@@ -1,0 +1,34 @@
+:root {
+    /* Colores primarios */
+    --primary-color: #7CC24A;
+    --primary-color-dark-1: #5FAF27;
+    --primary-color-dark-2: #5FAD28;
+    --primary-color-light-1: #A3E176;
+    --primary-color-light-2: #C3EEA4;
+
+  /* Tonos de negro */
+    --black: #111827;
+    --black-1: #464646;
+    --black-2: #7F7E7E;
+
+  /* Tonos de blanco */
+    --white: #f9fafb;
+    --white-1: #CECECE;
+    --white-2: #A2A0A0;
+
+  /* Tipografía */
+    --font-base: 'Poppins', sans-serif;
+}
+/* Mobile first */
+/* body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-base);
+    color: var(--black);
+    background-color: var(--white);
+}
+
+@media (min-width: 768px){
+
+}
