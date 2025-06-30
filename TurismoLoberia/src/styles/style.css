@@ -18,7 +18,45 @@
 
   /* Tipografía */
     --font-base: 'Poppins', sans-serif;
+
+  /* Tamaños */
+    --size-h1-mobile:32px;
+    --size-h2-mobile:26px;
+    --size-h3-mobile:20px;
+    --size-paragraph-mobile:14px;
+    --size-button-mobile:16px;
+    --size-h1-desktop:64px;
+    --size-h2-desktop:32px;
+    --size-h3-desktop:24px;
+    --size-paragraph-desktop: 16px;
+    --size-button-desktop: 20px;
 }
+/*Tamaño Mobile*/
+
+h1, h2, h3{
+  font-family: var(--font-base);
+  color: var(--black);
+  text-transform: uppercase;
+}
+
+h1{
+    font-size: var(--size-h1-mobile);
+}
+
+h2{
+  font-size: var(--size-h2-mobile);
+}
+
+h3{
+  font-size: var(--size-h3-mobile);
+}
+
+p{
+  font-family: var(--font-base);
+  font-size: var(--size-paragraph-mobile);
+  color: var(--black);
+}
+
 /* Mobile first */
 /* body */
 body {
@@ -30,5 +68,29 @@ body {
 }
 
 @media (min-width: 768px){
+
+  h1, h2, h3{
+  font-family: var(--font-base);
+  color: var(--black);
+  text-transform: uppercase;
+}
+
+h1{
+    font-size: var(--size-h1-desktop);
+}
+
+h2{
+  font-size: var(--size-h2-desktop);
+}
+
+h3{
+  font-size: var(--size-h3-desktop);
+}
+
+p{
+  font-family: var(--font-base);
+  font-size: var(--size-paragraph-desktop);
+  color: var(--black);
+}
 
 }
