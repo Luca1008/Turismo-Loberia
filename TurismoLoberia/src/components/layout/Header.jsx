@@ -2,10 +2,8 @@ import React from "react";
 
 export const Header = () => {
   return (
-    <>
-    <Header className="header">
+    <header className="header">
       <h1>Header</h1>
-    </Header>
-    </>
+    </header>
   );
 };
