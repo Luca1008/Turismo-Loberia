@@ -4,6 +4,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import carousel1 from '../../assets/images/carousel-index/carousel-1.jpg';
 import carousel2 from '../../assets/images/carousel-index/carousel-2.jpg';
 import carousel3 from '../../assets/images/carousel-index/carousel-3.jpg';
+import '../../styles/index.css';
 
 export const ControlledCarousel = () => {
   const [index, setIndex] = useState(0);

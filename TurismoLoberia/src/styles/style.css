@@ -57,17 +57,6 @@ p{
   color: var(--black);
 }
 
-/* Carousel */
-.carousel-index img{
-  width: 390px;
-  height: 300px;
-  object-fit: cover;
-}
-
-.carousel-index h2{
-  font-size: var(--size-h3-mobile);
-  color: var(--white);
-}
 
 
 /* Mobile first */
@@ -106,24 +95,4 @@ p{
   color: var(--black);
 }
 
-}
-
-/* Centrar verticalmente las flechas del carousel */
-.carousel-index .carousel-control-prev,
-.carousel-index .carousel-control-next {
-  top: 50%;
-  transform: translateY(-50%);
-  bottom: unset;
-  height: 40px;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Opcional: aumentar el tamaño de las flechas */
-.carousel-index .carousel-control-prev-icon,
-.carousel-index .carousel-control-next-icon {
-  width: 2rem;
-  height: 2rem;
 }

@@ -13,8 +13,8 @@
   }
   
   .border-nav {
-    border-top: 5px solid var(--primary-color-dark-1);
-    border-bottom: 5px solid var(--primary-color-dark-1);
+    border-top: 10px solid var(--primary-color-dark-1);
+    border-bottom: 10px solid var(--primary-color-dark-1);
   }
   
   .border-item-nav{
