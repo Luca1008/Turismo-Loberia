@@ -6,11 +6,13 @@ export const Index = () => {
   return (
     <div className="index">
       <Header />
+      <Header />
       <main>
         <h2>Contenido principal</h2>
         <p>Bienvenido a la página de inicio</p>
       </main>
       <Footer />
+
     </div>
   );
 };
