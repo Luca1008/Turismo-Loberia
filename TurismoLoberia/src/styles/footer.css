@@ -1,44 +1,48 @@
+/* Footer base: fondo blanco, bordes superiores e inferiores, tipografía */
 .footer {
-    padding: 1rem;
-    background-color: var(--white);
-    text-align: center;
-    font-family: var(--font-base);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-    border-top: 5px solid var(--primary-color-dark-1);
-    border-bottom: 5px solid var(--primary-color-dark-1);
+  background-color: var(--white);
+  border-top: 10px solid var(--primary-color-dark-1);
+  border-bottom: 10px solid var(--primary-color-dark-1);
+  font-family: var(--font-base);
+  padding: 1rem;
 }
 
-.footer__logo img {
-    width: 140px;
-    height: auto;
-    
+/* Contenedor interno que agrupa todo: logo, info, redes */
+.footer__container {
+  display: flex;
+  flex-direction: column; /* Mobile first: todo en columna */
+  align-items: center;
+  gap: 1rem;
 }
+
+/* Logo alineado al centro con texto debajo */
 .footer__logo {
-    justify-content: center;
-    align-items: center;
-}
-.footer__logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.footer_row {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.footer__logo img {
+  width: 120px;
+  height: auto;
+}
+
+.footer__logo p {
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Contenedor de info de contacto (íconos + texto) */
 .footer__info {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
 }
 
+/* Cada ítem de contacto (ícono + texto) */
 .footer__item {
   display: flex;
   align-items: center;
@@ -47,32 +51,34 @@
   color: var(--black);
 }
 
+/* Contenedor de íconos sociales */
 .footer__social {
   display: flex;
   gap: 1rem;
+  font-size: 1.5rem;
+  justify-content: center;
 }
 
 .footer__social a {
-  font-size: 1.25rem;
   color: var(--black);
-  text-decoration: none;
 }
 
+/* Estilos para pantallas >= 768px (versión desktop) */
 @media (min-width: 768px) {
-  .footer {
-    flex-direction: row;
-    justify-content: space-between;
+  .footer__container {
+    flex-direction: row; /* Ahora distribuye horizontalmente */
+    justify-content: space-between; /* Separa logo, info y redes */
+    align-items: flex-start;
     text-align: left;
-    padding: 2rem 4rem;
+    padding: 1rem 2rem;
   }
 
   .footer__info {
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start; /* Alinea textos a la izquierda */
   }
 
   .footer__social {
-    justify-content: flex-end;
+    justify-content: flex-end; /* Redes sociales a la derecha */
   }
-
 }
+
