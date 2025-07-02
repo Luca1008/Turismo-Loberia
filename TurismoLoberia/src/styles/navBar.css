@@ -1,91 +1,97 @@
-/*---------------------------Header----------------------*/
-.navBar, .menuPadding{
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-  
-  .logoLoberia{
-    width: 140px;
-  }
-  
-  li{
-    list-style: none;
-  }
-  
-  .border-nav {
-    border-top: 10px solid var(--primary-color-dark-1);
-    border-bottom: 10px solid var(--primary-color-dark-1);
-  }
-  
-  .border-item-nav{
-    border-right: 2px solid var(--primary-color-dark-1);
-  }
-  
-  .navbar.fixed-top {
-    z-index: 1050;
-  }
-  
-  .mobile-menu {
-    position: fixed;
-    top: 90px;
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 60px);
-    background-color: var(--primary-color-dark-1);
-    z-index: 9999;
-    color: white;
-    overflow-y: auto;
-  }
-  
-  .menu-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .menu-item {
-    font-size: var(--size-h3-mobile);
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: white;
-  }
-  
-  .menu-item .arrow {
-    transition: transform 0.3s ease;
-  }
-  
-  .menu-item .rotate {
-    transform: rotate(180deg);
-  }
-  
-  .submenu {
-    background-color: var(--primary-color);
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    margin-top: 0.5rem;
-  }
-  
-  .submenu li {
-    list-style: none;
-    margin-bottom: 0.4rem;
-  }
-  
-  .submenu li a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-  }
-  
-  .submenu li a:hover {
-    text-decoration: underline;
-  }
+/*---------------------------Nav----------------------*/
+.header {
+  position: sticky !important;
+  top: 0;
+  z-index: 1020;
+}
 
-  /* Lupa */
+.navBar,
+.menuPadding {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.logoLoberia {
+  width: 140px;
+}
+
+li {
+  list-style: none;
+}
+
+.border-nav {
+  border-top: 10px solid var(--primary-color-dark-1);
+  border-bottom: 10px solid var(--primary-color-dark-1);
+}
+
+.border-item-nav {
+  border-right: 2px solid var(--primary-color-dark-1);
+}
+
+.navbar.fixed-top {
+  z-index: 1050;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 60px);
+  background-color: var(--primary-color-dark-1);
+  z-index: 9999;
+  color: white;
+  overflow-y: auto;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  font-size: var(--size-h3-mobile);
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.menu-item .arrow {
+  transition: transform 0.3s ease;
+}
+
+.menu-item .rotate {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  background-color: var(--primary-color);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+.submenu li {
+  list-style: none;
+  margin-bottom: 0.4rem;
+}
+
+.submenu li a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.submenu li a:hover {
+  text-decoration: underline;
+}
+
+/* Lupa */
 .search-container {
   position: relative;
   width: 100%;
 }
-
 
 .search-input {
   padding-right: 38px;
@@ -103,5 +109,3 @@
   border-left: 2px solid var(--black-2);
   padding-left: 2px;
 }
-
-  

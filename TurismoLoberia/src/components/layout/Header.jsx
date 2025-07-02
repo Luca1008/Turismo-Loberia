@@ -1,14 +1,14 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 import {
   FaBars,
+  FaBell,
+  FaChevronDown,
   FaGlobe,
   FaTimes,
-  FaChevronDown,
-  FaBell,
 } from "react-icons/fa";
 import { WiDaySunny } from "react-icons/wi";
 import logoLoberia from "../../assets/icons/logoLoberia.svg";
@@ -77,7 +77,7 @@ export const Header = () => {
 
   return (
     <>
-      <nav className="navbar fixed-top bg-white shadow-sm border-nav navBar">
+      <nav className="navbar sticky-top bg-white shadow-sm border-nav navBar">
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
           <Link
             to="/"
