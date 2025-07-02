@@ -6,7 +6,7 @@
 }
 
 .navBar,
-.menuPadding {
+.menu-padding {
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -87,7 +87,7 @@ li {
   text-decoration: underline;
 }
 
-/* Lupa */
+/*-----------------------Lupa-------------------------*/
 .search-container {
   position: relative;
   width: 100%;
@@ -108,4 +108,10 @@ li {
   pointer-events: none;
   border-left: 2px solid var(--black-2);
   padding-left: 2px;
+}
+
+@media (min-width: 768px) {
+  .mobile-menu {
+    display: none !important;
+  }
 }

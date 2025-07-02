@@ -92,30 +92,59 @@ export const Header = () => {
             />
           </Link>
 
-          <div className="d-flex align-items-center gap-3">
-            <WiDaySunny className="border-item-nav" size={24} title="Clima" />
+          {/* DESKTOP NAV */}
+          <div className="d-none d-md-flex align-items-center gap-4">
+            {menuData.map(({ label }, idx) => (
+              <div
+                key={idx}
+                className="desktop-nav-item d-flex align-items-center gap-1"
+              >
+                <strong>{label}</strong>
+                <FaChevronDown size={12} />
+              </div>
+            ))}
+            <span className="ms-3 d-flex align-items-center gap-1">
+              <WiDaySunny size={20} title="Clima" />
+              Clima
+            </span>
+            <div className="d-flex align-items-center gap-1">
+              <FaGlobe />
+              <span>Español</span>
+              <span>▼</span>
+            </div>
+            <FaSearch />
+          </div>
+
+          {/* ICONOS Clima e Idioma SOLO en MOBILE */}
+          <div className="d-flex align-items-center gap-3 d-md-none">
+            <WiDaySunny className="border-item-nav" size={20} title="Clima" />
             <div className="d-flex align-items-center border-item-nav">
               <FaGlobe className="me-1" />
               <span>Español</span>
               <span className="ms-1">▼</span>
             </div>
-            <button className="btn p-0" onClick={() => setShowMenu(!showMenu)}>
-              {showMenu ? <FaTimes size={24} /> : <FaBars size={24} />}
-            </button>
           </div>
+
+          {/* HAMBURGUESA SOLO en MOBILE */}
+          <button
+            className="btn p-0 d-md-none"
+            onClick={() => setShowMenu(!showMenu)}
+          >
+            {showMenu ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </button>
         </div>
       </nav>
 
       {showMenu && (
-  <div className="mobile-menu d-flex flex-column p-3 pt-5">
-    <div className="search-container mb-4">
-      <input
-        type="text"
-        className="form-control search-input"
-        placeholder="Buscar..."
-      />
-      <FaSearch className="search-icon" />
-    </div>
+        <div className="mobile-menu d-flex flex-column p-3 pt-5 menu-padding">
+          <div className="search-container mb-4">
+            <input
+              type="text"
+              className="form-control search-input"
+              placeholder="Buscar..."
+            />
+            <FaSearch className="search-icon" />
+          </div>
           <ul className="menu-list px-0">
             <li className="menu-item d-flex justify-content-between align-items-center mb-3">
               <strong>Suscribirme</strong> <FaBell />
