@@ -1,25 +1,25 @@
 import React from 'react';
-import '../../styles/footer.css'; // Estilos del footer
-import logoLoberia from '../../assets/icons/logoLoberia.svg'; // Logo desde assets
+import '../../styles/footer.css';
+import logoLoberia from '../../assets/icons/logoLoberia.svg';
 
-// Íconos de redes sociales desde react-icons
+// Íconos sociales
 import { TiSocialFacebookCircular } from 'react-icons/ti';
 import { TiSocialInstagram } from 'react-icons/ti';
 import { IoLogoYoutube } from 'react-icons/io5';
 import { FaWhatsapp, FaTiktok } from 'react-icons/fa';
 
-// Componente Footer principal
 export const Footer = () => {
   return (
     <footer className="footer">
-      {/* Contenedor general para estructurar en columnas o filas */}
       <div className="footer__container">
-        {/* Logo */}
+
+        {/* Logo institucional */}
         <div className="footer__logo">
-          <img src={logoLoberia} alt="Lobería" />
+          <img src={logoLoberia} alt="Lobería Gobierno Local" />
+          <p>GOBIERNO LOCAL</p>
         </div>
 
-        {/* Info de contacto - dos ítems */}
+        {/* Información de contacto (2 ítems) */}
         <div className="footer__info">
           <div className="footer__item">
             <span>📧</span>
@@ -31,7 +31,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Último ítem + redes */}
+        {/* Newsletter + redes sociales */}
         <div className="footer__extra">
           <div className="footer__item">
             <span>📢</span>
@@ -45,8 +45,10 @@ export const Footer = () => {
             <a href="#"><FaTiktok /></a>
           </div>
         </div>
+
       </div>
     </footer>
   );
 };
+
 
