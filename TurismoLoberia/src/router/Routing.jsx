@@ -1,11 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Index } from '../pages/Index';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Buscador } from '../pages/Buscador';
 import { Ciudad } from '../pages/Ciudad';
 import { Clima } from '../pages/Clima';
 import { Contacto } from '../pages/Contacto';
+import { Index } from '../pages/Index';
 import { Partido } from '../pages/Partido';
-import { Buscador } from '../pages/Buscador';
 import { Suscribirse } from '../pages/Suscribirse';
 
 
