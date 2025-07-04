@@ -4,6 +4,13 @@
   top: 0;
   z-index: 1020;
 }
+
+.desktop-search-bar{
+  position: sticky !important;
+  top: 90px;
+  z-index: 1020;
+}
+
 .primary{
   color: var(--primary-color) !important;
 }
@@ -90,51 +97,6 @@ li {
   text-decoration: underline;
 }
 
-/*-----------------------Lupa-------------------------*/
-.search-container {
-  position: relative;
-  width: 100%;
-}
-
-.search-input {
-  padding-right: 38px;
-  border-radius: 20px;
-  font-size: 14px;
-}
-
-.search-icon {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--black-2);
-  pointer-events: none;
-  border-left: 2px solid var(--black-2);
-  padding-left: 2px;
-}
-
-@media (min-width: 768px) {
-  .mobile-menu {
-    display: none !important;
-  }
-
-  .desktop-search-bar {
-    background-color: var(--primary-color-dark-1);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.3s ease-in-out;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-5px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
 
 /* Estilos personalizados para el input de búsqueda con lupa en mobile */
 .search-bar-custom {
@@ -153,7 +115,7 @@ li {
   box-shadow: none;
 }
 .search-bar-custom .btn {
-  background: #f5f5f5;
+  background: var(--white);
   border: none;
   border-radius: 0 2rem 2rem 0;
   display: flex;
@@ -163,14 +125,46 @@ li {
 }
 .search-bar-custom .btn:active,
 .search-bar-custom .btn:focus {
-  background: #e0e0e0;
+  background: var(--white);
   box-shadow: none;
 }
 .search-bar-custom .btn svg {
-  color: #198754; /* Bootstrap primary o success */
+  color: var(--primary-color);
   font-size: 1.2rem;
   transition: color 0.2s;
 }
 .search-bar-custom .btn:hover svg {
-  color: #145c32;
+  color: var(--primary-color);
 }
+
+
+@media (min-width: 768px) {
+  .mobile-menu {
+    display: none !important;
+  }
+
+  .desktop-search-bar {
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .desktop-search-icon{
+    color: var(--white);
+    width: 30px;
+    height: 30px;
+  }
+
+}
+

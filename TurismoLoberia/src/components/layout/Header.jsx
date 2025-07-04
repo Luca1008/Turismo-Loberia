@@ -11,7 +11,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { WiDaySunny } from "react-icons/wi";
-import logoLoberia from "../../assets/icons/logoPatrimonioVivo.svg";
+import logoLoberia from "../../assets/icons/logoLoberia.svg";
 import "../../styles/Navbar.css";
 
 export const Header = () => {
@@ -112,7 +112,7 @@ export const Header = () => {
             <div className="d-flex align-items-center gap-1">
               <FaGlobe />
               <span>Español</span>
-              <span >▼</span>
+              <span>▼</span>
             </div>
             <FaSearch
               style={{ cursor: "pointer" }}
@@ -137,23 +137,29 @@ export const Header = () => {
             className="btn p-0 d-md-none primary"
             onClick={() => setShowMenu(!showMenu)}
           >
-            {showMenu ? <FaTimes className="primary" size={24} /> : <FaBars size={24} />}
+            {showMenu ? (
+              <FaTimes className="primary" size={24} />
+            ) : (
+              <FaBars size={24} />
+            )}
           </button>
         </div>
       </nav>
 
       {/* BARRA DE BÚSQUEDA DESPLEGABLE (DESKTOP) */}
       {showSearch && (
-        <div className="desktop-search-bar p-3 border-nav d-none d-md-block">
+        <div className="desktop-search-bar p-3 border-nav d-none d-md-block position-sticky">
           <div className="container d-flex justify-content-between align-items-center">
             <input
               type="text"
               className="form-control me-3"
               placeholder="Buscar…"
             />
-            <button className="btn btn-white">Buscar</button>
+            <button className="btn btn-white">
+              <FaSearch className="desktop-search-icon"/>
+            </button>
           </div>
-          </div>
+        </div>
       )}
 
       {/* PANEL LATERAL (MOBILE) */}
@@ -166,7 +172,11 @@ export const Header = () => {
                 className="form-control search-input"
                 placeholder="Buscar..."
               />
-              <button className="btn btn-outline-secondary" type="button" onClick={() => setShowSearch(!showSearch)}>
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={() => setShowSearch(!showSearch)}
+              >
                 <FaSearch />
               </button>
             </div>
