@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import carousel1 from '../../assets/images/carousel-index/carousel-1.jpg';
@@ -8,7 +7,6 @@ import '../../styles/index.css';
 
 export const ControlledCarousel = () => {
   const [index, setIndex] = useState(0);
-  const carousel = useRef(null);
 
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);

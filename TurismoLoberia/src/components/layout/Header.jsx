@@ -11,7 +11,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { WiDaySunny } from "react-icons/wi";
-import logoLoberia from "../../assets/icons/logoLoberia.svg";
+import logoLoberia from "../../assets/icons/logoPatrimonioVivo.svg";
 import "../../styles/Navbar.css";
 
 export const Header = () => {
@@ -110,9 +110,9 @@ export const Header = () => {
               Clima
             </strong>
             <div className="d-flex align-items-center gap-1">
-              <FaGlobe className="primary" />
+              <FaGlobe />
               <span>Español</span>
-              <span className="primary">▼</span>
+              <span >▼</span>
             </div>
             <FaSearch
               style={{ cursor: "pointer" }}
@@ -124,21 +124,20 @@ export const Header = () => {
           <div className="d-flex align-items-center gap-3 d-md-none">
             <strong className="border-item-nav d-flex align-items-center gap-1">
               <WiDaySunny className="primary" size={20} title="Clima" />
-              Clima
             </strong>
             <div className="d-flex align-items-center border-item-nav">
-              <FaGlobe className="me-1 primary" />
+              <FaGlobe className="me-1" />
               <span>Español</span>
-              <span className="ms-1 primary">▼</span>
+              <span className="ms-1">▼</span>
             </div>
           </div>
 
           {/* HAMBURGUESA SOLO en MOBILE */}
           <button
-            className="btn p-0 d-md-none"
+            className="btn p-0 d-md-none primary"
             onClick={() => setShowMenu(!showMenu)}
           >
-            {showMenu ? <FaTimes size={24} /> : <FaBars size={24} />}
+            {showMenu ? <FaTimes className="primary" size={24} /> : <FaBars size={24} />}
           </button>
         </div>
       </nav>
@@ -161,15 +160,16 @@ export const Header = () => {
       {showMenu && (
         <div className="mobile-menu d-flex flex-column p-3 pt-5 menu-padding">
           <div className="search-container mb-4">
-            <input
-              type="text"
-              className="form-control search-input"
-              placeholder="Buscar..."
-            />
-            <FaSearch
-              style={{ cursor: "pointer" }}
-              onClick={() => setShowSearch(!showSearch)}
-            />
+            <div className="input-group search-bar-custom">
+              <input
+                type="text"
+                className="form-control search-input"
+                placeholder="Buscar..."
+              />
+              <button className="btn btn-outline-secondary" type="button" onClick={() => setShowSearch(!showSearch)}>
+                <FaSearch />
+              </button>
+            </div>
           </div>
           <ul className="menu-list px-0">
             <li className="menu-item d-flex justify-content-between align-items-center mb-3">
@@ -185,7 +185,7 @@ export const Header = () => {
                 >
                   <strong>{label}</strong>
                   <FaChevronDown
-                    className={`arrow text-primary ${openItem === label ? "rotate" : ""}`}
+                    className={`arrow${openItem === label ? " rotate" : ""}`}
                   />
                 </div>
 
