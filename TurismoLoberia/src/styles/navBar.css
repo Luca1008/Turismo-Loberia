@@ -181,6 +181,7 @@ li {
     font-weight: bold;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    z-index: 1202;
   }
 
   .submenu-desktop a{
