@@ -37,7 +37,7 @@ export const Header = () => {
       label: "Ciudad de Lobería",
       subitems: [
         "Información General",
-        "Cómo LLegar",
+        "Cómo Llegar",
         "Alojamientos",
         "Gastronomía",
         "Transporte",
@@ -50,7 +50,7 @@ export const Header = () => {
       label: "San Manuel",
       subitems: [
         "Información General",
-        "Cómo LLegar",
+        "Cómo Llegar",
         "Alojamientos",
         "Gastronomía",
         "Transporte",
@@ -63,7 +63,7 @@ export const Header = () => {
       label: "Arenas Verdes",
       subitems: [
         "Información General",
-        "Cómo LLegar",
+        "Cómo Llegar",
         "Alojamientos",
         "Base de Campamentos",
         "Gastronomía",
@@ -96,13 +96,24 @@ export const Header = () => {
 
           {/* DESKTOP NAV */}
           <div className="d-none d-md-flex align-items-center gap-4">
-            {menuData.map(({ label }, idx) => (
+            {menuData.map(({ label, subitems }, idx) => (
               <div
                 key={idx}
-                className="desktop-nav-item d-flex align-items-center gap-1"
+                className="desktop-nav-item d-flex align-items-center gap-1 position-relative"
+                onClick={() => toggleItem(label)}
+                style={{ cursor: "pointer" }}
               >
                 <strong>{label}</strong>
-                <FaChevronDown className="primary" size={12} />
+                <FaChevronDown className={`primary transition-arrow${openItem === label ? ' rotate' : ''}`} size={12} />
+                {openItem === label && subitems && subitems.length > 0 && (
+                  <ul className="submenu-desktop position-absolute shadow p-2 mt-2">
+                    {subitems.map((sub, i) => (
+                      <li key={i} className="py-1 px-2 nav-subitem">
+                        <a href="#" className="text-decoration-none">{sub}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
             <strong className="ms-3 d-flex align-items-center gap-1">
