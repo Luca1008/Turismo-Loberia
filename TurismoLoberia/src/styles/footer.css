@@ -1,20 +1,21 @@
+/* === Footer base === */
 .footer {
   background-color: var(--primary-color);
   font-family: var(--font-base);
-  padding: 1rem;
+  padding: 2rem 1rem;
   color: var(--white);
 }
 
-/* Contenedor principal que agrupa logo, info y redes */
+/* === Layout general (Mobile First) === */
 .footer__container {
   display: flex;
-  flex-direction: column; /* Mobile first */
+  flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
   text-align: center;
 }
 
-/* Logo en columna */
+/* === Logo institucional === */
 .footer__logo {
   display: flex;
   flex-direction: column;
@@ -27,49 +28,73 @@
 }
 
 .footer__logo p {
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
-/* Sección de información en columnas o fila según el tamaño */
+/* === Info de contacto y sección extra === */
 .footer__info,
 .footer__extra {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
-/* Item con ícono + texto */
+/* === Ítem individual con ícono + texto === */
 .footer__item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.9rem;
+  font-size: var(--h3-font-size);
+  font-weight: 600;
   color: var(--white);
+  transition: all 0.3s ease;
 }
 
-/* Redes sociales */
+.footer__item p {
+  margin: 0;
+}
+
+/* Efecto UX al pasar el mouse */
+.footer__item:hover {
+  transform: scale(1.05);
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+}
+
+/* === Redes sociales === */
 .footer__social {
   display: flex;
   gap: 1rem;
-  font-size: 1.5rem;
   justify-content: center;
+  margin-top: 0.5rem;
+  width: auto;
+  height: auto;
 }
 
 .footer__social a {
   color: var(--white);
+  font-size: 1.6rem;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-/* ===== DESKTOP (3 columnas horizontales) ===== */
+.footer__social a:hover {
+  color: var(--primary-color-light1);
+  transform: scale(1.2);
+}
+
+/* === Versión Desktop (≥768px): layout en 3 columnas === */
 @media (min-width: 768px) {
   .footer__container {
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     text-align: left;
-    padding: 2rem;
+    padding: 2rem 4rem;
   }
 
   .footer__info,
@@ -79,8 +104,8 @@
 
   .footer__social {
     justify-content: flex-start;
-    margin-top: 0.5rem;
   }
 }
+
 
 
