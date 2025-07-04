@@ -30,13 +30,16 @@
     --size-h3-desktop:24px;
     --size-paragraph-desktop: 16px;
     --size-button-desktop: 20px;
+
+    /* Errores */
+    --Red:#B3261E;
 }
 
 /*Tamaño Mobile*/
 
 h1, h2, h3{
   font-family: var(--font-base);
-  color: var(--black);
+  color: var(--black-1-Texto);
   text-transform: uppercase;
 }
 

@@ -1,8 +1,6 @@
 /* Footer base: fondo blanco, bordes superiores e inferiores, tipografía */
 .footer {
-  background-color: var(--white);
-  border-top: 10px solid var(--primary-color-dark-1);
-  border-bottom: 10px solid var(--primary-color-dark-1);
+  background-color: var(--primary-color);
   font-family: var(--font-base);
   padding: 1rem;
 }
