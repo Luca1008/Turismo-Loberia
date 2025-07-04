@@ -1,6 +1,6 @@
 :root {
     /* Colores primarios */
-    --primary-color: #7CC24A;
+    --primary-color: #57AF31;
     --primary-color-dark-1: #5FAF27;
     --primary-color-dark-2: #5FAD28;
     --primary-color-light-1: #A3E176;
@@ -8,12 +8,12 @@
 
   /* Tonos de negro */
     --black: #111827;
-    --black-1: #464646;
+    --black-1-Texto: #49454F;
     --black-2: #7F7E7E;
 
   /* Tonos de blanco */
     --white: #f9fafb;
-    --white-1: #CECECE;
+    --white-1-background: #F2F2F2;
     --white-2: #A2A0A0;
 
   /* Tipografía */
@@ -31,6 +31,7 @@
     --size-paragraph-desktop: 16px;
     --size-button-desktop: 20px;
 }
+
 /*Tamaño Mobile*/
 
 h1, h2, h3{
@@ -56,8 +57,6 @@ p{
   font-size: var(--size-paragraph-mobile);
   color: var(--black);
 }
-
-
 
 /* Mobile first */
 /* body */
