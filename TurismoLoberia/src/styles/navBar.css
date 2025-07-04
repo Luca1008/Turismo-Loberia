@@ -4,6 +4,9 @@
   top: 0;
   z-index: 1020;
 }
+.primary{
+  color: var(--primary-color);
+}
 
 .navBar,
 .menu-padding {

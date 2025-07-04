@@ -79,7 +79,7 @@ export const Header = () => {
 
   return (
     <>
-      <nav className="navbar sticky-top bg-white shadow-sm border-nav navBar">
+      <nav className="navbar sticky-top bg-white shadow-sm border-nav navBar primary">
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
           <Link
             to="/"
