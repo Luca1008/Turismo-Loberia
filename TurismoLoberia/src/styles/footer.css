@@ -1,19 +1,20 @@
-/* Footer base: fondo blanco, bordes superiores e inferiores, tipografía */
 .footer {
   background-color: var(--primary-color);
   font-family: var(--font-base);
   padding: 1rem;
+  color: var(--white);
 }
 
-/* Contenedor interno que agrupa todo: logo, info, redes */
+/* Contenedor principal que agrupa logo, info y redes */
 .footer__container {
   display: flex;
-  flex-direction: column; /* Mobile first: todo en columna */
+  flex-direction: column; /* Mobile first */
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
+  text-align: center;
 }
 
-/* Logo alineado al centro con texto debajo */
+/* Logo en columna */
 .footer__logo {
   display: flex;
   flex-direction: column;
@@ -31,25 +32,25 @@
   font-weight: 500;
 }
 
-/* Contenedor de info de contacto (íconos + texto) */
-.footer__info {
+/* Sección de información en columnas o fila según el tamaño */
+.footer__info,
+.footer__extra {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  text-align: center;
 }
 
-/* Cada ítem de contacto (ícono + texto) */
+/* Item con ícono + texto */
 .footer__item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 0.9rem;
-  color: var(--black);
+  color: var(--white);
 }
 
-/* Contenedor de íconos sociales */
+/* Redes sociales */
 .footer__social {
   display: flex;
   gap: 1rem;
@@ -58,25 +59,28 @@
 }
 
 .footer__social a {
-  color: var(--black);
+  color: var(--white);
 }
 
-/* Estilos para pantallas >= 768px (versión desktop) */
+/* ===== DESKTOP (3 columnas horizontales) ===== */
 @media (min-width: 768px) {
   .footer__container {
-    flex-direction: row; /* Ahora distribuye horizontalmente */
-    justify-content: space-between; /* Separa logo, info y redes */
+    flex-direction: row;
+    justify-content: space-between;
     align-items: flex-start;
     text-align: left;
-    padding: 1rem 2rem;
+    padding: 2rem;
   }
 
-  .footer__info {
-    align-items: flex-start; /* Alinea textos a la izquierda */
+  .footer__info,
+  .footer__extra {
+    align-items: flex-start;
   }
 
   .footer__social {
-    justify-content: flex-end; /* Redes sociales a la derecha */
+    justify-content: flex-start;
+    margin-top: 0.5rem;
   }
 }
+
 

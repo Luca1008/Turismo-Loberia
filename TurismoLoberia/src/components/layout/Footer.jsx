@@ -14,13 +14,12 @@ export const Footer = () => {
     <footer className="footer">
       {/* Contenedor general para estructurar en columnas o filas */}
       <div className="footer__container">
-
-        {/* LOGO + texto debajo (GOBIERNO LOCAL) */}
+        {/* Logo */}
         <div className="footer__logo">
           <img src={logoLoberia} alt="Lobería" />
         </div>
 
-        {/* Información de contacto (íconos + texto) */}
+        {/* Info de contacto - dos ítems */}
         <div className="footer__info">
           <div className="footer__item">
             <span>📧</span>
@@ -30,19 +29,21 @@ export const Footer = () => {
             <span>📍</span>
             <p>Dirección de Turismo, Av. Campos 500</p>
           </div>
+        </div>
+
+        {/* Último ítem + redes */}
+        <div className="footer__extra">
           <div className="footer__item">
             <span>📢</span>
             <p>Suscribite a los newsletter</p>
           </div>
-        </div>
-
-        {/* Íconos de redes sociales */}
-        <div className="footer__social">
-          <a href="#"><TiSocialFacebookCircular /></a>
-          <a href="#"><TiSocialInstagram /></a>
-          <a href="#"><IoLogoYoutube /></a>
-          <a href="#"><FaWhatsapp /></a>
-          <a href="#"><FaTiktok /></a>
+          <div className="footer__social">
+            <a href="#"><TiSocialFacebookCircular /></a>
+            <a href="#"><TiSocialInstagram /></a>
+            <a href="#"><IoLogoYoutube /></a>
+            <a href="#"><FaWhatsapp /></a>
+            <a href="#"><FaTiktok /></a>
+          </div>
         </div>
       </div>
     </footer>
