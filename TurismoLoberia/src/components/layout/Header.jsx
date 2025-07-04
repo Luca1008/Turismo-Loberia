@@ -75,6 +75,8 @@ export const Header = () => {
     },
   ];
 
+  const [showSearch, setShowSearch] = useState(false);
+
   return (
     <>
       <nav className="navbar sticky-top bg-white shadow-sm border-nav navBar">
@@ -100,28 +102,34 @@ export const Header = () => {
                 className="desktop-nav-item d-flex align-items-center gap-1"
               >
                 <strong>{label}</strong>
-                <FaChevronDown size={12} />
+                <FaChevronDown className="primary" size={12} />
               </div>
             ))}
-            <span className="ms-3 d-flex align-items-center gap-1">
-              <WiDaySunny size={20} title="Clima" />
+            <strong className="ms-3 d-flex align-items-center gap-1">
+              <WiDaySunny className="primary" size={20} title="Clima" />
               Clima
-            </span>
+            </strong>
             <div className="d-flex align-items-center gap-1">
-              <FaGlobe />
+              <FaGlobe className="primary" />
               <span>Español</span>
-              <span>▼</span>
+              <span className="primary">▼</span>
             </div>
-            <FaSearch />
+            <FaSearch
+              style={{ cursor: "pointer" }}
+              onClick={() => setShowSearch(!showSearch)}
+            />
           </div>
 
           {/* ICONOS Clima e Idioma SOLO en MOBILE */}
           <div className="d-flex align-items-center gap-3 d-md-none">
-            <WiDaySunny className="border-item-nav" size={20} title="Clima" />
+            <strong className="border-item-nav d-flex align-items-center gap-1">
+              <WiDaySunny className="primary" size={20} title="Clima" />
+              Clima
+            </strong>
             <div className="d-flex align-items-center border-item-nav">
-              <FaGlobe className="me-1" />
+              <FaGlobe className="me-1 primary" />
               <span>Español</span>
-              <span className="ms-1">▼</span>
+              <span className="ms-1 primary">▼</span>
             </div>
           </div>
 
@@ -135,6 +143,21 @@ export const Header = () => {
         </div>
       </nav>
 
+      {/* BARRA DE BÚSQUEDA DESPLEGABLE (DESKTOP) */}
+      {showSearch && (
+        <div className="desktop-search-bar p-3 border-nav d-none d-md-block">
+          <div className="container d-flex justify-content-between align-items-center">
+            <input
+              type="text"
+              className="form-control me-3"
+              placeholder="Buscar…"
+            />
+            <button className="btn btn-white">Buscar</button>
+          </div>
+          </div>
+      )}
+
+      {/* PANEL LATERAL (MOBILE) */}
       {showMenu && (
         <div className="mobile-menu d-flex flex-column p-3 pt-5 menu-padding">
           <div className="search-container mb-4">
@@ -143,7 +166,10 @@ export const Header = () => {
               className="form-control search-input"
               placeholder="Buscar..."
             />
-            <FaSearch className="search-icon" />
+            <FaSearch
+              style={{ cursor: "pointer" }}
+              onClick={() => setShowSearch(!showSearch)}
+            />
           </div>
           <ul className="menu-list px-0">
             <li className="menu-item d-flex justify-content-between align-items-center mb-3">
@@ -159,7 +185,7 @@ export const Header = () => {
                 >
                   <strong>{label}</strong>
                   <FaChevronDown
-                    className={`arrow ${openItem === label ? "rotate" : ""}`}
+                    className={`arrow text-primary ${openItem === label ? "rotate" : ""}`}
                   />
                 </div>
 
