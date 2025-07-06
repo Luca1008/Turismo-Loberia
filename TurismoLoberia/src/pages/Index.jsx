@@ -11,6 +11,8 @@ import {
   MdMuseum,
 } from "react-icons/md";
 import { FaPaintBrush, FaInfo } from "react-icons/fa";
+import { Button } from "react-bootstrap";
+import ViewMoreButton from "../components/common/ViewMoreButton";
 
 export const Index = () => {
   return (
@@ -57,6 +59,7 @@ export const Index = () => {
         <PlaceCard className="place-card" />
         <PlaceCard className="place-card" />
         </div>
+        <ViewMoreButton />
       </section>
       <Footer />
     </div>
