@@ -40,7 +40,6 @@
 h1, h2, h3{
   font-family: var(--font-base);
   color: var(--primary-color);
-  text-transform: uppercase;
 }
 
 h1{
@@ -72,11 +71,6 @@ body {
 }
 
 @media (min-width: 768px){
-
-  h1, h2, h3{
-  font-family: var(--font-base);
-  text-transform: uppercase;
-}
 
 h1{
     font-size: var(--size-h1-desktop);

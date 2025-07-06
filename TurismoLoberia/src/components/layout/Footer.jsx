@@ -1,32 +1,36 @@
-import React from 'react';
-import '../../styles/footer.css';
-import logoLoberia from '../../assets/icons/logoLoberia.svg';
+import React from "react";
+import logoLoberiaFooter from "../../assets/icons/logoLoberiaFooter.svg";
+import "../../styles/footer.css";
 
-// Íconos sociales
-import { TiSocialFacebookCircular } from 'react-icons/ti';
-import { TiSocialInstagram } from 'react-icons/ti';
-import { IoLogoYoutube } from 'react-icons/io5';
-import { FaWhatsapp, FaTiktok } from 'react-icons/fa';
+// Íconos - Todos de Font Awesome para consistencia
+import {
+  FaBell,
+  FaEnvelope,
+  FaFacebook,
+  FaInstagram,
+  FaMapMarkerAlt,
+  FaTiktok,
+  FaWhatsapp,
+  FaYoutube
+} from "react-icons/fa";
 
 export const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer__container">
-
         {/* Logo institucional */}
         <div className="footer__logo">
-          <img src={logoLoberia} alt="Lobería Gobierno Local" />
-          <p>GOBIERNO LOCAL</p>
+          <img src={logoLoberiaFooter} alt="Lobería Gobierno Local" />
         </div>
 
         {/* Información de contacto (2 ítems) */}
         <div className="footer__info">
           <div className="footer__item">
-            <span>📧</span>
+            <FaEnvelope />
             <p>Contactate con nosotros</p>
           </div>
           <div className="footer__item">
-            <span>📍</span>
+            <FaMapMarkerAlt />
             <p>Dirección de Turismo, Av. Campos 500</p>
           </div>
         </div>
@@ -34,21 +38,28 @@ export const Footer = () => {
         {/* Newsletter + redes sociales */}
         <div className="footer__extra">
           <div className="footer__item">
-            <span>📢</span>
+            <FaBell />
             <p>Suscribite a los newsletter</p>
           </div>
           <div className="footer__social">
-            <a href="#"><TiSocialFacebookCircular /></a>
-            <a href="#"><TiSocialInstagram /></a>
-            <a href="#"><IoLogoYoutube /></a>
-            <a href="#"><FaWhatsapp /></a>
-            <a href="#"><FaTiktok /></a>
+            <a href="#">
+              <FaFacebook className="svg-social"/>
+            </a>
+            <a href="#">
+              <FaInstagram className="svg-social" />
+            </a>
+            <a href="#">
+              <FaYoutube className="svg-social" />
+            </a>
+            <a href="#">
+              <FaWhatsapp className="svg-social" />
+            </a>
+            <a href="#">
+              <FaTiktok className="svg-social" />
+            </a>
           </div>
         </div>
-
       </div>
     </footer>
   );
 };
-
-

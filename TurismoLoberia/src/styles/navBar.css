@@ -8,7 +8,7 @@
 .desktop-search-bar {
   position: sticky !important;
   top: 90px;
-  z-index: 1020;
+  z-index: 1000;
 }
 
 .primary {

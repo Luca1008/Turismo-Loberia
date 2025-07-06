@@ -1,9 +1,26 @@
 /* === Footer base === */
 .footer {
-  background-color: var(--primary-color);
+  background-color: var(--white);
   font-family: var(--font-base);
   padding: 2rem 1rem;
-  color: var(--white);
+  color: var(--primary-color);
+  border-top: 20px solid var(--primary-color);
+  border-bottom: 20px solid var(--primary-color);
+}
+
+/* Normalizar todos los SVG del footer para que tengan el mismo viewBox efectivo */
+.footer svg {
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+.footer__item svg{
+  width: 20px !important;
+  height: 20px !important;
+}
+.footer__social svg{
+  width: 30px !important;
+  height: 30px !important;
 }
 
 /* === Layout general (Mobile First) === */
@@ -50,20 +67,59 @@
   gap: 0.5rem;
   font-size: var(--h3-font-size);
   font-weight: 600;
-  color: var(--white);
   transition: all 0.3s ease;
+}
+
+.footer__item svg {
+  width: 30px;
+  height: 30px;
 }
 
 .footer__item p {
   margin: 0;
+  color: var(--primary-color)
 }
 
-/* Efecto UX al pasar el mouse */
-.footer__item:hover {
-  transform: scale(1.05);
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 0.3rem 0.6rem;
-  border-radius: 8px;
+/* Efecto UX al pasar el mouse - Items de contacto */
+.footer__item {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.footer__item:hover,
+.footer__item:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  color: white;
+}
+
+/* Efecto más suave para móvil */
+.footer__item:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  color: white;
+}
+
+.footer__item:hover p,
+.footer__item:active p,
+.footer__item:focus p {
+  color: white;
+}
+
+.footer__item:hover svg,
+.footer__item:active svg,
+.footer__item:focus svg {
+  color: white;
 }
 
 /* === Redes sociales === */
@@ -77,24 +133,65 @@
 }
 
 .footer__social a {
-  color: var(--white);
+  color: var(--primary-color);
   font-size: 1.6rem;
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.footer__social a:hover {
-  color: var(--primary-color-light1);
-  transform: scale(1.2);
+.footer__social svg {
+  width: 30px;
+  height: 30px;
+}
+
+.footer__social a {
+  position: relative;
+  display: inline-block;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer__social a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--primary-color);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.footer__social a:hover::before,
+.footer__social a:active::before,
+.footer__social a:focus::before {
+  width: 50px;
+  height: 50px;
+}
+
+.footer__social a:hover,
+.footer__social a:focus {
+  color: white;
+  transform: translateY(-3px) scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* Efecto más suave para móvil */
+.footer__social a:active {
+  color: white;
+  transform: translateY(-1px) scale(1.05);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
 
 /* === Versión Desktop (≥768px): layout en 3 columnas === */
 @media (min-width: 768px) {
   .footer__container {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: flex-start;
     text-align: left;
-    padding: 2rem 4rem;
+    padding: 1rem 3rem;
   }
 
   .footer__info,
@@ -104,6 +201,15 @@
 
   .footer__social {
     justify-content: flex-start;
+  }
+
+  .footer__social .svg-social{
+    width: 30px;
+    height: 30px
+  }
+
+  .footer__logo img{
+    width: 150px;
   }
 }
 
