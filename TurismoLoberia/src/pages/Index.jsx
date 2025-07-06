@@ -1,7 +1,8 @@
+import React from "react";
 import { Header } from "../components/layout/Header";
 import { Footer } from "../components/layout/Footer";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
-import React from "react";
+import PlaceCard from "../components/cards/PlaceCard";
 
 import {
   MdHotel,
@@ -43,6 +44,18 @@ export const Index = () => {
             <FaInfo />
             <p>Info Útil</p>
           </div>
+        </div>
+      </section>
+      <section className="places">
+        <h2>Descubrí Lobería</h2>
+        <p>Explorá la naturaleza, historia y cultura de Lobería, Arenas Verdes y San Manuel.</p>
+        <div className="places-items">
+        <PlaceCard className="place-card" />
+        <PlaceCard className="place-card" />
+        <PlaceCard className="place-card" />
+        <PlaceCard className="place-card" />
+        <PlaceCard className="place-card" />
+        <PlaceCard className="place-card" />
         </div>
       </section>
       <Footer />

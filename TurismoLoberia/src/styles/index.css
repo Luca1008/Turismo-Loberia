@@ -10,7 +10,7 @@
   }
 
   /*------------------Guía de servicios------------------*/
-  .services{
+  .services, .places{
     margin-left: 15px;
     margin-right: 15px;
     margin-top: 2rem;
@@ -96,6 +96,18 @@
   text-align: center;
 }
 
+/*------------------Places--------------*/
+.places{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.place-card{
+  width: 18rem;
+  margin: 1rem;
+}
+
   
   @media (min-width: 768px){
       
@@ -154,4 +166,16 @@
 }
 .search-bar-custom .btn:hover svg {
   color: #145c32;
+}
+
+/*---------------Places-----------------*/
+.places{
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+.places-items{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
