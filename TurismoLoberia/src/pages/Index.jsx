@@ -1,17 +1,18 @@
 import React from "react";
-import { Header } from "../components/layout/Header";
-import { Footer } from "../components/layout/Footer";
-import { ControlledCarousel } from "../components/layout/ControlledCarousel";
+import eventoImg from "../assets/images/event-card-index/event-card-1.jpg";
+import EventCard from "../components/cards/EventCard";
 import PlaceCard from "../components/cards/PlaceCard";
+import { ControlledCarousel } from "../components/layout/ControlledCarousel";
+import { Footer } from "../components/layout/Footer";
+import { Header } from "../components/layout/Header";
 
+import { FaInfo, FaPaintBrush } from "react-icons/fa";
 import {
   MdHotel,
+  MdMuseum,
   MdOutlineRestaurant,
   MdPlace,
-  MdMuseum,
 } from "react-icons/md";
-import { FaPaintBrush, FaInfo } from "react-icons/fa";
-import { Button } from "react-bootstrap";
 import ViewMoreButton from "../components/common/ViewMoreButton";
 
 export const Index = () => {
@@ -60,6 +61,11 @@ export const Index = () => {
         <PlaceCard className="place-card" />
         </div>
         <ViewMoreButton />
+      </section>
+      <section className="upcoming-events">
+        <h2>Próximos Eventos</h2>
+        <p>No te pierdas todos los eventos que tenemos para vos!!!</p>
+        <EventCard />
       </section>
       <Footer />
     </div>

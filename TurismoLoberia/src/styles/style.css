@@ -49,8 +49,6 @@ h1{
 
 h2{
   font-size: var(--size-h2-mobile);
-  margin-top: 3rem;
-  margin-bottom: 2rem;
 }
 
 h3{
@@ -61,6 +59,16 @@ p{
   font-family: var(--font-base);
   font-size: var(--size-paragraph-mobile);
   color: var(--black-1-Texto);
+}
+
+section h2{
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+section p{
+  text-align: center;
 }
 
 .btn-view-more{
