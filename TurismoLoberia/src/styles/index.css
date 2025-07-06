@@ -8,6 +8,94 @@
     font-size: var(--size-h3-mobile);
     color: var(--white);
   }
+
+  /*------------------Guía de servicios------------------*/
+  .services{
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .services h2{
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .item-services-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .item-services {
+  width: 110px;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, var(--primary-color), #4caf50);
+  border-radius: 16px;
+  color: white;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 4px 6px rgba(0, 0, 0, 0.15),
+    0 10px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  padding: 15px;
+  text-align: center;
+  margin: 0.5rem;
+}
+
+.item-services:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 6px 12px rgba(0, 0, 0, 0.2),
+    0 14px 22px rgba(0, 0, 0, 0.1);
+}
+
+.item-services:active {
+  transform: translateY(1px);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(145deg, #3e8e41, var(--primary-color));
+}
+
+.item-services svg {
+  width: 40px !important;
+  height: 40px !important;
+  display: block;
+  margin: 0 auto 12px auto;
+  color: white;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+  transition: transform 0.2s;
+  overflow: visible;
+}
+
+.item-services:hover svg {
+  transform: scale(1.05);
+}
+
+.item-services p {
+  font-weight: bold;
+  margin: 0;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  font-size: 1.05rem;
+  line-height: 1.15;
+  min-height: 2.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
   
   @media (min-width: 768px){
       
