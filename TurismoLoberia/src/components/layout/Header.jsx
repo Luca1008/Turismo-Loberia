@@ -77,6 +77,11 @@ export const Header = () => {
 
   const [showSearch, setShowSearch] = useState(false);
 
+  const handleSearchToggle = () => {
+    setShowSearch(!showSearch);
+    setOpenItem(null);
+  };
+
   return (
     <>
       <nav className="navbar sticky-top bg-white shadow-sm border-nav navBar primary">
@@ -127,7 +132,7 @@ export const Header = () => {
             </div>
             <FaSearch
               style={{ cursor: "pointer" }}
-              onClick={() => setShowSearch(!showSearch)}
+              onClick={handleSearchToggle}
             />
           </div>
 
@@ -186,7 +191,7 @@ export const Header = () => {
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                onClick={() => setShowSearch(!showSearch)}
+                onClick={handleSearchToggle}
               >
                 <FaSearch />
               </button>
