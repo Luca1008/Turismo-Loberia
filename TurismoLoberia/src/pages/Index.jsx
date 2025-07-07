@@ -1,5 +1,4 @@
 import React from "react";
-import eventoImg from "../assets/images/event-card-index/event-card-1.jpg";
 import EventCard from "../components/cards/EventCard";
 import PlaceCard from "../components/cards/PlaceCard";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
@@ -14,6 +13,7 @@ import {
   MdPlace,
 } from "react-icons/md";
 import ButtonSuccess from "../components/common/ButtonSuccess";
+import '../styles/button.css';
 
 export const Index = () => {
   return (
