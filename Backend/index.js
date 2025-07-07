@@ -10,9 +10,9 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/api/send-email', async (req, res) => {
-  const { name, email, message } = req.body;
+  const { name, email, subject, message } = req.body;
 
-  if (!name || !email || !message) {
+  if (!name || !email || !subject || !message) {
     return res.status(400).json({ error: 'Todos los campos son obligatorios.' });
   }
 
@@ -28,10 +28,10 @@ app.post('/api/send-email', async (req, res) => {
 
     // Opciones del correo
     let mailOptions = {
-      from: `"Turismo Lobería" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER, // Puedes cambiarlo por otro destinatario si quieres
-      subject: 'Nuevo mensaje de contacto',
-      text: `Nombre: ${name}\nEmail: ${email}\nMensaje: ${message}`,
+      from: `<${email}>`,
+      to: process.env.EMAIL_USER,
+      subject: `${subject} - (De: ${name} <${email}>)`,
+      text: `(Mensaje enviado desde la página de turismo de Lobería)\nNombre y Apellido: ${name}\nEmail: ${email}\nAsunto: ${subject} \nMensaje:\n ${message}`,
       replyTo: email,
     };
 
