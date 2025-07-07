@@ -22,7 +22,19 @@
 }
 
 .logoLoberia {
-  width: 140px;
+  width: 120px;
+}
+
+.logoNav {
+  font-size: 20px !important;
+  vertical-align: middle;
+}
+
+.logoNav svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  overflow: visible;
 }
 
 li {
@@ -34,8 +46,12 @@ li {
   border-bottom: 10px solid var(--primary-color);
 }
 
-.border-item-nav {
-  border-right: 2px solid var(--primary-color);
+.vertical-divider {
+  width: 2px;
+  height: 24px;
+  background-color: var(--primary-color);
+  border-radius: 1px;
+  padding: 0%;
 }
 
 .navbar.fixed-top {

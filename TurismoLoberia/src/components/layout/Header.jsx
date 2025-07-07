@@ -7,10 +7,10 @@ import {
   FaBars,
   FaBell,
   FaChevronDown,
+  FaCloudSun,
   FaGlobe,
   FaTimes,
 } from "react-icons/fa";
-import { WiDaySunny } from "react-icons/wi";
 import logoLoberia from "../../assets/icons/logoLoberia.svg";
 import "../../styles/Navbar.css";
 
@@ -20,6 +20,7 @@ export const Header = () => {
 
   const toggleItem = (item) => {
     setOpenItem(openItem === item ? null : item);
+    setShowSearch(false);
   };
 
   const menuData = [
@@ -94,8 +95,6 @@ export const Header = () => {
               className="logoLoberia"
               src={logoLoberia}
               alt="Lobería"
-              width="40"
-              height="40"
             />
           </Link>
 
@@ -122,7 +121,7 @@ export const Header = () => {
               </div>
             ))}
             <strong className="ms-3 d-flex align-items-center gap-1">
-              <WiDaySunny className="primary" size={20} title="Clima" />
+              <FaCloudSun className="primary logoNav" />
               Clima
             </strong>
             <div className="d-flex align-items-center gap-1">
@@ -137,15 +136,17 @@ export const Header = () => {
           </div>
 
           {/* ICONOS Clima e Idioma SOLO en MOBILE */}
-          <div className="d-flex align-items-center gap-3 d-md-none">
+          <div className="d-flex align-items-center gap-2 d-md-none">
             <strong className="border-item-nav d-flex align-items-center gap-1">
-              <WiDaySunny className="primary" size={20} title="Clima" />
+            <FaCloudSun className="primary logoNav" />
             </strong>
+            <div className="vertical-divider"></div>
             <div className="d-flex align-items-center border-item-nav">
               <FaGlobe className="me-1" />
               <span>Español</span>
               <span className="ms-1">▼</span>
             </div>
+            <div className="vertical-divider"></div>
           </div>
 
           {/* HAMBURGUESA SOLO en MOBILE */}
