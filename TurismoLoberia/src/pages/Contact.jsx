@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
+import ButtonSubmit from "../components/common/ButtonSubmit";
 import { Footer } from "../components/layout/Footer";
 import { Header } from "../components/layout/Header";
+import '../styles/contact.css';
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -65,13 +66,13 @@ export const Contact = () => {
   return (
     <div>
       <Header />
-          <h2>Contacto</h2>
+      <section className="contact">
+        <h2>Contacto</h2>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formName">
             <Form.Label>Nombre y Apellido</Form.Label>
             <Form.Control
               type="text"
-              id="name"
               name="name"
               value={formData.name}
               onChange={handleChange}
@@ -84,7 +85,6 @@ export const Contact = () => {
             <Form.Label>Email</Form.Label>
             <Form.Control
               type="email"
-              id="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
@@ -98,7 +98,6 @@ export const Contact = () => {
             <Form.Control
               as="textarea"
               rows={4}
-              id="message"
               name="message"
               value={formData.message}
               onChange={handleChange}
@@ -107,14 +106,11 @@ export const Contact = () => {
             />
           </Form.Group>
 
-          <Button
-            variant="primary"
-            type="submit"
+          <ButtonSubmit
+            text={status === "enviando" ? "Enviando..." : "Enviar"}
             disabled={status === "enviando"}
-            className={status === "enviando" ? "sending" : ""}
-          >
-            {status === "enviando" ? "Enviando..." : "Enviar Mensaje"}
-          </Button>
+            className={`btn-view-more${status === "enviando" ? " sending" : ""}`}
+          />
 
           {status === "exitoso" && (
             <p className="success-message">
@@ -125,6 +121,7 @@ export const Contact = () => {
             <p className="error-message">{errorMessage}</p>
           )}
         </Form>
+      </section>
       <Footer />
     </div>
   );

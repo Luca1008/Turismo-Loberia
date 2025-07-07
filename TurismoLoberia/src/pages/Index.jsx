@@ -13,7 +13,7 @@ import {
   MdOutlineRestaurant,
   MdPlace,
 } from "react-icons/md";
-import ViewMoreButton from "../components/common/ViewMoreButton";
+import ButtonSuccess from "../components/common/ButtonSuccess";
 
 export const Index = () => {
   return (
@@ -60,7 +60,7 @@ export const Index = () => {
         <PlaceCard className="place-card" />
         <PlaceCard className="place-card" />
         </div>
-        <ViewMoreButton />
+        <ButtonSuccess />
       </section>
       <section className="upcoming-events">
         <h2>Próximos Eventos</h2>
