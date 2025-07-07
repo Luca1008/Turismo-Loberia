@@ -5,6 +5,7 @@ import ButtonSubmit from "../components/common/ButtonSubmit";
 import { Footer } from "../components/layout/Footer";
 import { Header } from "../components/layout/Header";
 import "../styles/contact.css";
+import Breadcrumb from "../components/common/Breadcrumb";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -62,6 +63,7 @@ export const Contact = () => {
   return (
     <div>
       <Header />
+      <Breadcrumb />
       <section className="contact">
         <h2>Contactanos</h2>
         <Form onSubmit={handleSubmit} className="form-contact">

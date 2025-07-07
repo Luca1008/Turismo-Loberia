@@ -4,6 +4,7 @@ import PlaceCard from "../components/cards/PlaceCard";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
 import { Footer } from "../components/layout/Footer";
 import { Header } from "../components/layout/Header";
+import Breadcrumb from "../components/common/Breadcrumb";
 
 import { FaInfo, FaPaintBrush } from "react-icons/fa";
 import {
@@ -20,6 +21,7 @@ export const Index = () => {
     <div className="index">
       <Header />
       <ControlledCarousel />
+      <Breadcrumb />
       <section className="services">
         <h2>Guía de Servicios</h2>
         <div className="item-services-container">

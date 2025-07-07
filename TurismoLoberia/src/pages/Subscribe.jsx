@@ -4,6 +4,7 @@ import { FaAsterisk } from "react-icons/fa";
 import ButtonSubmit from "../components/common/ButtonSubmit";
 import { Footer } from "../components/layout/Footer";
 import { Header } from "../components/layout/Header";
+import Breadcrumb from "../components/common/Breadcrumb";
 
 export const Suscribe = () => {
   const [formData, setFormData] = useState({
@@ -43,6 +44,7 @@ export const Suscribe = () => {
   return (
     <div>
       <Header />
+      <Breadcrumb />
       <section className="suscribe">
         <h2>Queremos conocerte</h2>
         <Form className="form-direction">
