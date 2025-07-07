@@ -235,12 +235,12 @@ li {
     z-index: 1202;
   }
 
-  .submenu-desktop a{
+  .submenu-desktop a {
     color: var(--white);
     z-index: 100;
   }
 
-  .submenu-desktop li:hover{
+  .submenu-desktop li:hover {
     background-color: var(--white);
     color: var(--primary-color) !important;
     border-radius: 8px;
