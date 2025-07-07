@@ -6,7 +6,7 @@ import { Clima } from '../pages/Weather';
 import { Contact } from '../pages/Contact';
 import { Index } from '../pages/Index';
 import { Partido } from '../pages/County';
-import { Suscribirse } from '../pages/Subscribe';
+import { Suscribe } from '../pages/Subscribe';
 
 
 export const Routing = () => {
@@ -19,7 +19,7 @@ export const Routing = () => {
         <Route path="/Contacto" element={<Contact />} />
         <Route path="/Partido" element={<Partido />} />
         <Route path="/Buscador" element={<Buscador />} />
-        <Route path="/Suscribirse" element={<Suscribirse />} />
+        <Route path="/Suscribirse" element={<Suscribe />} />
       </Routes>
     </BrowserRouter>
   )
