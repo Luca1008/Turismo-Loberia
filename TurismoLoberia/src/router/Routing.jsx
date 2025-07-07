@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Buscador } from '../pages/Buscador';
-import { Ciudad } from '../pages/Ciudad';
-import { Clima } from '../pages/Clima';
-import { Contacto } from '../pages/Contacto';
+import { Buscador } from '../pages/Searcher';
+import { Ciudad } from '../pages/City';
+import { Clima } from '../pages/Weather';
+import { Contacto } from '../pages/Contact';
 import { Index } from '../pages/Index';
-import { Partido } from '../pages/Partido';
-import { Suscribirse } from '../pages/Suscribirse';
+import { Partido } from '../pages/County';
+import { Suscribirse } from '../pages/Subscribe';
 
 
 export const Routing = () => {
