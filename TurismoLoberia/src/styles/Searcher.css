@@ -1,0 +1,119 @@
+/* Main container */
+.search-main {
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Título */
+.search-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Barra de búsqueda destacada */
+.search-input-group {
+  display: flex;
+  width: 100%;
+  max-width: 720px;
+  border: 2px solid var(--primary-color-dark1);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-input-group input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-input-group button {
+  background-color: var(--primary-color-dark1);
+  color: white;
+  padding: 0 1.2rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-input-group button:hover {
+  background-color: var(--primary-color-dark2);
+}
+
+/* Filtros: vertical en mobile, horizontal en desktop */
+.search-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 720px;
+}
+
+.filter-select {
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--white2);
+}
+
+/* Grid de resultados centrado */
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  justify-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* Paginación centrada */
+.pagination-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+/* Contenedor del pagination */
+.pagination-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow-x: auto; /* Evita desbordamiento */
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .search-filters {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .results-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .pagination .page-link {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .pagination .page-item {
+    flex-shrink: 0; /* Evita que se aplasten demasiado */
+  }
+
+  .pagination-container {
+    padding: 0 1rem;
+  }
+}
