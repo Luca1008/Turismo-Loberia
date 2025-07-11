@@ -1,7 +1,8 @@
 import React from "react";
 import { Header } from "../components/layout/Header";
 import { Footer } from "../components/layout/Footer";
-import WheatherCard from "../components/cards/WheatherCard";
+import WeatherCard from "../components/cards/WeatherCard";
+import WeatherCarousel from "../components/layout/WeatherCarousel";
 
 export const Clima = () => {
   return (
@@ -16,9 +17,10 @@ export const Clima = () => {
           marginTop: 40,
         }}
       >
-        <WheatherCard ciudad="Loberia" />
-        <WheatherCard ciudad="San Manuel" />
-        <WheatherCard ciudad="Arenas Verdes" lat={-38.5457} lon={-58.5567} />
+        <WeatherCarousel compact/>
+        <WeatherCard ciudad="Lobería" />
+        <WeatherCard ciudad="San Manuel" />
+        <WeatherCard ciudad="Arenas Verdes" lat={-38.8083} lon={-58.6036} />
       </div>
       <Footer />
     </div>
