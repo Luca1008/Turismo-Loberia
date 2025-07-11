@@ -19,6 +19,7 @@ const db = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
+  search_path: ['turismo_prueba', 'public'],
 });
 
 
@@ -68,17 +69,17 @@ app.get('/api/cards', async (req, res) => {
   const { city, category } = req.query;
 
   try {
-    let query = 'SELECT * FROM Card';
+    let query = 'SELECT * FROM turismo_prueba."card"';
     const params = [];
 
     if (city) {
       params.push(city);
-      query += ` WHERE "CardCity" = $${params.length}`;
+      query += ` WHERE "card_city" = $${params.length}`;
     }
 
     if (category) {
       params.push(category);
-      query += params.length === 1 ? ` WHERE "CardCategory" = $${params.length}` : ` AND "CardCategory" = $${params.length}`;
+      query += params.length === 1 ? ` WHERE "card_category" = $${params.length}` : ` AND "card_category" = $${params.length}`;
     }
 
     const result = await db.query(query, params);
@@ -93,7 +94,7 @@ app.get('/api/cards', async (req, res) => {
 app.get('/api/cards/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await db.query('SELECT * FROM Card WHERE "ID" = $1', [id]);
+    const result = await db.query('SELECT * FROM turismo_prueba."card" WHERE "id" = $1', [id]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Card no encontrada.' });
     }
@@ -104,44 +105,88 @@ app.get('/api/cards/:id', async (req, res) => {
   }
 });
 
-// POST /api/cards → Agregar una nueva card
+// ==== POST crear una nueva card ====
 app.post('/api/cards', async (req, res) => {
   const {
-    CardTitle,
-    CardDescription,
-    CardUbicacion,
-    CardLinkUbic,
-    CardHorario,
-    CardContacto,
-    CardInfo,
-    CardCity,
-    CardCategory,
+    card_title,
+    card_description,
+    card_ubicacion,
+    card_link_ubicacion,
+    card_horario,
+    card_contacto,
+    card_info,
+    card_city,
+    card_category,
   } = req.body;
 
   try {
     const result = await db.query(
-      `INSERT INTO Card (
-        "CardTitle", "CardDescription", "CardUbicacion", "CardLinkUbic", 
-        "CardHorario", "CardContacto", "CardInfo", "CardCity", "CardCategory"
+      `INSERT INTO turismo_prueba."card" (
+        "card_title", "card_description", "card_ubicacion", "card_link_ubicacion", 
+        "card_horario", "card_contacto", "card_info", "card_city", "card_category"
       ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
       [
-        CardTitle,
-        CardDescription,
-        CardUbicacion,
-        CardLinkUbic,
-        CardHorario,
-        CardContacto,
-        CardInfo,
-        CardCity,
-        CardCategory
+        card_title,
+        card_description,
+        card_ubicacion,
+        card_link_ubicacion,
+        card_horario,
+        card_contacto,
+        card_info,
+        card_city,
+        card_category
       ]
     );
     res.status(201).json({ message: 'Card creada', card: result.rows[0] });
   } catch (error) {
-    console.error('❌ Error al insertar card:', error);
+    console.error('❌ Error al insertar card:', error.message);
     res.status(500).json({ error: 'Error al insertar la card.' });
   }
 });
+
+// ==== DELETE una card por ID ====
+app.delete('/api/cards/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await db.query(
+      'DELETE FROM turismo_prueba."card" WHERE "id" = $1 RETURNING *',
+      [id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Card no encontrada para eliminar.' });
+    }
+
+    res.json({ message: 'Card eliminada exitosamente', card: result.rows[0] });
+  } catch (error) {
+    console.error('❌ Error al eliminar la card:', error.message);
+    res.status(500).json({ error: 'Error al eliminar la card.' });
+  }
+});
+
+// ==== DELETE una card por ID ====
+app.delete('/api/cards/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await db.query(
+      'DELETE FROM turismo_prueba."card" WHERE "id" = $1 RETURNING *',
+      [id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Card no encontrada para eliminar.' });
+    }
+
+    res.json({ message: 'Card eliminada exitosamente', card: result.rows[0] });
+  } catch (error) {
+    console.error('❌ Error al eliminar la card:', error.message);
+    res.status(500).json({ error: 'Error al eliminar la card.' });
+  }
+});
+
+
 
 // ==== Servidor iniciado ====
 app.listen(PORT, () => {
