@@ -4,9 +4,11 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const { Pool } = require('pg');
+const axios = require("axios");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const API_KEY = process.env.OPENWEATHER_API_KEY;
 
 // ==== Middlewares ====
 app.use(cors());
@@ -96,6 +98,87 @@ app.get('/api/cards/:id', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor.' });
   }
 });
+
+// ==== Wheather ====
+app.get("/api/forecast", async (req, res) => {
+  const { city } = req.query;
+  const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},AR&units=metric&lang=es&appid=${API_KEY}`;
+  try {
+    const response = await axios.get(url);
+    const hoy = new Date().getDate();
+    const dias = {};
+
+    for (const item of response.data.list) {
+      const fecha = new Date(item.dt_txt);
+      const dia = fecha.getDate();
+      if (dia === hoy) continue;
+
+      if (!dias[dia]) {
+        dias[dia] = {
+          dt: item.dt,
+          tempMax: item.main.temp_max,
+          tempMin: item.main.temp_min,
+          icon: item.weather[0].icon,
+          descripcion: item.weather[0].description,
+          icon12: null,
+          desc12: null,
+          dt12: null,
+        };
+      } else {
+        dias[dia].tempMax = Math.max(dias[dia].tempMax, item.main.temp_max);
+        dias[dia].tempMin = Math.min(dias[dia].tempMin, item.main.temp_min);
+      }
+
+      // Guardar icono y descripción de las 12:00 si existe
+      if (fecha.getHours() === 12) {
+        dias[dia].icon12 = item.weather[0].icon;
+        dias[dia].desc12 = item.weather[0].description;
+        dias[dia].dt12 = item.dt;
+      }
+    }
+
+    // Convertir a array y tomar solo los primeros 5 días
+    const diasUnicos = Object.values(dias)
+      .map(d => ({
+        dt: d.dt12 || d.dt,
+        tempMax: d.tempMax,
+        tempMin: d.tempMin,
+        icon: d.icon12 || d.icon,
+        descripcion: d.desc12 || d.descripcion,
+      }))
+      .slice(0, 5);
+
+    res.json(diasUnicos);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener el pronóstico" });
+  }
+});
+
+app.get("/api/weather", async (req, res) => {
+  const { city, lat, lon } = req.query;
+  let url;
+  if (lat && lon) {
+    url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${API_KEY}`;
+  } else if (city) {
+    url = `https://api.openweathermap.org/data/2.5/weather?q=${city},AR&units=metric&lang=es&appid=${API_KEY}`;
+  } else {
+    return res.status(400).json({ error: "Faltan parámetros" });
+  }
+  try {
+    const response = await axios.get(url);
+    const data = response.data;
+    res.json({
+      ciudad: data.name,
+      temp: data.main.temp,
+      descripcion: data.weather[0].description,
+      icon: data.weather[0].icon,
+      dt: data.dt,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener el clima actual" });
+  }
+});
+
 
 // ==== Servidor iniciado ====
 app.listen(PORT, () => {
