@@ -21,6 +21,13 @@ const db = new Pool({
   database: process.env.DB_NAME,
 });
 
+
+// ==== Verificación de conexión a la base de datos ====
+db.connect()
+  .then(() => console.log('✅ Conexión a PostgreSQL exitosa'))
+  .catch(err => console.error('❌ Error al conectar a PostgreSQL:', err));
+
+
 // ==== Rutas: Envío de correos ====
 app.post('/api/send-email', async (req, res) => {
   const { name, email, subject, message } = req.body;
@@ -94,6 +101,45 @@ app.get('/api/cards/:id', async (req, res) => {
   } catch (error) {
     console.error('Error al obtener la card:', error);
     res.status(500).json({ error: 'Error interno del servidor.' });
+  }
+});
+
+// POST /api/cards → Agregar una nueva card
+app.post('/api/cards', async (req, res) => {
+  const {
+    CardTitle,
+    CardDescription,
+    CardUbicacion,
+    CardLinkUbic,
+    CardHorario,
+    CardContacto,
+    CardInfo,
+    CardCity,
+    CardCategory,
+  } = req.body;
+
+  try {
+    const result = await db.query(
+      `INSERT INTO Card (
+        "CardTitle", "CardDescription", "CardUbicacion", "CardLinkUbic", 
+        "CardHorario", "CardContacto", "CardInfo", "CardCity", "CardCategory"
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
+      [
+        CardTitle,
+        CardDescription,
+        CardUbicacion,
+        CardLinkUbic,
+        CardHorario,
+        CardContacto,
+        CardInfo,
+        CardCity,
+        CardCategory
+      ]
+    );
+    res.status(201).json({ message: 'Card creada', card: result.rows[0] });
+  } catch (error) {
+    console.error('❌ Error al insertar card:', error);
+    res.status(500).json({ error: 'Error al insertar la card.' });
   }
 });
 
