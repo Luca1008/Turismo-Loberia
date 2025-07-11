@@ -21,7 +21,15 @@ const db = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
+  search_path: ['turismo_prueba', 'public'],
 });
+
+
+// ==== Verificación de conexión a la base de datos ====
+db.connect()
+  .then(() => console.log('✅ Conexión a PostgreSQL exitosa'))
+  .catch(err => console.error('❌ Error al conectar a PostgreSQL:', err));
+
 
 // ==== Rutas: Envío de correos ====
 app.post('/api/send-email', async (req, res) => {
@@ -63,17 +71,17 @@ app.get('/api/cards', async (req, res) => {
   const { city, category } = req.query;
 
   try {
-    let query = 'SELECT * FROM Card';
+    let query = 'SELECT * FROM turismo_prueba."card"';
     const params = [];
 
     if (city) {
       params.push(city);
-      query += ` WHERE "CardCity" = $${params.length}`;
+      query += ` WHERE "card_city" = $${params.length}`;
     }
 
     if (category) {
       params.push(category);
-      query += params.length === 1 ? ` WHERE "CardCategory" = $${params.length}` : ` AND "CardCategory" = $${params.length}`;
+      query += params.length === 1 ? ` WHERE "card_category" = $${params.length}` : ` AND "card_category" = $${params.length}`;
     }
 
     const result = await db.query(query, params);
@@ -88,7 +96,7 @@ app.get('/api/cards', async (req, res) => {
 app.get('/api/cards/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await db.query('SELECT * FROM Card WHERE "ID" = $1', [id]);
+    const result = await db.query('SELECT * FROM turismo_prueba."card" WHERE "id" = $1', [id]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Card no encontrada.' });
     }
