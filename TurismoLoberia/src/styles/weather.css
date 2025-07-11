@@ -1,0 +1,217 @@
+.card-weather {
+  background: var(--white-1-background);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 340px;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.h2-weather {
+  font-weight: bold;
+  text-align: center;
+  font-size: 2.2rem;
+}
+
+.date-weather {
+  text-align: center;
+  color: var(--black-2);
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.container-weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.actually-weather {
+  font-weight: bold;
+  font-size: 3rem;
+  margin-top: 8px;
+}
+
+.description-weather {
+  font-size: 1rem;
+  text-transform: capitalize;
+  font-weight: bold;
+  color: var(--black-2);
+}
+
+.five-day-weather {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.name-weather {
+  font-weight: bolder;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.temp-max-weather {
+  font-size: 1rem;
+  margin-top: 2px;
+}
+
+.temp-min-weather {
+  font-size: 0.9rem;
+  color: var(--black-2);
+}
+
+.icon-weather {
+  font-size: 30px;
+  color: var(--primary-color);
+}
+
+.icon-weather:hover {
+  color: var(--primary-color-dark);
+}
+
+.icono-sol {
+  color: #ffc107; /* Amarillo suave */
+}
+
+.icono-luna {
+  color: #aab7b8; /* Gris claro frío */
+}
+
+.icono-nube {
+  color: #90caf9; /* Azul pastel */
+}
+
+.icono-nube-noche {
+  color: #5c6bc0; /* Azul noche suave */
+}
+
+.icono-lluvia {
+  color: #64b5f6; /* Azul intermedio */
+}
+
+.icono-lluvia-noche {
+  color: #3f51b5; /* Azul profundo pero no oscuro */
+}
+
+.icono-tormenta {
+  color: #ffa726; /* Naranja cálido */
+}
+
+.icono-tormenta-noche {
+  color: #fb8c00; /* Naranja más oscuro pero armónico */
+}
+
+.icono-nieve {
+  color: #b3e5fc; /* Celeste muy claro */
+}
+
+.icono-nieve-noche {
+  color: #81d4fa; /* Celeste intermedio */
+}
+
+.icono-niebla {
+  color: #b0bec5; /* Gris azulado suave */
+}
+
+.icono-niebla-noche {
+  color: #78909c; /* Gris más profundo */
+}
+
+/*---------------Version compacta------------------*/
+
+.weather-card-compact {
+  width: 150px;
+  min-height: 120px;
+  padding: 18px 14px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(30, 60, 90, 0.18), 0 1.5px 6px rgba(30, 60, 90, 0.10);
+  border: 1.5px solid #e0e7ef;
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+}
+
+.weather-card-compact:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 16px 40px rgba(30, 60, 90, 0.22), 0 2px 8px rgba(30, 60, 90, 0.13);
+}
+
+.compact-city {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--primary-color);
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 0 #fff, 0 0.5px 1.5px #b2b2b2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.compact-icon {
+  margin: 8px 0 6px 0;
+  font-size: 2.1rem;
+  filter: drop-shadow(0 1px 2px #b2b2b2);
+}
+
+.compact-temp {
+  font-size: 2.1rem;
+  font-weight: bold;
+  color: var(--primary-color-dark);
+  margin: 2px 0 4px 0;
+  text-shadow: 0 1px 0 #fff, 0 0.5px 1.5px #b2b2b2;
+}
+
+.compact-desc {
+  font-size: 0.92rem;
+  color: var(--black-texto-1);
+  margin-top: 6px;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  text-shadow: 0 1px 0 #fff;
+}
+
+/* Widget-style floating effect */
+.weather-card-compact::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: -16px;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 8px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e0e7ef 0%, #b2d8c5 100%);
+  opacity: 0.45;
+  filter: blur(1.5px);
+  z-index: 0;
+}
+
+.weather-carousel{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 768px){
+  .weather-carousel{
+    position: absolute;
+    top: 100%;
+    right: 20px;
+  }
+}

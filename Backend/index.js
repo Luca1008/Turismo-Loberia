@@ -101,8 +101,21 @@ app.get('/api/cards/:id', async (req, res) => {
 
 // ==== Wheather ====
 app.get("/api/forecast", async (req, res) => {
-  const { city } = req.query;
-  const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},AR&units=metric&lang=es&appid=${API_KEY}`;
+  let { city, lat, lon } = req.query;
+
+  // Redirección: si la ciudad es Arenas Verdes, usar Forest
+  if (city && city.trim().toLowerCase() === "arenas verdes") {
+    city = "Forest";
+  }
+
+  let url;
+  if (lat && lon) {
+    url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${API_KEY}`;
+  } else if (city) {
+    url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},AR&units=metric&lang=es&appid=${API_KEY}`;
+  } else {
+    return res.status(400).json({ error: "Faltan parámetros" });
+  }
   try {
     const response = await axios.get(url);
     const hoy = new Date().getDate();

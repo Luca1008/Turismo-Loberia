@@ -15,6 +15,7 @@ import {
 } from "react-icons/md";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import '../styles/button.css';
+import WeatherCarousel from "../components/layout/WeatherCarousel";
 
 export const Index = () => {
   return (
@@ -51,6 +52,7 @@ export const Index = () => {
           </div>
         </div>
       </section>
+      <WeatherCarousel />
       <section className="places">
         <h2>Descubrí Lobería</h2>
         <p>Explorá la naturaleza, historia y cultura de Lobería, Arenas Verdes y San Manuel.</p>
