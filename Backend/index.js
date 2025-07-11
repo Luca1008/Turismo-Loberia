@@ -4,9 +4,11 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const { Pool } = require('pg');
+const axios = require("axios");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const API_KEY = process.env.OPENWEATHER_API_KEY;
 
 // ==== Middlewares ====
 app.use(cors());
@@ -104,89 +106,6 @@ app.get('/api/cards/:id', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor.' });
   }
 });
-
-// ==== POST crear una nueva card ====
-app.post('/api/cards', async (req, res) => {
-  const {
-    card_title,
-    card_description,
-    card_ubicacion,
-    card_link_ubicacion,
-    card_horario,
-    card_contacto,
-    card_info,
-    card_city,
-    card_category,
-  } = req.body;
-
-  try {
-    const result = await db.query(
-      `INSERT INTO turismo_prueba."card" (
-        "card_title", "card_description", "card_ubicacion", "card_link_ubicacion", 
-        "card_horario", "card_contacto", "card_info", "card_city", "card_category"
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
-      [
-        card_title,
-        card_description,
-        card_ubicacion,
-        card_link_ubicacion,
-        card_horario,
-        card_contacto,
-        card_info,
-        card_city,
-        card_category
-      ]
-    );
-    res.status(201).json({ message: 'Card creada', card: result.rows[0] });
-  } catch (error) {
-    console.error('❌ Error al insertar card:', error.message);
-    res.status(500).json({ error: 'Error al insertar la card.' });
-  }
-});
-
-// ==== DELETE una card por ID ====
-app.delete('/api/cards/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const result = await db.query(
-      'DELETE FROM turismo_prueba."card" WHERE "id" = $1 RETURNING *',
-      [id]
-    );
-
-    if (result.rowCount === 0) {
-      return res.status(404).json({ error: 'Card no encontrada para eliminar.' });
-    }
-
-    res.json({ message: 'Card eliminada exitosamente', card: result.rows[0] });
-  } catch (error) {
-    console.error('❌ Error al eliminar la card:', error.message);
-    res.status(500).json({ error: 'Error al eliminar la card.' });
-  }
-});
-
-// ==== DELETE una card por ID ====
-app.delete('/api/cards/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const result = await db.query(
-      'DELETE FROM turismo_prueba."card" WHERE "id" = $1 RETURNING *',
-      [id]
-    );
-
-    if (result.rowCount === 0) {
-      return res.status(404).json({ error: 'Card no encontrada para eliminar.' });
-    }
-
-    res.json({ message: 'Card eliminada exitosamente', card: result.rows[0] });
-  } catch (error) {
-    console.error('❌ Error al eliminar la card:', error.message);
-    res.status(500).json({ error: 'Error al eliminar la card.' });
-  }
-});
-
-
 
 // ==== Servidor iniciado ====
 app.listen(PORT, () => {
