@@ -92,6 +92,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Excepción para elementos que no deben tener cursor pointer */
+.footer__item--no-pointer {
+  cursor: default;
+}
+
 .footer__item:hover,
 .footer__item:focus {
   transform: translateY(-2px);
