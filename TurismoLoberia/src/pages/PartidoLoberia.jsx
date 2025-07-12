@@ -1,28 +1,29 @@
 import React from "react";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import "../styles/city.css";
+import { FaCar, FaBus, FaTrain } from "react-icons/fa";
 
-export const Partido = () => {
+const PartidoLoberia = () => {
   return (
     <div className="city">
       <h1 id="informacion-general">Partido de Lobería</h1>
       <div className="portada-city"></div>
       <section className="information">
         <p>
-          El Partido de Lobería es una hermosa región ubicada en la provincia de Buenos Aires, Argentina.
+          Lobería es un destino ubicado en el sudeste de la Provincia de Buenos Aires, Argentina.
         </p>
         <p>
-          Conocido por su rica historia, paisajes naturales y tradiciones culturales, Lobería ofrece una experiencia única a sus visitantes.
+          Rodeado de paisajes naturales, historia y tradiciones, el Partido de Lobería invita a descubrir sus pueblos, su costa atlántica y la calidez de su gente.
         </p>
         <p>
           Desde sus playas tranquilas hasta sus campos fértiles, el Partido de Lobería es un destino ideal para aquellos que buscan disfrutar de la naturaleza y la hospitalidad local.
         </p>
       </section>
-      <section className="historia" id="historia">
+      <section className="history" id="historia">
         <h2>Historia</h2>
         <div className="photo"></div>
         <p>
-          El Partido de Lobería tiene una rica historia que se remonta a los primeros asentamientos indígenas en la región.
+          Fundada oficialmente en 1891, Lobería tiene raíces que se remontan al siglo XIX con las estancias rurales y las primeras familias pioneras.
         </p>
         <p>
           Su nombre proviene de la abundancia de lobos marinos que habitaban las costas del Atlántico Sur.
@@ -35,20 +36,20 @@ export const Partido = () => {
         </p>
         <ButtonSuccess />
       </section>
-      <section className="naturaleza" id="naturaleza">
+      <section className="nature" id="naturaleza">
         <h2>Naturaleza</h2>
         <div className="photo"></div>
         <p>
-          El Partido de Lobería cuenta con una diversidad natural excepcional que incluye playas vírgenes, sierras bajas y campos fértiles.
+          Lobería cuenta con un entorno natural privilegiado: playas agrestes, sierras bajas, arroyos y reservas ecológicas.
+        </p>
+        <p>
+          Es ideal para el ecoturismo, la observación de aves y actividades al aire libre.
         </p>
         <p>
           Sus costas albergan una rica biodiversidad marina, incluyendo aves costeras, lobos marinos y diversas especies de peces.
         </p>
         <p>
           En el interior, los campos ofrecen paisajes serranos ideales para el ecoturismo, la observación de aves y actividades al aire libre.
-        </p>
-        <p>
-          La región cuenta con varias reservas naturales y áreas protegidas que preservan su patrimonio ecológico.
         </p>
         <ButtonSuccess />
       </section>
@@ -69,11 +70,11 @@ export const Partido = () => {
         </p>
         <ButtonSuccess />
       </section>
-      <section className="como-llegar" id="como-llegar">
+      <section className="go-to" id="como-llegar">
         <h2>Cómo Llegar</h2>
         <div className="photo"></div>
         <p>
-          <strong>En auto desde Buenos Aires:</strong> Tomar la Autopista Buenos Aires-La Plata y luego la Ruta Provincial 2 hacia Mar del Plata.
+          <strong><FaCar />En auto desde Buenos Aires:</strong> Tomar la Autopista Buenos Aires-La Plata y luego la Ruta Provincial 2 hacia Mar del Plata.
         </p>
         <p>
           Continuar por la Ruta 88 hacia Necochea y tomar el desvío hacia Lobería por la Ruta Provincial 227.
@@ -82,10 +83,10 @@ export const Partido = () => {
           <strong>Distancia desde Buenos Aires:</strong> Aproximadamente 470 km. <strong>Tiempo estimado:</strong> 5-6 horas en auto.
         </p>
         <p>
-          <strong>En colectivo:</strong> Varias empresas de transporte interurbano conectan Buenos Aires con Lobería, incluyendo Rápido del Sud y Costera Criolla.
+          <strong><FaBus />En colectivo:</strong> Varias empresas de transporte interurbano conectan Buenos Aires con Lobería, incluyendo Rápido del Sud y Costera Criolla.
         </p>
         <p>
-          <strong>En tren:</strong> El servicio ferroviario conecta Tandil con Lobería, aunque los horarios pueden variar según la temporada.
+          <strong><FaTrain />En tren:</strong> El servicio ferroviario conecta Tandil con Lobería, aunque los horarios pueden variar según la temporada.
         </p>
       </section>
       <section className="descargas" id="descargas">
@@ -98,4 +99,4 @@ export const Partido = () => {
   );
 };
 
-export default Partido;
+export default PartidoLoberia;

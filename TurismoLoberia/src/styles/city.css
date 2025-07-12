@@ -38,6 +38,11 @@
   text-align: center;
 }
 
+.city svg{
+  color: var(--primary-color);
+  margin-right: 8px;
+}
+
 @media (min-width: 768px) {
 
   .portada-city {
@@ -46,5 +51,9 @@
 
   .photo {
     height: 400px;
+  }
+
+  .city svg{
+    font-size: 30px;
   }
 }

@@ -1,11 +1,14 @@
 import React from "react";
-import "../styles/city.css";
 import ButtonSuccess from "../components/common/ButtonSuccess";
+import "../styles/city.css";
+import { FaCar } from "react-icons/fa";
+
 
 const ArenasVerdes = () => {
+
   return (
     <div className="city">
-      <h1>Arenas Verdes</h1>
+      <h1  id="informacion-general">Arenas Verdes</h1>
       <div className="portada-city"></div>
       <section className="information">
         <p>
@@ -19,7 +22,7 @@ const ArenasVerdes = () => {
           temporada alta, gracias al turismo nacional.
         </p>
       </section>
-      <section className="go-to">
+      <section className="go-to" id="como-llegar">
         <h2>Cómo Llegar</h2>
         <p>
           <strong>En autobús:</strong> Se puede llegar en colectivo hasta las
@@ -32,7 +35,7 @@ const ArenasVerdes = () => {
           Costera Criolla y Via TAC, entre otras.
         </p>
         <p>
-          <strong>En auto desde la ciudad de Buenos Aires:</strong> Tomar
+          <strong><FaCar />En auto desde la ciudad de Buenos Aires:</strong> Tomar
           Autopista Buenos Aires-La Plata y luego la Ruta Provincial 2 hacia Mar
           del Plata. En Mar del Plata, continuar por la Ruta 88 hacia Necochea.
         </p>
@@ -50,7 +53,7 @@ const ArenasVerdes = () => {
         </p>
         <div className="photo"></div>
       </section>
-      <section className="accommodation">
+      <section className="accommodation" id="alojamientos">
         <h2>Alojamientos</h2>
         <div className="photo"></div>
         <p>
@@ -62,7 +65,7 @@ const ArenasVerdes = () => {
           natural del lugar. Se recomienda reservar con anticipación en
           temporada alta.
         </p>
-        <h3>Base de campamento</h3>
+        <h3 id="base-de-campamentos">Base de campamento</h3>
         <p>
           Arenas Verdes cuenta con zonas designadas para acampar, tanto en áreas
           privadas como en espacios públicos autorizados.
@@ -73,7 +76,7 @@ const ArenasVerdes = () => {
         </p>
         <ButtonSuccess />
       </section>
-      <section className="gastronomy">
+      <section className="gastronomy" id="gastronomia">
         <h2>Gastronomía</h2>
         <div className="photo"></div>
         <p>
@@ -87,7 +90,7 @@ const ArenasVerdes = () => {
         </p>
         <ButtonSuccess />
       </section>
-      <section className="transport">
+      <section className="transport" id="transporte">
         <h2>Transporte</h2>
         <div className="photo"></div>
         <p>
@@ -104,7 +107,7 @@ const ArenasVerdes = () => {
           a 13 hs.
         </p>
       </section>
-      <section className="agenda">
+      <section className="agenda" id="agenda">
         <h2>Agenda</h2>
         <div className="photo"></div>
         <p>
@@ -118,7 +121,7 @@ const ArenasVerdes = () => {
         </p>
         <ButtonSuccess />
       </section>
-      <section className="event">
+      <section className="event" id="que-hacer">
         <h2>¿Qué hacer?</h2>
         <p>Disfrutar de la playa y los médanos.</p>
         <p>Recorrer senderos en bicicleta o a pie.</p>
@@ -127,7 +130,7 @@ const ArenasVerdes = () => {
         <p>Practicar pesca deportiva.</p>
         <p>Asistir a actividades culturales y ferias locales.</p>
       </section>
-      <section className="download">
+      <section className="download" id="descargas">
         <h2>Descargas</h2>
         <p>
           Puedes descargar material útil para tu visita como: Mapa turístico,

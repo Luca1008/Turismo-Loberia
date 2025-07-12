@@ -75,6 +75,32 @@ export const Header = () => {
       ],
     },
   ];
+  
+  // Función para convertir subitem en un hash amigable
+  const toHash = (text) => {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // elimina tildes
+      .replace(/\s+/g, "-"); // reemplaza espacios por guiones
+  };
+
+  // Función para obtener la ruta según el label y subitem
+  const getSubitemRoute = (label, sub) => {
+    const hash = toHash(sub);
+    switch (label) {
+      case "Partido de Lobería":
+        return `/PartidoLoberia#${hash}`;
+      case "Ciudad de Lobería":
+        return `/Loberia#${hash}`;
+      case "San Manuel":
+        return `/SanManuel#${hash}`;
+      case "Arenas Verdes":
+        return `/ArenasVerdes#${hash}`;
+      default:
+        return "/";
+    }
+  };
 
   const [showSearch, setShowSearch] = useState(false);
 
@@ -91,11 +117,7 @@ export const Header = () => {
             to="/"
             className="navbar-brand d-flex align-items-center gap-2 m-0"
           >
-            <img
-              className="logoLoberia"
-              src={logoLoberia}
-              alt="Lobería"
-            />
+            <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
           </Link>
 
           {/* DESKTOP NAV */}
@@ -108,12 +130,23 @@ export const Header = () => {
                 style={{ cursor: "pointer" }}
               >
                 <strong>{label}</strong>
-                <FaChevronDown className={`primary transition-arrow${openItem === label ? ' rotate' : ''}`} size={12} />
+                <FaChevronDown
+                  className={`primary transition-arrow${
+                    openItem === label ? " rotate" : ""
+                  }`}
+                  size={12}
+                />
                 {openItem === label && subitems && subitems.length > 0 && (
                   <ul className="submenu-desktop position-absolute shadow p-2 mt-2">
                     {subitems.map((sub, i) => (
                       <li key={i} className="py-1 px-2 nav-subitem">
-                        <a href="#" className="text-decoration-none">{sub}</a>
+                        <Link
+                          to={getSubitemRoute(label, sub)}
+                          className="text-decoration-none"
+                          onClick={() => setShowMenu(false)}
+                        >
+                          {sub}
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -138,7 +171,7 @@ export const Header = () => {
           {/* ICONOS Clima e Idioma SOLO en MOBILE */}
           <div className="d-flex align-items-center gap-2 d-md-none">
             <strong className="border-item-nav d-flex align-items-center gap-1">
-            <FaCloudSun className="primary logoNav" />
+              <FaCloudSun className="primary logoNav" />
             </strong>
             <div className="vertical-divider"></div>
             <div className="d-flex align-items-center border-item-nav">
@@ -173,7 +206,7 @@ export const Header = () => {
               placeholder="Buscar…"
             />
             <button className="btn btn-white">
-              <FaSearch className="desktop-search-icon"/>
+              <FaSearch className="desktop-search-icon" />
             </button>
           </div>
         </div>
@@ -220,7 +253,12 @@ export const Header = () => {
                   <ul className="submenu mt-2">
                     {subitems.map((sub, i) => (
                       <li key={i}>
-                        <a href="#">{sub}</a>
+                        <Link
+                          to={getSubitemRoute(label, sub)}
+                          onClick={() => setShowMenu(false)}
+                        >
+                          {sub}
+                        </Link>
                       </li>
                     ))}
                   </ul>
