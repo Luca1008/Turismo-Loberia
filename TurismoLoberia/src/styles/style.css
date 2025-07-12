@@ -69,8 +69,6 @@ section{
   margin-bottom: 3rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 section h2{
@@ -79,9 +77,6 @@ section h2{
   text-align: center;
 }
 
-section p{
-  text-align: center;
-}
 
 
 /* Mobile first */

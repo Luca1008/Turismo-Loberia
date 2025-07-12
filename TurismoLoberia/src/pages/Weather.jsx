@@ -14,7 +14,6 @@ export const Clima = () => {
           marginTop: 40,
         }}
       >
-        <WeatherCarousel compact/>
         <WeatherCard ciudad="Lobería" />
         <WeatherCard ciudad="San Manuel" />
         <WeatherCard ciudad="Arenas Verdes" lat={-38.8083} lon={-58.6036} />
