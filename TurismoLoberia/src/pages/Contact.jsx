@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { FaAsterisk } from "react-icons/fa";
-import ButtonSubmit from "../components/common/ButtonSubmit";
-import { Footer } from "../components/layout/Footer";
-import { Header } from "../components/layout/Header";
-import "../styles/contact.css";
 import Breadcrumb from "../components/common/Breadcrumb";
+import ButtonSubmit from "../components/common/ButtonSubmit";
+import "../styles/contact.css";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -62,7 +60,6 @@ export const Contact = () => {
   };
   return (
     <div>
-      <Header />
       <Breadcrumb />
       <section className="contact">
         <h2>Contactanos</h2>
@@ -143,7 +140,6 @@ export const Contact = () => {
           )}
         </Form>
       </section>
-      <Footer />
     </div>
   );
 };

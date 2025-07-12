@@ -1,26 +1,23 @@
 import React from "react";
 import EventCard from "../components/cards/EventCard";
 import PlaceCard from "../components/cards/PlaceCard";
-import { ControlledCarousel } from "../components/layout/ControlledCarousel";
-import { Footer } from "../components/layout/Footer";
-import { Header } from "../components/layout/Header";
 import Breadcrumb from "../components/common/Breadcrumb";
+import { ControlledCarousel } from "../components/layout/ControlledCarousel";
 
 import { FaInfo, FaPaintBrush } from "react-icons/fa";
 import {
-  MdHotel,
-  MdMuseum,
-  MdOutlineRestaurant,
-  MdPlace,
+    MdHotel,
+    MdMuseum,
+    MdOutlineRestaurant,
+    MdPlace,
 } from "react-icons/md";
 import ButtonSuccess from "../components/common/ButtonSuccess";
-import '../styles/button.css';
 import WeatherCarousel from "../components/layout/WeatherCarousel";
+import '../styles/button.css';
 
 export const Index = () => {
   return (
     <div className="index">
-      <Header />
       <ControlledCarousel />
       <Breadcrumb />
       <section className="services">
@@ -71,7 +68,6 @@ export const Index = () => {
         <p>No te pierdas todos los eventos que tenemos para vos!!!</p>
         <EventCard />
       </section>
-      <Footer />
     </div>
   );
 };

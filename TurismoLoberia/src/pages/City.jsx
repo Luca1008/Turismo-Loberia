@@ -1,6 +1,4 @@
 import React from "react";
-import { Header } from "../components/layout/Header";
-import { Footer } from "../components/layout/Footer";
 import { useParams } from "react-router-dom";
 
 export const Ciudad = () => {
@@ -8,7 +6,6 @@ export const Ciudad = () => {
 
   return (
     <div>
-      <Header />
       <div className="ciudad">
         <h1>{nombreCiudad}</h1>
         <p>¡Bienvenido a la Ciudad de Lobería!</p>
@@ -25,7 +22,6 @@ export const Ciudad = () => {
           interés y actividades en nuestra ciudad.
         </p>
       </div>
-      <Footer />
     </div>
   );
 };
