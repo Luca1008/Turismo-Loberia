@@ -83,6 +83,11 @@ li {
   color: white;
 }
 
+a{
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
 .menu-item .arrow {
   transition: transform 0.3s ease;
 }

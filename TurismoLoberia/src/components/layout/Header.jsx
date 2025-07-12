@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -17,9 +17,34 @@ import "../../styles/Navbar.css";
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [openItem, setOpenItem] = useState(null);
+  const [showLanguage, setShowLanguage] = useState(false);
+  const navRef = useRef(null);
+
+  // Cerrar submenús cuando se hace clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setOpenItem(null);
+        setShowLanguage(false);
+        setShowSearch(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const toggleItem = (item) => {
     setOpenItem(openItem === item ? null : item);
+    setShowSearch(false);
+    setShowLanguage(false);
+  };
+
+  const toggleLanguage = () => {
+    setShowLanguage(!showLanguage);
+    setOpenItem(null);
     setShowSearch(false);
   };
 
@@ -111,7 +136,7 @@ export const Header = () => {
 
   return (
     <>
-      <nav className="navbar sticky-top bg-white shadow-sm border-nav navBar primary">
+      <nav ref={navRef} className="navbar sticky-top bg-white shadow-sm border-nav navBar primary">
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
           <Link
             to="/"
@@ -153,14 +178,23 @@ export const Header = () => {
                 )}
               </div>
             ))}
-            <strong className="ms-3 d-flex align-items-center gap-1">
-              <FaCloudSun className="primary logoNav" />
-              Clima
-            </strong>
-            <div className="d-flex align-items-center gap-1">
+            <Link to="/Clima" className="text-decoration-none">
+              <strong className="ms-3 d-flex align-items-center gap-1">
+                <FaCloudSun className="primary logoNav" />
+                Clima
+              </strong>
+            </Link>
+            <div 
+              className="d-flex align-items-center gap-1"
+              onClick={toggleLanguage}
+              style={{ cursor: "pointer" }}
+            >
               <FaGlobe />
-              <span>Español</span>
-              <span>▼</span>
+              <strong>Español</strong>
+              <FaChevronDown 
+                className={`primary transition-arrow${showLanguage ? ' rotate' : ''}`} 
+                size={12} 
+              />
             </div>
             <FaSearch
               style={{ cursor: "pointer" }}
