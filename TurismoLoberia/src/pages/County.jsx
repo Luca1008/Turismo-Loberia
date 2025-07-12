@@ -1,11 +1,8 @@
 import React from "react";
-import { Header } from "../components/layout/Header";
-import { Footer } from "../components/layout/Footer";
 
 export const Partido = () => {
   return (
     <div>
-      <Header />
       <div className="partido">
         <h1>Partido de Lobería</h1>
         <p>
@@ -24,7 +21,6 @@ export const Partido = () => {
           lugares para visitar en el Partido de Lobería.
         </p>
       </div>
-      <Footer />
     </div>
   );
 };

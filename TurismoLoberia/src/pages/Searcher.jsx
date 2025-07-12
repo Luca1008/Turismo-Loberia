@@ -1,16 +1,12 @@
 import React from "react";
-import { Header } from "../components/layout/Header";
-import { Footer } from "../components/layout/Footer";
+import { FaSearch } from "react-icons/fa";
 import PlaceCard from "../components/cards/PlaceCard";
 import AdvancedExample from "../components/common/Pagination";
-import { FaSearch } from "react-icons/fa";
 import "../styles/Searcher.css";
 
 export const Buscador = () => {
   return (
     <div className="search-page">
-      <Header />
-
       <main className="search-main">
         <h1 className="search-title">Buscador</h1>
 
@@ -47,8 +43,6 @@ export const Buscador = () => {
           <AdvancedExample />
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

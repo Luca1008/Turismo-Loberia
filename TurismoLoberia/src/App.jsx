@@ -1,14 +1,21 @@
 
+import { BrowserRouter } from 'react-router-dom';
+import { Footer } from './components/layout/Footer';
+import { Header } from './components/layout/Header';
 import { Routing } from './router/Routing';
+
 function App() {
-  
   return (
-   <div>
-    <div className="layout">
-      <Routing/>
-    </div>
-   </div>
-  )
+    <BrowserRouter>
+      <div className="layout">
+        <Header />
+        <main>
+          <Routing />
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
