@@ -1,0 +1,255 @@
+  /* Contenedor para ambos botones flotantes */
+  .floating-buttons-container {
+    position: fixed;
+    bottom: 350px;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    pointer-events: none;
+  }
+
+  /* Posiciona los botones flotantes */
+  .floating-buttons {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: auto;
+  }
+
+  /* Contenedor para el botón de accesibilidad */
+  .accessibility-container {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: auto;
+  }
+
+  /* Contenedor específico para el botón de accesibilidad con menú */
+  .accessibility-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Menú accesibilidad */
+  .accessibility-menu {
+    margin-bottom: 8px;
+    margin-top: 0;
+    background: var(--white);
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 8px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 120px;
+    max-width: 140px;
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: auto;
+    z-index: 10001;
+  }
+  
+  /* Botón de WhatsApp */
+  .whatsapp-button {
+    background: var(--primary-color);
+    border: none;
+    border-radius: 50%;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px black;
+    transition: transform 0.2s, background-color 0.2s;
+  }
+  
+  .whatsapp-button:hover {
+    transform: scale(1.1);
+    background: var(--primary-color-dark-1);
+  }
+  
+  .whatsapp-button:focus {
+    outline: 3px solid var(--primary-color-dark-1);
+  }
+  
+  .whatsapp-button svg {
+    width: 30px;
+    height: 30px;
+    fill: var(--white);
+  }
+  
+  /* Botón principal de accesibilidad */
+  .accessibility-trigger {
+    background: #0066cc;
+    border: none;
+    border-radius: 50%;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px black;
+    transition: transform 0.2s, background-color 0.2s;
+  }
+  
+  .accessibility-trigger:hover {
+    transform: scale(1.1);
+    background: #0052a3;
+  }
+  
+  .accessibility-trigger:focus {
+    outline: 3px solid #0052a3;
+  }
+
+  .accessibility-trigger svg {
+    color: white;
+    width: 30px;
+    height: 30px;
+    fill: white;
+  }
+  
+  /* Botones del menú */
+  .accessibility-menu button {
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: var(--white);
+    border-radius: 3px;
+    padding: 4px 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s, border 0.2s;
+    white-space: nowrap;
+    text-align: center;
+  }
+  
+  .accessibility-menu button:focus {
+    outline: 3px solid var(--primary-color-dark-1);
+    background: var(--primary-color-dark-1);
+    border-color: var(--primary-color-dark-1);
+  }
+  
+  .accessibility-menu button:hover {
+    background: var(--primary-color-dark-1);
+  }
+  
+  /* Alto contraste */
+  #main-content.high-contrast {
+    background: var(--color-high-contrast-bg) !important;
+    color: var(--color-high-contrast-text) !important;
+    filter: contrast(1.4);
+  }
+  
+  #main-content.high-contrast a {
+    color: var(--color-high-contrast-link) !important;
+    text-decoration: underline;
+  }
+  
+  #main-content.high-contrast button,
+  #main-content.high-contrast input,
+  #main-content.high-contrast select {
+    border: 2px solid var(--color-high-contrast-text) !important;
+    background: var(--black) !important;
+    color: var(--color-high-contrast-text) !important;
+  }
+  
+  /* Modo oscuro */
+  #main-content.dark-mode {
+    background: var(--black) !important;
+    color: var(--white) !important;
+  }
+  
+  #main-content.dark-mode a {
+    color: var(--color-link-dark) !important;
+  }
+  
+  #main-content.dark-mode button,
+  #main-content.dark-mode .btn,
+  #main-content.dark-mode .accessibility-menu button {
+    background: var(--primary-color) !important;
+    color: var(--white) !important;
+    border-color: var(--primary-color-dark-1) !important;
+  }
+
+  #main-content.dark-mode .btn-success {
+    background: var(--primary-color) !important;
+    color: var(--white) !important;
+    border: none !important;
+  }
+  
+  /* Subrayar enlaces */
+  #main-content.underline-links a {
+    text-decoration: underline !important;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 2px;
+  }
+  
+  /* Fuente para dislexia */
+  #main-content.dyslexia-font {
+    font-family: 'OpenDyslexic', sans-serif !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.35px !important;
+    word-spacing: 0.16em !important;
+  }
+  
+  #main-content.dyslexia-font p,
+  #main-content.dyslexia-font h1,
+  #main-content.dyslexia-font h2,
+  #main-content.dyslexia-font h3,
+  #main-content.dyslexia-font h4,
+  #main-content.dyslexia-font h5,
+  #main-content.dyslexia-font h6,
+  #main-content.dyslexia-font span,
+  #main-content.dyslexia-font div {
+    font-family: 'OpenDyslexic', sans-serif !important;
+  }
+  
+  /* Mejora la visibilidad del foco para todos los elementos interactivos */
+  :focus-visible {
+    outline: 3px solid var(--color-primary-focus);
+    outline-offset: 2px;
+  }
+
+  /* Estilos específicos para móvil */
+  @media (min-width: 767px) {
+    .floating-buttons-container {
+      bottom: 10px;
+      padding: 0 16px;
+    }
+  }
+
+  a {
+    background: transparent !important;
+  }
+
+  .accessibility-menu a {
+    background: transparent !important;
+    color: var(--primary-color) !important; /* o el color que prefieras */
+    border: none !important;
+    padding: 4px 6px;
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .accessibility-menu a:hover,
+  .accessibility-menu a:focus {
+    background: var(--primary-color-dark-1) !important;
+    color: var(--white) !important;
+  }
+
+  #main-content.dark-mode a {
+    background: transparent !important;
+  }
+
+.font-size-large {
+  font-size: 20px !important;
+}
+.font-size-small {
+  font-size: 14px !important;
+}
