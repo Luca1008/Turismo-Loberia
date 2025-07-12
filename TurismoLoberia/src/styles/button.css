@@ -19,6 +19,7 @@ button[type="submit"] {
   align-items: center;
   text-align: center;
   justify-content: center !important;
+  margin: 2rem;
 }
 
 .btn-success:hover,
