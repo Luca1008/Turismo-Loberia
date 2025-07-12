@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Form from 'react-bootstrap/Form';
 import { FaAsterisk } from "react-icons/fa";
-import Breadcrumb from "../components/common/Breadcrumb";
 import ButtonSubmit from "../components/common/ButtonSubmit";
 
 export const Suscribe = () => {
@@ -41,7 +40,6 @@ export const Suscribe = () => {
 
   return (
     <div>
-      <Breadcrumb />
       <section className="suscribe">
         <h2>Queremos conocerte</h2>
         <Form className="form-direction">

@@ -1,5 +1,6 @@
 .breadcrumb-nav {
   padding: 0.5rem 1rem;
+  text-align: center;
 }
 
 .breadcrumb {
@@ -11,6 +12,7 @@
   margin: 0%;
   padding-left: 60px;
   padding-right: 60px;
+  justify-content: center;
 }
 
 .breadcrumb-item {

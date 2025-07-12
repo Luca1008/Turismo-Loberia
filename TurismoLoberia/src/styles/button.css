@@ -19,7 +19,15 @@ button[type="submit"] {
   align-items: center;
   text-align: center;
   justify-content: center !important;
-  margin: 2rem;
+  margin: 1rem auto; /* Cambiado para centrar horizontalmente */
+}
+
+/* Centrado específico para botones en formularios */
+.form-direction .btn-success,
+.form-contact .btn-success {
+  display: block;
+  margin: 1rem auto;
+  width: fit-content;
 }
 
 .btn-success:hover,

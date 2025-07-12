@@ -19,7 +19,6 @@ export const Index = () => {
   return (
     <div className="index">
       <ControlledCarousel />
-      <Breadcrumb />
       <section className="services">
         <h2>Guía de Servicios</h2>
         <div className="item-services-container">

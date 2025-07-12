@@ -60,7 +60,6 @@ export const Contact = () => {
   };
   return (
     <div>
-      <Breadcrumb />
       <section className="contact">
         <h2>Contactanos</h2>
         <Form onSubmit={handleSubmit} className="form-contact">

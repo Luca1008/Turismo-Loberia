@@ -36,13 +36,21 @@ export const Header = () => {
     };
   }, []);
 
-  const toggleItem = (item) => {
+  const toggleItem = (item, event) => {
+    // Prevenir propagación del evento
+    if (event) {
+      event.stopPropagation();
+    }
     setOpenItem(openItem === item ? null : item);
     setShowSearch(false);
     setShowLanguage(false);
   };
 
-  const toggleLanguage = () => {
+  const toggleLanguage = (event) => {
+    // Prevenir propagación del evento
+    if (event) {
+      event.stopPropagation();
+    }
     setShowLanguage(!showLanguage);
     setOpenItem(null);
     setShowSearch(false);
@@ -151,7 +159,7 @@ export const Header = () => {
               <div
                 key={idx}
                 className="desktop-nav-item d-flex align-items-center gap-1 position-relative"
-                onClick={() => toggleItem(label)}
+                onClick={(e) => toggleItem(label, e)}
                 style={{ cursor: "pointer" }}
               >
                 <strong>{label}</strong>
@@ -168,7 +176,11 @@ export const Header = () => {
                         <Link
                           to={getSubitemRoute(label, sub)}
                           className="text-decoration-none"
-                          onClick={() => setShowMenu(false)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setOpenItem(null);
+                            setShowMenu(false);
+                          }}
                         >
                           {sub}
                         </Link>
@@ -186,7 +198,7 @@ export const Header = () => {
             </Link>
             <div 
               className="d-flex align-items-center gap-1"
-              onClick={toggleLanguage}
+              onClick={(e) => toggleLanguage(e)}
               style={{ cursor: "pointer" }}
             >
               <FaGlobe />
@@ -274,7 +286,7 @@ export const Header = () => {
               <li key={idx} className="menu-item">
                 <div
                   className="d-flex justify-content-between align-items-center"
-                  onClick={() => toggleItem(label)}
+                  onClick={(e) => toggleItem(label, e)}
                   style={{ cursor: "pointer" }}
                 >
                   <strong>{label}</strong>
@@ -289,7 +301,11 @@ export const Header = () => {
                       <li key={i}>
                         <Link
                           to={getSubitemRoute(label, sub)}
-                          onClick={() => setShowMenu(false)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setOpenItem(null);
+                            setShowMenu(false);
+                          }}
                         >
                           {sub}
                         </Link>
