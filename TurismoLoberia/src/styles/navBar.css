@@ -22,11 +22,11 @@
 }
 
 .logoLoberia {
-  width: 120px;
+  width: 7.5rem; /* 120px */
 }
 
 .logoNav {
-  font-size: 20px !important;
+  font-size: 1.25rem !important; /* 20px */
   vertical-align: middle;
 }
 
@@ -77,7 +77,7 @@ li {
 }
 
 .menu-item {
-  font-size: var(--size-h3-mobile);
+  font-size: 1.25rem; /* 20px */
   font-weight: bold;
   margin-bottom: 1rem;
   color: white;
@@ -188,7 +188,7 @@ a{
 }
 
 .carousel-index {
-  height: 300px; /* Altura fija para mobile */
+  height: 18.75rem; /* 300px */
   max-width: 100%;
   overflow: hidden;
 }
@@ -257,7 +257,7 @@ a{
   }
 
   .carousel-index {
-    height: 450px; /* Altura fija para desktop */
+    height: 28.125rem; /* 450px */
   }
   .carousel-index img {
     height: 100%;

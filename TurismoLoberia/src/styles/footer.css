@@ -46,9 +46,9 @@
 
 .footer__logo p {
   margin-top: 0.5rem;
-  font-size: 0.9rem;
+  font-size: 0.9rem; /* 14.4px */
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 0.0625rem; /* 1px */
 }
 
 /* === Info de contacto y sección extra === */
@@ -65,7 +65,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: var(--h3-font-size);
+  font-size: 1.25rem; /* 20px */
   font-weight: 600;
   transition: all 0.3s ease;
 }

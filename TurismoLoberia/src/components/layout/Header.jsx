@@ -215,7 +215,7 @@ export const Header = () => {
           </div>
 
           {/* ICONOS Clima e Idioma SOLO en MOBILE */}
-          <div className="d-flex align-items-center gap-2 d-md-none">
+          <div className="d-flex align-items-center gap-2 d-md-none mobile-icon">
             <strong className="border-item-nav d-flex align-items-center gap-1">
               <FaCloudSun className="primary logoNav" />
             </strong>

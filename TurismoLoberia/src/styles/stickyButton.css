@@ -160,20 +160,6 @@
 }
 
 /* Modo oscuro */
-
-#main-content.dark-mode .mobile-menu {
-  background: var(--primary-color) !important;
-}
-
-#main-content.dark-mode .mobile-menu button
- {
-  color: #fff !important;
-}
-
-#main-content.dark-mode .mobile-menu{
-  color: var(--primary-color)
-}
-
 #main-content.dark-mode {
   background: var(--black) !important;
   color: var(--white) !important;
@@ -195,8 +181,6 @@
 {
   color: var(--black) !important;
 }
-
-
 
 #main-content.dark-mode .footer {
   background: var(--black) !important;
@@ -268,7 +252,7 @@ a {
 
 .accessibility-menu a {
   background: transparent !important;
-  color: var(--primary-color) !important; /* o el color que prefieras */
+  color: var(--primary-color) !important;
   border: none !important;
   padding: 4px 6px;
   border-radius: 3px;

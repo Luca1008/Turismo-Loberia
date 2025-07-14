@@ -4,7 +4,7 @@
 
 .carousel-index img {
   width: 100%;
-  height: 300px;
+  height: 18.75rem; /* 300px */
   object-fit: cover;
 }
 
@@ -130,7 +130,7 @@
   padding: 0.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   text-align: center;
-  min-width: 60px;
+  min-width: 3.75rem; /* 60px */
 }
 
 .event-card__month {
@@ -157,7 +157,7 @@
 }
 
 .event-card__title {
-  font-size: var(--size-h3-mobile);
+  font-size: 1.25rem; /* 20px */
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
   margin: 1rem;
 }
@@ -172,8 +172,8 @@
 
 .event-card__icon{
   margin: 1rem;
-  width: 20px;
-  height: 20px;
+  width: 1.25rem; /* 20px */
+  height: 1.25rem; /* 20px */
 }
 
 
@@ -185,14 +185,14 @@
   }
 
   .carousel-index h2 {
-    font-size: var(--size-h3-desktop);
+    font-size: 1.5rem; /* 24px */
     color: var(--white);
   }
 
   .carousel-control-next-icon,
   .carousel-control-prev-icon {
-    width: 60px;
-    height: 60px;
+    width: 3.75rem; /* 60px */
+    height: 3.75rem; /* 60px */
   }
 }
 

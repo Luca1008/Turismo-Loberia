@@ -3,7 +3,7 @@ import { IoAccessibility } from "react-icons/io5";
 import '../../styles/stickyButton.css';
 
 const AccessibilityButtton = () => {
-    const [fontSize, setFontSize] = useState(16);
+    const [fontSize, setFontSize] = useState(1); // 1 = 1rem = 16px
     const [menuOpen, setMenuOpen] = useState(false);
     const [reading, setReading] = useState(false);
     const [isHighContrast, setIsHighContrast] = useState(false);
@@ -11,12 +11,14 @@ const AccessibilityButtton = () => {
     const [isUnderlineLinks, setIsUnderlineLinks] = useState(false);
     const [isDyslexiaFont, setIsDyslexiaFont] = useState(false);
 
-    // Cambia el tamaño de fuente
+    // Cambia el tamaño de fuente usando rem
     const changeFontSize = (size) => {
         const mainContent = document.getElementById('main-content');
+        // Limitar entre 0.8rem y 1.5rem
+        const newSize = Math.max(0.8, Math.min(size, 1.5));
         if (mainContent) {
-            mainContent.style.fontSize = `${size}px`;
-            setFontSize(size);
+            mainContent.style.fontSize = `${newSize}rem`;
+            setFontSize(newSize);
         }
     };
 
@@ -93,8 +95,8 @@ const AccessibilityButtton = () => {
     const resetAccessibility = () => {
         const mainContent = document.getElementById('main-content');
         if (mainContent) {
-            mainContent.style.fontSize = '16px';
-            setFontSize(16);
+            mainContent.style.fontSize = '1rem';
+            setFontSize(1);
             mainContent.classList.remove('high-contrast', 'dark-mode', 'underline-links', 'dyslexia-font');
             stopReading();
             setIsHighContrast(false);
@@ -123,8 +125,8 @@ const AccessibilityButtton = () => {
                         role="menu"
                         tabIndex={-1}
                     >
-                        <button onClick={() => changeFontSize(fontSize + 2)} aria-label="Aumentar texto" role="menuitem">A+</button>
-                        <button onClick={() => changeFontSize(fontSize - 2)} aria-label="Disminuir texto" role="menuitem">A-</button>
+                        <button onClick={() => changeFontSize(fontSize + 0.1)} aria-label="Aumentar texto" role="menuitem">A+</button>
+                        <button onClick={() => changeFontSize(fontSize - 0.1)} aria-label="Disminuir texto" role="menuitem">A-</button>
                         <button onClick={toggleContrast} aria-label="Alto contraste" role="menuitem">Alto contraste</button>
                         <button onClick={toggleDarkMode} aria-label="Modo oscuro" role="menuitem">Modo oscuro</button>
                         <button onClick={toggleUnderlineLinks} aria-label="Subrayar enlaces" role="menuitem">Subrayar enlaces</button>
