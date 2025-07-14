@@ -144,7 +144,7 @@ export const Header = () => {
 
   return (
     <>
-      <nav ref={navRef} className="navbar sticky-top bg-white shadow-sm border-nav navBar primary">
+      <nav ref={navRef} className="navbar sticky-top bg-white shadow-sm border-nav navBar primary header">
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
           <Link
             to="/"

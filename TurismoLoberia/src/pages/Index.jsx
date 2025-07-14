@@ -1,15 +1,14 @@
 import React from "react";
 import EventCard from "../components/cards/EventCard";
 import PlaceCard from "../components/cards/PlaceCard";
-import Breadcrumb from "../components/common/Breadcrumb";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
 
 import { FaInfo, FaPaintBrush } from "react-icons/fa";
 import {
-    MdHotel,
-    MdMuseum,
-    MdOutlineRestaurant,
-    MdPlace,
+  MdHotel,
+  MdMuseum,
+  MdOutlineRestaurant,
+  MdPlace,
 } from "react-icons/md";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import WeatherCarousel from "../components/layout/WeatherCarousel";

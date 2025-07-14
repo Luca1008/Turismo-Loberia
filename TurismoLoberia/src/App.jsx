@@ -1,12 +1,11 @@
-
-import { BrowserRouter } from 'react-router-dom';
-import AccessibilityButtton from './components/common/AccessibilityButtton';
-import ScrollToHash from './components/common/ScrollToHash';
-import ScrollToTop from './components/common/ScrollToTop';
-import Whatsapp from './components/common/Whatsapp';
-import { Footer } from './components/layout/Footer';
-import { Header } from './components/layout/Header';
-import { Routing } from './router/Routing';
+import { BrowserRouter } from "react-router-dom";
+import AccessibilityButtton from "./components/common/AccessibilityButtton";
+import ScrollToHash from "./components/common/ScrollToHash";
+import ScrollToTop from "./components/common/ScrollToTop";
+import Whatsapp from "./components/common/Whatsapp";
+import { Footer } from "./components/layout/Footer";
+import { Header } from "./components/layout/Header";
+import { Routing } from "./router/Routing";
 
 function App() {
   return (
@@ -14,11 +13,11 @@ function App() {
       <ScrollToTop />
       <ScrollToHash />
       <div className="layout">
-        <Header />
-        <main id="main-content">
+        <div id="main-content">
+          <Header />
           <Routing />
-        </main>
-        <Footer />
+          <Footer />
+        </div>
         <div className="floating-buttons-container">
           <div className="accessibility-container">
             <AccessibilityButtton />
