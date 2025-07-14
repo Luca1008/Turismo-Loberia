@@ -12,7 +12,7 @@ import {
 } from "react-icons/md";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import WeatherCarousel from "../components/layout/WeatherCarousel";
-import '../styles/button.css';
+import "../styles/button.css";
 
 export const Index = () => {
   return (
@@ -47,17 +47,19 @@ export const Index = () => {
           </div>
         </div>
       </section>
-      <WeatherCarousel />
       <section className="places">
         <h2>Descubrí Lobería</h2>
-        <p>Explorá la naturaleza, historia y cultura de Lobería, Arenas Verdes y San Manuel.</p>
+        <p>
+          Explorá la naturaleza, historia y cultura de Lobería, Arenas Verdes y
+          San Manuel.
+        </p>
         <div className="places-items">
-        <PlaceCard className="place-card" />
-        <PlaceCard className="place-card" />
-        <PlaceCard className="place-card" />
-        <PlaceCard className="place-card" />
-        <PlaceCard className="place-card" />
-        <PlaceCard className="place-card" />
+          <PlaceCard className="place-card" />
+          <PlaceCard className="place-card" />
+          <PlaceCard className="place-card" />
+          <PlaceCard className="place-card" />
+          <PlaceCard className="place-card" />
+          <PlaceCard className="place-card" />
         </div>
         <ButtonSuccess />
       </section>
@@ -65,6 +67,30 @@ export const Index = () => {
         <h2>Próximos Eventos</h2>
         <p>No te pierdas todos los eventos que tenemos para vos!!!</p>
         <EventCard />
+      </section>
+      <section className="more-info">
+        <h2>Actualidad</h2>
+        <div className="container-info">
+        <WeatherCarousel />
+        <div className="facebook-container">
+          <iframe
+            className="facebook-iframe"
+            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Floberiaturismo&tabs=timeline&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+            width="500"
+            height="600"
+            scrolling="no"
+            frameBorder="0"
+            allowFullScreen={true}
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            style={{
+              border: "none",
+              overflow: "hidden",
+              width: "100%",
+              height: "600px",
+            }}
+          />
+        </div>
+        </div>
       </section>
     </div>
   );
