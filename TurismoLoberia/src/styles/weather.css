@@ -1,3 +1,11 @@
+.section-weather{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding-top: 2rem;
+}
+
 .card-weather {
   background: var(--white-1-background);
   border-radius: 20px;
@@ -67,9 +75,6 @@
   color: var(--primary-color);
 }
 
-.icon-weather:hover {
-  color: var(--primary-color-dark);
-}
 
 .icono-sol {
   color: #ffc107; /* Amarillo suave */
@@ -214,4 +219,8 @@
     top: 100%;
     right: 20px;
   }
+}
+
+.section-weather {
+  margin-top: 0 !important;
 }

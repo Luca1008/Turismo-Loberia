@@ -67,7 +67,7 @@ section{
   margin-left: 15px;
   margin-right: 15px;
   margin-top: 1rem;
-  margin-bottom: 3rem;
+  padding-bottom: 3rem;
   display: flex;
   flex-direction: column;
 }
