@@ -1,9 +1,13 @@
 const db = require('../models/db');
 
+console.log('📂 cards.routes.js CARGADO');
+
+
 // Obtener todas las cards sin filtros (admin o debug)
 exports.getAllCardsRaw = async (req, res) => {
   try {
-    const result = await db.query('SELECT * FROM "card" ORDER BY id');
+    let query = 'SELECT * FROM turismo_prueba."card"';
+    const result = await db.query(query);
     res.json(result.rows);
   } catch (error) {
     console.error('Error al obtener todas las cards sin filtros:', error.message);
@@ -15,7 +19,7 @@ exports.getAllCardsRaw = async (req, res) => {
 exports.getAllCards = async (req, res) => {
   const { city, category, title } = req.query;
   try {
-    let query = 'SELECT * FROM "card"';
+    let query = 'SELECT * FROM turismo_prueba."card"';
     const params = [];
     const conditions = [];
 
@@ -48,7 +52,7 @@ exports.getAllCards = async (req, res) => {
 exports.getCardById = async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await db.query('SELECT * FROM "card" WHERE "id" = $1', [id]);
+    const result = await db.query('SELECT * FROM turismo_prueba."card" WHERE "id" = $1', [id]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Card no encontrada.' });
     }
@@ -75,7 +79,7 @@ exports.createCard = async (req, res) => {
 
   try {
     const result = await db.query(
-      `INSERT INTO "card" (
+      `INSERT INTO turismo_prueba."card" (
         card_title, card_description, card_ubicacion, card_linkubic,
         card_horario, card_contacto, card_info, card_city, card_category
       ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
@@ -115,7 +119,7 @@ exports.updateCard = async (req, res) => {
 
   try {
     const result = await db.query(
-      `UPDATE "card" SET
+      `UPDATE turismo_prueba."card" SET
         card_title = $1,
         card_description = $2,
         card_ubicacion = $3,
@@ -154,7 +158,7 @@ exports.updateCard = async (req, res) => {
 exports.deleteCard = async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await db.query('DELETE FROM "card" WHERE id = $1 RETURNING *', [id]);
+    const result = await db.query('DELETE FROM turismo_prueba."card" WHERE id = $1 RETURNING *', [id]);
     if (result.rowCount === 0) {
       return res.status(404).json({ error: 'Card no encontrada para eliminar.' });
     }
