@@ -58,38 +58,42 @@ export const Index = () => {
           <PlaceCard className="place-card" />
           <PlaceCard className="place-card" />
           <PlaceCard className="place-card" />
-          <PlaceCard className="place-card" />
-          <PlaceCard className="place-card" />
         </div>
         <ButtonSuccess />
       </section>
       <section className="upcoming-events">
         <h2>Próximos Eventos</h2>
         <p>No te pierdas todos los eventos que tenemos para vos!!!</p>
-        <EventCard />
+        <div className="events">
+          <EventCard />
+          <EventCard />
+          <EventCard />
+          <EventCard />
+        </div>
+        <ButtonSuccess />
       </section>
       <section className="more-info">
         <h2>Actualidad</h2>
         <div className="container-info">
-        <WeatherCarousel />
-        <div className="facebook-container">
-          <iframe
-            className="facebook-iframe"
-            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Floberiaturismo&tabs=timeline&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-            width="500"
-            height="600"
-            scrolling="no"
-            frameBorder="0"
-            allowFullScreen={true}
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            style={{
-              border: "none",
-              overflow: "hidden",
-              width: "100%",
-              height: "600px",
-            }}
-          />
-        </div>
+          <WeatherCarousel />
+          <div className="facebook-container">
+            <iframe
+              className="facebook-iframe"
+              src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Floberiaturismo&tabs=timeline&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+              width="500"
+              height="600"
+              scrolling="no"
+              frameBorder="0"
+              allowFullScreen={true}
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              style={{
+                border: "none",
+                overflow: "hidden",
+                width: "100%",
+                height: "600px",
+              }}
+            />
+          </div>
         </div>
       </section>
     </div>

@@ -97,7 +97,7 @@
 }
 
 /*------------------Places--------------*/
-.places {
+.places , .upcoming-events{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -130,6 +130,7 @@
 }
 
 /*-----------------EventCard--------------*/
+
 .event-card {
   border-radius: 14px;
   overflow: hidden;
@@ -198,6 +199,13 @@
 }
 
 /*-----------------More info--------------*/
+
+section .container-info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2rem;
+}
 .facebook-container {
   width: 100%;
   max-width: 500px;
@@ -276,7 +284,7 @@
   margin-right: 60px;
 }
 
-.places-items {
+.places-items, .events{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -287,6 +295,10 @@ section .container-info{
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  justify-content: space-around;
-  padding-top: 2rem;
+}
+
+
+section.more-info{
+  margin: 0%;
+  background: linear-gradient(to bottom, #F9FAFB, #dcedc8);
 }
