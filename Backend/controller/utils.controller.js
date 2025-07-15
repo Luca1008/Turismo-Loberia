@@ -109,12 +109,26 @@ exports.getWeather = async (req, res) => {
   try {
     const response = await axios.get(url);
     const data = response.data;
+    // Procesar viento
+    let viento = "-";
+    if (data.wind) {
+      const dir = data.wind.deg !== undefined ? gradosADireccion(data.wind.deg) : "";
+      viento = `${Math.round(data.wind.speed)} km/h${dir ? ' ' + dir : ''}`;
+    }
+    // Función auxiliar para dirección cardinal
+    function gradosADireccion(grados) {
+      const dirs = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSO", "SO", "OSO", "O", "ONO", "NO", "NNO"];
+      return dirs[Math.round(grados / 22.5) % 16];
+    }
     res.json({
       ciudad: data.name,
       temp: data.main.temp,
       descripcion: data.weather[0].description,
       icon: data.weather[0].icon,
       dt: data.dt,
+      humedad: data.main.humidity,
+      presion: data.main.pressure,
+      viento
     });
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener el clima actual' });
