@@ -108,6 +108,27 @@
   margin: 1rem;
 }
 
+.place-card:hover,
+.event-card:hover {
+  transform: none !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.13);
+}
+
+.place-card .card-body {
+  text-align: left;
+}
+
+.place-card .btn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.place-card .card-text {
+  text-align: left !important;
+}
+
 /*-----------------EventCard--------------*/
 .event-card {
   border-radius: 14px;
@@ -251,7 +272,6 @@
 
 /*---------------Places-----------------*/
 .services, .places, .upcoming-events {
-
   margin-left: 60px;
   margin-right: 60px;
 }
