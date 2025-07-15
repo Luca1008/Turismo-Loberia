@@ -1,34 +1,36 @@
 import React from "react";
+import Form from 'react-bootstrap/Form';
 import { FaSearch } from "react-icons/fa";
 import PlaceCard from "../components/cards/PlaceCard";
 import AdvancedExample from "../components/common/Pagination";
-import "../styles/Searcher.css";
+import "../styles/searcher.css";
 
 export const Buscador = () => {
   return (
     <div className="search-page">
       <main className="search-main">
-        <h1 className="search-title">Buscador</h1>
+        <h1 className="search-title">Busqueda de contenido</h1>
 
         {/* Input principal */}
         <div className="search-input-group">
-          <input type="text" placeholder="Buscar..." />
+          <input type="text" placeholder="Buscar por nombre..." />
           <button><FaSearch /></button>
         </div>
 
         {/* Filtros */}
         <div className="search-filters">
-          <select className="filter-select">
+          <Form.Select className="filter-select select-label-primary"> 
             <option value="">Ciudad</option>
             <option value="loberia">Lobería</option>
+            <option value="sanmanuel">Arenas Verdes</option>
             <option value="sanmanuel">San Manuel</option>
-          </select>
+          </Form.Select>
 
-          <select className="filter-select">
+          <Form.Select className="filter-select select-label-primary">
             <option value="">Categoría</option>
-            <option value="turismo">Turismo</option>
+            <option value="alojamiento">Alojamiento</option>
             <option value="gastronomia">Gastronomía</option>
-          </select>
+          </Form.Select>
         </div>
 
         {/* Tarjetas de lugares */}

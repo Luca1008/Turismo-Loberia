@@ -72,3 +72,34 @@ button[type="submit"]:disabled {
     display: flex;
     justify-content: center;
 }
+
+.btn-link{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--primary-color);
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  border: 1px solid var(--primary-color);
+  border-radius: 12px;
+  background-color: var(--white);
+  width: 100%;
+  padding: 0.25rem 1.2rem;
+  box-shadow: 0 2px 8px rgba(87, 175, 49, 0.10), 0 1.5px 4px rgba(60, 180, 60, 0.10);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn-link:hover, .btn-link:focus {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: 1px solid var(--primary-color-dark-1);
+  box-shadow: 0 4px 16px rgba(87, 175, 49, 0.18);
+  text-decoration: none;
+  outline: none;
+}
