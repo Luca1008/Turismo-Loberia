@@ -6,7 +6,7 @@ import { Index } from '../pages/Index';
 import Loberia from '../pages/Loberia';
 import PartidoLoberia from '../pages/PartidoLoberia';
 import { SanManuel } from '../pages/SanManuel';
-import { Buscador } from '../pages/Searcher';
+import Searcher from '../pages/Searcher';
 import { Suscribe } from '../pages/Subscribe';
 import { Clima } from '../pages/Weather';
 
@@ -21,7 +21,7 @@ export const Routing = () => {
       <Route path="/SanManuel" element={<SanManuel />} />
       <Route path="/Clima" element={<Clima />} />
       <Route path="/Contacto" element={<Contact />} />
-      <Route path="/Buscador" element={<Buscador />} />
+      <Route path="/Buscador" element={<Searcher />} />
       <Route path="/Suscribirse" element={<Suscribe />} />
     </Routes>
   )
