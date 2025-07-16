@@ -278,10 +278,6 @@ section .container-info{
 }
 
 /*---------------Places-----------------*/
-.services, .places, .upcoming-events {
-  margin-left: 60px;
-  margin-right: 60px;
-}
 
 .places-items, .events{
   display: flex;
@@ -299,13 +295,6 @@ section {
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
   box-sizing: border-box;
-}
-
-@media (min-width: 768px) {
-  section {
-    padding-left: 4rem;
-    padding-right: 4rem;
-  }
 }
 
 section.more-info {
