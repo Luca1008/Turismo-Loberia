@@ -19,6 +19,15 @@ export const Header = () => {
   const [openItem, setOpenItem] = useState(null);
   const [showLanguage, setShowLanguage] = useState(false);
   const navRef = useRef(null);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Cerrar submenús cuando se hace clic fuera
   useEffect(() => {
@@ -144,7 +153,10 @@ export const Header = () => {
 
   return (
     <>
-      <nav ref={navRef} className="navbar sticky-top bg-white shadow-sm border-nav navBar primary header">
+      <nav
+        ref={navRef}
+        className={`navbar sticky-top bg-white shadow-sm border-nav navBar primary header${scrolled ? " nav-transparent" : ""}`}
+      >
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
           <Link
             to="/"
@@ -193,7 +205,8 @@ export const Header = () => {
             <Link to="/Clima" className="text-decoration-none">
               <strong className="ms-3 d-flex align-items-center gap-1">
                 <FaCloudSun className="primary logoNav" />
-                Clima
+                <span className="nav-hover-effect">Clima
+                  </span>
               </strong>
             </Link>
             <div 
@@ -202,14 +215,14 @@ export const Header = () => {
               style={{ cursor: "pointer" }}
             >
               <FaGlobe />
-              <strong>Español</strong>
+              <strong className="nav-hover-effect">Español</strong>
               <FaChevronDown 
                 className={`primary transition-arrow${showLanguage ? ' rotate' : ''}`} 
                 size={12} 
               />
             </div>
             <FaSearch
-              style={{ cursor: "pointer" }}
+              className="search-icon-nav"
               onClick={handleSearchToggle}
             />
           </div>
@@ -220,10 +233,16 @@ export const Header = () => {
               <FaCloudSun className="primary logoNav" />
             </strong>
             <div className="vertical-divider"></div>
-            <div className="d-flex align-items-center border-item-nav">
+            <div
+              className="d-flex align-items-center border-item-nav"
+              onClick={(e) => toggleLanguage(e)}
+              style={{ cursor: "pointer" }}
+            >
               <FaGlobe className="me-1" />
               <span>Español</span>
-              <span className="ms-1">▼</span>
+              <span className="ms-1">
+                <FaChevronDown className={`primary transition-arrow${showLanguage ? ' rotate' : ''}`} size={12} />
+              </span>
             </div>
             <div className="vertical-divider"></div>
           </div>

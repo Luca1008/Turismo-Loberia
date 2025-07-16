@@ -199,9 +199,49 @@ a{
   display: block;
 }
 
+.header.nav-transparent {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  transition: background-color 0.3s;
+  backdrop-filter: blur(4px);
+}
+
+.header.nav-transparent:hover {
+  background-color: #fff !important;
+  transition: background-color 0.2s;
+}
+
 @media (min-width: 768px) {
   .mobile-menu {
     display: none !important;
+  }
+
+  /*------Efecto hover nav item----------*/
+  .desktop-nav-item,
+  .nav-hover-effect {
+    position: relative;
+  }
+  
+  .desktop-nav-item::after,
+  .nav-hover-effect::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -4px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .desktop-nav-item:hover::after,
+  .nav-hover-effect:hover::after {
+    width: 100%;
+  }
+  
+  .desktop-nav-item:hover,
+  .nav-hover-effect:hover {
+    background-color: rgba(87, 175, 49, 0.05);
+    border-radius: 6px;
   }
 
   .desktop-search-bar {
@@ -221,12 +261,32 @@ a{
     }
   }
 
-  .desktop-search-icon {
+  .search-icon-nav {
+    color: var(--primary-color);
+    width: 20px;
+    height: 20px;
+    transition: color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .search-icon-nav:hover {
+    color: var(--primary-color-dark-2);
+    transform: scale(1.5);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .desktop-search-icon{
     color: var(--white);
+    transition: transform 0.2s ease;
     width: 30px;
     height: 30px;
   }
 
+  .desktop-search-icon:hover {
+    transform: scale(1.5);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+  
   .submenu-desktop {
     background-color: var(--primary-color) !important;
     color: var(--white) !important;
