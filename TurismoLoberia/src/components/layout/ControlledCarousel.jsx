@@ -17,19 +17,19 @@ export const ControlledCarousel = () => {
       <Carousel.Item>
         <img src={carousel1} alt="First slide" />
         <Carousel.Caption>
-          <h2>Lobería</h2>
+          <h1>Lobería</h1>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img src={carousel2} alt="Second slide" />
         <Carousel.Caption>
-          <h2>Arenas Verdes</h2>
+          <h1>Arenas Verdes</h1>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <img src={carousel3} alt="Third slide" />
         <Carousel.Caption>
-          <h2>San Manuel</h2>
+          <h1>San Manuel</h1>
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
