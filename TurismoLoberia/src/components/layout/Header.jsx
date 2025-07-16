@@ -193,7 +193,8 @@ export const Header = () => {
             <Link to="/Clima" className="text-decoration-none">
               <strong className="ms-3 d-flex align-items-center gap-1">
                 <FaCloudSun className="primary logoNav" />
-                Clima
+                <span className="nav-hover-effect">Clima
+                  </span>
               </strong>
             </Link>
             <div 
@@ -202,14 +203,14 @@ export const Header = () => {
               style={{ cursor: "pointer" }}
             >
               <FaGlobe />
-              <strong>Español</strong>
+              <strong className="nav-hover-effect">Español</strong>
               <FaChevronDown 
                 className={`primary transition-arrow${showLanguage ? ' rotate' : ''}`} 
                 size={12} 
               />
             </div>
             <FaSearch
-              style={{ cursor: "pointer" }}
+              className="search-icon-nav"
               onClick={handleSearchToggle}
             />
           </div>

@@ -19,7 +19,8 @@
 
 
   /* Tipografía */
-    --font-base: 'Linotte-Light', sans-serif;
+    --font-base: 'Poppins', sans-serif;
+
 
   /* Tamaños */
     --size-h1-mobile: 2rem;      /* 32px */
@@ -28,7 +29,7 @@
     --size-paragraph-mobile: 0.875rem; /* 14px */
     --size-button-mobile: 1rem;  /* 16px */
     --size-h1-desktop: 4rem;     /* 64px */
-    --size-h2-desktop: 2rem;     /* 32px */
+    --size-h2-desktop: 2.5rem; /* 40px */
     --size-h3-desktop: 1.5rem;   /* 24px */
     --size-paragraph-desktop: 1rem; /* 16px */
     --size-button-desktop: 1.25rem; /* 20px */
@@ -45,22 +46,26 @@ h1, h2, h3{
   font-weight: bolder;
 }
 
-h1{
-    font-size: var(--size-h1-mobile);
+h1 {
+  font-size: var(--size-h1-mobile);
+  letter-spacing: 0.02em;
 }
 
-h2{
-  font-size: var(--size-h2-mobile);
+h2 {
+  font-size: 2.5rem; /* 40px */
+  letter-spacing: 0.03em;
 }
 
-h3{
+h3 {
   font-size: var(--size-h3-mobile);
+  letter-spacing: 0.02em;
 }
 
-p{
+p {
   font-family: var(--font-base);
   font-size: var(--size-paragraph-mobile);
   color: var(--black-1-Texto);
+  letter-spacing: 0.01em;
 }
 
 section{
@@ -105,23 +110,31 @@ body {
 
 h1{
     font-size: var(--size-h1-desktop);
+    letter-spacing: 0.025em;
 }
 
 h2{
   font-size: var(--size-h2-desktop);
+  letter-spacing: 0.035em;
 }
 
 h3{
   font-size: var(--size-h3-desktop);
+  letter-spacing: 0.025em;
 }
 
 p{
   font-family: var(--font-base);
   font-size: var(--size-paragraph-desktop);
+  letter-spacing: 0.012em;
 }
 
 section{
   margin-left: 60px;
   margin-right: 60px;
 }
+}
+
+h2 {
+  letter-spacing: 0.03em;
 }
