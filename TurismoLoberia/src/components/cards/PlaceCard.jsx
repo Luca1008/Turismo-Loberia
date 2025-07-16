@@ -1,17 +1,15 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import placeCard1 from "../../assets/images/place-card-index/place-card-1.jpg";
-const PlaceCard = () => {
+const PlaceCard = ({ title, description, city, img }) => {
   return (
     <Card className="place-card">
-      <Card.Img variant="top" src={placeCard1} />
+      <Card.Img variant="top" src={img || "https://via.placeholder.com/300x200?text=Sin+Imagen"}
+        alt={title} />
       <Card.Body>
-        <Card.Title>
-          Museo de Ciencias Naturales Gesué Pedro Noseda - Lobería
-        </Card.Title>
-        <Card.Text>
-          Conocé la megafauna pampeana, restos arqueológicos y fósiles locales.
-        </Card.Text>
+        <Card.Title>{title}</Card.Title>
+        <Card.Text>{description}</Card.Text>
+        <Card.Text><strong>Ciudad:</strong> {city}</Card.Text>
         <Button variant="link">Ver más</Button>
       </Card.Body>
     </Card>

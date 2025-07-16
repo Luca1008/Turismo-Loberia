@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const cardsController = require('../controllers/cards.controller');
+const cardsController = require('../controller/cards.controller');
 
 // Rutas para operaciones CRUD de cards
 router.get('/test', (req, res) => {

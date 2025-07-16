@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const utilsController = require('../controllers/utils.controller');
+const utilsController = require('../controller/utils.controller');
 
 router.post('/send-email', utilsController.sendEmail);
 router.get('/forecast', utilsController.getForecast);
