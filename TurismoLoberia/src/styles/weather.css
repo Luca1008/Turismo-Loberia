@@ -82,50 +82,87 @@ section.weather h1{
 
 .icono-sol {
   color: #ffc107; /* Amarillo suave */
+  animation: rotarSol 3.5s linear infinite;
+}
+
+@keyframes rotarSol {
+  0% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+  100% { transform: rotate(-10deg); }
 }
 
 .icono-luna {
   color: #aab7b8; /* Gris claro frío */
+  animation: flotar 4s ease-in-out infinite;
 }
 
 .icono-nube {
   color: #90caf9; /* Azul pastel */
+  animation: mover 3.2s ease-in-out infinite alternate;
 }
+
 
 .icono-nube-noche {
   color: #5c6bc0; /* Azul noche suave */
+  animation: mover 3.2s ease-in-out infinite alternate;
 }
 
 .icono-lluvia {
   color: #64b5f6; /* Azul intermedio */
+  animation: mover 3.2s ease-in-out infinite alternate;
 }
 
 .icono-lluvia-noche {
   color: #3f51b5; /* Azul profundo pero no oscuro */
+  animation: mover 3.2s ease-in-out infinite alternate;
 }
 
 .icono-tormenta {
   color: #ffa726; /* Naranja cálido */
+  animation: flotar 4s ease-in-out infinite;
 }
 
 .icono-tormenta-noche {
   color: #fb8c00; /* Naranja más oscuro pero armónico */
+  animation: flotar 4s ease-in-out infinite;
 }
 
 .icono-nieve {
   color: #b3e5fc; /* Celeste muy claro */
+  animation: flotar 4s ease-in-out infinite;
 }
 
 .icono-nieve-noche {
   color: #81d4fa; /* Celeste intermedio */
+  animation: mover 3.2s ease-in-out infinite alternate;
+
 }
 
 .icono-niebla {
   color: #b0bec5; /* Gris azulado suave */
+  animation: mover 3.2s ease-in-out infinite alternate;
+
 }
 
 .icono-niebla-noche {
   color: #78909c; /* Gris más profundo */
+  animation: mover 3.2s ease-in-out infinite alternate;
+
+}
+
+@keyframes flotar {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes mover {
+  0% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  100% { transform: translateX(-2px); }
 }
 
 /*---------------Version compacta------------------*/
