@@ -7,7 +7,7 @@ import {
   FaMoon,
   FaSmog,
   FaSnowflake,
-  FaSun
+  FaSun,
 } from "react-icons/fa";
 import "../../styles/weather.css";
 
@@ -182,7 +182,11 @@ const WeatherCard = ({ ciudad = "Tandil", lat, lon }) => {
   }, [ciudad, lat, lon]); // <-- Agregado ciudad como dependencia
 
   if (error) return <div style={{ color: "red" }}>{error}</div>;
-  if (!climaActual) return <div>Cargando...</div>;
+  if (!climaActual) return (
+    <div className="weather-spinner-container">
+      <div className="weather-spinner"></div>
+    </div>
+  );
 
   const IconoClima = iconosOWMtoFa[climaActual.icon] || FaCloud;
 

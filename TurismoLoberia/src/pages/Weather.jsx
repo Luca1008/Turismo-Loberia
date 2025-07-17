@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 import {
   FaCity,
   FaCloudSun,
+  FaSun,
   FaTachometerAlt,
   FaTemperatureHigh,
   FaTemperatureLow,
@@ -212,7 +213,9 @@ export const Clima = () => {
         <div className='table-weather' style={{ background: bgGradient }}>
           <h3>Pronóstico detallado para el día de hoy: <span style={{ fontWeight: 400 }}>{fechaCompleta}</span></h3>
           {loading ? (
-            <div>Cargando datos...</div>
+            <div class="weather-spinner-container">
+              <div class="weather-spinner"></div>
+            </div>
           ) : (
             <Table striped bordered hover>
               <thead>
@@ -259,96 +262,104 @@ export const Clima = () => {
         {/* Tablas de pronóstico extendido: una por ciudad, cada una con los cinco días como filas */}
         <div className="section-weather" style={{ flexDirection: 'column', gap: '2rem', marginTop: '2rem' }}>
           <h2 className="h2-weather">Pronóstico extendido</h2>
-          {/* Lobería */}
-          <div className='table-weather'>
-            <h3>Lobería</h3>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Temp. Máx <FaTemperatureHigh style={{ marginLeft: 4, color: '#ff9800' }} /></th>
-                  <th>Temp. Mín <FaTemperatureLow style={{ marginLeft: 4, color: '#2196f3' }} /></th>
-                  <th>Estado <FaCloudSun style={{ marginLeft: 4, color: '#ffc107' }} /></th>
-                  <th>Humedad <FaTint style={{ marginLeft: 4, color: '#00bcd4' }} /></th>
-                  <th>Viento <FaWind style={{ marginLeft: 4, color: '#90a4ae' }} /></th>
-                  <th>Presión <FaTachometerAlt style={{ marginLeft: 4, color: '#9c27b0' }} /></th>
-                </tr>
-              </thead>
-              <tbody>
-                {forecastLoberia.map((d, i) => (
-                  <tr key={i}>
-                    <td>{formatFecha(d.dt)}</td>
-                    <td>{Math.round(d.tempMax)}°</td>
-                    <td>{Math.round(d.tempMin)}°</td>
-                    <td style={{ textTransform: 'capitalize' }}>{getWeatherIcon(d.icon)} {d.descripcion}</td>
-                    <td>{d.humedad ? d.humedad + '%' : '-'}</td>
-                    <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
-                    <td>{d.presion ? d.presion + ' hPa' : '-'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+          {loadingForecast ? (
+            <div className="weather-spinner-container">
+            <div className="weather-spinner"></div>
           </div>
-          {/* San Manuel */}
-          <div className='table-weather'>
-            <h3>San Manuel</h3>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Temp. Máx <FaTemperatureHigh style={{ marginLeft: 4, color: '#ff9800' }} /></th>
-                  <th>Temp. Mín <FaTemperatureLow style={{ marginLeft: 4, color: '#2196f3' }} /></th>
-                  <th>Estado <FaCloudSun style={{ marginLeft: 4, color: '#ffc107' }} /></th>
-                  <th>Humedad <FaTint style={{ marginLeft: 4, color: '#00bcd4' }} /></th>
-                  <th>Viento <FaWind style={{ marginLeft: 4, color: '#90a4ae' }} /></th>
-                  <th>Presión <FaTachometerAlt style={{ marginLeft: 4, color: '#9c27b0' }} /></th>
-                </tr>
-              </thead>
-              <tbody>
-                {forecastSanManuel.map((d, i) => (
-                  <tr key={i}>
-                    <td>{formatFecha(d.dt)}</td>
-                    <td>{Math.round(d.tempMax)}°</td>
-                    <td>{Math.round(d.tempMin)}°</td>
-                    <td style={{ textTransform: 'capitalize' }}>{getWeatherIcon(d.icon)} {d.descripcion}</td>
-                    <td>{d.humedad ? d.humedad + '%' : '-'}</td>
-                    <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
-                    <td>{d.presion ? d.presion + ' hPa' : '-'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
-          {/* Arenas Verdes */}
-          <div className='table-weather'>
-            <h3>Arenas Verdes</h3>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Temp. Máx <FaTemperatureHigh style={{ marginLeft: 4, color: '#ff9800' }} /></th>
-                  <th>Temp. Mín <FaTemperatureLow style={{ marginLeft: 4, color: '#2196f3' }} /></th>
-                  <th>Estado <FaCloudSun style={{ marginLeft: 4, color: '#ffc107' }} /></th>
-                  <th>Humedad <FaTint style={{ marginLeft: 4, color: '#00bcd4' }} /></th>
-                  <th>Viento <FaWind style={{ marginLeft: 4, color: '#90a4ae' }} /></th>
-                  <th>Presión <FaTachometerAlt style={{ marginLeft: 4, color: '#9c27b0' }} /></th>
-                </tr>
-              </thead>
-              <tbody>
-                {forecastArenasVerdes.map((d, i) => (
-                  <tr key={i}>
-                    <td>{formatFecha(d.dt)}</td>
-                    <td>{Math.round(d.tempMax)}°</td>
-                    <td>{Math.round(d.tempMin)}°</td>
-                    <td style={{ textTransform: 'capitalize' }}>{getWeatherIcon(d.icon)} {d.descripcion}</td>
-                    <td>{d.humedad ? d.humedad + '%' : '-'}</td>
-                    <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
-                    <td>{d.presion ? d.presion + ' hPa' : '-'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
+          ) : (
+            <>
+              {/* Lobería */}
+              <div className='table-weather'>
+                <h3>Lobería</h3>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Temp. Máx <FaTemperatureHigh style={{ marginLeft: 4, color: '#ff9800' }} /></th>
+                      <th>Temp. Mín <FaTemperatureLow style={{ marginLeft: 4, color: '#2196f3' }} /></th>
+                      <th>Estado <FaCloudSun style={{ marginLeft: 4, color: '#ffc107' }} /></th>
+                      <th>Humedad <FaTint style={{ marginLeft: 4, color: '#00bcd4' }} /></th>
+                      <th>Viento <FaWind style={{ marginLeft: 4, color: '#90a4ae' }} /></th>
+                      <th>Presión <FaTachometerAlt style={{ marginLeft: 4, color: '#9c27b0' }} /></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {forecastLoberia.map((d, i) => (
+                      <tr key={i}>
+                        <td>{formatFecha(d.dt)}</td>
+                        <td>{Math.round(d.tempMax)}°</td>
+                        <td>{Math.round(d.tempMin)}°</td>
+                        <td style={{ textTransform: 'capitalize' }}>{getWeatherIcon(d.icon)} {d.descripcion}</td>
+                        <td>{d.humedad ? d.humedad + '%' : '-'}</td>
+                        <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
+                        <td>{d.presion ? d.presion + ' hPa' : '-'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+              {/* San Manuel */}
+              <div className='table-weather'>
+                <h3>San Manuel</h3>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Temp. Máx <FaTemperatureHigh style={{ marginLeft: 4, color: '#ff9800' }} /></th>
+                      <th>Temp. Mín <FaTemperatureLow style={{ marginLeft: 4, color: '#2196f3' }} /></th>
+                      <th>Estado <FaCloudSun style={{ marginLeft: 4, color: '#ffc107' }} /></th>
+                      <th>Humedad <FaTint style={{ marginLeft: 4, color: '#00bcd4' }} /></th>
+                      <th>Viento <FaWind style={{ marginLeft: 4, color: '#90a4ae' }} /></th>
+                      <th>Presión <FaTachometerAlt style={{ marginLeft: 4, color: '#9c27b0' }} /></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {forecastSanManuel.map((d, i) => (
+                      <tr key={i}>
+                        <td>{formatFecha(d.dt)}</td>
+                        <td>{Math.round(d.tempMax)}°</td>
+                        <td>{Math.round(d.tempMin)}°</td>
+                        <td style={{ textTransform: 'capitalize' }}>{getWeatherIcon(d.icon)} {d.descripcion}</td>
+                        <td>{d.humedad ? d.humedad + '%' : '-'}</td>
+                        <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
+                        <td>{d.presion ? d.presion + ' hPa' : '-'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+              {/* Arenas Verdes */}
+              <div className='table-weather'>
+                <h3>Arenas Verdes</h3>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Temp. Máx <FaTemperatureHigh style={{ marginLeft: 4, color: '#ff9800' }} /></th>
+                      <th>Temp. Mín <FaTemperatureLow style={{ marginLeft: 4, color: '#2196f3' }} /></th>
+                      <th>Estado <FaCloudSun style={{ marginLeft: 4, color: '#ffc107' }} /></th>
+                      <th>Humedad <FaTint style={{ marginLeft: 4, color: '#00bcd4' }} /></th>
+                      <th>Viento <FaWind style={{ marginLeft: 4, color: '#90a4ae' }} /></th>
+                      <th>Presión <FaTachometerAlt style={{ marginLeft: 4, color: '#9c27b0' }} /></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {forecastArenasVerdes.map((d, i) => (
+                      <tr key={i}>
+                        <td>{formatFecha(d.dt)}</td>
+                        <td>{Math.round(d.tempMax)}°</td>
+                        <td>{Math.round(d.tempMin)}°</td>
+                        <td style={{ textTransform: 'capitalize' }}>{getWeatherIcon(d.icon)} {d.descripcion}</td>
+                        <td>{d.humedad ? d.humedad + '%' : '-'}</td>
+                        <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
+                        <td>{d.presion ? d.presion + ' hPa' : '-'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+            </>
+          )}
         </div>
       </section>
     </div>

@@ -221,3 +221,28 @@ section.weather h1{
   border-radius: 16px;
   padding: 1.5rem 1rem;
 }
+
+.weather-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.weather-spinner {
+  width: 24px;
+  height: 24px;
+  background: #4fc3f7;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: dropBounce 1.2s infinite ease-in-out;
+  box-shadow: 0 0 10px #4fc3f7aa;
+}
+
+@keyframes dropBounce {
+  0%, 100% {
+    transform: translateY(0) scaleY(1);
+  }
+  50% {
+    transform: translateY(-15px) scaleY(1.2);
+  }
+}
