@@ -7,7 +7,7 @@ import {
   FaMoon,
   FaSmog,
   FaSnowflake,
-  FaSun,
+  FaSun
 } from "react-icons/fa";
 import "../../styles/weather.css";
 

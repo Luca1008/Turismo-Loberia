@@ -63,6 +63,10 @@ exports.getForecast = async (req, res) => {
           tempMin: item.main.temp_min,
           icon: item.weather[0].icon,
           descripcion: item.weather[0].description,
+          humedadSum: item.main.humidity,
+          presionSum: item.main.pressure,
+          vientoSum: item.wind ? item.wind.speed : 0,
+          count: 1,
           icon12: null,
           desc12: null,
           dt12: null,
@@ -70,6 +74,10 @@ exports.getForecast = async (req, res) => {
       } else {
         dias[dia].tempMax = Math.max(dias[dia].tempMax, item.main.temp_max);
         dias[dia].tempMin = Math.min(dias[dia].tempMin, item.main.temp_min);
+        dias[dia].humedadSum += item.main.humidity;
+        dias[dia].presionSum += item.main.pressure;
+        dias[dia].vientoSum += item.wind ? item.wind.speed : 0;
+        dias[dia].count += 1;
       }
 
       if (fecha.getHours() === 12) {
@@ -86,6 +94,9 @@ exports.getForecast = async (req, res) => {
         tempMin: d.tempMin,
         icon: d.icon12 || d.icon,
         descripcion: d.desc12 || d.descripcion,
+        humedad: Math.round(d.humedadSum / d.count),
+        presion: Math.round(d.presionSum / d.count),
+        viento: Math.round((d.vientoSum / d.count) * 10) / 10, // 1 decimal
       }))
       .slice(0, 5);
 

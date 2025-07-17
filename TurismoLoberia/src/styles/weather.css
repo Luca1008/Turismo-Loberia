@@ -1,9 +1,13 @@
 .section-weather{
   display: flex;
+  justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 1.5rem;
   padding-top: 2rem;
+}
+section.weather h1{
+  text-align: center;
 }
 
 .card-weather {
@@ -211,4 +215,9 @@
   margin-top: 0 !important;
 }
 
-
+.table-weather{
+  margin-top: 4rem;
+  overflow: auto;
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+}
