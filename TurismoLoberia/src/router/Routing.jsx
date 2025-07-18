@@ -9,6 +9,7 @@ import { SanManuel } from '../pages/SanManuel';
 import Searcher from '../pages/Searcher';
 import { Suscribe } from '../pages/Subscribe';
 import { Clima } from '../pages/Weather';
+import CardPage from "../pages/CardPage";
 
 
 export const Routing = () => {
@@ -23,6 +24,7 @@ export const Routing = () => {
       <Route path="/Contacto" element={<Contact />} />
       <Route path="/Buscador" element={<Searcher />} />
       <Route path="/Suscribirse" element={<Suscribe />} />
+      <Route path="/card/:id" element={<CardPage />} />
     </Routes>
   )
 }

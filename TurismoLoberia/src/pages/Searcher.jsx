@@ -117,6 +117,7 @@ export const Searcher = () => {
             cards.map((card) => (
               <PlaceCard
                 key={card.id}
+                id={card.id}
                 title={card.card_title}
                 description={card.card_description}
                 city={card.card_city}
