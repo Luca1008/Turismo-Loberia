@@ -33,36 +33,40 @@ export const Clima = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const promesas = ciudades.map(async (c) => {
-        let url = c.lat && c.lon
-          ? `http://localhost:5000/api/weather?lat=${c.lat}&lon=${c.lon}`
-          : `http://localhost:5000/api/weather?city=${c.ciudad}`;
-        try {
-          const res = await axios.get(url);
-          return {
-            ciudad: res.data.ciudad,
-            temp: res.data.temp,
-            sensacion: res.data.temp,
-            humedad: res.data.humedad || 80,
-            viento: res.data.viento !== undefined ? res.data.viento : "-",
-            presion: res.data.presion || 1012,
-            estado: res.data.descripcion,
-          };
-        } catch {
-          return {
-            ciudad: c.ciudad,
-            temp: '-',
-            sensacion: '-',
-            humedad: '-',
-            viento: '-',
-            presion: '-',
-            estado: 'Sin datos',
-          };
-        }
-      });
-      const resultados = await Promise.all(promesas);
-      setDetalles(resultados);
-      setLoading(false);
+      try {
+        const promesas = ciudades.map(async (c) => {
+          let url = c.lat && c.lon
+            ? `http://localhost:5000/api/weather?lat=${c.lat}&lon=${c.lon}`
+            : `http://localhost:5000/api/weather?city=${c.ciudad}`;
+          try {
+            const res = await axios.get(url);
+            return {
+              ciudad: res.data.ciudad,
+              temp: res.data.temp,
+              sensacion: res.data.temp,
+              humedad: res.data.humedad || 80,
+              viento: res.data.viento !== undefined ? res.data.viento : "-",
+              presion: res.data.presion || 1012,
+              estado: res.data.descripcion,
+            };
+          } catch {
+            return {
+              ciudad: c.ciudad,
+              temp: '-',
+              sensacion: '-',
+              humedad: '-',
+              viento: '-',
+              presion: '-',
+              estado: 'Sin datos',
+            };
+          }
+        });
+        const resultados = await Promise.all(promesas);
+        setDetalles(resultados);
+        setLoading(false); // Solo si todo sale bien
+      } catch {
+        // Si hay error general, no cambiamos loading
+      }
     };
     fetchData();
   }, []);
@@ -87,12 +91,10 @@ export const Clima = () => {
           `http://localhost:5000/api/forecast?lat=-38.8083&lon=-58.6036`
         );
         setForecastArenasVerdes(resArenas.data);
+        setLoadingForecast(false); // Solo si todo sale bien
       } catch (error) {
-        setForecastLoberia([]);
-        setForecastSanManuel([]);
-        setForecastArenasVerdes([]);
+        // Si hay error, no cambiamos loadingForecast
       }
-      setLoadingForecast(false);
     };
     fetchForecasts();
   }, []);
@@ -203,7 +205,7 @@ export const Clima = () => {
   return (
     <div>
       <section className='weather'>
-        <h1>Consultá el clima</h1>
+        <h1>Consultá el Clima</h1>
         <div className="section-weather">
           <WeatherCard ciudad="Lobería" />
           <WeatherCard ciudad="San Manuel" />
@@ -260,8 +262,8 @@ export const Clima = () => {
           )}
         </div>
         {/* Tablas de pronóstico extendido: una por ciudad, cada una con los cinco días como filas */}
+        <h2 className="h2-weather">Pronóstico Extendido</h2>
         <div className="section-weather" style={{ flexDirection: 'column', gap: '2rem', marginTop: '2rem' }}>
-          <h2 className="h2-weather">Pronóstico extendido</h2>
           {loadingForecast ? (
             <div className="weather-spinner-container">
             <div className="weather-spinner"></div>
@@ -289,7 +291,7 @@ export const Clima = () => {
                         <td>{formatFecha(d.dt)}</td>
                         <td>{Math.round(d.tempMax)}°</td>
                         <td>{Math.round(d.tempMin)}°</td>
-                        <td style={{ textTransform: 'capitalize' }}>{getWeatherIcon(d.icon)} {d.descripcion}</td>
+                        <td style={{ textTransform: 'capitalize' }}>{d.descripcion}</td>
                         <td>{d.humedad ? d.humedad + '%' : '-'}</td>
                         <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
                         <td>{d.presion ? d.presion + ' hPa' : '-'}</td>
@@ -319,7 +321,7 @@ export const Clima = () => {
                         <td>{formatFecha(d.dt)}</td>
                         <td>{Math.round(d.tempMax)}°</td>
                         <td>{Math.round(d.tempMin)}°</td>
-                        <td style={{ textTransform: 'capitalize' }}>{getWeatherIcon(d.icon)} {d.descripcion}</td>
+                        <td style={{ textTransform: 'capitalize' }}>{d.descripcion}</td>
                         <td>{d.humedad ? d.humedad + '%' : '-'}</td>
                         <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
                         <td>{d.presion ? d.presion + ' hPa' : '-'}</td>
@@ -349,7 +351,7 @@ export const Clima = () => {
                         <td>{formatFecha(d.dt)}</td>
                         <td>{Math.round(d.tempMax)}°</td>
                         <td>{Math.round(d.tempMin)}°</td>
-                        <td style={{ textTransform: 'capitalize' }}>{getWeatherIcon(d.icon)} {d.descripcion}</td>
+                        <td style={{ textTransform: 'capitalize' }}>{d.descripcion}</td>
                         <td>{d.humedad ? d.humedad + '%' : '-'}</td>
                         <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
                         <td>{d.presion ? d.presion + ' hPa' : '-'}</td>

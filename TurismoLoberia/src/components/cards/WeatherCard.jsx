@@ -94,7 +94,6 @@ const WeatherCard = ({ ciudad = "Tandil", lat, lon }) => {
     );
   const [climaActual, setClimaActual] = useState(null);
   const [pronostico, setPronostico] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     let urlActual, urlPronostico;
@@ -108,17 +107,15 @@ const WeatherCard = ({ ciudad = "Tandil", lat, lon }) => {
     axios
       .get(urlActual)
       .then((res) => setClimaActual(res.data))
-      .catch(() => setError("No hay datos del clima actual."));
+      .catch(() => {
+        // Si hay error, no seteamos nada y el spinner queda visible
+      });
 
     axios
       .get(urlPronostico)
       .then((res) => {
-        // Si la API ya devuelve un array de días con tempMax/tempMin, icon y descripcion, úsalo directo
-        // Si no, agrupa los datos por día y calcula máximas y mínimas
         let datos = res.data;
-        //console.log('Pronóstico crudo:', datos); // <-- Agregado para depuración
         if (Array.isArray(datos) && datos.length && datos[0].dt_txt) {
-          // Agrupar por día
           const dias = {};
           datos.forEach((item) => {
             const fechaUTC = new Date(item.dt_txt);
@@ -129,7 +126,6 @@ const WeatherCard = ({ ciudad = "Tandil", lat, lon }) => {
             if (!dias[dia]) dias[dia] = [];
             dias[dia].push(item);
           });
-          // Tomar los próximos 5 días (sin incluir hoy)
           const hoy = new Date().toISOString().split("T")[0];
           const diasKeys = Object.keys(dias)
             .filter((d) => d !== hoy)
@@ -139,7 +135,6 @@ const WeatherCard = ({ ciudad = "Tandil", lat, lon }) => {
             const items = dias[diaKey];
             const tempMax = Math.max(...items.map((i) => i.main.temp_max));
             const tempMin = Math.min(...items.map((i) => i.main.temp_min));
-            // Priorizar horas diurnas (6 a 18)
             const horasDiurnas = items.filter((i) => {
               const h = (new Date(i.dt_txt).getUTCHours() - 3 + 24) % 24;
               return h >= 6 && h <= 18;
@@ -178,10 +173,11 @@ const WeatherCard = ({ ciudad = "Tandil", lat, lon }) => {
         }
         setPronostico(datos);
       })
-      .catch(() => setError("No hay pronóstico disponible."));
+      .catch(() => {
+        // Si hay error, no seteamos nada y el spinner queda visible
+      });
   }, [ciudad, lat, lon]); // <-- Agregado ciudad como dependencia
 
-  if (error) return <div style={{ color: "red" }}>{error}</div>;
   if (!climaActual) return (
     <div className="weather-spinner-container">
       <div className="weather-spinner"></div>
