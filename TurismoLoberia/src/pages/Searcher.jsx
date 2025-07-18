@@ -120,7 +120,7 @@ export const Searcher = () => {
                 title={card.card_title}
                 description={card.card_description}
                 city={card.card_city}
-                img={card.img}
+                img={card.card_img_portada}
               />
             ))
           ) : (

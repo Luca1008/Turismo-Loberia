@@ -3,17 +3,23 @@ const express = require('express');
 const cors = require('cors');
 const cardsRoutes = require('./routes/cards.routes');
 const utilsRoutes = require('./routes/utils.routes');
+const multer = require('multer'); // ⬅️ Agregado para configuración global si se necesita
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(express.json());
 
+// 🔸 json limit pequeño para requests normales
+app.use(express.json({ limit: '1mb' }));
+
+// 🔸 para formularios con imágenes (multipart/form-data)
+app.use(express.urlencoded({ extended: true })); // ✅ necesario para form-data además de json
+
+// Rutas
 app.use('/api', cardsRoutes);
 app.use('/api', utilsRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor backend escuchando en http://localhost:${PORT}`);
 });
-console.log('🧠 ESTE ES EL INDEX REAL QUE SE ESTÁ EJECUTANDO');

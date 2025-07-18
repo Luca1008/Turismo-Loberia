@@ -61,7 +61,11 @@ exports.getAllCards = async (req, res) => {
     query += ` ORDER BY id ASC LIMIT ${limit} OFFSET ${offset}`;
 
     const result = await db.query(query, params);
-    res.json({ total, cards: result.rows });
+    const formatted = result.rows.map(formatCardWithImages);
+    res.json({
+      total,
+      cards: formatted
+    });
   } catch (error) {
     console.error('Error al obtener cards:', error.message);
     res.status(500).json({ error: 'Error al obtener los datos.' });
@@ -85,25 +89,29 @@ exports.getCardById = async (req, res) => {
 
 // POST (crear nueva card)
 exports.createCard = async (req, res) => {
-  const {
-    card_title, card_description, card_ubicacion, card_link_ubicacion,
-    card_horario, card_contacto, card_info, card_city, card_category
-  } = req.body;
-
-  const imgBuffer = req.file ? req.file.buffer : null;
-
   try {
+    const {
+      card_title, card_description, card_ubicacion, card_link_ubicacion,
+      card_horario, card_contacto, card_info, card_city, card_category
+    } = req.body;
+
+    const imgPortada = req.files?.card_img_portada?.[0]?.buffer || null;
+    const imgExtra = req.files?.card_img?.[0]?.buffer || null;
+
     const result = await db.query(
       `INSERT INTO turismo_prueba."card" (
         card_title, card_description, card_ubicacion, card_link_ubicacion,
-        card_horario, card_contacto, card_info, card_city, card_category, card_img_portada
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
+        card_horario, card_contacto, card_info, card_city, card_category,
+        card_img_portada, card_img
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
       [
         card_title, card_description, card_ubicacion, card_link_ubicacion,
-        card_horario, card_contacto, card_info, card_city, card_category, imgBuffer
+        card_horario, card_contacto, card_info, card_city, card_category,
+        imgPortada, imgExtra
       ]
     );
-    res.status(201).json({ message: 'Card creada correctamente', card: result.rows[0] });
+
+    res.status(201).json({ message: 'Card creada correctamente', card: formatCardWithImages(result.rows[0]) });
   } catch (error) {
     console.error('Error al crear card con imagen:', error.message);
     res.status(500).json({ error: 'Error al crear la card con imagen.' });
@@ -113,56 +121,30 @@ exports.createCard = async (req, res) => {
 // PUT (actualizar una card)
 exports.updateCard = async (req, res) => {
   const { id } = req.params;
-  const {
-    card_title,
-    card_description,
-    card_ubicacion,
-    card_link_ubicacion,
-    card_horario,
-    card_contacto,
-    card_info,
-    card_city,
-    card_category,
-    card_img_portada,
-    card_img
-  } = req.body;
-
-  const imgBuffer = req.file ? req.file.buffer : null;
-
   try {
+    const {
+      card_title, card_description, card_ubicacion, card_link_ubicacion,
+      card_horario, card_contacto, card_info, card_city, card_category
+    } = req.body;
+
+    const imgPortada = req.files?.card_img_portada?.[0]?.buffer || null;
+    const imgExtra = req.files?.card_img?.[0]?.buffer || null;
+
     const result = await db.query(
       `UPDATE turismo_prueba."card" SET
-        card_title = $1,
-        card_description = $2,
-        card_ubicacion = $3,
-        card_link_ubicacion = $4,
-        card_horario = $5,
-        card_contacto = $6,
-        card_info = $7,
-        card_city = $8,
-        card_category = $9,
-        card_img_portada = $10,
-        card_img = $11
+        card_title=$1, card_description=$2, card_ubicacion=$3, card_link_ubicacion=$4,
+        card_horario=$5, card_contacto=$6, card_info=$7, card_city=$8, card_category=$9,
+        card_img_portada=$10, card_img=$11
       WHERE id = $12 RETURNING *`,
       [
-        card_title,
-        card_description,
-        card_ubicacion,
-        card_link_ubicacion,
-        card_horario,
-        card_contacto,
-        card_info,
-        card_city,
-        card_category,
-        imgBuffer,
-        card_img ? Buffer.from(card_img, 'base64') : null,
-        id
+        card_title, card_description, card_ubicacion, card_link_ubicacion,
+        card_horario, card_contacto, card_info, card_city, card_category,
+        imgPortada, imgExtra, id
       ]
     );
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Card no encontrada para actualizar.' });
-    }
-    res.json({ message: 'Card actualizada', card: formatCardWithImages(result.rows[0]) });
+
+    if (result.rowCount === 0) return res.status(404).json({ error: 'Card no encontrada para actualizar.' });
+    res.json({ message: 'Card actualizada correctamente', card: formatCardWithImages(result.rows[0]) });
   } catch (error) {
     console.error('Error al actualizar card:', error.message);
     res.status(500).json({ error: 'Error al actualizar la card.' });
