@@ -16,7 +16,13 @@ section.weather h1{
   padding: 24px;
   max-width: 340px;
   margin: 0 auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.22), 0 1.5px 6px rgba(0,0,0,0.13);
+  transition: transform 0.18s cubic-bezier(0.4,0,0.2,1);
+}
+
+.card-weather:hover,
+.card-weather:focus-within {
+  transform: scale(1.03);
 }
 
 .h2-weather {
@@ -254,9 +260,24 @@ section.weather h1{
 
 .table-weather{
   margin-top: 4rem;
-  overflow: auto;
+  overflow-x: auto;
   border-radius: 16px;
   padding: 1.5rem 1rem;
+  width: 100%;
+}
+
+/* Forzar scroll horizontal y hacer la tabla más compacta en mobile */
+@media (max-width: 600px) {
+  .table-weather {
+    padding: 0.5rem 0.2rem;
+  }
+  .table-weather table {
+    min-width: 600px;
+    font-size: 0.92rem;
+  }
+  .table-weather th, .table-weather td {
+    padding: 0.4rem 0.3rem;
+  }
 }
 
 .weather-spinner-container {

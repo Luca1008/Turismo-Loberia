@@ -17,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/Luca1008/Turismo-Loberia/issues"
   },
-  "homepage": "https://github.com/Luca1008/Turismo-Loberia#readme"
+  "homepage": "https://github.com/Luca1008/Turismo-Loberia#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "multer": "^2.0.2"
+  }
 }
