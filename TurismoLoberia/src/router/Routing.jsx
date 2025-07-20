@@ -9,14 +9,9 @@ import { SanManuel } from '../pages/SanManuel';
 import Searcher from '../pages/Searcher';
 import { Suscribe } from '../pages/Subscribe';
 import { Clima } from '../pages/Weather';
-<<<<<<< HEAD
-import CardPage from "../pages/CardPage";
-
-=======
 import Admin from '../pages/Admin';
 import {Register} from '../pages/Register';
 import PanelAdmin from '../pages/PanelAdmin';
->>>>>>> admin
 
 export const Routing = () => {
   return (
@@ -30,13 +25,9 @@ export const Routing = () => {
       <Route path="/Contacto" element={<Contact />} />
       <Route path="/Buscador" element={<Searcher />} />
       <Route path="/Suscribirse" element={<Suscribe />} />
-<<<<<<< HEAD
-      <Route path="/card/:id" element={<CardPage />} />
-=======
       <Route path="/Admin" element={<Admin />} />
       <Route path="/Register" element={<Register />} />
       <Route path="/PanelAdmin" element={<PanelAdmin />} />
->>>>>>> admin
     </Routes>
   )
 }
