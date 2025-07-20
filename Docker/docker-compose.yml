@@ -7,15 +7,16 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: localhost
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: loberia
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./init_cards.sql:/docker-entrypoint-initdb.d/init_cards.sql  # Tu archivo SQL
     restart: always
 
   backend:
-    build: ./Backend
+    build: ../Backend
     container_name: backend_loberia
     ports:
       - "5000:5000"
