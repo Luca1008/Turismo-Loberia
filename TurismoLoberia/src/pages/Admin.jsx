@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
-import ButtonSubmit from "../components/common/ButtonSubmit"; // Ajusta la ruta si es necesario
+import ButtonSubmit from "../components/common/ButtonSubmit";
+import '../styles/admin.css';
 
 const Admin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -44,7 +45,7 @@ const Admin = () => {
   return (
     <section className="login">
       <h2>Panel de Administración</h2>
-      <Form onSubmit={loginUser}>
+      <Form onSubmit={loginUser} className="form-login">
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Email</Form.Label>
           <Form.Control

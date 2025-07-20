@@ -19,8 +19,6 @@ export const Register = () => {
       password: e.target.password.value,
     };
 
-    // Eliminar la recolección de imagen de perfil
-    // const profileImage = e.target.profileImage.files[0];
 
     // Validar contraseña
     if (userData.password.length < 8) {
@@ -92,9 +90,6 @@ export const Register = () => {
               <Form.Label>Contraseña</Form.Label>
               <Form.Control type="password" name="password" placeholder="Contraseña" required />
             </Form.Group>
-
-            {/* Eliminar el campo de imagen de perfil */}
-
             <button type="submit" className="btn btn-success">
               Registrarse
             </button>
