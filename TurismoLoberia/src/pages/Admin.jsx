@@ -1,51 +1,84 @@
 import React, { useState } from "react";
-import Create from "../components/layout/Create";
-import Edit from "../components/layout/Edit";
-import '../styles/panelAdmin.css';
-import Searcher from "./Searcher";
-import UserPanel from "../components/layout/UserPanel";
+import Form from "react-bootstrap/Form";
+import ButtonSubmit from "../components/common/ButtonSubmit"; // Ajusta la ruta si es necesario
 
 const Admin = () => {
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [selectedCardId, setSelectedCardId] = useState(null);
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
 
-  const handleEditCard = (cardId) => {
-    setSelectedCardId(cardId);
-    setShowEditModal(true);
-  };
+  const loginUser = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-  const handleCloseEditModal = () => {
-    setShowEditModal(false);
-    setSelectedCardId(null);
+    // Validación simple
+    if (!formData.password || formData.password.length < 8) {
+      alert("La contraseña debe tener al menos 8 caracteres.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/user/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        // Guarda el token JWT
+        localStorage.setItem('token', data.token);
+        alert('¡Login exitoso!');
+        setLoading(false);
+        window.location.href = "/PanelAdmin";
+      } else {
+        alert(data.message || 'Error al iniciar sesión');
+        setLoading(false);
+      }
+    } catch (error) {
+      alert('Error de conexión');
+      setLoading(false);
+    }
   };
 
   return (
-    <section className="panel-admin">
-      <h2>Bienvenido al Panel de Administración</h2>
-      
-      {/* Buscador en modo admin */}
-      <Searcher 
-        isAdmin={true} 
-        onEdit={handleEditCard}
-      />
-      
-      {/* Formulario de creación */}
-      <section className="add-card">
-        <Create />
-      </section>
-
-      {/* Modal de edición */}
-      {showEditModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <Edit 
-              cardId={selectedCardId} 
-              onClose={handleCloseEditModal}
-            />
-          </div>
-        </div>
-      )}
-      <UserPanel />
+    <section className="login">
+      <h2>Panel de Administración</h2>
+      <Form onSubmit={loginUser}>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="name@example.com"
+            required
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+          <Form.Label>Contraseña</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="contraseña"
+            required
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+          />
+        </Form.Group>
+        <div style={{ marginTop: '1rem' }}>
+        <a href="/Register">¿No tienes cuenta? Regístrate aquí</a>
+      </div>
+        <ButtonSubmit
+          type="submit"
+          text={loading ? "Cargando..." : "Logueate"}
+          className={`btn btn-success ${loading ? "loading" : ""}`}
+          disabled={loading}
+        />
+      </Form>
     </section>
   );
 };

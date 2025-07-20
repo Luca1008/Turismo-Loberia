@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Global } from "../helpers/Global";
@@ -14,10 +15,12 @@ export const Register = () => {
     let userData = {
       name: e.target.name.value,
       surname: e.target.surname.value,
-      nick: e.target.nick.value,
       email: e.target.email.value,
       password: e.target.password.value,
     };
+
+    // Eliminar la recolección de imagen de perfil
+    // const profileImage = e.target.profileImage.files[0];
 
     // Validar contraseña
     if (userData.password.length < 8) {
@@ -26,12 +29,10 @@ export const Register = () => {
     }
 
     try {
-      // Petición al servidor
+      // Enviar datos como JSON
       const request = await fetch(Global.url + "user/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
 
@@ -48,6 +49,9 @@ export const Register = () => {
           toast.error("El usuario ya existe en el sistema");
         } else {
           toast.success("Usuario registrado correctamente");
+          setTimeout(() => {
+            window.location.href = "/Admin";
+          }, 1500); // Espera 1.5 segundos para mostrar el toast
         }
       } else {
         setError(data.message || "Error al registrar usuario");
@@ -61,60 +65,43 @@ export const Register = () => {
 
   return (
     <>
-      <header className="content__header">
-        <h1 className="content__title">Registro</h1>
-      </header>
+      <section className="register">
+        <h2 className="content__title">Registro</h2>
+        <div className="content__posts">
+          <Form
+            className="register-form"
+            onSubmit={registerUser}
+            encType="multipart/form-data"
+          >
+            <Form.Group className="mb-3" controlId="registerName">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control type="text" name="name" placeholder="Nombre" required />
+            </Form.Group>
 
-      <div className="content__posts">
-        <form className="register-form" onSubmit={registerUser}>
-          <div className="form-group">
-            <label htmlFor="name">Nombre</label>
-            <input type="text" name="name" className="form-control" required />
-          </div>
+            <Form.Group className="mb-3" controlId="registerSurname">
+              <Form.Label>Apellido</Form.Label>
+              <Form.Control type="text" name="surname" placeholder="Apellido" required />
+            </Form.Group>
 
-          <div className="form-group">
-            <label htmlFor="surname">Apellidos</label>
-            <input
-              type="text"
-              name="surname"
-              className="form-control"
-              required
-            />
-          </div>
+            <Form.Group className="mb-3" controlId="registerEmail">
+              <Form.Label>Correo electrónico</Form.Label>
+              <Form.Control type="email" name="email" placeholder="Correo electrónico" required />
+            </Form.Group>
 
-          <div className="form-group">
-            <label htmlFor="nick">Nick</label>
-            <input type="text" name="nick" className="form-control" required />
-          </div>
+            <Form.Group className="mb-3" controlId="registerPassword">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control type="password" name="password" placeholder="Contraseña" required />
+            </Form.Group>
 
-          <div className="form-group">
-            <label htmlFor="email">Correo electrónico</label>
-            <input
-              type="email"
-              name="email"
-              className="form-control"
-              required
-            />
-          </div>
+            {/* Eliminar el campo de imagen de perfil */}
 
-          <div className="form-group">
-            <label htmlFor="password">Contraseña</label>
-            <input
-              type="password"
-              name="password"
-              className="form-control"
-              required
-            />
-          </div>
-
-          <input
-            type="submit"
-            value="Registrarse"
-            className="btn btn-success"
-          />
-        </form>
-      </div>
-      <ToastContainer />
+            <button type="submit" className="btn btn-success">
+              Registrarse
+            </button>
+          </Form>
+        </div>
+        <ToastContainer />
+      </section>
     </>
   );
 };

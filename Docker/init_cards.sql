@@ -20,3 +20,16 @@ INSERT INTO turismo_prueba."card" (card_title, card_description, card_ubicacion,
 ('Museo Histórico', 'Museo con exposiciones sobre la historia local.', 'Av. Principal 123', 'https://maps.google.com', 'Lun-Vie 9-18hs', '0221-654321', 'Visitas guiadas disponibles', 'Lobería', 'Cultura'),
 ('Playa Arenas Verdes', 'Hermosa playa para disfrutar en familia.', 'Ruta 11 km 45', 'https://maps.google.com', 'Todo el día', '0221-789012', 'Balneario con servicios', 'Arenas Verdes', 'Cultura'),
 ('Parque San Manuel', 'Espacio verde con juegos y actividades al aire libre.', 'San Manuel Centro', 'https://maps.google.com', '8-20hs', '0221-345678', 'Parque recreativo familiar', 'San Manuel', 'Cultura');
+
+CREATE TABLE IF NOT EXISTS turismo_prueba.users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    surname VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Usuarios de ejemplo
+INSERT INTO turismo_prueba.users (name, surname, email, password) VALUES
+('Felicitas', 'Aguerralde', 'felicitas.aguerralde@gmail.com', 'Feluchi89');
