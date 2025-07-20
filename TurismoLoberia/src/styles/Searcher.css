@@ -44,8 +44,16 @@
   transition: background-color 0.2s ease;
 }
 
+button.btn-reset{
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
+  font-weight: bold;
+
+}
+
 .search-input-group button:hover {
-  background-color: var(--primary-color-dark2);
+  background-color: var(--primary-white-2);
 }
 
 /* Filtros: vertical en mobile, horizontal en desktop */
@@ -55,6 +63,7 @@
   gap: 0.75rem;
   width: 100%;
   max-width: 720px;
+  max-height: 50px;
 }
 
 .filter-select {
@@ -80,6 +89,7 @@
   display: flex;
   justify-content: center;
 }
+
 /* Contenedor del pagination */
 .pagination-container {
   margin-top: 2rem;
@@ -138,4 +148,5 @@
   .pagination-container {
     padding: 0 1rem;
   }
+
 }

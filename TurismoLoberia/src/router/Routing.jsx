@@ -9,7 +9,9 @@ import { SanManuel } from '../pages/SanManuel';
 import Searcher from '../pages/Searcher';
 import { Suscribe } from '../pages/Subscribe';
 import { Clima } from '../pages/Weather';
-
+import Login from '../pages/Login';
+import {Register} from '../pages/Register';
+import Admin from '../pages/Admin';
 
 export const Routing = () => {
   return (
@@ -23,6 +25,9 @@ export const Routing = () => {
       <Route path="/Contacto" element={<Contact />} />
       <Route path="/Buscador" element={<Searcher />} />
       <Route path="/Suscribirse" element={<Suscribe />} />
+      <Route path="/Login" element={<Login />} />
+      <Route path="/Register" element={<Register />} />
+      <Route path="/Admin" element={<Admin />} />
     </Routes>
   )
 }

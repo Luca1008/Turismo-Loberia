@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Pagination from "react-bootstrap/Pagination";
 import { FaSearch } from "react-icons/fa";
 
+import CardEdit from "../components/cards/CardEdit";
 import PlaceCard from "../components/cards/PlaceCard";
 import "../styles/searcher.css";
 
-export const Searcher = () => {
+export const Searcher = ({ 
+  isAdmin = false, 
+  onEdit = null, 
+  onDelete = null 
+}) => {
   // --- Estados principales
   const [cards, setCards] = useState([]);
   const [search, setSearch] = useState("");
@@ -58,10 +64,46 @@ export const Searcher = () => {
     }
   };
 
-  // === Ejecutar cada vez que cambien filtros o página
+  // === Función para eliminar card
+  const handleDeleteCard = async (cardId) => {
+    try {
+      const response = await axios.delete(`http://localhost:5000/api/cards/${cardId}`);
+      if (response.status === 200) {
+        // Recargar las cards después de eliminar
+        fetchCards();
+      }
+    } catch (error) {
+      console.error("Error al eliminar la card:", error);
+    }
+  };
+
+  // === Función para editar card
+  const handleEditCard = (cardId) => {
+    if (onEdit) {
+      onEdit(cardId);
+    } else {
+      console.log("Editar card con ID:", cardId);
+    }
+  };
+
+  // === Efectos
   useEffect(() => {
     fetchCards();
-  }, [search, city, category, page]);
+  }, [page, search, city, category]);
+
+  // === Handlers
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setPage(1); // Reset a la primera página
+    fetchCards();
+  };
+
+  const handleReset = () => {
+    setSearch("");
+    setCity("");
+    setCategory("");
+    setPage(1);
+  };
 
   return (
     <div className="search-page">
@@ -109,23 +151,38 @@ export const Searcher = () => {
             <option value="Gastronomía">Gastronomía</option>
             <option value="Cultura">Cultura</option>
           </Form.Select>
+
+          <Button className="btn-reset" variant="outline-secondary" onClick={handleReset}>
+            Limpiar filtros
+          </Button>
         </div>
 
         {/* 🗂️ Resultados */}
         <div className="results-grid">
           {cards.length > 0 ? (
-            cards.map((card) => (
-              <PlaceCard
-                key={card.id}
-                title={card.card_title}
-                description={card.card_description}
-                city={card.card_city}
-                img={card.card_img_portada}
-              />
-            ))
-          ) : (
-            noResults && <p className="no-results-msg">No se encontraron resultados 🧐</p>
-          )}
+            cards.map((card) => 
+              isAdmin ? (
+                <CardEdit
+                  key={card.id}
+                  id={card.id}
+                  title={card.card_title}
+                  description={card.card_description}
+                  city={card.card_city}
+                  img={card.card_img_portada}
+                  onEdit={handleEditCard}
+                  onDelete={handleDeleteCard}
+                />
+              ) : (
+                <PlaceCard
+                  key={card.id}
+                  title={card.card_title}
+                  description={card.card_description}
+                  city={card.card_city}
+                  img={card.card_img_portada}
+                />
+              )
+            )
+          ) : null}
         </div>
 
         {/* 📄 Paginación con Bootstrap */}

@@ -1,4 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AccessibilityButtton from "./components/common/AccessibilityButtton";
 import ScrollToHash from "./components/common/ScrollToHash";
 import ScrollToTop from "./components/common/ScrollToTop";
@@ -25,6 +27,7 @@ function App() {
           <Whatsapp />
         </div>
       </div>
+      <ToastContainer />
     </BrowserRouter>
   );
 }
