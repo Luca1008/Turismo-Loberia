@@ -8,13 +8,27 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Lucaleo100
-      POSTGRES_DB: LoberiaTurismoPrueba
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: loberia
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./init_cards.sql:/docker-entrypoint-initdb.d/init_cards.sql
+      - ./init_cards.sql:/docker-entrypoint-initdb.d/init_cards.sql  # Tu archivo SQL
     restart: always
+
+  backend:
+    build: ../Backend
+    container_name: backend_loberia
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    environment:
+      PORT: 5000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: 1234
+      DB_NAME: loberia
 
 volumes:
   pgdata:
-

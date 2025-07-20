@@ -1,0 +1,10 @@
+.panel-admin section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel-admin h2{
+    text-align: center;
+}
