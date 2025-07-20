@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Pagination from "react-bootstrap/Pagination";
@@ -9,11 +9,7 @@ import CardEdit from "../components/cards/CardEdit";
 import PlaceCard from "../components/cards/PlaceCard";
 import "../styles/searcher.css";
 
-export const Searcher = ({ 
-  isAdmin = false, 
-  onEdit = null, 
-  onDelete = null 
-}) => {
+const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }, ref) => {
   // --- Estados principales
   const [cards, setCards] = useState([]);
   const [search, setSearch] = useState("");
@@ -90,6 +86,10 @@ export const Searcher = ({
   useEffect(() => {
     fetchCards();
   }, [page, search, city, category]);
+
+  useImperativeHandle(ref, () => ({
+    fetchCards
+  }));
 
   // === Handlers
   const handleSearch = (e) => {
@@ -202,7 +202,7 @@ export const Searcher = ({
       </main>
     </div>
   );
-};
+});
 
 export default Searcher;
 

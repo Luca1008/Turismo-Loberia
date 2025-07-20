@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import ButtonSubmit from "../common/ButtonSubmit";
 
-const Edit = ({ cardId, onClose }) => {
+const Edit = ({ cardId, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
     titulo: "",
     descripcion: "",
@@ -31,13 +31,13 @@ const Edit = ({ cardId, onClose }) => {
       if (response.ok) {
         const card = await response.json();
         setFormData({
-          titulo: card.titulo || "",
-          descripcion: card.descripcion || "",
-          ubicacion: card.ubicacion || "",
-          horario: card.horario || "",
-          informacion: card.informacion || "",
-          ciudad: card.ciudad || "",
-          categoria: card.categoria || "",
+          titulo: card.card_title || "",
+          descripcion: card.card_description || "",
+          ubicacion: card.card_ubicacion || "",
+          horario: card.card_horario || "",
+          informacion: card.card_info || "",
+          ciudad: card.card_city || "",
+          categoria: card.card_category || "",
         });
         setImagenActual(card.card_img_portada || "");
       } else {
@@ -65,9 +65,13 @@ const Edit = ({ cardId, onClose }) => {
     
     try {
       const data = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        data.append(key, value);
-      });
+      data.append("card_title", formData.titulo);
+      data.append("card_description", formData.descripcion);
+      data.append("card_ubicacion", formData.ubicacion);
+      data.append("card_horario", formData.horario);
+      data.append("card_info", formData.informacion);
+      data.append("card_city", formData.ciudad);
+      data.append("card_category", formData.categoria);
       if (imagen) {
         data.append("card_img_portada", imagen);
       }
@@ -81,7 +85,8 @@ const Edit = ({ cardId, onClose }) => {
         setMensaje("¡Card actualizada exitosamente!");
         setTimeout(() => {
           if (onClose) onClose();
-        }, 2000);
+          window.location.reload();
+        }, 1500); // Espera 1.5 segundos para mostrar el mensaje
       } else {
         setError("Error al actualizar la card.");
       }
@@ -199,16 +204,6 @@ const Edit = ({ cardId, onClose }) => {
         
         <Form.Group className="mb-3" controlId="formFile">
           <Form.Label>Imagen de Portada</Form.Label>
-          {imagenActual && (
-            <div className="mb-2">
-              <small className="text-muted">Imagen actual:</small>
-              <img 
-                src={`http://localhost:5000/uploads/${imagenActual}`} 
-                alt="Imagen actual" 
-                style={{ width: "100px", height: "60px", objectFit: "cover", display: "block", marginTop: "5px" }}
-              />
-            </div>
-          )}
           <Form.Control
             type="file"
             accept="image/*"
