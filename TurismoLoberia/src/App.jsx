@@ -27,7 +27,6 @@ function App() {
           <Whatsapp />
         </div>
       </div>
-      <ToastContainer />
     </BrowserRouter>
   );
 }
