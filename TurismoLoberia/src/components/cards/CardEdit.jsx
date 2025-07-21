@@ -30,13 +30,13 @@ const CardEdit = ({
   };
 
   return (
-    <Card className="card-edit">
+    <Card className="card">
       <Card.Img className="card-img"
         variant="top"
         src={img || placeCard1}
         alt={title}
       />
-      <Card.Body className="card-edit-body">
+      <Card.Body className="card-body">
         <div className="content-card">
         <Card.Title className="card-title-ellipsis">{title}</Card.Title>
         <Card.Text className="card-description">{description}</Card.Text>

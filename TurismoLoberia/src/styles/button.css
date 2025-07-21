@@ -96,7 +96,7 @@ button[type="submit"]:disabled {
 }
 
 .btn-link:hover, .btn-link:focus {
-  background-color: var(--primary-color);
+  background-color: var(--primary-color) !important;
   color: var(--white);
   border: 1px solid var(--primary-color-dark-1);
   box-shadow: 0 4px 16px rgba(87, 175, 49, 0.18);

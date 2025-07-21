@@ -57,7 +57,6 @@ export const Index = () => {
           <PlaceCard className="place-card" />
           <PlaceCard className="place-card" />
           <PlaceCard className="place-card" />
-          <PlaceCard className="place-card" />
         </div>
         <ButtonSuccess />
       </section>
