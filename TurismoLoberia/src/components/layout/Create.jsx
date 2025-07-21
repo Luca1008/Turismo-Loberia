@@ -70,6 +70,9 @@ const Create = () => {
           categoria: "",
         });
         setImagen(null);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1200); // Espera 1.2 segundos para mostrar el mensaje
       } else {
         const errorData = await response.json();
         setError(errorData.error || "Error al crear la card.");
@@ -165,10 +168,12 @@ const Create = () => {
             name="ciudad"
             value={formData.ciudad}
             onChange={handleChange}
+            required
           >
-            <option>Lobería</option>
-            <option>Arenas Verdes</option>
-            <option>San Manuel</option>
+            <option value="">Selecciona una ciudad</option>
+            <option value="Lobería">Lobería</option>
+            <option value="Arenas Verdes">Arenas Verdes</option>
+            <option value="San Manuel">San Manuel</option>
           </Form.Select>
         </Form.Group>
         <Form.Group className="mb-3" controlId="categoria">
@@ -178,10 +183,12 @@ const Create = () => {
             name="categoria"
             value={formData.categoria}
             onChange={handleChange}
+            required
           >
-            <option>Alojamiento</option>
-            <option>Gastronomía</option>
-            <option>Cultura</option>
+            <option value="">Selecciona una categoría</option>
+            <option value="Alojamiento">Alojamiento</option>
+            <option value="Gastronomía">Gastronomía</option>
+            <option value="Cultura">Cultura</option>
           </Form.Select>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formFile">

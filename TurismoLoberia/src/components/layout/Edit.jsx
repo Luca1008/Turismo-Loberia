@@ -86,7 +86,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
         setTimeout(() => {
           if (onClose) onClose();
           window.location.reload();
-        }, 1500); // Espera 1.5 segundos para mostrar el mensaje
+        }, 1200); // Espera 1.2 segundos para mostrar el mensaje
       } else {
         setError("Error al actualizar la card.");
       }
@@ -203,6 +203,16 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
         </Form.Group>
         
         <Form.Group className="mb-3" controlId="formFile">
+          {imagenActual && (
+            <div style={{ marginBottom: "1rem" }}>
+              <img
+                src={imagenActual}
+                alt="Imagen actual"
+                style={{ maxWidth: "100%", maxHeight: "180px", borderRadius: "8px" }}
+              />
+              <div style={{ fontSize: "0.9rem", color: "#888" }}>Imagen actual</div>
+            </div>
+          )}
           <Form.Label>Imagen de Portada</Form.Label>
           <Form.Control
             type="file"

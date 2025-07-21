@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import EventCard from "../components/cards/EventCard";
 import PlaceCard from "../components/cards/PlaceCard";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
@@ -15,6 +15,22 @@ import WeatherCarousel from "../components/layout/WeatherCarousel";
 import "../styles/button.css";
 
 export const Index = () => {
+  const [alojamientos, setAlojamientos] = useState([]);
+
+  useEffect(() => {
+    // Traer solo los tres primeros alojamientos
+    fetch("http://localhost:5000/api/cards?category=Alojamiento&limit=3&page=1")
+      .then((res) => res.json())
+      .then((data) => {
+        // Si la respuesta es { cards: [...] }
+        const cards = data.cards || data;
+        setAlojamientos(cards.slice(0, 3));
+      })
+      .catch((err) => {
+        setAlojamientos([]);
+      });
+  }, []);
+
   return (
     <div className="index">
       <ControlledCarousel />
@@ -54,9 +70,16 @@ export const Index = () => {
           San Manuel.
         </p>
         <div className="places-items">
-          <PlaceCard className="place-card" />
-          <PlaceCard className="place-card" />
-          <PlaceCard className="place-card" />
+          {alojamientos.map((card) => (
+            <PlaceCard
+              key={card.id}
+              id={card.id}
+              title={card.card_title}
+              description={card.card_description}
+              city={card.card_city}
+              img={card.card_img_portada}
+            />
+          ))}
         </div>
         <ButtonSuccess />
       </section>
