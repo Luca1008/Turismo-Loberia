@@ -163,6 +163,17 @@ a{
 .search-bar-custom .btn:hover svg {
   color: var(--primary-color);
 }
+.btn-buscador{
+  margin: 0% !important;
+}
+
+.Buscadorcito{ 
+  width: 100%;
+  display: flex ;
+  justify-content: between;
+  align-items: center;
+  padding: 0;
+}
 
 .transition-arrow {
   transition: transform 0.2s;
