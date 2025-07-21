@@ -149,6 +149,7 @@ section .container-info{
   border-radius: 2rem;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 0%;
 }
 .search-bar-custom .form-control {
   border: none;
@@ -175,12 +176,12 @@ section .container-info{
   box-shadow: none;
 }
 .search-bar-custom .btn svg {
-  color: #198754; /* Bootstrap primary o success */
+  color: var(--primary-color);
   font-size: 1.2rem;
   transition: color 0.2s;
 }
 .search-bar-custom .btn:hover svg {
-  color: #145c32;
+  color: var(--primary-color-dark-1);
 }
 
 /*---------------Places-----------------*/

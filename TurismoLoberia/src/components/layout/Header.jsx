@@ -198,6 +198,7 @@ export const Header = () => {
               <span>Español</span>
               <FaChevronDown className={`primary transition-arrow${showLanguage ? " rotate" : ""}`} size={12} />
             </div>
+            <div className="vertical-divider"></div>
           </div>
 
           {/* 🍔 HAMBURGUESA */}
@@ -210,7 +211,7 @@ export const Header = () => {
       {/* 🔍 BARRA DE BÚSQUEDA DESKTOP */}
       {showSearch && (
         <div ref={searchRef} className="desktop-search-bar p-3 border-nav d-none d-md-block position-sticky">
-            <form className="Buscadorcito" onSubmit={handleSearchSubmit}>
+            <form className="search-desktop-form" onSubmit={handleSearchSubmit}>
               <input type="text" className="form-control me-3" placeholder="Buscar…" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
               <button className="btn btn-white" type="submit">
                 <FaSearch className="desktop-search-icon" />
