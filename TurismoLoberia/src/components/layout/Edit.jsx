@@ -11,6 +11,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
     informacion: "",
     ciudad: "",
     categoria: "",
+    fecha: "",
   });
   const [imagen, setImagen] = useState(null);
   const [imagenActual, setImagenActual] = useState("");
@@ -38,6 +39,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
           informacion: card.card_info || "",
           ciudad: card.card_city || "",
           categoria: card.card_category || "",
+          fecha: card.card_date || "",
         });
         setImagenActual(card.card_img_portada || "");
       } else {
@@ -72,6 +74,9 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
       data.append("card_info", formData.informacion);
       data.append("card_city", formData.ciudad);
       data.append("card_category", formData.categoria);
+      if (formData.categoria === "Evento") {
+        data.append("card_date", formData.fecha);
+      }
       if (imagen) {
         data.append("card_img_portada", imagen);
       }
@@ -199,8 +204,21 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             <option value="Alojamiento">Alojamiento</option>
             <option value="Gastronomía">Gastronomía</option>
             <option value="Cultura">Cultura</option>
+            <option value="Evento">Evento</option>
           </Form.Select>
         </Form.Group>
+        {formData.categoria === "Evento" && (
+          <Form.Group className="mb-3" controlId="fecha">
+            <Form.Label>Fecha del evento</Form.Label>
+            <Form.Control
+              type="date"
+              name="fecha"
+              value={formData.fecha}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+        )}
         
         <Form.Group className="mb-3" controlId="formFile">
           {imagenActual && (

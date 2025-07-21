@@ -5,8 +5,7 @@ import Form from "react-bootstrap/Form";
 import Pagination from "react-bootstrap/Pagination";
 import { FaSearch } from "react-icons/fa";
 import { useSearchParams } from "react-router-dom";
-import CardEdit from "../components/cards/CardEdit";
-import PlaceCard from "../components/cards/PlaceCard";
+import ContentCard from "../components/cards/ContentCard";
 import "../styles/searcher.css";
 
 const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }, ref) => {
@@ -159,6 +158,7 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }
             <option value="Alojamiento">Alojamiento</option>
             <option value="Gastronomía">Gastronomía</option>
             <option value="Cultura">Cultura</option>
+            <option value="Evento">Evento</option>
           </Form.Select>
 
           <Button className="btn-reset" variant="outline-secondary" onClick={handleReset}>
@@ -169,28 +169,19 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }
         {/* 🗂️ Resultados */}
         <div className="results-grid">
           {cards.length > 0 ? (
-            cards.map((card) => 
-              isAdmin ? (
-                <CardEdit
-                  key={card.id}
-                  id={card.id}
-                  title={card.card_title}
-                  description={card.card_description}
-                  city={card.card_city}
-                  img={card.card_img_portada}
-                  onEdit={handleEditCard}
-                  onDelete={handleDeleteCard}
-                />
-              ) : (
-                <PlaceCard
-                  key={card.id}
-                  title={card.card_title}
-                  description={card.card_description}
-                  city={card.card_city}
-                  img={card.card_img_portada}
-                />
-              )
-            )
+            cards.map((card) => (
+              <ContentCard
+                key={card.id}
+                id={card.id}
+                title={card.card_title}
+                description={card.card_description}
+                city={card.card_city}
+                img={card.card_img_portada}
+                category={card.card_category}
+                card_date={card.card_date}
+                {...(isAdmin && { onEdit: handleEditCard, onDelete: handleDeleteCard })}
+              />
+            ))
           ) : null}
         </div>
 

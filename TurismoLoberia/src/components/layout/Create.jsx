@@ -13,6 +13,7 @@ const Create = () => {
     informacion: "",
     ciudad: "",
     categoria: "",
+    fecha: "",
   });
   const [imagen, setImagen] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,7 @@ const Create = () => {
     setLoading(true);
     setMensaje("");
     setError("");
+    console.log("Datos enviados:", formData);
     try {
       const data = new FormData();
       
@@ -46,6 +48,9 @@ const Create = () => {
       data.append("card_info", formData.informacion);
       data.append("card_city", formData.ciudad);
       data.append("card_category", formData.categoria);
+      if (formData.categoria === "Evento") {
+        data.append("card_date", formData.fecha);
+      }
       
       if (imagen) {
         data.append("card_img_portada", imagen);
@@ -68,11 +73,12 @@ const Create = () => {
           informacion: "",
           ciudad: "",
           categoria: "",
+          fecha: "",
         });
         setImagen(null);
-        setTimeout(() => {
-          window.location.reload();
-        }, 1200); // Espera 1.2 segundos para mostrar el mensaje
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 1200); // Espera 1.2 segundos para mostrar el mensaje
       } else {
         const errorData = await response.json();
         setError(errorData.error || "Error al crear la card.");
@@ -189,8 +195,21 @@ const Create = () => {
             <option value="Alojamiento">Alojamiento</option>
             <option value="Gastronomía">Gastronomía</option>
             <option value="Cultura">Cultura</option>
+            <option value="Evento">Evento</option>
           </Form.Select>
         </Form.Group>
+        {formData.categoria === "Evento" && (
+          <Form.Group className="mb-3" controlId="fecha">
+            <Form.Label>Fecha del evento</Form.Label>
+            <Form.Control
+              type="date"
+              name="fecha"
+              value={formData.fecha}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+        )}
         <Form.Group className="mb-3" controlId="formFile">
           <Form.Label>Imagen de Portada</Form.Label>
           <Form.Control

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import EventCard from "../components/cards/EventCard";
-import PlaceCard from "../components/cards/PlaceCard";
+import ContentCard from "../components/cards/ContentCard";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
 
 import { FaInfo, FaPaintBrush } from "react-icons/fa";
@@ -16,6 +15,7 @@ import "../styles/button.css";
 
 export const Index = () => {
   const [alojamientos, setAlojamientos] = useState([]);
+  const [eventos, setEventos] = useState([]);
 
   useEffect(() => {
     // Traer solo los tres primeros alojamientos
@@ -28,6 +28,16 @@ export const Index = () => {
       })
       .catch((err) => {
         setAlojamientos([]);
+      });
+    // Traer solo los tres primeros eventos
+    fetch("http://localhost:5000/api/cards?category=Evento&limit=3&page=1")
+      .then((res) => res.json())
+      .then((data) => {
+        const cards = data.cards || data;
+        setEventos(cards.slice(0, 3));
+      })
+      .catch((err) => {
+        setEventos([]);
       });
   }, []);
 
@@ -71,13 +81,14 @@ export const Index = () => {
         </p>
         <div className="places-items">
           {alojamientos.map((card) => (
-            <PlaceCard
+            <ContentCard
               key={card.id}
               id={card.id}
               title={card.card_title}
               description={card.card_description}
               city={card.card_city}
               img={card.card_img_portada}
+              category={card.card_category}
             />
           ))}
         </div>
@@ -87,10 +98,18 @@ export const Index = () => {
         <h2>Próximos Eventos</h2>
         <p>No te pierdas todos los eventos que tenemos para vos!!!</p>
         <div className="events">
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
+          {eventos.map((card) => (
+            <ContentCard
+              key={card.id}
+              id={card.id}
+              title={card.card_title}
+              description={card.card_description}
+              city={card.card_city}
+              img={card.card_img_portada}
+              category={card.card_category}
+              card_date={card.card_date}
+            />
+          ))}
         </div>
         <ButtonSuccess />
       </section>

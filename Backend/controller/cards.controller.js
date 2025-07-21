@@ -92,9 +92,10 @@ exports.createCard = async (req, res) => {
   try {
     const {
       card_title, card_description, card_ubicacion, card_link_ubicacion,
-      card_horario, card_contacto, card_info, card_city, card_category
-    } = req.body;
+  card_horario, card_contacto, card_info, card_city, card_category, card_date
+} = req.body;
 
+    console.log('REQ.BODY:', req.body);
     const imgPortada = req.files?.card_img_portada?.[0]?.buffer || null;
     const imgExtra = req.files?.card_img?.[0]?.buffer || null;
 
@@ -102,12 +103,12 @@ exports.createCard = async (req, res) => {
       `INSERT INTO turismo_prueba."card" (
         card_title, card_description, card_ubicacion, card_link_ubicacion,
         card_horario, card_contacto, card_info, card_city, card_category,
-        card_img_portada, card_img
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
+        card_img_portada, card_img, card_date
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
       [
         card_title, card_description, card_ubicacion, card_link_ubicacion,
         card_horario, card_contacto, card_info, card_city, card_category,
-        imgPortada, imgExtra
+        imgPortada, imgExtra, card_date || null
       ]
     );
 
@@ -124,8 +125,8 @@ exports.updateCard = async (req, res) => {
   try {
     const {
       card_title, card_description, card_ubicacion, card_link_ubicacion,
-      card_horario, card_contacto, card_info, card_city, card_category
-    } = req.body;
+  card_horario, card_contacto, card_info, card_city, card_category, card_date
+} = req.body;
 
     const imgPortada = req.files?.card_img_portada?.[0]?.buffer || null;
     const imgExtra = req.files?.card_img?.[0]?.buffer || null;
@@ -134,12 +135,12 @@ exports.updateCard = async (req, res) => {
       `UPDATE turismo_prueba."card" SET
         card_title=$1, card_description=$2, card_ubicacion=$3, card_link_ubicacion=$4,
         card_horario=$5, card_contacto=$6, card_info=$7, card_city=$8, card_category=$9,
-        card_img_portada=$10, card_img=$11
-      WHERE id = $12 RETURNING *`,
+        card_img_portada=$10, card_img=$11, card_date=$12
+      WHERE id = $13 RETURNING *`,
       [
         card_title, card_description, card_ubicacion, card_link_ubicacion,
         card_horario, card_contacto, card_info, card_city, card_category,
-        imgPortada, imgExtra, id
+        imgPortada, imgExtra, card_date || null, id
       ]
     );
 

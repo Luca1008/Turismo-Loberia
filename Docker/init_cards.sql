@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS turismo_prueba."card" (
     card_city VARCHAR(50),
     card_category VARCHAR(50),
     card_img_portada BYTEA,
-    card_img BYTEA
+    card_img BYTEA,
+    card_date DATE
 );
 
 INSERT INTO turismo_prueba."card" (card_title, card_description, card_ubicacion, card_link_ubicacion, card_horario, card_contacto, card_info, card_city, card_category) VALUES
@@ -20,6 +21,22 @@ INSERT INTO turismo_prueba."card" (card_title, card_description, card_ubicacion,
 ('Museo Histórico', 'Museo con exposiciones sobre la historia local.', 'Av. Principal 123', 'https://maps.google.com', 'Lun-Vie 9-18hs', '0221-654321', 'Visitas guiadas disponibles', 'Lobería', 'Cultura'),
 ('Playa Arenas Verdes', 'Hermosa playa para disfrutar en familia.', 'Ruta 11 km 45', 'https://maps.google.com', 'Todo el día', '0221-789012', 'Balneario con servicios', 'Arenas Verdes', 'Cultura'),
 ('Parque San Manuel', 'Espacio verde con juegos y actividades al aire libre.', 'San Manuel Centro', 'https://maps.google.com', '8-20hs', '0221-345678', 'Parque recreativo familiar', 'San Manuel', 'Cultura');
+
+INSERT INTO turismo_prueba."card" (
+    card_title, card_description, card_ubicacion, card_link_ubicacion,
+    card_horario, card_contacto, card_info, card_city, card_category, card_date
+) VALUES (
+    'Fiesta de la Primavera',
+    'Gran evento anual con música en vivo y actividades para toda la familia.',
+    'Parque Central',
+    'https://maps.google.com',
+    'Sábado 18:00',
+    '0221-555555',
+    'Entrada libre y gratuita',
+    'Lobería',
+    'Evento',
+    '2024-09-21'
+);
 
 CREATE TABLE IF NOT EXISTS turismo_prueba.users (
     id SERIAL PRIMARY KEY,
