@@ -1,7 +1,9 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import placeCard1 from "../../assets/images/place-card-index/place-card-1.jpg";
+import placeCard1 from "../../assets/images/default-photo.jpg";
 import { Link } from "react-router-dom";
+import '../../styles/card.css';
+import { FaLocationDot } from "react-icons/fa6";
 
 const PlaceCard = ({
   title = "Título del lugar",
@@ -20,7 +22,7 @@ const PlaceCard = ({
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{description}</Card.Text>
-        <Card.Text><strong>Ciudad:</strong> {city}</Card.Text>
+        <Card.Text><strong><FaLocationDot /></strong> {city}</Card.Text>
         <Button as={Link} to={`/card/${id}`} variant="link">
           Ver más
         </Button>

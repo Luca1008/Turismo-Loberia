@@ -1,7 +1,10 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import placeCard1 from "../../assets/images/place-card-index/place-card-1.jpg";
+import { FaLocationDot } from "react-icons/fa6";
+import { MdDeleteForever, MdModeEdit } from "react-icons/md";
+import placeCard1 from "../../assets/images/default-photo.jpg";
+import '../../styles/card.css';
 
 const CardEdit = ({
   title = "Título del lugar",
@@ -28,28 +31,27 @@ const CardEdit = ({
 
   return (
     <Card className="card-edit">
-      <Card.Img
+      <Card.Img className="card-img"
         variant="top"
         src={img || placeCard1}
         alt={title}
-        className="card-edit-img"
       />
       <Card.Body className="card-edit-body">
-        <Card.Title className="card-edit-title">{title}</Card.Title>
-        <Card.Text className="card-edit-description">{description}</Card.Text>
-        <Card.Text className="card-edit-city">
-          <strong>Ciudad:</strong> {city}
+        <div className="content-card">
+        <Card.Title className="card-title-ellipsis">{title}</Card.Title>
+        <Card.Text className="card-description">{description}</Card.Text>
+        <Card.Text className="card-city-ellipsis">
+          <strong><FaLocationDot /></strong> {city}
         </Card.Text>
-        
-        {/* Botones de administración */}
-        <div className="card-edit-actions">
+        </div>
+        <div className="card-buttons">
           <Button 
             variant="outline-primary" 
             size="sm" 
             onClick={handleEdit}
             className="btn-edit"
           >
-            ✏️ Editar
+           <strong><MdModeEdit /> Editar</strong>
           </Button>
           <Button 
             variant="outline-danger" 
@@ -57,7 +59,7 @@ const CardEdit = ({
             onClick={handleDelete}
             className="btn-delete"
           >
-            🗑️ Eliminar
+            <strong><MdDeleteForever /> Eliminar</strong> 
           </Button>
         </div>
       </Card.Body>
