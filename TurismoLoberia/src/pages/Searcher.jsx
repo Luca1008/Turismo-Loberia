@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Pagination from "react-bootstrap/Pagination";
 import { FaSearch } from "react-icons/fa";
-
+import { useSearchParams } from "react-router-dom";
 import CardEdit from "../components/cards/CardEdit";
 import PlaceCard from "../components/cards/PlaceCard";
 import "../styles/searcher.css";
@@ -21,6 +21,15 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }
   const [page, setPage] = useState(1);
   const limit = 6;
   const [totalPages, setTotalPages] = useState(1);
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+  const titleFromUrl = searchParams.get("title");
+  if (titleFromUrl) {
+    setSearch(titleFromUrl);
+  }
+  }, [searchParams]);
+
 
   // === Utilidad: convertir Bytea (imagen) a base64
   const bufferToBase64 = (buffer) => {
