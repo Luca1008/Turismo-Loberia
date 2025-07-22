@@ -76,9 +76,9 @@ const Create = () => {
           fecha: "",
         });
         setImagen(null);
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 1200); // Espera 1.2 segundos para mostrar el mensaje
+        setTimeout(() => {
+         window.location.reload();
+        }, 1200); // Espera 1.2 segundos para mostrar el mensaje
       } else {
         const errorData = await response.json();
         setError(errorData.error || "Error al crear la card.");

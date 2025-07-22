@@ -1,6 +1,6 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import "../styles/cardPage.css"; // lo podés personalizar vos
 
 const CardPage = () => {
@@ -30,6 +30,13 @@ const CardPage = () => {
 
       {/* Título */}
       <h1>{card.card_title}</h1>
+
+      {/* Mostrar fecha si es un evento y tiene fecha */}
+      {card.card_category === "Evento" && card.card_date && (
+        <div className="event-date-detail" style={{ marginBottom: '1rem', fontWeight: 'bold', fontSize: '1.2rem' }}>
+          Fecha del evento: {new Date(card.card_date).toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </div>
+      )}
 
       {/* Descripción */}
       <p>{card.card_description}</p>
