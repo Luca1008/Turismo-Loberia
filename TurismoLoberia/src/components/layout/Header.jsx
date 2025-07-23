@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FaBars,
@@ -9,7 +9,9 @@ import {
   FaGlobe,
   FaSearch,
   FaTimes,
+  FaCheck,
 } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
 import logoLoberia from "../../assets/icons/logoLoberia.svg";
 import "../../styles/Navbar.css";
 
@@ -21,10 +23,17 @@ export const Header = () => {
   const [showSearch, setShowSearch] = useState(false); // 🧠 Este debe ir arriba
   const [scrolled, setScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
+  const { t, i18n } = useTranslation();
   const navRef = useRef(null);
   const searchRef = useRef(null);
   const navigate = useNavigate();
+
+
+  // ===== Cambio de idioma
+  const changeLanguage = (lang) => {
+    i18n.changeLanguage(lang);
+    setShowLanguage(false);
+  };
 
   // ===== Navegación con parámetros de búsqueda
   const handleSearchSubmit = (e) => {
@@ -72,33 +81,24 @@ export const Header = () => {
   }, [showSearch]);
 
   // ===== Menú de navegación
-  const menuData = [
+  const menuData = useMemo(() => [
     {
-      label: "Partido de Lobería",
-      subitems: ["Información General", "Historia", "Naturaleza", "Producciones", "Cómo Llegar"],
+      label: t("Partido de Lobería"),
+      subitems: [t("Información General"), t("Historia"), t("Naturaleza"), t("Producciones"), t("Cómo Llegar")],
     },
     {
-      label: "Ciudad de Lobería",
-      subitems: [
-        "Información General",
-        "Cómo Llegar",
-        "Alojamientos",
-        "Gastronomía",
-        "Transporte",
-        "Agenda",
-        "Qué Hacer",
-        "Descargas",
-      ],
+      label: t("Ciudad de Lobería"),
+      subitems: [t("Información General"), t("Cómo Llegar"), t("Alojamientos"), t("Gastronomía"), t("Transporte"), t("Agenda"), t("Qué Hacer"), t("Descargas")],
     },
     {
-      label: "San Manuel",
-      subitems: ["Información General", "Cómo Llegar", "Alojamientos", "Gastronomía", "Transporte", "Agenda", "Qué Hacer", "Descargas"],
+      label: t("San Manuel"),
+      subitems: [t("Información General"), t("Cómo Llegar"), t("Alojamientos"), t("Gastronomía"), t("Transporte"), t("Agenda"), t("Qué Hacer"), t("Descargas")],
     },
     {
-      label: "Arenas Verdes",
-      subitems: ["Información General", "Cómo Llegar", "Alojamientos", "Base de Campamentos", "Gastronomía", "Transporte", "Agenda", "Qué Hacer", "Descargas"],
+      label: t("Arenas Verdes"),
+      subitems: [t("Información General"), t("Cómo Llegar"), t("Alojamientos"), t("Base de Campamentos"), t("Gastronomía"), t("Transporte"), t("Agenda"), t("Qué Hacer"), t("Descargas")],
     },
-  ];
+  ], [i18n.language]);
 
   const toHash = (text) =>
     text
@@ -174,15 +174,29 @@ export const Header = () => {
             <Link to="/Clima" className="text-decoration-none">
               <strong className="ms-3 d-flex align-items-center gap-1">
                 <FaCloudSun className="primary logoNav" />
-                <span className="nav-hover-effect">Clima</span>
+                <span className="nav-hover-effect">{t("Clima")}</span>
               </strong>
             </Link>
-
-            <div className="d-flex align-items-center gap-1" onClick={(e) => toggleLanguage(e)} style={{ cursor: "pointer" }}>
-              <FaGlobe />
-              <strong className="nav-hover-effect">Español</strong>
-              <FaChevronDown className={`primary transition-arrow${showLanguage ? " rotate" : ""}`} size={12} />
+            {/* Menu de idioma */}
+            {/* 🌍 Language Switcher */}
+            <div className="position-relative" onClick={toggleLanguage} style={{ cursor: "pointer" }}>
+              <div className="d-flex align-items-center gap-1">
+                <FaGlobe />
+                <strong className="nav-hover-effect">{i18n.language === "es" ? "Español" : "English"}</strong>
+                <FaChevronDown className={`primary transition-arrow${showLanguage ? " rotate" : ""}`} size={12} />
+              </div>
+              {showLanguage && (
+                <ul className="submenu-desktop position-absolute shadow p-2 mt-2 bg-white" style={{ zIndex: 1000 }}>
+                  <li className="px-2 py-1" onClick={() => changeLanguage("es")}>
+                    {i18n.language === "es" && <FaCheck className="me-2 text-success" />} Español
+                  </li>
+                  <li className="px-2 py-1" onClick={() => changeLanguage("en")}>
+                    {i18n.language === "en" && <FaCheck className="me-2 text-success" />} English
+                  </li>
+                </ul>
+              )}
             </div>
+
 
             <FaSearch className="search-icon-nav" onClick={handleSearchToggle} />
           </div>
@@ -211,12 +225,12 @@ export const Header = () => {
       {/* 🔍 BARRA DE BÚSQUEDA DESKTOP */}
       {showSearch && (
         <div ref={searchRef} className="desktop-search-bar p-3 border-nav d-none d-md-block position-sticky">
-            <form className="search-desktop-form" onSubmit={handleSearchSubmit}>
-              <input type="text" className="form-control me-3" placeholder="Buscar…" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-              <button className="btn btn-white" type="submit">
-                <FaSearch className="desktop-search-icon" />
-              </button>
-            </form>
+          <form className="search-desktop-form" onSubmit={handleSearchSubmit}>
+            <input type="text" className="form-control me-3" placeholder={t("Buscar...")} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            <button className="btn btn-white" type="submit">
+              <FaSearch className="desktop-search-icon" />
+            </button>
+          </form>
         </div>
       )}
 
