@@ -22,7 +22,11 @@
     "nodemon": "^3.1.10"
   },
   "dependencies": {
+    "i18next": "^25.3.2",
+    "i18next-chained-backend": "^4.6.2",
+    "i18next-http-backend": "^3.0.2",
     "multer": "^2.0.2",
+    "react-i18next": "^15.6.1",
     "react-toastify": "^11.0.5"
   }
 }

@@ -8,10 +8,12 @@ import Whatsapp from "./components/common/Whatsapp";
 import { Footer } from "./components/layout/Footer";
 import { Header } from "./components/layout/Header";
 import { Routing } from "./router/Routing";
+import { AuthProvider } from "./context/AuthProvider"; 
 
 function App() {
   return (
     <BrowserRouter>
+    <AuthProvider>
       <ScrollToTop />
       <ScrollToHash />
       <div className="layout">
@@ -27,6 +29,7 @@ function App() {
           <Whatsapp />
         </div>
       </div>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
