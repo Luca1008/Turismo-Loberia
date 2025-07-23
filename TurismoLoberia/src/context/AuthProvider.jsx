@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
-      const request = await fetch(Global.url + "user/profile/" + userId, {
+      const request = await fetch(Global.url + "user/" + userId, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
