@@ -6,7 +6,9 @@ const JWT_SECRET = process.env.JWT_SECRET || 'clave_secreta_super_segura';
 
 exports.registerUser = async (req, res) => {
   try {
-    const { name, surname, email, password } = req.body;
+
+    const { name, surname, email, password} = req.body;
+    const role = 'admin'; // 👈 Variable hardcodeada
 
     // Validaciones básicas
     if (!name || !surname || !email || !password) {
@@ -26,10 +28,10 @@ exports.registerUser = async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Insertar usuario en la base de datos
+    // Insertar usuario en la base de datos con fijo admin
     await db.query(
       'INSERT INTO turismo_prueba.users (name, surname, email, password, role) VALUES ($1, $2, $3, $4, $5)',
-      [name, surname, email, hashedPassword, role || 'admin']
+      [name, surname, email, hashedPassword, role]
     );
 
     return res.status(200).json({ status: 'success', message: 'Usuario registrado correctamente' });
@@ -86,9 +88,8 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.getProfile = (req, res) => {
-  // req.user contiene los datos del token decodificado
   res.json({
     status: 'success',
     user: req.user
   });
-}; 
+};
