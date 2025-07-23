@@ -1,10 +1,7 @@
-// Importar modulos
 const jwt = require("jwt-simple");
 const moment = require("moment");
+const { secret } = require("../services/jwt");
 
-// Importar clave secreta
-const libjwt = require("../services/jwt");
-const secret = libjwt.secret;
 
 // MIDDLEWARE: Funcion de autenticacion
 const auth = (req, res, next) => {
@@ -19,16 +16,24 @@ const auth = (req, res, next) => {
       message: "No hay token de autenticación",
       debug: {
         headers: req.headers,
-        authHeader: req.headers.authorization
-      }
+        authHeader: req.headers.authorization,
+      },
     });
   }
 
-  // Limpiar el token
-  let token = req.headers.authorization.replace(/['"]+/g, "");
+  // Limpiar el token, sacar el "Bearer " si existe
+  const authHeader = req.headers.authorization;
+  let token = null;
+
+  if (authHeader.startsWith("Bearer ")) {
+    token = authHeader.split(" ")[1];
+  } else {
+    token = authHeader; // En caso que venga sin Bearer
+  }
+
   console.log("Token limpio:", token);
 
-  //Decodificar el token
+  // Decodificar el token
   try {
     let payload = jwt.decode(token, secret);
     console.log("Payload decodificado:", payload);
@@ -53,8 +58,8 @@ const auth = (req, res, next) => {
       error: error.message,
       debug: {
         token: token,
-        error: error.toString()
-      }
+        error: error.toString(),
+      },
     });
   }
 };

@@ -2,10 +2,10 @@ const db = require('../models/db');
 const bcrypt = require('bcrypt');
 const jwt = require('jwt-simple');
 const moment = require('moment');
-const JWT_SECRET = process.env.JWT_SECRET || 'clave_secreta_super_segura';
+const JWT_SECRET = process.env.JWT_SECRET || 'SecretClaveProjectLoberia_2025';
 
 
-//------------------------------Registrar----------------------------------
+//------------------------------POST user Ok (Registrar)----------------------------------
 exports.registerUser = async (req, res) => {
   try {
 
@@ -43,7 +43,7 @@ exports.registerUser = async (req, res) => {
   }
 };
 
- // -------------------------------Loguear-----------------------------------------
+ // -------------------------------Loguear Ok-----------------------------------------
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -91,52 +91,71 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-//---------------------------------Profile-------------------------------------------
 
-exports.getProfile = (req, res) => {
-  res.json({
-    status: 'success',
-    user: req.user
-  });
-};
-
-//--------------------------------Profile by id-----------------------------------------
-exports.getProfileById = async (req, res) => {
+//--------------------------------GET user by id-----------------------------------------
+exports.getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
-    const result = await db.query('SELECT id, name, surname, email, role FROM turismo_prueba.users WHERE id = $1', [userId]);
+
+    const result = await db.query(
+      'SELECT id, name, surname, email, role FROM turismo_prueba.users WHERE id = $1',
+      [userId]
+    );
 
     if (result.rows.length === 0) {
       return res.status(404).json({ status: 'error', message: 'Usuario no encontrado' });
     }
 
-    return res.json({
+    return res.status(200).json({
       status: 'success',
       user: result.rows[0]
     });
   } catch (error) {
-    console.error('Error obteniendo perfil:', error);
-    return res.status(500).json({ status: 'error', message: 'Error al obtener perfil' });
+    console.error('Error al obtener usuario por ID:', error);
+    return res.status(500).json({ status: 'error', message: 'Error al obtener usuario' });
   }
 };
+
 
 //----------------------------------Update--------------------------------
 exports.updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    const { name, surname, email } = req.body;
+    const { name, surname, email, password } = req.body;
 
-    // Validar que el usuario exista
+    // Validar campos obligatorios
+    if (!name || !surname || !email) {
+      return res.status(400).json({ status: 'error', message: 'Nombre, apellido y email son obligatorios.' });
+    }
+
+    // Verificar que el usuario exista
     const result = await db.query('SELECT * FROM turismo_prueba.users WHERE id = $1', [userId]);
     if (result.rows.length === 0) {
       return res.status(404).json({ status: 'error', message: 'Usuario no encontrado' });
     }
 
-    // Actualizar usuario (sin tocar la contraseña ni el rol)
-    await db.query(
-      'UPDATE turismo_prueba.users SET name = $1, surname = $2, email = $3 WHERE id = $4',
-      [name, surname, email, userId]
-    );
+    // Preparar los datos a actualizar
+    let updateQuery = 'UPDATE turismo_prueba.users SET name = $1, surname = $2, email = $3';
+    let values = [name, surname, email];
+    let paramIndex = 4;
+
+    // Si se envía una nueva contraseña
+    if (password) {
+      if (password.length < 8) {
+        return res.status(400).json({ status: 'error', message: 'La contraseña debe tener al menos 8 caracteres.' });
+      }
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updateQuery += `, password = $${paramIndex}`;
+      values.push(hashedPassword);
+      paramIndex++;
+    }
+
+    // Agregar la condición WHERE
+    updateQuery += ` WHERE id = $${paramIndex}`;
+    values.push(userId);
+
+    // Ejecutar la consulta
+    await db.query(updateQuery, values);
 
     return res.json({ status: 'success', message: 'Usuario actualizado correctamente' });
   } catch (error) {
