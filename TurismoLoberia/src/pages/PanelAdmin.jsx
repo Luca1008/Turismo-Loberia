@@ -1,14 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Outlet, Link } from "react-router-dom";
 import Create from "../components/layout/Create";
 import Edit from "../components/layout/Edit";
-import UserPanel from "../components/layout/UserPanel";
 import "../styles/panelAdmin.css";
 import Searcher from "./Searcher";
 import Nav from "react-bootstrap/Nav";
 import { useAuth } from "../hooks/useAuth.jsx";
+import { MdLogout, MdOutlineSettings } from "react-icons/md";
+import { FaPencilAlt, FaUserCheck, FaUsersCog, FaUserSlash} from "react-icons/fa";
+import Offcanvas from "react-bootstrap/Offcanvas";
 
 const PanelAdmin = () => {
   const { auth } = useAuth();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const editModalRef = useRef(null);
@@ -44,17 +50,21 @@ const PanelAdmin = () => {
 
   return (
     <>
-      <Nav defaultActiveKey="/home" as="ul">
+      <Nav defaultActiveKey="/home" as="ul" className="nav-user">
         <Nav.Item as="li">
-          <Nav.Link href="/home"></Nav.Link>
+          <span>Bienvenido {auth.name}</span>
         </Nav.Item>
         <Nav.Item as="li">
-          <Nav.Link eventKey="link-1">
-              <span className="container-names__name">{auth.name}</span>
-          </Nav.Link>
+          <button onClick={handleShow}>
+            <MdOutlineSettings /> Ajustes
+          </button>
         </Nav.Item>
         <Nav.Item as="li">
-          <Nav.Link eventKey="link-2">Link</Nav.Link>
+          <span>
+            <button>
+            <MdLogout /> Cerrar sesión
+            </button>
+          </span>
         </Nav.Item>
       </Nav>
       <section className="panel-admin">
@@ -80,8 +90,42 @@ const PanelAdmin = () => {
             </div>
           </div>
         )}
-        <UserPanel />
       </section>
+
+      {/*----------------------Ajustes-----------------*/}
+      <section className="user-panel">
+  <Offcanvas show={show} onHide={handleClose}>
+    <Offcanvas.Header closeButton>
+      <Offcanvas.Title>Panel de ajustes de:  {auth.name}</Offcanvas.Title>
+    </Offcanvas.Header>
+    <Offcanvas.Body>
+      <div className="user-panel-content">
+        <div className="user-info">
+          <p><strong>Email:</strong> {auth.email}</p>
+          <p><strong>Rol:</strong> {auth.role}</p>
+        </div>
+
+        <div className="panel-admin">
+      <aside className="sidebar-admin">
+        <ul>
+          {auth.role === "superadmin" && (
+            <>
+          <li><Link to="modificar-datos"><FaPencilAlt />Modificar mis datos</Link></li>
+          <li><Link to="crear-admin"><FaUserCheck />Crear nuevo admin</Link></li>
+          <li><Link to="listar-admins"><FaUsersCog />Listar admins</Link></li>
+          <li><Link to="baja-admins"><FaUserSlash />Dar de baja admins</Link></li>
+          </>
+          )}
+        </ul>
+      </aside>
+      <main className="panel-content">
+        <Outlet /> {/* Aquí se renderiza la subvista */}
+      </main>
+      </div>
+      </div>
+    </Offcanvas.Body>
+  </Offcanvas>
+</section>
     </>
   );
 };

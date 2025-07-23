@@ -14,30 +14,44 @@ export const AuthProvider = ({ children }) => {
   const authUser = async () => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
+
     if (!token || !user) {
       setLoading(false);
-      return false;
+      return;
     }
 
-    const userObj = JSON.parse(user);
-    const userId = userObj._id;
+    try {
+      const userObj = JSON.parse(user);
+      const userId = userObj.id;
 
-    // Petición para obtener los datos del usuario
-    const request = await fetch(Global.url + "user/profile/" + userId, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    });
+      if (!userId) {
+        console.warn("El usuario no tiene ID válido.");
+        setLoading(false);
+        return;
+      }
 
-    const response = await request.json();
-    if (response.status === "success") {
-      setAuth(response.user);
+      const request = await fetch(Global.url + "user/profile/" + userId, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // ← siempre con Bearer
+        },
+      });
+
+      const response = await request.json();
+
+      if (response.status === "success") {
+        setAuth(response.user);
+      } else {
+        console.warn("No se pudo autenticar al usuario.");
+        setAuth({});
+      }
+    } catch (err) {
+      console.error("Error al autenticar:", err);
+      setAuth({});
+    } finally {
+      setLoading(false);
     }
-
-
-    setLoading(false);
   };
 
   return (

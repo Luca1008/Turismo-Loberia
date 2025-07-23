@@ -65,6 +65,7 @@ exports.loginUser = async (req, res) => {
       email: user.email,
       name: user.name,
       surname: user.surname,
+      role: user.role,
       iat: moment().unix(),
       exp: moment().add(7, 'days').unix()
     };
@@ -78,7 +79,8 @@ exports.loginUser = async (req, res) => {
         id: user.id,
         name: user.name,
         surname: user.surname,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
     });
   } catch (error) {
@@ -92,4 +94,23 @@ exports.getProfile = (req, res) => {
     status: 'success',
     user: req.user
   });
+};
+
+exports.getProfileById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const result = await db.query('SELECT id, name, surname, email, role FROM turismo_prueba.users WHERE id = $1', [userId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ status: 'error', message: 'Usuario no encontrado' });
+    }
+
+    return res.json({
+      status: 'success',
+      user: result.rows[0]
+    });
+  } catch (error) {
+    console.error('Error obteniendo perfil:', error);
+    return res.status(500).json({ status: 'error', message: 'Error al obtener perfil' });
+  }
 };
