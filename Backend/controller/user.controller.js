@@ -26,10 +26,10 @@ exports.registerUser = async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Insertar usuario en la base de datos (sin imagen de perfil)
+    // Insertar usuario en la base de datos
     await db.query(
-      'INSERT INTO turismo_prueba.users (name, surname, email, password) VALUES ($1, $2, $3, $4)',
-      [name, surname, email, hashedPassword]
+      'INSERT INTO turismo_prueba.users (name, surname, email, password, role) VALUES ($1, $2, $3, $4, $5)',
+      [name, surname, email, hashedPassword, role || 'admin']
     );
 
     return res.status(200).json({ status: 'success', message: 'Usuario registrado correctamente' });
@@ -39,7 +39,7 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-// Preparar función loginUser (a implementar)
+// Preparar función loginUser
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
