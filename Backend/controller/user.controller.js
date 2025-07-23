@@ -4,6 +4,8 @@ const jwt = require('jwt-simple');
 const moment = require('moment');
 const JWT_SECRET = process.env.JWT_SECRET || 'clave_secreta_super_segura';
 
+
+//------------------------------Registrar----------------------------------
 exports.registerUser = async (req, res) => {
   try {
 
@@ -41,7 +43,7 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-// Preparar función loginUser
+ // -------------------------------Loguear-----------------------------------------
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -89,6 +91,8 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+//---------------------------------Profile-------------------------------------------
+
 exports.getProfile = (req, res) => {
   res.json({
     status: 'success',
@@ -96,6 +100,7 @@ exports.getProfile = (req, res) => {
   });
 };
 
+//--------------------------------Profile by id-----------------------------------------
 exports.getProfileById = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -112,5 +117,30 @@ exports.getProfileById = async (req, res) => {
   } catch (error) {
     console.error('Error obteniendo perfil:', error);
     return res.status(500).json({ status: 'error', message: 'Error al obtener perfil' });
+  }
+};
+
+//----------------------------------Update--------------------------------
+exports.updateUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { name, surname, email } = req.body;
+
+    // Validar que el usuario exista
+    const result = await db.query('SELECT * FROM turismo_prueba.users WHERE id = $1', [userId]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ status: 'error', message: 'Usuario no encontrado' });
+    }
+
+    // Actualizar usuario (sin tocar la contraseña ni el rol)
+    await db.query(
+      'UPDATE turismo_prueba.users SET name = $1, surname = $2, email = $3 WHERE id = $4',
+      [name, surname, email, userId]
+    );
+
+    return res.json({ status: 'success', message: 'Usuario actualizado correctamente' });
+  } catch (error) {
+    console.error('Error actualizando usuario:', error);
+    return res.status(500).json({ status: 'error', message: 'Error al actualizar usuario' });
   }
 };

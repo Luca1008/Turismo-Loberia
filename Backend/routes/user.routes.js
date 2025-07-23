@@ -16,5 +16,9 @@ router.get('/user/profile', auth, userController.getProfile);
 // User by id
 router.get('/user/profile/:id', userController.getProfileById);
 
+// Update
+router.put('/user/:id', auth, userController.updateUser);
+
+
 
 module.exports = router; 
