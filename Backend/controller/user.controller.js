@@ -92,7 +92,7 @@ exports.loginUser = async (req, res) => {
 };
 
 
-//--------------------------------GET user by id-----------------------------------------
+//--------------------------------GET user by id Ok-----------------------------------------
 exports.getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -117,7 +117,7 @@ exports.getUserById = async (req, res) => {
 };
 
 
-//----------------------------------Update--------------------------------
+//----------------------------------Update Ok--------------------------------
 exports.updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -161,5 +161,26 @@ exports.updateUser = async (req, res) => {
   } catch (error) {
     console.error('Error actualizando usuario:', error);
     return res.status(500).json({ status: 'error', message: 'Error al actualizar usuario' });
+  }
+};
+
+/*---------------------------Delete Ok------------------------*/
+exports.deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    // Verificar que el usuario exista
+    const result = await db.query('SELECT * FROM turismo_prueba.users WHERE id = $1', [userId]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ status: 'error', message: 'Usuario no encontrado' });
+    }
+
+    // Eliminar usuario
+    await db.query('DELETE FROM turismo_prueba.users WHERE id = $1', [userId]);
+
+    return res.json({ status: 'success', message: 'Usuario eliminado correctamente' });
+  } catch (error) {
+    console.error('Error eliminando usuario:', error);
+    return res.status(500).json({ status: 'error', message: 'Error al eliminar usuario' });
   }
 };
