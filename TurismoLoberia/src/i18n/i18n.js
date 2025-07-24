@@ -13,7 +13,7 @@ i18n
     fallbackLng: 'es',              // 🌐 Idioma por defecto
     debug: true,                   // Cambiá a true para debuggear
     backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json' // 📂 Carga desde /public/locales
+      loadPath: '/public/locales/{{lng}}/{{ns}}.json' // 📂 Carga desde /public/locales
     },
     interpolation: {
       escapeValue: false            // ✅ No hace falta escape en React

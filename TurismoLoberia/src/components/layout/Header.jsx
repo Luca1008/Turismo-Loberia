@@ -240,17 +240,17 @@ export const Header = () => {
             <li className="menu-item d-flex justify-content-between align-items-center mb-3">
               <strong>Suscribirme</strong> <FaBell />
             </li>
-            {menuData.map(({ label, subitems }, idx) => (
+            {menuData.map(({ id, subitems }, idx) => (
               <li key={idx} className="menu-item">
-                <div className="d-flex justify-content-between align-items-center" onClick={(e) => toggleItem(label, e)}>
-                  <strong>{label}</strong>
-                  <FaChevronDown className={`arrow${openItem === label ? " rotate" : ""}`} />
+                <div className="d-flex justify-content-between align-items-center" onClick={(e) => toggleItem(id, e)}>
+                  <strong>{t(id)}</strong>
+                  <FaChevronDown className={`arrow${openItem === id ? " rotate" : ""}`} />
                 </div>
-                {openItem === label && (
+                {openItem === id && (
                   <ul className="submenu mt-2">
                     {subitems.map((sub, i) => (
                       <li key={i}>
-                        <Link to={getSubitemRoute(label, sub)} onClick={(e) => {
+                        <Link to={getSubitemRoute(id, sub)} onClick={(e) => {
                           e.stopPropagation();
                           setOpenItem(null);
                           setShowMenu(false);
