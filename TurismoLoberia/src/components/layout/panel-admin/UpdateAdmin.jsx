@@ -45,7 +45,7 @@ const UpdateAdmin = () => {
     }
 
     const updatedData = { ...formData };
-    if (!formData.password) {
+    if (formData.password.trim() === "") {
       delete updatedData.password;
     }
 
@@ -64,15 +64,21 @@ const UpdateAdmin = () => {
       const data = await response.json();
 
       if (data.status === "success") {
-        toast.success("Perfil actualizado correctamente");
-
-        // Actualizar localStorage y contexto
-        localStorage.setItem("user", JSON.stringify(data.user));
-        setAuth(data.user); // ← actualiza el contexto
-      } else {
-        setError(data.message || "Error al actualizar");
-        toast.error(data.message || "Error al actualizar");
-      }
+        if (formData.password) {
+          toast.success("Datos actualizados correctamente. Por favor, volvé a iniciar sesión.");
+      
+          setTimeout(() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            setAuth({});
+            window.location.href = "/Admin";
+          }, 3000); // Espera 3 segundos antes de redirigir
+        } else {
+          toast.success("Perfil actualizado correctamente");
+          localStorage.setItem("user", JSON.stringify(data.user));
+          setAuth(data.user);
+        }
+      }      
     } catch (error) {
       setError("Error al conectar con el servidor");
       toast.error("Error al conectar con el servidor");
