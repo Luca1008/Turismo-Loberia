@@ -12,8 +12,6 @@ import { Clima } from '../pages/Weather';
 import Admin from '../pages/Admin';
 import {Register} from '../pages/Register';
 import PanelAdmin from '../pages/PanelAdmin';
-import CardPage from '../pages/CardPage';
-
 
 export const Routing = () => {
   return (
@@ -30,8 +28,6 @@ export const Routing = () => {
       <Route path="/Admin" element={<Admin />} />
       <Route path="/Register" element={<Register />} />
       <Route path="/PanelAdmin" element={<PanelAdmin />} />
-      <Route path="/cards/:id" element={<CardPage />} />
-
     </Routes>
-  )
-}
+  );
+};

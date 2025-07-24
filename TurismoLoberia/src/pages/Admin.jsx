@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import ButtonSubmit from "../components/common/ButtonSubmit";
-import '../styles/admin.css';
+import "../styles/admin.css";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
 
@@ -19,25 +23,25 @@ const Admin = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/user/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+      const response = await fetch("http://localhost:5000/api/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
       const data = await response.json();
 
-      if (data.status === 'success') {
-        // Guarda el token JWT
-        localStorage.setItem('token', data.token);
-        alert('¡Login exitoso!');
+      if (data.status === "success") {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setAuth(data.user); // ⬅️ Esto es clave para que el contexto se actualice
         setLoading(false);
-        window.location.href = "/PanelAdmin";
+        navigate("/PanelAdmin");
       } else {
-        alert(data.message || 'Error al iniciar sesión');
+        alert(data.message || "Error al iniciar sesión");
         setLoading(false);
       }
     } catch (error) {
-      alert('Error de conexión');
+      alert("Error de conexión");
       setLoading(false);
     }
   };
@@ -70,9 +74,9 @@ const Admin = () => {
             }
           />
         </Form.Group>
-        <div style={{ marginTop: '1rem' }}>
-        <a href="/Register">¿No tienes cuenta? Regístrate aquí</a>
-      </div>
+        <div style={{ marginTop: "1rem" }}>
+          <a href="/Register">¿No tienes cuenta? Regístrate aquí</a>
+        </div>
         <ButtonSubmit
           type="submit"
           text={loading ? "Cargando..." : "Logueate"}
