@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import Create from "../components/layout/Create";
 import Edit from "../components/layout/Edit";
 import "../styles/panelAdmin.css";
@@ -11,7 +11,13 @@ import { FaPencilAlt, FaUserCheck, FaUsersCog, FaUserSlash} from "react-icons/fa
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 const PanelAdmin = () => {
-  const { auth } = useAuth();
+  const { auth, logout } = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();            // Limpia estado y localStorage
+    navigate("/Admin");  // Redirige a /Admin
+  };
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -50,7 +56,7 @@ const PanelAdmin = () => {
 
   return (
     <>
-      <Nav defaultActiveKey="/home" as="ul" className="nav-user">
+      <Nav defaultActiveKey="/Admin" as="ul" className="nav-user">
         <Nav.Item as="li">
           <span>Bienvenido {auth.name}</span>
         </Nav.Item>
@@ -61,7 +67,7 @@ const PanelAdmin = () => {
         </Nav.Item>
         <Nav.Item as="li">
           <span>
-            <button>
+          <button onClick={handleLogout}>
             <MdLogout /> Cerrar sesión
             </button>
           </span>

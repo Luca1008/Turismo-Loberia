@@ -54,8 +54,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+   // Función logout
+   const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setAuth({});
+  };
+
   return (
-    <AuthContext.Provider value={{ auth, setAuth, loading }}>
+    <AuthContext.Provider value={{ auth, setAuth, loading, logout }}>
       {children}
     </AuthContext.Provider>
   );
