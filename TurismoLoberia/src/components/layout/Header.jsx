@@ -98,7 +98,7 @@ export const Header = () => {
       label: t("Arenas Verdes"),
       subitems: [t("Información General"), t("Cómo Llegar"), t("Alojamientos"), t("Base de Campamentos"), t("Gastronomía"), t("Transporte"), t("Agenda"), t("Qué Hacer"), t("Descargas")],
     },
-  ], [i18n.language]);
+  ], [i18n.language, t]);
 
   const toHash = (text) =>
     text
@@ -151,7 +151,7 @@ export const Header = () => {
           <div className="d-none d-md-flex align-items-center gap-4">
             {menuData.map(({ label, subitems }, idx) => (
               <div key={idx} className="desktop-nav-item position-relative" onClick={(e) => toggleItem(label, e)}>
-                <strong>{label}</strong>
+                <strong>{t(label)}</strong>
                 <FaChevronDown className={`primary transition-arrow${openItem === label ? " rotate" : ""}`} size={12} />
                 {openItem === label && (
                   <ul className="submenu-desktop position-absolute shadow p-2 mt-2">

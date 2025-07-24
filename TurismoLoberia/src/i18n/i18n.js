@@ -1,5 +1,61 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import HttpBackend from 'i18next-http-backend'; // ✅ Solo cargamos desde archivos locales
+
+i18n
+  .use(HttpBackend)
+  .use(initReactI18next)
+  .init({
+    fallbackLng: 'es', // Idioma por defecto si no se encuentra otro
+    debug: false, // Activá true si querés ver logs de i18next
+
+    backend: {
+      // 🔹 Ruta donde buscará los archivos JSON de traducción
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
+    },
+
+    interpolation: {
+      escapeValue: false,
+    },
+  });
+
+export default i18n;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import ChainedBackend from 'i18next-chained-backend';
 import HttpBackend from 'i18next-http-backend';
 
@@ -49,4 +105,4 @@ i18n
     },
   });
 
-export default i18n;
+export default i18n; */
