@@ -1,26 +1,26 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import HttpBackend from 'i18next-http-backend'; // ✅ Solo cargamos desde archivos locales
+import HttpBackend from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
+
 
 i18n
-  .use(HttpBackend)
-  .use(initReactI18next)
+  .use(HttpBackend)                  // 🔌 Carga los archivos .json por HTTP
+  .use(LanguageDetector)            // 🌍 Detecta idioma del navegador
+  .use(initReactI18next)            // 🔁 Integra con React
   .init({
-    fallbackLng: 'es', // Idioma por defecto si no se encuentra otro
-    debug: false, // Activá true si querés ver logs de i18next
-
+    fallbackLng: 'es',              // 🌐 Idioma por defecto
+    debug: true,                   // Cambiá a true para debuggear
     backend: {
-      // 🔹 Ruta donde buscará los archivos JSON de traducción
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
+      loadPath: '/locales/{{lng}}/{{ns}}.json' // 📂 Carga desde /public/locales
     },
-
     interpolation: {
-      escapeValue: false,
-    },
+      escapeValue: false            // ✅ No hace falta escape en React
+    }
   });
 
 export default i18n;
-
 
 
 
