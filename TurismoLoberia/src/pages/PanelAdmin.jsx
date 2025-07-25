@@ -118,7 +118,7 @@ const PanelAdmin = () => {
             <>
           <li><Link to="modificar-datos"><FaPencilAlt />Modificar mis datos</Link></li>
           <li><Link to="crear-admin"><FaUserCheck />Crear nuevo admin</Link></li>
-          <li><Link to="listar-admins"><FaUsersCog />Listar admins</Link></li>
+          <li><Link to="listar-admins"><FaUsersCog />Gestionar administradores</Link></li>
           <li><Link to="baja-admins"><FaUserSlash />Dar de baja admins</Link></li>
           </>
           )}

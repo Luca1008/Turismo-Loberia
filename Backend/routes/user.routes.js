@@ -10,6 +10,8 @@ router.post('/user/register', registerValidators, userController.registerUser);
 // Ruta para login de usuario (con validaciones)
 router.post('/user/login', loginValidators, userController.loginUser);
 
+// List admins (Tiene que ir antes de getById)
+router.get('/user/admins', userController.getAllAdmins);
 
 // User by id
 router.get('/user/:id', userController.getUserById);
@@ -19,6 +21,7 @@ router.put('/user/:id', auth, userController.updateUser);
 
 // Delete
 router.delete('/user/:id', auth, userController.deleteUser);
+
 
 
 module.exports = router; 

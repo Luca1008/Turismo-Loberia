@@ -79,4 +79,8 @@ CREATE TABLE IF NOT EXISTS turismo_prueba.users (
 
 -- Usuarios de ejemplo password: loberia1234
 INSERT INTO turismo_prueba.users (name, surname, email, password, role) VALUES
-('loberia', 'loberia', 'loberia@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'superadmin');
+('loberia', 'loberia', 'loberia@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'superadmin'),
+('Ana', 'Martínez', 'ana.martinez@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'admin'),
+('Carlos', 'Pérez', 'carlos.perez@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'admin'),
+('Laura', 'González', 'laura.gonzalez@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'admin'),
+('Javier', 'Rodríguez', 'javier.rodriguez@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'admin');

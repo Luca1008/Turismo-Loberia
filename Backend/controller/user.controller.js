@@ -184,3 +184,21 @@ exports.deleteUser = async (req, res) => {
     return res.status(500).json({ status: 'error', message: 'Error al eliminar usuario' });
   }
 };
+
+// ------------------------------GET all admins------------------------------
+exports.getAllAdmins = async (req, res) => {
+  try {
+    const result = await db.query(
+      'SELECT id, name, surname, email, role FROM turismo_prueba.users WHERE role = $1',
+      ['admin']
+    );
+
+    return res.status(200).json({
+      status: 'success',
+      admins: result.rows
+    });
+  } catch (error) {
+    console.error('Error al obtener admins:', error);
+    return res.status(500).json({ status: 'error', message: 'Error al obtener administradores' });
+  }
+};
