@@ -6,8 +6,8 @@ import { Global } from "../../../helpers/Global";
 import { useAuth } from "../../../hooks/useAuth";
 import "../../../styles/panelAdmin.css";
 
-const UpdateAdmin = () => {
-  const { auth, setAuth } = useAuth(); // ← usar contexto
+const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
+  const { auth, setAuth } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -16,9 +16,18 @@ const UpdateAdmin = () => {
   });
   const [error, setError] = useState(null);
 
-  // Cargar datos del usuario logueado
+  // Cargar datos del admin seleccionado o del usuario logueado
   useEffect(() => {
-    if (auth) {
+    if (isAdminEdit && admin) {
+      // Cargar datos del admin seleccionado para edición
+      setFormData({
+        name: admin.name || "",
+        surname: admin.surname || "",
+        email: admin.email || "",
+        password: ""
+      });
+    } else if (auth) {
+      // Cargar datos del usuario logueado (para edición de perfil propio)
       setFormData({
         name: auth.name || "",
         surname: auth.surname || "",
@@ -26,7 +35,7 @@ const UpdateAdmin = () => {
         password: ""
       });
     }
-  }, [auth]);
+  }, [admin, auth, isAdminEdit]);
 
   const handleChange = (e) => {
     setFormData({
@@ -51,8 +60,11 @@ const UpdateAdmin = () => {
 
     try {
       const token = localStorage.getItem("token");
+      const url = isAdminEdit 
+        ? Global.url + `user/${admin.id}` // Edición de admin
+        : Global.url + `user/${auth.id}`; // Edición de perfil propio
 
-      const response = await fetch(Global.url + `user/${auth.id}`, {
+      const response = await fetch(url, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -64,31 +76,38 @@ const UpdateAdmin = () => {
       const data = await response.json();
 
       if (data.status === "success") {
-        if (formData.password) {
-          toast.success("Datos actualizados correctamente. Por favor, volvé a iniciar sesión.");
-      
-          setTimeout(() => {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-            setAuth({});
-            window.location.href = "/Admin";
-          }, 3000); // Espera 3 segundos antes de redirigir
+        toast.success("Datos actualizados correctamente");
+        
+        if (isAdminEdit) {
+          onSuccess(); // Para edición de admin desde el listado
         } else {
-          toast.success("Perfil actualizado correctamente");
-          localStorage.setItem("user", JSON.stringify(data.user));
-          setAuth(data.user);
+          // Manejo para edición de perfil propio
+          if (formData.password) {
+            setTimeout(() => {
+              localStorage.removeItem("token");
+              localStorage.removeItem("user");
+              setAuth({});
+              window.location.href = "/Admin";
+            }, 3000);
+          } else {
+            localStorage.setItem("user", JSON.stringify(data.user));
+            setAuth(data.user);
+          }
         }
-      }      
+      } else {
+        throw new Error(data.message || "Error al actualizar");
+      }
     } catch (error) {
-      setError("Error al conectar con el servidor");
-      toast.error("Error al conectar con el servidor");
+      toast.error(error.message || "Error al conectar con el servidor");
     }
   };
 
   return (
     <>
       <section className="register">
-        <h3 className="content__title">Modificar Perfil</h3>
+        <h3 className="content__title">
+          {isAdminEdit ? "Editar Administrador" : "Modificar Perfil"}
+        </h3>
         <div className="content__posts">
           <Form className="register-form" onSubmit={updateProfile}>
             <Form.Group className="mb-3" controlId="updateName">
@@ -135,9 +154,18 @@ const UpdateAdmin = () => {
               />
             </Form.Group>
 
-            <button type="submit" className="btn btn-primary">
-              Actualizar
-            </button>
+            <div className="d-flex justify-content-between">
+              <button 
+                type="button" 
+                className="btn btn-secondary"
+                onClick={onCancel}
+              >
+                Cancelar
+              </button>
+              <button type="submit" className="btn btn-primary">
+                Actualizar
+              </button>
+            </div>
           </Form>
         </div>
         <ToastContainer />
