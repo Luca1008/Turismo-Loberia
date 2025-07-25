@@ -4,6 +4,7 @@ const cors = require('cors');
 const cardsRoutes = require('./routes/cards.routes');
 const utilsRoutes = require('./routes/utils.routes');
 const userRoutes = require('./routes/user.routes');
+const translateRoutes = require("./routes/translate");
 const multer = require('multer'); // ⬅️ Agregado para configuración global si se necesita
 
 const app = express();
@@ -24,6 +25,8 @@ app.use(express.urlencoded({ extended: true })); // ✅ necesario para form-data
 app.use('/api', cardsRoutes);
 app.use('/api', utilsRoutes);
 app.use('/api', userRoutes);
+// 💬 Traducción (proxy)
+app.use("/api/translate", translateRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor backend escuchando en http://localhost:${PORT}`);

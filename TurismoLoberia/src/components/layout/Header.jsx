@@ -2,40 +2,33 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  FaBars,
-  FaBell,
-  FaChevronDown,
-  FaCloudSun,
-  FaGlobe,
-  FaSearch,
-  FaTimes,
-  FaCheck,
+  FaBars, FaBell, FaChevronDown, FaCloudSun, FaGlobe, FaSearch, FaTimes, FaCheck
 } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
 import logoLoberia from "../../assets/icons/logoLoberia.svg";
 import "../../styles/Navbar.css";
-
 export const Header = () => {
-  // ===== Estados principales
+  const { t, i18n } = useTranslation();
+
+  // 🧠 Estados
   const [showMenu, setShowMenu] = useState(false);
   const [openItem, setOpenItem] = useState(null);
   const [showLanguage, setShowLanguage] = useState(false);
-  const [showSearch, setShowSearch] = useState(false); // 🧠 Este debe ir arriba
+  const [showSearch, setShowSearch] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const { t, i18n } = useTranslation();
+
   const navRef = useRef(null);
   const searchRef = useRef(null);
   const navigate = useNavigate();
 
-
-  // ===== Cambio de idioma
+  // 🌍 Cambio de idioma
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
     setShowLanguage(false);
   };
 
-  // ===== Navegación con parámetros de búsqueda
+  // 🔍 Enviar búsqueda
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -45,23 +38,19 @@ export const Header = () => {
     }
   };
 
-  // ===== Scroll transparente
+  // 🎯 Scroll transparente
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ===== Cierre de submenús si haces click fuera
+  // 🔐 Cierre al hacer click afuera
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        navRef.current &&
-        !navRef.current.contains(event.target) &&
-        searchRef.current &&
-        !searchRef.current.contains(event.target)
+        navRef.current && !navRef.current.contains(event.target) &&
+        searchRef.current && !searchRef.current.contains(event.target)
       ) {
         setOpenItem(null);
         setShowLanguage(false);
@@ -72,7 +61,7 @@ export const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // ===== Enfocar el input al abrir buscador
+  // 🔍 Autofocus en búsqueda
   useEffect(() => {
     if (showSearch) {
       const input = document.querySelector(".desktop-search-bar input");
@@ -80,45 +69,45 @@ export const Header = () => {
     }
   }, [showSearch]);
 
-  // ===== Menú de navegación
+  // 🗂️ Menú de navegación traducido
   const menuData = useMemo(() => [
     {
-      label: t("Partido de Lobería"),
-      subitems: [t("Información General"), t("Historia"), t("Naturaleza"), t("Producciones"), t("Cómo Llegar")],
+      id: "partido_loberia",
+      subitems: ["informacion_general", "historia", "naturaleza", "producciones", "como_llegar"]
     },
     {
-      label: t("Ciudad de Lobería"),
-      subitems: [t("Información General"), t("Cómo Llegar"), t("Alojamientos"), t("Gastronomía"), t("Transporte"), t("Agenda"), t("Qué Hacer"), t("Descargas")],
+      id: "ciudad_loberia",
+      subitems: ["informacion_general", "como_llegar", "alojamientos", "gastronomia", "transporte", "agenda", "que_hacer", "descargas"]
     },
     {
-      label: t("San Manuel"),
-      subitems: [t("Información General"), t("Cómo Llegar"), t("Alojamientos"), t("Gastronomía"), t("Transporte"), t("Agenda"), t("Qué Hacer"), t("Descargas")],
+      id: "san_manuel",
+      subitems: ["informacion_general", "como_llegar", "alojamientos", "gastronomia", "transporte", "agenda", "que_hacer", "descargas"]
     },
     {
-      label: t("Arenas Verdes"),
-      subitems: [t("Información General"), t("Cómo Llegar"), t("Alojamientos"), t("Base de Campamentos"), t("Gastronomía"), t("Transporte"), t("Agenda"), t("Qué Hacer"), t("Descargas")],
-    },
+      id: "arenas_verdes",
+      subitems: ["informacion_general", "como_llegar", "alojamientos", "base_campamentos", "gastronomia", "transporte", "agenda", "que_hacer", "descargas"]
+    }
   ], [i18n.language]);
 
-  const toHash = (text) =>
-    text
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/\s+/g, "-");
+  // 🧩 Generar ruta con hash
+  const toHash = (text) => text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/\s+/g, "-");
 
-  const getSubitemRoute = (label, sub) => {
-    const hash = toHash(sub);
-    switch (label) {
-      case "Partido de Lobería": return `/PartidoLoberia#${hash}`;
-      case "Ciudad de Lobería": return `/Loberia#${hash}`;
-      case "San Manuel": return `/SanManuel#${hash}`;
-      case "Arenas Verdes": return `/ArenasVerdes#${hash}`;
+  const getSubitemRoute = (sectionId, subKey) => {
+    const hash = toHash(t(subKey));
+    switch (sectionId) {
+      case "partido_loberia": return `/PartidoLoberia#${hash}`;
+      case "ciudad_loberia": return `/Loberia#${hash}`;
+      case "san_manuel": return `/SanManuel#${hash}`;
+      case "arenas_verdes": return `/ArenasVerdes#${hash}`;
       default: return "/";
     }
   };
 
-  // ===== Toggle acciones
+  // 🎛️ UI
   const toggleItem = (item, e) => {
     e?.stopPropagation();
     setOpenItem(openItem === item ? null : item);
@@ -149,20 +138,20 @@ export const Header = () => {
 
           {/* 🔍 DESKTOP NAV */}
           <div className="d-none d-md-flex align-items-center gap-4">
-            {menuData.map(({ label, subitems }, idx) => (
-              <div key={idx} className="desktop-nav-item position-relative" onClick={(e) => toggleItem(label, e)}>
-                <strong>{label}</strong>
-                <FaChevronDown className={`primary transition-arrow${openItem === label ? " rotate" : ""}`} size={12} />
-                {openItem === label && (
+            {menuData.map(({ id, subitems }, idx) => (
+              <div key={idx} className="desktop-nav-item position-relative" onClick={(e) => toggleItem(id, e)}>
+                <strong>{t(id)}</strong>
+                <FaChevronDown className={`primary transition-arrow${openItem === id ? " rotate" : ""}`} size={12} />
+                {openItem === id && (
                   <ul className="submenu-desktop position-absolute shadow p-2 mt-2">
-                    {subitems.map((sub, i) => (
+                    {subitems.map((subKey, i) => (
                       <li key={i} className="py-1 px-2 nav-subitem">
-                        <Link to={getSubitemRoute(label, sub)} className="text-decoration-none" onClick={(e) => {
+                        <Link to={getSubitemRoute(id, subKey)} className="text-decoration-none" onClick={(e) => {
                           e.stopPropagation();
                           setOpenItem(null);
                           setShowMenu(false);
                         }}>
-                          {sub}
+                          {t(subKey)}
                         </Link>
                       </li>
                     ))}
@@ -182,17 +171,13 @@ export const Header = () => {
             <div className="position-relative" onClick={toggleLanguage} style={{ cursor: "pointer" }}>
               <div className="d-flex align-items-center gap-1">
                 <FaGlobe />
-                <strong className="nav-hover-effect">{i18n.language === "es" ? "Español" : "English"}</strong>
+                <strong className="nav-hover-effect">{i18n.language === "es" ? t("espanol") : t("ingles")}</strong>
                 <FaChevronDown className={`primary transition-arrow${showLanguage ? " rotate" : ""}`} size={12} />
               </div>
               {showLanguage && (
                 <ul className="submenu-desktop position-absolute shadow p-2 mt-2 bg-white" style={{ zIndex: 1000 }}>
-                  <li className="px-2 py-1" onClick={() => changeLanguage("es")}>
-                    {i18n.language === "es" && <FaCheck className="me-2 text-success" />} Español
-                  </li>
-                  <li className="px-2 py-1" onClick={() => changeLanguage("en")}>
-                    {i18n.language === "en" && <FaCheck className="me-2 text-success" />} English
-                  </li>
+                  <li className="px-2 py-1" onClick={() => changeLanguage("es")}>{i18n.language === "es" && <FaCheck className="me-2 text-success" />} {t("espanol")}</li>
+                  <li className="px-2 py-1" onClick={() => changeLanguage("en")}>{i18n.language === "en" && <FaCheck className="me-2 text-success" />} {t("ingles")}</li>
                 </ul>
               )}
             </div>
@@ -255,17 +240,17 @@ export const Header = () => {
             <li className="menu-item d-flex justify-content-between align-items-center mb-3">
               <strong>Suscribirme</strong> <FaBell />
             </li>
-            {menuData.map(({ label, subitems }, idx) => (
+            {menuData.map(({ id, subitems }, idx) => (
               <li key={idx} className="menu-item">
-                <div className="d-flex justify-content-between align-items-center" onClick={(e) => toggleItem(label, e)}>
-                  <strong>{label}</strong>
-                  <FaChevronDown className={`arrow${openItem === label ? " rotate" : ""}`} />
+                <div className="d-flex justify-content-between align-items-center" onClick={(e) => toggleItem(id, e)}>
+                  <strong>{t(id)}</strong>
+                  <FaChevronDown className={`arrow${openItem === id ? " rotate" : ""}`} />
                 </div>
-                {openItem === label && (
+                {openItem === id && (
                   <ul className="submenu mt-2">
                     {subitems.map((sub, i) => (
                       <li key={i}>
-                        <Link to={getSubitemRoute(label, sub)} onClick={(e) => {
+                        <Link to={getSubitemRoute(id, sub)} onClick={(e) => {
                           e.stopPropagation();
                           setOpenItem(null);
                           setShowMenu(false);

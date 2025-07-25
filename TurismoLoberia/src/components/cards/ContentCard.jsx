@@ -45,7 +45,7 @@ const ContentCard = ({
           variant="link"
           className="btn-link"
           as={Link}
-          to={`/card/${id}`}
+          to={`/cards/${id}`}
         >
           Ver más
         </Button>

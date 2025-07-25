@@ -64,12 +64,12 @@ const CardPage = () => {
         <p>{card.card_horario}</p>
       </section>
 
-      {/* Imagen Extra */}
+      {/* Imagen Extra
       {card.card_img && (
         <section className="card-section">
           <img src={card.card_img} alt="Imagen adicional" className="card-img-extra" />
         </section>
-      )}
+      )} */}
 
       {/* Contactos */}
       <section className="card-section">
