@@ -37,3 +37,8 @@ aside.sidebar-admin li svg{
   text-align: left;
   padding: 10px;
 }
+
+.btn-admin{
+  background-color: transparent;
+  border: none;
+}

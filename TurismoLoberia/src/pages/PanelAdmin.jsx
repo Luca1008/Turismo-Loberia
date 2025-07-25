@@ -7,7 +7,7 @@ import Searcher from "./Searcher";
 import Nav from "react-bootstrap/Nav";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { MdLogout, MdOutlineSettings } from "react-icons/md";
-import { FaPencilAlt, FaUserCheck, FaUsersCog, FaUserSlash} from "react-icons/fa";
+import { FaPencilAlt, FaUserCheck, FaUsersCog} from "react-icons/fa";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 const PanelAdmin = () => {
@@ -61,13 +61,13 @@ const PanelAdmin = () => {
           <span>Bienvenido {auth.name}</span>
         </Nav.Item>
         <Nav.Item as="li">
-          <button onClick={handleShow}>
+          <button className="btn-admin" onClick={handleShow}>
             <MdOutlineSettings /> Ajustes
           </button>
         </Nav.Item>
         <Nav.Item as="li">
           <span>
-          <button onClick={handleLogout}>
+          <button className="btn-admin" onClick={handleLogout}>
             <MdLogout /> Cerrar sesión
             </button>
           </span>
@@ -119,7 +119,6 @@ const PanelAdmin = () => {
           <li><Link to="modificar-datos"><FaPencilAlt />Modificar mis datos</Link></li>
           <li><Link to="crear-admin"><FaUserCheck />Crear nuevo admin</Link></li>
           <li><Link to="listar-admins"><FaUsersCog />Gestionar administradores</Link></li>
-          <li><Link to="baja-admins"><FaUserSlash />Dar de baja admins</Link></li>
           </>
           )}
         </ul>

@@ -16,7 +16,6 @@ import PanelAdmin from "../pages/PanelAdmin";
 import UpdateUser from '../components/layout/panel-admin/UpdateAdmin';
 import CreateAdmin from '../components/layout/panel-admin/CreateAdmin';
 import ListAdmins from '../components/layout/panel-admin/ListAdmins';
-import DeleteAdmin from '../components/layout/panel-admin/DeleteAdmin';
 
 
 
@@ -39,9 +38,7 @@ export const Routing = () => {
         <Route path="modificar-datos" element={<UpdateUser />} />
         <Route path="crear-admin" element={<CreateAdmin />} />
         <Route path="listar-admins" element={<ListAdmins />} />
-        <Route path="baja-admins" element={<DeleteAdmin />} />
       </Route>
-
     </Routes>
   );
 };

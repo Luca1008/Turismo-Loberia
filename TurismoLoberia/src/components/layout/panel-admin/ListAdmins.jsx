@@ -3,6 +3,7 @@ import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 import UpdateAdmin from './UpdateAdmin'; // Asegúrate de que la ruta sea correcta
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Table from 'react-bootstrap/Table';
 
 const ListAdmins = () => {
   const [admins, setAdmins] = useState([]);
@@ -64,7 +65,7 @@ const ListAdmins = () => {
       name: admin.name,
       surname: admin.surname,
       email: admin.email,
-      password: admin.password
+      password: admin
     };
     setSelectedAdmin(adminToEdit);
     setShowEditForm(true);
@@ -89,12 +90,11 @@ const ListAdmins = () => {
       <h3>Administradores:</h3>
       
       {/* Tabla de administradores */}
-      <table className="admin-table" border="1" cellPadding="8">
+      <Table striped bordered hover className="admin-table" border="1" cellPadding="8">
         <thead>
           <tr>
             <th>Nombre</th>
             <th>Apellido</th>
-            <th>Email</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -108,7 +108,6 @@ const ListAdmins = () => {
               <tr key={admin.id}>
                 <td>{admin.name}</td>
                 <td>{admin.surname}</td>
-                <td>{admin.email}</td>
                 <td>
                   <button
                     className="btn btn-sm btn-primary me-2"
@@ -129,7 +128,7 @@ const ListAdmins = () => {
             ))
           )}
         </tbody>
-      </table>
+      </Table>
 
       {/* Formulario de edición */}
       {showEditForm && selectedAdmin && (
