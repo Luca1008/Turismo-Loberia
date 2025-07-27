@@ -36,9 +36,37 @@ aside.sidebar-admin li svg{
   width: 100%;
   text-align: left;
   padding: 10px;
+  border-radius: 0%;
+  padding: 20px;
 }
 
 .btn-admin{
   background-color: transparent;
   border: none;
+}
+
+.buttons-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.buttons-container button{
+  font-weight: bold;
+  font-size: 1rem;
+  font-family: var(--size-h3-mobile);
+  border: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 1.5px 4px rgba(60, 180, 60, 0.18);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center !important;
+  margin-right: 8px;
 }

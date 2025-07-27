@@ -110,15 +110,15 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
     <div className="edit-card-modal">
       <div className="modal-header">
         <h3>Editar Card</h3>
-        <button 
-          type="button" 
-          className="btn-close" 
+        <button
+          type="button"
+          className="btn-close"
           onClick={handleCancel}
           aria-label="Cerrar"
         ></button>
       </div>
       
-      <Form onSubmit={handleSubmit} encType="multipart/form-data">
+      <Form className="form-edit-card" onSubmit={handleSubmit} encType="multipart/form-data">
         <Form.Group className="mb-3" controlId="titulo">
           <Form.Label>Título del lugar</Form.Label>
           <Form.Control

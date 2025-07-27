@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Global } from "../../../helpers/Global";
 import { useAuth } from "../../../hooks/useAuth";
 import "../../../styles/panelAdmin.css";
+import Button from 'react-bootstrap/Button';
 
 const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
   const { auth, setAuth } = useAuth();
@@ -154,17 +155,16 @@ const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
               />
             </Form.Group>
 
-            <div className="d-flex justify-content-between">
-              <button 
-                type="button" 
-                className="btn btn-secondary"
+            <div className="buttons-container">
+              <Button variant="secondary" 
+                type="button"
                 onClick={onCancel}
               >
                 Cancelar
-              </button>
-              <button type="submit" className="btn btn-primary">
+              </Button>
+              <Button variant="success" type="submit">
                 Actualizar
-              </button>
+              </Button>
             </div>
           </Form>
         </div>
