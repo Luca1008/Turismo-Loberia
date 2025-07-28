@@ -93,7 +93,7 @@ const Create = () => {
   return (
     <div>
       <h3>Agregar Contenido</h3>
-      <Form onSubmit={handleSubmit} encType="multipart/form-data">
+      <Form className="form-create-card" onSubmit={handleSubmit} encType="multipart/form-data">
         <Form.Group className="mb-3" controlId="titulo">
           <Form.Label>Título del lugar</Form.Label>
           <Form.Control

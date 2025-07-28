@@ -51,9 +51,13 @@ const ListAdmins = () => {
 
       setAdmins(admins.filter(admin => admin.id !== id));
       toast.success("Administrador eliminado correctamente");
+      setTimeout(() => {
+      }, 1500);
     } catch (err) {
       console.error("Error completo:", err);
       toast.error("Hubo un error: " + err.message);
+      setTimeout(() => {
+      }, 1500);
     }
   };
 
@@ -75,6 +79,8 @@ const ListAdmins = () => {
     setShowEditForm(false);
     fetchAdmins(); // Recargar la lista después de editar
     toast.success("Administrador actualizado correctamente");
+    setTimeout(() => {
+    }, 1500);
   };
 
   const cancelEdit = () => {

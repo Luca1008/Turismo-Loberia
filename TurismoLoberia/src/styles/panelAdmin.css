@@ -70,3 +70,32 @@ aside.sidebar-admin li svg{
   justify-content: center !important;
   margin-right: 8px;
 }
+
+.modal-header{
+  width: 650px;
+  display: flex;
+  flex-direction: row;
+  margin: auto
+}
+
+.form-edit-card, .form-create-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  text-align: left;
+}
+
+.modal-footer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.modal-footer button{
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 1.5px 4px rgba(60, 180, 60, 0.18);
+}
