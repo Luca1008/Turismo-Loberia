@@ -2,11 +2,14 @@ import React from "react";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import "../styles/city.css";
 import { FaCar, FaBus, FaBicycle } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
 
 export const SanManuel = () => {
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
   return (
-    <div className="city">
-      <h1 id="informacion-general">San Manuel</h1>
+    <div className="city" key={i18n.language}>
+      <h1 id="informacion-general">{t("san_manuel")}</h1>
       <div className="portada-city"></div>
       <section className="information">
         <p>
@@ -29,7 +32,7 @@ export const SanManuel = () => {
         </p>
       </section>
       <section className="go-to" id="como-llegar">
-        <h2>Cómo Llegar</h2>
+        <h2>{t("como_llegar")}</h2>
         <p>
           <strong><FaCar />En auto:</strong> Ruta recomendada: Tomá la Ruta Nacional 226 desde Tandil en dirección a Lobería.
         </p>
@@ -54,7 +57,7 @@ export const SanManuel = () => {
         <div className="photo"></div>
       </section>
       <section className="accommodation" id="alojamientos">
-        <h2>Alojamientos</h2>
+        <h2>{t("alojamientos")}</h2>
         <div className="photo"></div>
         <p>
           San Manuel ofrece opciones de alojamiento sencillas y acogedoras, ideales para quienes buscan una experiencia tranquila en el campo.
@@ -68,7 +71,7 @@ export const SanManuel = () => {
         <ButtonSuccess />
       </section>
       <section className="gastronomy" id="gastronomia">
-        <h2>Gastronomía</h2>
+        <h2>{t("gastronomia")}</h2>
         <div className="photo"></div>
         <p>
           San Manuel ofrece una propuesta gastronómica sencilla y auténtica, ideal para quienes buscan disfrutar de la cocina casera en un entorno rural.
@@ -88,7 +91,7 @@ export const SanManuel = () => {
         <ButtonSuccess />
       </section>
       <section className="transport" id="transporte">
-        <h2>Transporte</h2>
+        <h2>{t("transporte")}</h2>
         <div className="photo"></div>
         <p>
           San Manuel, una localidad del partido de Lobería en la provincia de Buenos Aires, ofrece opciones limitadas de transporte público.
@@ -107,7 +110,7 @@ export const SanManuel = () => {
         </p>
       </section>
       <section className="agenda" id="agenda">
-        <h2>Agenda</h2>
+        <h2>{t("agenda")}</h2>
         <div className="photo"></div>
         <p>
           San Manuel, una localidad del partido de Lobería, Buenos Aires, celebra diversos eventos a lo largo del año, destacándose especialmente durante el mes de marzo.
@@ -127,7 +130,7 @@ export const SanManuel = () => {
         <ButtonSuccess />
       </section>
       <section className="event" id="que-hacer">
-        <h2>¿Qué hacer?</h2>
+        <h2>{t("que_hacer2")}</h2>
         <p>
           En San Manuel, podés disfrutar de varias actividades al aire libre y culturales que reflejan el encanto de esta localidad serrana.
         </p>
@@ -148,7 +151,7 @@ export const SanManuel = () => {
         </p>
       </section>
       <section className="download" id="descargas">
-        <h2>Descargas</h2>
+        <h2>{t("descargas")}</h2>
         <p>
           Puedes descargar material útil para tu visita como: Mapa turístico, listado actualizado de alojamientos y guía gastronómica local.
         </p>

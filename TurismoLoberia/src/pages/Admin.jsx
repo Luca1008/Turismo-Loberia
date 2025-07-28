@@ -67,7 +67,7 @@ const Admin = () => {
   };
 
   return (
-    <section className="login">
+    <section className="login" key={i18n.language}>
       <ToastContainer
         position="top-right"
         autoClose={5000}

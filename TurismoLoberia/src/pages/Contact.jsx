@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import { FaAsterisk } from "react-icons/fa";
 import ButtonSubmit from "../components/common/ButtonSubmit";
 import "../styles/contact.css";
+import { useTranslation } from "react-i18next";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ export const Contact = () => {
   });
   const [status, setStatus] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
 
   const handleChange = (e) => {
     setFormData({
@@ -59,12 +62,12 @@ export const Contact = () => {
   };
   return (
     <div>
-      <section className="contact">
-        <h2>Contactanos</h2>
+      <section className="contact" key={i18n.language}>
+        <h2>{t("contactanos")}</h2>
         <Form onSubmit={handleSubmit} className="form-contact">
           <Form.Group className="mb-3" controlId="formName">
             <Form.Label>
-              Nombre y Apellido: <FaAsterisk className="requerided" />
+              {t("nombre_apellido")} <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               type="text"
@@ -72,13 +75,13 @@ export const Contact = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              placeholder="Tu nombre completo"
+              placeholder={t("placeholder_nombre")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formEmail">
             <Form.Label>
-              Email: <FaAsterisk className="requerided" />
+              {t("email2")} <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               type="email"
@@ -86,13 +89,13 @@ export const Contact = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="tu@email.com"
+              placeholder={t("placeholder_email")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formSubject">
             <Form.Label>
-              Asunto: <FaAsterisk className="requerided" />
+              {t("asunto")} <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               type="text"
@@ -100,13 +103,13 @@ export const Contact = () => {
               value={formData.subject}
               onChange={handleChange}
               required
-              placeholder="Motivo del mensaje"
+              placeholder={t("placeholder_asunto")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formMessage">
             <Form.Label>
-              Mensaje: <FaAsterisk className="requerided" />
+              {t("mensaje")} <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               as="textarea"
@@ -115,22 +118,22 @@ export const Contact = () => {
               value={formData.message}
               onChange={handleChange}
               required
-              placeholder="Escribe tu mensaje aquí..."
+              placeholder={t("placeholder_mensaje")}
             />
           </Form.Group>
           <p className="required-info">
-            Los campos marcados con un asterisco (
+            {t("campos_obligatorios")} (
             <FaAsterisk className="requerided" />) son obligatorios.
           </p>
           <ButtonSubmit
-            text={status === "enviando" ? "Enviando..." : "Enviar"}
+            text={status === "enviando" ? t("enviando") :t("enviar")}
             disabled={status === "enviando"}
             className={`.btn-success${status === "enviando" ? " sending" : ""}`}
           />
 
           {status === "exitoso" && (
             <p className="success-message">
-              ¡Mensaje enviado exitosamente! Te responderemos a la brevedad.
+              {t("mensaje_exitoso")}
             </p>
           )}
           {status === "error" && (

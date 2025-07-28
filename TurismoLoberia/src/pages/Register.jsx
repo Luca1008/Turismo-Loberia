@@ -3,9 +3,12 @@ import Form from "react-bootstrap/Form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Global } from "../helpers/Global";
+import { useTranslation } from 'react-i18next';
 
 export const Register = () => {
   const [error, setError] = useState(null);
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
 
   const registerUser = async (e) => {
     e.preventDefault();
@@ -22,7 +25,7 @@ export const Register = () => {
 
     // Validar contraseña
     if (userData.password.length < 8) {
-      toast.error("La contraseña debe tener al menos 8 caracteres.");
+      toast.error(t("error_contrasena_minima"));
       return; // Detiene la ejecución si la validación falla
     }
 
@@ -43,10 +46,10 @@ export const Register = () => {
 
       if (data.status === "success") {
         if (data.message && data.message.includes("ya existe")) {
-          setError("El usuario ya existe en el sistema");
-          toast.error("El usuario ya existe en el sistema");
+          setError(t("error_usuario_existente"));
+          toast.error(t("error_usuario_existente"));
         } else {
-          toast.success("Usuario registrado correctamente");
+          toast.success(t("usuario_registrado"));
           setTimeout(() => {
             window.location.href = "/Admin";
           }, 1500); // Espera 1.5 segundos para mostrar el toast
@@ -56,15 +59,15 @@ export const Register = () => {
         toast.error(data.message || "Error al registrar usuario");
       }
     } catch (error) {
-      setError("Error al conectar con el servidor");
-      toast.error("Error al conectar con el servidor");
+      setError(t("error_conexion2"));
+      toast.error(t("error_conexion2"));
     }
   };
 
   return (
     <>
-      <section className="register">
-        <h2 className="content__title">Registro</h2>
+      <section className="register" key={i18n.language}>
+        <h2 className="content__title">{t("registro")}</h2>
         <div className="content__posts">
           <Form
             className="register-form"
@@ -72,26 +75,26 @@ export const Register = () => {
             encType="multipart/form-data"
           >
             <Form.Group className="mb-3" controlId="registerName">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control type="text" name="name" placeholder="Nombre" required />
+              <Form.Label>{t("nombre")}</Form.Label>
+              <Form.Control type="text" name="name" placeholder={t("nombre")} required />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="registerSurname">
-              <Form.Label>Apellido</Form.Label>
-              <Form.Control type="text" name="surname" placeholder="Apellido" required />
+              <Form.Label>{t("apellido")}</Form.Label>
+              <Form.Control type="text" name="surname" placeholder={t("apellido")} required />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="registerEmail">
-              <Form.Label>Correo electrónico</Form.Label>
-              <Form.Control type="email" name="email" placeholder="Correo electrónico" required />
+              <Form.Label>{t("correo_electronico")}</Form.Label>
+              <Form.Control type="email" name="email" placeholder={t("correo_electronico")} required />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="registerPassword">
-              <Form.Label>Contraseña</Form.Label>
-              <Form.Control type="password" name="password" placeholder="Contraseña" required />
+              <Form.Label>{t("contrasena")}</Form.Label>
+              <Form.Control type="password" name="password" placeholder={t("contrasena")} required />
             </Form.Group>
             <button type="submit" className="btn btn-success">
-              Registrarse
+              {t("registrarse")}
             </button>
           </Form>
         </div>

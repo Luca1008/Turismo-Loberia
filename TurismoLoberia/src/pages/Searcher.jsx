@@ -7,6 +7,7 @@ import { FaSearch } from "react-icons/fa";
 import { useSearchParams } from "react-router-dom";
 import ContentCard from "../components/cards/ContentCard";
 import "../styles/searcher.css";
+import { useTranslation } from 'react-i18next';
 
 const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }, ref) => {
   // --- Estados principales
@@ -15,6 +16,8 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }
   const [city, setCity] = useState("");
   const [category, setCategory] = useState("");
   const [noResults, setNoResults] = useState(false);
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
 
   // --- Estados para paginación
   const [page, setPage] = useState(1);
@@ -114,15 +117,15 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }
   };
 
   return (
-    <div className="search-page">
+    <div className="search-page" key={i18n.language}>
       <main className="search-main">
-        <h1 className="search-title">Búsqueda de contenido</h1>
+        <h1 className="search-title">{t("busqueda_contenido")}</h1>
 
         {/* 🔍 Buscador por título */}
         <div className="search-input-group">
           <input
             type="text"
-            placeholder="Buscar por nombre..."
+            placeholder={t("buscar_por_nombre")}
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -141,7 +144,7 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }
               setPage(1);
             }}
           >
-            <option value="">Ciudad</option>
+            <option value="">{t("ciudad")}</option>
             <option value="Lobería">Lobería</option>
             <option value="Arenas Verdes">Arenas Verdes</option>
             <option value="San Manuel">San Manuel</option>
@@ -154,15 +157,15 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }
               setPage(1);
             }}
           >
-            <option value="">Categoría</option>
-            <option value="Alojamiento">Alojamiento</option>
-            <option value="Gastronomía">Gastronomía</option>
-            <option value="Cultura">Cultura</option>
-            <option value="Evento">Evento</option>
+            <option value="">{t("categoria")}</option>
+            <option value="Alojamiento">{t("alojamiento")}</option>
+            <option value="Gastronomía">{t("gastronomia")}</option>
+            <option value="Cultura">{t("cultura")}</option>
+            <option value="Evento">{t("evento")}</option>
           </Form.Select>
 
           <Button className="btn-reset" variant="outline-secondary" onClick={handleReset}>
-            Limpiar filtros
+            {t("limpiar_filtros")}
           </Button>
         </div>
 
