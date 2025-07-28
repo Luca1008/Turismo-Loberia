@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ContentCard from "../components/cards/ContentCard";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
 import { Global } from "../helpers/Global";
-import Spinner from "react-bootstrap/Spinner";
 
 import { FaInfo, FaPaintBrush } from "react-icons/fa";
 import {
@@ -29,7 +28,7 @@ export const Index = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setIsVisible((prev) => !prev);
-    }, 800); // Ajusta este valor para cambiar la velocidad del parpadeo
+    }, 800);
 
     return () => clearInterval(interval);
   }, []);
