@@ -2,13 +2,17 @@ import React from "react";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import "../styles/city.css";
 import { FaCar } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+
 
 
 const ArenasVerdes = () => {
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
 
   return (
-    <div className="city">
-      <h1  id="informacion-general">Arenas Verdes</h1>
+    <div className="city" key={i18n.language}>
+      <h1 id="informacion-general">{t("arenas_verdes")}</h1>
       <div className="portada-city"></div>
       <section className="information">
         <p>
@@ -23,7 +27,7 @@ const ArenasVerdes = () => {
         </p>
       </section>
       <section className="go-to" id="como-llegar">
-        <h2>Cómo Llegar</h2>
+        <h2>{t("como_llegar")}</h2>
         <p>
           <strong>En autobús:</strong> Se puede llegar en colectivo hasta las
           ciudades cercanas: Necochea (45 km) y Lobería (30 km). Desde allí, se
@@ -54,7 +58,7 @@ const ArenasVerdes = () => {
         <div className="photo"></div>
       </section>
       <section className="accommodation" id="alojamientos">
-        <h2>Alojamientos</h2>
+        <h2>{t("alojamientos")}</h2>
         <div className="photo"></div>
         <p>
           La oferta de alojamiento incluye cabañas, casas de alquiler
@@ -65,7 +69,7 @@ const ArenasVerdes = () => {
           natural del lugar. Se recomienda reservar con anticipación en
           temporada alta.
         </p>
-        <h3 id="base-de-campamentos">Base de campamento</h3>
+        <h3 id="base-de-campamentos">{t("base_campamentos")}</h3>
         <p>
           Arenas Verdes cuenta con zonas designadas para acampar, tanto en áreas
           privadas como en espacios públicos autorizados.
@@ -77,7 +81,7 @@ const ArenasVerdes = () => {
         <ButtonSuccess />
       </section>
       <section className="gastronomy" id="gastronomia">
-        <h2>Gastronomía</h2>
+        <h2>{t("gastronomia")}</h2>
         <div className="photo"></div>
         <p>
           La gastronomía local se basa en productos frescos, incluyendo pescados
@@ -91,7 +95,7 @@ const ArenasVerdes = () => {
         <ButtonSuccess />
       </section>
       <section className="transport" id="transporte">
-        <h2>Transporte</h2>
+        <h2>{t("transporte")}</h2>
         <div className="photo"></div>
         <p>
           Durante la temporada alta, algunos servicios turísticos ofrecen
@@ -108,7 +112,7 @@ const ArenasVerdes = () => {
         </p>
       </section>
       <section className="agenda" id="agenda">
-        <h2>Agenda</h2>
+        <h2>{t("agenda")}</h2>
         <div className="photo"></div>
         <p>
           Durante el verano, se realizan actividades culturales, deportivas y
@@ -122,7 +126,7 @@ const ArenasVerdes = () => {
         <ButtonSuccess />
       </section>
       <section className="event" id="que-hacer">
-        <h2>¿Qué hacer?</h2>
+        <h2>{t("que_hacer2")}</h2>
         <p>Disfrutar de la playa y los médanos.</p>
         <p>Recorrer senderos en bicicleta o a pie.</p>
         <p>Visitar la zona del arroyo “El Moro”.</p>
@@ -131,7 +135,7 @@ const ArenasVerdes = () => {
         <p>Asistir a actividades culturales y ferias locales.</p>
       </section>
       <section className="download" id="descargas">
-        <h2>Descargas</h2>
+        <h2>{t("descargas")}</h2>
         <p>
           Puedes descargar material útil para tu visita como: Mapa turístico,
           listado actualizado de alojamientos y guía gastronómica local.
