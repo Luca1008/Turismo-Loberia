@@ -6,6 +6,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 const Admin = () => {
   const { setAuth } = useAuth();
@@ -28,6 +29,9 @@ const Admin = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -78,7 +82,7 @@ const Admin = () => {
       <h2>Panel de Administración</h2>
       <Form onSubmit={loginUser} className="form-login" noValidate>
         <Form.Group className="mb-3" controlId="formEmail">
-          <Form.Label>Email</Form.Label>
+          <Form.Label>{t("email")}</Form.Label>
           <Form.Control
             type="email"
             placeholder="name@example.com"
@@ -92,11 +96,12 @@ const Admin = () => {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formPassword">
-          <Form.Label>Contraseña</Form.Label>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+          <Form.Label>{t("password")}</Form.Label>
           <Form.Control
             type="password"
-            placeholder="contraseña"
+            placeholder={t("placeholder_password")}
             required
             value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -108,12 +113,13 @@ const Admin = () => {
         </Form.Group>
 
         <div style={{ marginTop: "1rem" }}>
-          <a href="/Register">¿No tienes cuenta? Regístrate aquí</a>
+          <a href="/Register">{t("no_account")}</a>
         </div>
 
         <ButtonSubmit
           type="submit"
-          text={loading ? "Cargando..." : "Iniciar sesión"}
+
+          text={loading ? t("loading") : t("login")}
           className={`btn btn-success ${loading ? "loading" : ""}`}
           disabled={loading}
         />
