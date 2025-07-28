@@ -7,15 +7,15 @@ import Searcher from "./Searcher";
 import Nav from "react-bootstrap/Nav";
 import { useAuth } from "../hooks/useAuth.jsx";
 import { MdLogout, MdOutlineSettings } from "react-icons/md";
-import { FaPencilAlt, FaUserCheck, FaUsersCog} from "react-icons/fa";
+import { FaPencilAlt, FaUserCheck, FaUsersCog } from "react-icons/fa";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 const PanelAdmin = () => {
   const { auth, logout } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
-    logout();            // Limpia estado y localStorage
-    navigate("/Admin");  // Redirige a /Admin
+    logout(); // Limpia estado y localStorage
+    navigate("/Admin"); // Redirige a /Admin
   };
 
   const [show, setShow] = useState(false);
@@ -67,8 +67,8 @@ const PanelAdmin = () => {
         </Nav.Item>
         <Nav.Item as="li">
           <span>
-          <button className="btn-admin" onClick={handleLogout}>
-            <MdLogout /> Cerrar sesión
+            <button className="btn-admin" onClick={handleLogout}>
+              <MdLogout /> Cerrar sesión
             </button>
           </span>
         </Nav.Item>
@@ -96,41 +96,62 @@ const PanelAdmin = () => {
             </div>
           </div>
         )}
+
+        <h3>Modificar Carrousel Portada</h3>
       </section>
 
       {/*----------------------Ajustes-----------------*/}
       <section className="user-panel">
-  <Offcanvas show={show} onHide={handleClose}>
-    <Offcanvas.Header closeButton>
-      <Offcanvas.Title>Panel de ajustes de:  {auth.name}</Offcanvas.Title>
-    </Offcanvas.Header>
-    <Offcanvas.Body>
-      <div className="user-panel-content">
-        <div className="user-info">
-          <p><strong>Email:</strong> {auth.email}</p>
-          <p><strong>Rol:</strong> {auth.role}</p>
-        </div>
+        <Offcanvas show={show} onHide={handleClose}>
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Panel de ajustes de: {auth.name}</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <div className="user-panel-content">
+              <div className="user-info">
+                <p>
+                  <strong>Email:</strong> {auth.email}
+                </p>
+                <p>
+                  <strong>Rol:</strong> {auth.role}
+                </p>
+              </div>
 
-        <div className="panel-admin">
-      <aside className="sidebar-admin">
-        <ul>
-          {auth.role === "superadmin" && (
-            <>
-          <li><Link to="modificar-datos"><FaPencilAlt />Modificar mis datos</Link></li>
-          <li><Link to="crear-admin"><FaUserCheck />Crear nuevo admin</Link></li>
-          <li><Link to="listar-admins"><FaUsersCog />Gestionar administradores</Link></li>
-          </>
-          )}
-        </ul>
-      </aside>
-      <main className="panel-content">
-        <Outlet /> {/* Aquí se renderiza la subvista */}
-      </main>
-      </div>
-      </div>
-    </Offcanvas.Body>
-  </Offcanvas>
-</section>
+              <div className="panel-admin">
+                <aside className="sidebar-admin">
+                  <ul>
+                    {auth.role === "superadmin" && (
+                      <>
+                        <li>
+                          <Link to="modificar-datos">
+                            <FaPencilAlt />
+                            Modificar mis datos
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="crear-admin">
+                            <FaUserCheck />
+                            Crear nuevo admin
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="listar-admins">
+                            <FaUsersCog />
+                            Gestionar administradores
+                          </Link>
+                        </li>
+                      </>
+                    )}
+                  </ul>
+                </aside>
+                <main className="panel-content">
+                  <Outlet /> {/* Aquí se renderiza la subvista */}
+                </main>
+              </div>
+            </div>
+          </Offcanvas.Body>
+        </Offcanvas>
+      </section>
     </>
   );
 };

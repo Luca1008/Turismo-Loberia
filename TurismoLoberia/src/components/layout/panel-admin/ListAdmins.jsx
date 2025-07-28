@@ -4,6 +4,7 @@ import UpdateAdmin from './UpdateAdmin';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Table from 'react-bootstrap/Table';
+import { Global } from "../../../helpers/Global";
 
 const ListAdmins = () => {
   const [admins, setAdmins] = useState([]);
@@ -18,7 +19,7 @@ const ListAdmins = () => {
   }, []);
 
   const fetchAdmins = () => {
-    fetch('http://localhost:5000/api/user/admins')
+    fetch(`${Global.url}user/admins`)
       .then(res => {
         if (!res.ok) throw new Error('Error al cargar admins');
         return res.json();
@@ -39,7 +40,7 @@ const ListAdmins = () => {
     if (!confirmar) return;
     
     try {
-      const res = await fetch(`http://localhost:5000/api/user/${id}`, {
+      const res = await fetch(`${Global.url}user/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
