@@ -10,6 +10,7 @@ import { MdLogout, MdOutlineSettings } from "react-icons/md";
 import { FaPencilAlt, FaUserCheck, FaUsersCog } from "react-icons/fa";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
+
 const PanelAdmin = () => {
   const { auth, logout } = useAuth();
   const navigate = useNavigate();

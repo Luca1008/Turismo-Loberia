@@ -18,6 +18,8 @@ export const Suscribe = () => {
   });
   const [status, setStatus] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -40,12 +42,12 @@ export const Suscribe = () => {
 
   return (
     <div>
-      <section className="suscribe">
-        <h2>Queremos conocerte</h2>
+      <section className="suscribe" key={i18n.language}>
+        <h2>{t("suscribete_titulo")}</h2>
         <Form className="form-direction">
           <Form.Group className="mb-3" controlId="formDirection">
             <Form.Label>
-              Vivo en: <FaAsterisk className="requerided" />
+              {t("vivo_en")} <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               type="text"
@@ -53,18 +55,18 @@ export const Suscribe = () => {
               value={formData.direction}
               onChange={handleChange}
               required
-              placeholder="Ciudad, Provincia, País"
+              placeholder={t("placeholder_ciudad")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formSource">
             <Form.Label>
-              Me enteré de Lobería por... <FaAsterisk className="requerided" />
+              {t("me_entere")} <FaAsterisk className="requerided" />
             </Form.Label>
             <div>
               <Form.Check
                 type="checkbox"
-                label="Conocidos"
+                label={t("conocidos")}
                 name="source"
                 value="Conocidos"
                 checked={formData.source.includes("Conocidos")}
@@ -80,7 +82,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Radio"
+                label={t("radio")}
                 name="source"
                 value="Radio"
                 checked={formData.source.includes("Radio")}
@@ -96,7 +98,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Televisión"
+                label={t("television")}
                 name="source"
                 value="Televisión"
                 checked={formData.source.includes("Televisión")}
@@ -112,7 +114,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Redes Sociales"
+                label={t("television")}
                 name="source"
                 value="Redes Sociales"
                 checked={formData.source.includes("Redes Sociales")}
@@ -128,7 +130,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Nunca escuché"
+                label={t("nunca_escuche")}
                 name="source"
                 value="Nunca escuché"
                 checked={formData.source.includes("Nunca escuché")}
@@ -144,7 +146,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Otros"
+                label={t("otros")}
                 name="source"
                 value="Otros"
                 checked={formData.source.includes("Otros")}
@@ -163,20 +165,20 @@ export const Suscribe = () => {
 
           <Form.Group className="mb-3" controlId="formThink">
             <Form.Label>
-              Cuando pienso en Lobería pienso en
+              {t("pienso_en_loberia")}
             </Form.Label>
             <Form.Control
               type="text"
               name="think"
               value={formData.think}
               onChange={handleChange}
-              placeholder="Escribe una sola palabra"
+              placeholder={t("placeholder_palabra")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formProject">
             <Form.Label>
-              Cuando vaya a Lobería quiero: <FaAsterisk className="requerided" />
+              t("quiero_en_loberia")} <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               type="text"
@@ -184,18 +186,18 @@ export const Suscribe = () => {
               value={formData.project}
               onChange={handleChange}
               required
-              placeholder="Escribe una sola"
+              placeholder={t("placeholder_actividad")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formCompanions">
             <Form.Label>
-              Me gustaría ir... <FaAsterisk className="requerided" />
+              {t("me_gustaria_ir")} <FaAsterisk className="requerided" />
             </Form.Label>
             <div>
               <Form.Check
                 type="checkbox"
-                label="Solo/a"
+                label={t("solo")}
                 name="companions"
                 value="Solo/a"
                 checked={formData.companions.includes("Solo/a")}
@@ -203,7 +205,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="En pareja"
+                label={t("en_pareja")}
                 name="companions"
                 value="En pareja"
                 checked={formData.companions.includes("En pareja")}
@@ -211,7 +213,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Con familia"
+                label={t("con_familia")}
                 name="companions"
                 value="Con familia"
                 checked={formData.companions.includes("Con familia")}
@@ -219,7 +221,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Con amigos"
+                label={t("con_amigos")}
                 name="companions"
                 value="Con amigos"
                 checked={formData.companions.includes("Con amigos")}
@@ -227,7 +229,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Con mis mascotas"
+                label={t("con_mascotas")}
                 name="companions"
                 value="Con mis mascotas"
                 checked={formData.companions.includes("Con mis mascotas")}
@@ -238,12 +240,12 @@ export const Suscribe = () => {
 
           <Form.Group className="mb-3" controlId="formTransport">
             <Form.Label>
-              Iría en... <FaAsterisk className="requerided" />
+              {t("iria_en")} <FaAsterisk className="requerided" />
             </Form.Label>
             <div>
               <Form.Check
                 type="checkbox"
-                label="Micro de larga distancia"
+                label={t("micro_larga")}
                 name="transport"
                 value="Micro de larga distancia"
                 checked={formData.transport?.includes("Micro de larga distancia")}
@@ -259,7 +261,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Vehículo propio"
+                label={t("vehiculo_propio")}
                 name="transport"
                 value="Vehículo propio"
                 checked={formData.transport?.includes("Vehículo propio")}
@@ -275,7 +277,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Viajes compartidos"
+                label={t("viajes_compartidos")}
                 name="transport"
                 value="Viajes compartidos"
                 checked={formData.transport?.includes("Viajes compartidos")}
@@ -291,7 +293,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Motorhome"
+                label={t("motorhome")}
                 name="transport"
                 value="Motorhome"
                 checked={formData.transport?.includes("Motorhome")}
@@ -307,7 +309,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Tour de Agencia de viajes"
+                label={t("tour_agencia")}
                 name="transport"
                 value="Tour de Agencia de viajes"
                 checked={formData.transport?.includes("Tour de Agencia de viajes")}
@@ -323,7 +325,7 @@ export const Suscribe = () => {
               />
               <Form.Check
                 type="checkbox"
-                label="Otros"
+                label={t("otros")}
                 name="transport"
                 value="Otros"
                 checked={formData.transport?.includes("Otros")}
@@ -342,7 +344,7 @@ export const Suscribe = () => {
 
           <Form.Group className="mb-3" controlId="formName">
             <Form.Label>
-              Nombre y Apellido: <FaAsterisk className="requerided" />
+              {t("nombre_apellido2")} <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               type="text"
@@ -350,13 +352,13 @@ export const Suscribe = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              placeholder="Tu nombre completo"
+              placeholder={t("placeholder_nombre")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formEmail">
             <Form.Label>
-              Email: <FaAsterisk className="requerided" />
+              {t("email3")} <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               type="email"
@@ -364,13 +366,13 @@ export const Suscribe = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="tu@email.com"
+              placeholder={t("placeholder_email")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formPhone">
             <Form.Label>
-              Teléfono / whatsApp: <FaAsterisk className="requerided" />
+              {t("telefono")} <FaAsterisk className="requerided" />
             </Form.Label>
             <p style={{ fontSize: "0.9em", color: "#888" }}>
               Ingrese su número sin el 15 si es celular. Para líneas fijas, incluya el código de área. Si es del exterior, agregue +54.
@@ -381,14 +383,14 @@ export const Suscribe = () => {
               value={formData.phone}
               onChange={handleChange}
               required
-              placeholder="(cod) 12345"
+              placeholder={t("placeholder_telefono")}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formAccept">
             <Form.Check
               type="checkbox"
-              label="Acepto recibir información por correo electrónico y las Políticas de Privacidad"
+              label={t("acepto_politicas")}
               name="accept"
               checked={formData.accept}
               onChange={e => setFormData(prev => ({ ...prev, accept: e.target.checked }))}
@@ -396,18 +398,18 @@ export const Suscribe = () => {
             />
           </Form.Group>
           <p className="required-info">
-            Los campos marcados con un asterisco (
+            {t("campos_obligatorios")} (
             <FaAsterisk className="requerided" />) son obligatorios.
           </p>
           <ButtonSubmit
-            text={status === "enviando" ? "Enviando..." : "Enviar"}
+            text={status === "enviando" ? t("enviando") : t("enviar")}}
             disabled={status === "enviando"}
             className={`btn-success${status === "enviando" ? " sending" : ""}`}
           />
 
           {status === "exitoso" && (
             <p className="success-message">
-              ¡Mensaje enviado exitosamente! Te responderemos a la brevedad.
+              {t("mensaje_enviado")}
             </p>
           )}
           {status === "error" && (

@@ -2,11 +2,14 @@ import React from "react";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import "../styles/city.css";
 import { FaCar, FaBus, FaTrain } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
 
 const PartidoLoberia = () => {
+    const { t } = useTranslation();
+    const { i18n } = useTranslation();
   return (
-    <div className="city">
-      <h1 id="informacion-general">Partido de Lobería</h1>
+    <div className="city" key={i18n.language}>
+      <h1 id="informacion-general">{t("partido_loberia")}</h1>
       <div className="portada-city"></div>
       <section className="information">
         <p>
@@ -20,7 +23,7 @@ const PartidoLoberia = () => {
         </p>
       </section>
       <section className="history" id="historia">
-        <h2>Historia</h2>
+        <h2>{t("historia")}</h2>
         <div className="photo"></div>
         <p>
           Fundada oficialmente en 1891, Lobería tiene raíces que se remontan al siglo XIX con las estancias rurales y las primeras familias pioneras.
@@ -37,7 +40,7 @@ const PartidoLoberia = () => {
         <ButtonSuccess />
       </section>
       <section className="nature" id="naturaleza">
-        <h2>Naturaleza</h2>
+        <h2>{t("naturaleza")}</h2>
         <div className="photo"></div>
         <p>
           Lobería cuenta con un entorno natural privilegiado: playas agrestes, sierras bajas, arroyos y reservas ecológicas.
@@ -54,7 +57,7 @@ const PartidoLoberia = () => {
         <ButtonSuccess />
       </section>
       <section className="producciones" id="producciones">
-        <h2>Producciones</h2>
+        <h2>{t("producciones")}</h2>
         <div className="photo"></div>
         <p>
           La economía del Partido de Lobería se basa principalmente en la agricultura, la ganadería y el turismo.
@@ -71,7 +74,7 @@ const PartidoLoberia = () => {
         <ButtonSuccess />
       </section>
       <section className="go-to" id="como-llegar">
-        <h2>Cómo Llegar</h2>
+        <h2>{t("como_llegar")}</h2>
         <div className="photo"></div>
         <p>
           <strong><FaCar />En auto desde Buenos Aires:</strong> Tomar la Autopista Buenos Aires-La Plata y luego la Ruta Provincial 2 hacia Mar del Plata.
@@ -90,7 +93,7 @@ const PartidoLoberia = () => {
         </p>
       </section>
       <section className="descargas" id="descargas">
-        <h2>Descargas</h2>
+        <h2>{t("descargas")}</h2>
         <p>
           Puedes descargar material útil para tu visita como: Mapa turístico del partido, guía de servicios y folleto informativo.
         </p>

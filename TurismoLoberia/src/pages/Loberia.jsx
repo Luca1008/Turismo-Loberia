@@ -2,12 +2,15 @@ import React from "react";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import "../styles/city.css";
 import { FaCar, FaBus, FaTrain } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
 
 
 const Loberia = () => {
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
   return (
-    <div className="city">
-      <h1 id="informacion-general">Lobería</h1>
+    <div className="city" key={i18n.language}>
+      <h1 id="informacion-general">{t("ciudad_loberia")}</h1>
       <div className="portada-city"></div>
       <section className="information">
         <p>
@@ -21,7 +24,7 @@ const Loberia = () => {
         </p>
       </section>
       <section className="go-to" id="como-llegar">
-        <h2>Cómo Llegar</h2>
+        <h2>{t("como_llegar")}</h2>
         <p>
           Lobería se encuentra a aproximadamente 470 km de la Ciudad Autónoma de Buenos Aires, en el sudeste de la provincia de Buenos Aires.
         </p>
@@ -40,7 +43,7 @@ const Loberia = () => {
         <div className="photo"></div>
       </section>
       <section className="accommodation" id="alojamientos">
-        <h2>Alojamientos</h2>
+        <h2>{t("alojamientos")}</h2>
         <div className="photo"></div>
         <p>
           La ciudad de Lobería ofrece una variedad de opciones de alojamiento pensadas para todo tipo de visitantes.
@@ -57,7 +60,7 @@ const Loberia = () => {
         <ButtonSuccess />
       </section>
       <section className="gastronomy" id="gastronomia">
-        <h2>Gastronomía</h2>
+        <h2>{t("gastronomia")}</h2>
         <div className="photo"></div>
         <p>
           La gastronomía en Lobería se destaca por su sencillez y sabor casero, con propuestas que combinan tradición rural y productos frescos de la zona.
@@ -74,7 +77,7 @@ const Loberia = () => {
         <ButtonSuccess />
       </section>
       <section className="transport" id="transporte">
-        <h2>Transporte</h2>
+        <h2>{t("transporte")}</h2>
         <div className="photo"></div>
         <p>
           Lobería cuenta con una terminal de ómnibus que conecta la ciudad con destinos regionales como Necochea, Mar del Plata, Tandil, Balcarce y la Ciudad de Buenos Aires.
@@ -93,7 +96,7 @@ const Loberia = () => {
         </p>
       </section>
       <section className="agenda" id="agenda">
-        <h2>Agenda</h2>
+        <h2>{t("agenda")}</h2>
         <div className="photo"></div>
         <p>
           Lobería ofrece una variada agenda cultural y recreativa a lo largo del año.
@@ -110,7 +113,7 @@ const Loberia = () => {
         <ButtonSuccess />
       </section>
       <section className="event" id="que-hacer">
-        <h2>¿Qué hacer?</h2>
+        <h2>{t("que_hacer2")}</h2>
         <p>
           <strong>Playas y naturaleza:</strong> Visitar Arenas Verdes y Bahía de los Moros para disfrutar del mar y paisajes costeros. También hacer caminatas o bici por el Camino de Sirga junto al río Quequén.
         </p>
@@ -125,7 +128,7 @@ const Loberia = () => {
         </p>
       </section>
       <section className="download" id="descargas">
-        <h2>Descargas</h2>
+        <h2>{t("descargas")}</h2>
         <p>
           Puedes descargar material útil para tu visita como: Mapa turístico, listado actualizado de alojamientos y guía gastronómica local.
         </p>

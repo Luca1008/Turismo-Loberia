@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import WeatherCard from "../components/cards/WeatherCard";
 import "../styles/weather.css";
+import ButtonSubmit from "../components/common/ButtonSubmit";
 
 export const Clima = () => {
   const ciudades = [
