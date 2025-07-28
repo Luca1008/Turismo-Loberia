@@ -48,16 +48,18 @@ exports.getForecast = async (req, res) => {
 
   try {
     const response = await axios.get(url);
-    const hoy = new Date().getDate();
+    const hoy = new Date();
     const dias = {};
 
     for (const item of response.data.list) {
       const fecha = new Date(item.dt_txt);
-      const dia = fecha.getDate();
-      if (dia === hoy) continue;
+      // Agrupa por fecha completa (YYYY-MM-DD)
+      const key = fecha.toISOString().slice(0, 10);
+      // Salta el día de hoy
+      if (key === hoy.toISOString().slice(0, 10)) continue;
 
-      if (!dias[dia]) {
-        dias[dia] = {
+      if (!dias[key]) {
+        dias[key] = {
           dt: item.dt,
           tempMax: item.main.temp_max,
           tempMin: item.main.temp_min,
@@ -72,23 +74,25 @@ exports.getForecast = async (req, res) => {
           dt12: null,
         };
       } else {
-        dias[dia].tempMax = Math.max(dias[dia].tempMax, item.main.temp_max);
-        dias[dia].tempMin = Math.min(dias[dia].tempMin, item.main.temp_min);
-        dias[dia].humedadSum += item.main.humidity;
-        dias[dia].presionSum += item.main.pressure;
-        dias[dia].vientoSum += item.wind ? item.wind.speed : 0;
-        dias[dia].count += 1;
+        dias[key].tempMax = Math.max(dias[key].tempMax, item.main.temp_max);
+        dias[key].tempMin = Math.min(dias[key].tempMin, item.main.temp_min);
+        dias[key].humedadSum += item.main.humidity;
+        dias[key].presionSum += item.main.pressure;
+        dias[key].vientoSum += item.wind ? item.wind.speed : 0;
+        dias[key].count += 1;
       }
 
       if (fecha.getHours() === 12) {
-        dias[dia].icon12 = item.weather[0].icon;
-        dias[dia].desc12 = item.weather[0].description;
-        dias[dia].dt12 = item.dt;
+        dias[key].icon12 = item.weather[0].icon;
+        dias[key].desc12 = item.weather[0].description;
+        dias[key].dt12 = item.dt;
       }
     }
 
-    const diasUnicos = Object.values(dias)
-      .map(d => ({
+    // Ordena por fecha y toma los próximos 5 días
+    const diasUnicos = Object.entries(dias)
+      .sort(([a], [b]) => new Date(a) - new Date(b))
+      .map(([key, d]) => ({
         dt: d.dt12 || d.dt,
         tempMax: d.tempMax,
         tempMin: d.tempMin,
@@ -96,7 +100,7 @@ exports.getForecast = async (req, res) => {
         descripcion: d.desc12 || d.descripcion,
         humedad: Math.round(d.humedadSum / d.count),
         presion: Math.round(d.presionSum / d.count),
-        viento: Math.round((d.vientoSum / d.count) * 10) / 10, // 1 decimal
+        viento: Math.round((d.vientoSum / d.count) * 10) / 10,
       }))
       .slice(0, 5);
 
