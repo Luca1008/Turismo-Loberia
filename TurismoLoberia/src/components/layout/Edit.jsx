@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import ButtonSubmit from "../common/ButtonSubmit";
-
+import Button from 'react-bootstrap/Button';
 const Edit = ({ cardId, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
     titulo: "",
@@ -246,12 +246,12 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
         {error && <div className="alert alert-danger mt-2">{error}</div>}
         
         <div className="modal-footer">
-          <ButtonSubmit
+          <Button variant="secondary"
             type="button"
             text="Cancelar"
             className="btn btn-secondary me-2"
             onClick={handleCancel}
-          />
+          >Cancelar</Button>
           <ButtonSubmit
             type="submit"
             text={loading ? "Actualizando..." : "Actualizar"}
