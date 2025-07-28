@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ContentCard from "../components/cards/ContentCard";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
 import { Global } from "../helpers/Global";
+import Spinner from "react-bootstrap/Spinner";
 
 import { FaInfo, FaPaintBrush } from "react-icons/fa";
 import {
@@ -20,6 +21,18 @@ export const Index = () => {
   const [eventos, setEventos] = useState([]);
   const { t } = useTranslation();
   const { i18n } = useTranslation();
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  /*---Spinner facebook----*/
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsVisible((prev) => !prev);
+    }, 800); // Ajusta este valor para cambiar la velocidad del parpadeo
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     // Traer solo los tres primeros alojamientos
@@ -121,6 +134,33 @@ export const Index = () => {
         <div className="container-info">
           <WeatherCarousel />
           <div className="facebook-container">
+            {!iframeLoaded && (
+              <div className="fb-logo-spinner-container">
+                <div
+                  className={`fb-logo-spinner ${
+                    isVisible ? "visible" : "hidden"
+                  }`}
+                >
+                  <svg
+                    viewBox="0 0 36 36"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M34 18c0-8.837-7.163-16-16-16S2 9.163 2 18c0 7.99 5.847 14.604 13.5 15.804V23.5h-4V18h4v-3.5c0-4.142 3.358-7.5 7.5-7.5h3v5h-3c-1.381 0-2.5 1.119-2.5 2.5V18h4.5l-1 5.5H22v10.804C29.153 32.604 34 25.99 34 18z"
+                      fill="#1877F2"
+                    />
+                    <path
+                      d="M24.5 23.5L25.5 18H22v-3.5c0-1.381 1.119-2.5 2.5-2.5h3v-5h-3c-4.142 0-7.5 3.358-7.5 7.5V18h-4v5.5h4v10.804a16.096 16.096 0 005 0V23.5h3.5z"
+                      fill="#FFFFFF"
+                    />
+                  </svg>
+                </div>
+                <p className="fb-loading-text">
+                  <strong>Cargando contenido...</strong>
+                </p>
+              </div>
+            )}
             <iframe
               className="facebook-iframe"
               src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Floberiaturismo&tabs=timeline&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
@@ -135,7 +175,9 @@ export const Index = () => {
                 overflow: "hidden",
                 width: "100%",
                 height: "600px",
+                display: iframeLoaded ? "block" : "none",
               }}
+              onLoad={() => setIframeLoaded(true)}
             />
           </div>
         </div>
