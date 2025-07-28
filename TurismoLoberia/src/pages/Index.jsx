@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ContentCard from "../components/cards/ContentCard";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
+import { Global } from "../helpers/Global";
 
 import { FaInfo, FaPaintBrush } from "react-icons/fa";
 import {
@@ -11,7 +12,7 @@ import {
 } from "react-icons/md";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import WeatherCarousel from "../components/layout/WeatherCarousel";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import "../styles/button.css";
 
 export const Index = () => {
@@ -20,10 +21,9 @@ export const Index = () => {
   const { t } = useTranslation();
   const { i18n } = useTranslation();
 
-
   useEffect(() => {
     // Traer solo los tres primeros alojamientos
-    fetch("http://localhost:5000/api/cards?category=Alojamiento&limit=3&page=1")
+    fetch(`${Global.url}cards?category=Alojamiento&limit=3&page=1`)
       .then((res) => res.json())
       .then((data) => {
         // Si la respuesta es { cards: [...] }
@@ -31,16 +31,18 @@ export const Index = () => {
         setAlojamientos(cards.slice(0, 3));
       })
       .catch((err) => {
+        console.error("Error al cargar alojamientos:", err);
         setAlojamientos([]);
       });
     // Traer solo los tres primeros eventos
-    fetch("http://localhost:5000/api/cards?category=Evento&limit=3&page=1")
+    fetch(`${Global.url}cards?category=Evento&limit=3&page=1`)
       .then((res) => res.json())
       .then((data) => {
         const cards = data.cards || data;
         setEventos(cards.slice(0, 3));
       })
       .catch((err) => {
+        console.error("Error al cargar eventos:", err);
         setEventos([]);
       });
   }, []);
@@ -51,12 +53,30 @@ export const Index = () => {
       <section className="services">
         <h2>{t("guia_servicios")}</h2>
         <div className="item-services-container">
-          <div className="item-services"><MdHotel /><p>{t("alojamientos")}</p></div>
-          <div className="item-services"><MdOutlineRestaurant /><p>{t("gastronomia")}</p></div>
-          <div className="item-services"><MdPlace /><p>{t("lugares_interes")}</p></div>
-          <div className="item-services"><FaPaintBrush /><p>{t("artesanos")}</p></div>
-          <div className="item-services"><MdMuseum /><p>{t("servicios_publicos")}</p></div>
-          <div className="item-services"><FaInfo /><p>{t("info_util")}</p></div>
+          <div className="item-services">
+            <MdHotel />
+            <p>{t("alojamientos")}</p>
+          </div>
+          <div className="item-services">
+            <MdOutlineRestaurant />
+            <p>{t("gastronomia")}</p>
+          </div>
+          <div className="item-services">
+            <MdPlace />
+            <p>{t("lugares_interes")}</p>
+          </div>
+          <div className="item-services">
+            <FaPaintBrush />
+            <p>{t("artesanos")}</p>
+          </div>
+          <div className="item-services">
+            <MdMuseum />
+            <p>{t("servicios_publicos")}</p>
+          </div>
+          <div className="item-services">
+            <FaInfo />
+            <p>{t("info_util")}</p>
+          </div>
         </div>
       </section>
       <section className="places">
