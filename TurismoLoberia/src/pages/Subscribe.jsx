@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
 import { FaAsterisk } from "react-icons/fa";
 import ButtonSubmit from "../components/common/ButtonSubmit";
 
@@ -164,9 +164,7 @@ export const Suscribe = () => {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formThink">
-            <Form.Label>
-              {t("pienso_en_loberia")}
-            </Form.Label>
+            <Form.Label>{t("pienso_en_loberia")}</Form.Label>
             <Form.Control
               type="text"
               name="think"
@@ -178,7 +176,7 @@ export const Suscribe = () => {
 
           <Form.Group className="mb-3" controlId="formProject">
             <Form.Label>
-              t("quiero_en_loberia")} <FaAsterisk className="requerided" />
+              {t("quiero_en_loberia")} <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               type="text"
@@ -248,7 +246,9 @@ export const Suscribe = () => {
                 label={t("micro_larga")}
                 name="transport"
                 value="Micro de larga distancia"
-                checked={formData.transport?.includes("Micro de larga distancia")}
+                checked={formData.transport?.includes(
+                  "Micro de larga distancia"
+                )}
                 onChange={(e) => {
                   const { value, checked } = e.target;
                   setFormData((prev) => ({
@@ -312,7 +312,9 @@ export const Suscribe = () => {
                 label={t("tour_agencia")}
                 name="transport"
                 value="Tour de Agencia de viajes"
-                checked={formData.transport?.includes("Tour de Agencia de viajes")}
+                checked={formData.transport?.includes(
+                  "Tour de Agencia de viajes"
+                )}
                 onChange={(e) => {
                   const { value, checked } = e.target;
                   setFormData((prev) => ({
@@ -375,7 +377,8 @@ export const Suscribe = () => {
               {t("telefono")} <FaAsterisk className="requerided" />
             </Form.Label>
             <p style={{ fontSize: "0.9em", color: "#888" }}>
-              Ingrese su número sin el 15 si es celular. Para líneas fijas, incluya el código de área. Si es del exterior, agregue +54.
+              Ingrese su número sin el 15 si es celular. Para líneas fijas,
+              incluya el código de área. Si es del exterior, agregue +54.
             </p>
             <Form.Control
               type="text"
@@ -393,7 +396,9 @@ export const Suscribe = () => {
               label={t("acepto_politicas")}
               name="accept"
               checked={formData.accept}
-              onChange={e => setFormData(prev => ({ ...prev, accept: e.target.checked }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, accept: e.target.checked }))
+              }
               required
             />
           </Form.Group>
@@ -402,15 +407,13 @@ export const Suscribe = () => {
             <FaAsterisk className="requerided" />) son obligatorios.
           </p>
           <ButtonSubmit
-            text={status === "enviando" ? t("enviando") : t("enviar")}}
+            text={status === "enviando" ? t("enviando") : t("enviar")}
             disabled={status === "enviando"}
             className={`btn-success${status === "enviando" ? " sending" : ""}`}
           />
 
           {status === "exitoso" && (
-            <p className="success-message">
-              {t("mensaje_enviado")}
-            </p>
+            <p className="success-message">{t("mensaje_enviado")}</p>
           )}
           {status === "error" && (
             <p className="error-message">{errorMessage}</p>
