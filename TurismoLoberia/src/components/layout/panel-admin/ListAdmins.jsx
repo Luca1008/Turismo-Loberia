@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
-import UpdateAdmin from './UpdateAdmin'; // Asegúrate de que la ruta sea correcta
-import { toast } from 'react-toastify';
+import UpdateAdmin from './UpdateAdmin';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Table from 'react-bootstrap/Table';
 
@@ -142,6 +142,7 @@ const ListAdmins = () => {
           />
         </div>
       )}
+        <ToastContainer />
     </div>
   );
 };
