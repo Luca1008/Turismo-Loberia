@@ -124,6 +124,12 @@ exports.getWeather = async (req, res) => {
   try {
     const response = await axios.get(url);
     const data = response.data;
+
+    // Si la consulta fue por coordenadas y la ciudad es Necochea, renombrar a Arenas Verdes
+    if (lat && lon && data.name && data.name.toLowerCase() === "necochea") {
+      data.name = "Arenas Verdes";
+    }
+
     // Procesar viento
     let viento = "-";
     if (data.wind) {

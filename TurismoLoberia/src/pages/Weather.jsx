@@ -35,9 +35,10 @@ export const Clima = () => {
       setLoading(true);
       try {
         const promesas = ciudades.map(async (c) => {
-          let url = c.lat && c.lon
-            ? `http://localhost:5000/api/weather?lat=${c.lat}&lon=${c.lon}`
-            : `http://localhost:5000/api/weather?city=${c.ciudad}`;
+          let url =
+            c.lat && c.lon
+              ? `http://localhost:5000/api/weather?lat=${c.lat}&lon=${c.lon}`
+              : `http://localhost:5000/api/weather?city=${c.ciudad}`;
           try {
             const res = await axios.get(url);
             return {
@@ -49,25 +50,29 @@ export const Clima = () => {
               presion: res.data.presion || 1012,
               estado: res.data.descripcion,
             };
-          } catch {
+          } catch (error) {
+            console.error(`Error al obtener clima de ${c.ciudad}:`, error);
             return {
               ciudad: c.ciudad,
-              temp: '-',
-              sensacion: '-',
-              humedad: '-',
-              viento: '-',
-              presion: '-',
-              estado: 'Sin datos',
+              temp: "-",
+              sensacion: "-",
+              humedad: "-",
+              viento: "-",
+              presion: "-",
+              estado: "Sin datos",
             };
           }
         });
+
         const resultados = await Promise.all(promesas);
         setDetalles(resultados);
-        setLoading(false); // Solo si todo sale bien
-      } catch {
-        // Si hay error general, no cambiamos loading
+      } catch (error) {
+        console.error("Error general al obtener datos de clima:", error);
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
@@ -76,26 +81,27 @@ export const Clima = () => {
     const fetchForecasts = async () => {
       setLoadingForecast(true);
       try {
-        // Lobería
         const resLob = await axios.get(
           `http://localhost:5000/api/forecast?city=Lobería`
         );
         setForecastLoberia(resLob.data);
-        // San Manuel
+
         const resSan = await axios.get(
           `http://localhost:5000/api/forecast?city=San Manuel`
         );
         setForecastSanManuel(resSan.data);
-        // Arenas Verdes
+
         const resArenas = await axios.get(
           `http://localhost:5000/api/forecast?lat=-38.8083&lon=-58.6036`
         );
         setForecastArenasVerdes(resArenas.data);
-        setLoadingForecast(false); // Solo si todo sale bien
       } catch (error) {
-        // Si hay error, no cambiamos loadingForecast
+        console.error("Error al obtener el pronóstico extendido:", error);
+      } finally {
+        setLoadingForecast(false);
       }
     };
+
     fetchForecasts();
   }, []);
 
@@ -124,7 +130,9 @@ export const Clima = () => {
     "Diciembre",
   ];
   const hoy = new Date();
-  const fechaCompleta = `${diasLargos[hoy.getDay()]} ${hoy.getDate()} de ${meses[hoy.getMonth()]} de ${hoy.getFullYear()}`;
+  const fechaCompleta = `${diasLargos[hoy.getDay()]} ${hoy.getDate()} de ${
+    meses[hoy.getMonth()]
+  } de ${hoy.getFullYear()}`;
 
   // Determinar degradado según el estado del clima de la primera ciudad
   let bgGradient = "linear-gradient(to bottom, #ffffff, #ffffff)";
@@ -144,24 +152,26 @@ export const Clima = () => {
   // Función para formatear fecha desde timestamp
   const formatFecha = (dt) => {
     const fecha = new Date(dt * 1000);
-    return `${diasLargos[fecha.getDay()]} ${fecha.getDate()} de ${meses[fecha.getMonth()]}`;
+    return `${diasLargos[fecha.getDay()]} ${fecha.getDate()} de ${
+      meses[fecha.getMonth()]
+    }`;
   };
 
   // Cabecera de tabla con íconos
   const TableHeader = () => (
     <thead>
       <tr>
+        <th>Fecha</th>
         <th>
-          Fecha
+          Temp. Máx{" "}
+          <FaTemperatureHigh style={{ marginLeft: 4, color: "#ff9800" }} />
         </th>
         <th>
-          Temp. Máx <FaTemperatureHigh style={{ marginLeft: 4, color: '#ff9800' }} />
+          Temp. Mín{" "}
+          <FaTemperatureLow style={{ marginLeft: 4, color: "#2196f3" }} />
         </th>
         <th>
-          Temp. Mín <FaTemperatureLow style={{ marginLeft: 4, color: '#2196f3' }} />
-        </th>
-        <th>
-          Estado <FaCloudSun style={{ marginLeft: 4, color: '#ffc107' }} />
+          Estado <FaCloudSun style={{ marginLeft: 4, color: "#ffc107" }} />
         </th>
       </tr>
     </thead>
@@ -204,7 +214,7 @@ export const Clima = () => {
 
   return (
     <div>
-      <section className='weather'>
+      <section className="weather">
         <h1>Consultá el Clima</h1>
         <div className="section-weather">
           <WeatherCard ciudad="Lobería" />
@@ -212,8 +222,11 @@ export const Clima = () => {
           <WeatherCard ciudad="Arenas Verdes" lat={-38.8083} lon={-58.6036} />
         </div>
         {/* Tabla de detalles */}
-        <div className='table-weather' style={{ background: bgGradient }}>
-          <h3>Pronóstico detallado para el día de hoy: <span style={{ fontWeight: 400 }}>{fechaCompleta}</span></h3>
+        <div className="table-weather" style={{ background: bgGradient }}>
+          <h3>
+            Pronóstico detallado para el día de hoy:{" "}
+            <span style={{ fontWeight: 400 }}>{fechaCompleta}</span>
+          </h3>
           {loading ? (
             <div class="weather-spinner-container">
               <div class="weather-spinner"></div>
@@ -223,25 +236,38 @@ export const Clima = () => {
               <thead>
                 <tr>
                   <th>
-                    Ciudad <FaCity style={{ marginLeft: 4, color: '#4caf50' }} />
+                    Ciudad{" "}
+                    <FaCity style={{ marginLeft: 4, color: "#4caf50" }} />
                   </th>
                   <th>
-                    Temp. Actual <FaTemperatureHigh style={{ marginLeft: 4, color: '#ff9800' }} />
+                    Temp. Actual{" "}
+                    <FaTemperatureHigh
+                      style={{ marginLeft: 4, color: "#ff9800" }}
+                    />
                   </th>
                   <th>
-                    Sensación <FaTemperatureLow style={{ marginLeft: 4, color: '#2196f3' }} />
+                    Sensación{" "}
+                    <FaTemperatureLow
+                      style={{ marginLeft: 4, color: "#2196f3" }}
+                    />
                   </th>
                   <th>
-                    Humedad <FaTint style={{ marginLeft: 4, color: '#00bcd4' }} />
+                    Humedad{" "}
+                    <FaTint style={{ marginLeft: 4, color: "#00bcd4" }} />
                   </th>
                   <th>
-                    Viento <FaWind style={{ marginLeft: 4, color: '#90a4ae' }} />
+                    Viento{" "}
+                    <FaWind style={{ marginLeft: 4, color: "#90a4ae" }} />
                   </th>
                   <th>
-                    Presión <FaTachometerAlt style={{ marginLeft: 4, color: '#9c27b0' }} />
+                    Presión{" "}
+                    <FaTachometerAlt
+                      style={{ marginLeft: 4, color: "#9c27b0" }}
+                    />
                   </th>
                   <th>
-                    Estado <FaCloudSun style={{ marginLeft: 4, color: '#ffc107' }} />
+                    Estado{" "}
+                    <FaCloudSun style={{ marginLeft: 4, color: "#ffc107" }} />
                   </th>
                 </tr>
               </thead>
@@ -249,8 +275,12 @@ export const Clima = () => {
                 {detalles.map((d, i) => (
                   <tr key={i}>
                     <td>{d.ciudad}</td>
-                    <td>{d.temp !== '-' ? Math.round(d.temp) + '°' : '-'}</td>
-                    <td>{d.sensacion !== '-' ? Math.round(d.sensacion) + '°' : '-'}</td>
+                    <td>{d.temp !== "-" ? Math.round(d.temp) + "°" : "-"}</td>
+                    <td>
+                      {d.sensacion !== "-"
+                        ? Math.round(d.sensacion) + "°"
+                        : "-"}
+                    </td>
                     <td>{d.humedad}%</td>
                     <td>{d.viento}</td>
                     <td>{d.presion} hPa</td>
@@ -263,26 +293,55 @@ export const Clima = () => {
         </div>
         {/* Tablas de pronóstico extendido: una por ciudad, cada una con los cinco días como filas */}
         <h2 className="h2-weather">Pronóstico Extendido</h2>
-        <div className="section-weather" style={{ flexDirection: 'column', gap: '2rem', marginTop: '2rem' }}>
+        <div
+          className="section-weather"
+          style={{ flexDirection: "column", gap: "2rem", marginTop: "2rem" }}
+        >
           {loadingForecast ? (
             <div className="weather-spinner-container">
-            <div className="weather-spinner"></div>
-          </div>
+              <div className="weather-spinner"></div>
+            </div>
           ) : (
             <>
               {/* Lobería */}
-              <div className='table-weather'>
+              <div className="table-weather">
                 <h3>Lobería</h3>
                 <Table striped bordered hover>
                   <thead>
                     <tr>
                       <th>Fecha</th>
-                      <th>Temp. Máx <FaTemperatureHigh style={{ marginLeft: 4, color: '#ff9800' }} /></th>
-                      <th>Temp. Mín <FaTemperatureLow style={{ marginLeft: 4, color: '#2196f3' }} /></th>
-                      <th>Estado <FaCloudSun style={{ marginLeft: 4, color: '#ffc107' }} /></th>
-                      <th>Humedad <FaTint style={{ marginLeft: 4, color: '#00bcd4' }} /></th>
-                      <th>Viento <FaWind style={{ marginLeft: 4, color: '#90a4ae' }} /></th>
-                      <th>Presión <FaTachometerAlt style={{ marginLeft: 4, color: '#9c27b0' }} /></th>
+                      <th>
+                        Temp. Máx{" "}
+                        <FaTemperatureHigh
+                          style={{ marginLeft: 4, color: "#ff9800" }}
+                        />
+                      </th>
+                      <th>
+                        Temp. Mín{" "}
+                        <FaTemperatureLow
+                          style={{ marginLeft: 4, color: "#2196f3" }}
+                        />
+                      </th>
+                      <th>
+                        Estado{" "}
+                        <FaCloudSun
+                          style={{ marginLeft: 4, color: "#ffc107" }}
+                        />
+                      </th>
+                      <th>
+                        Humedad{" "}
+                        <FaTint style={{ marginLeft: 4, color: "#00bcd4" }} />
+                      </th>
+                      <th>
+                        Viento{" "}
+                        <FaWind style={{ marginLeft: 4, color: "#90a4ae" }} />
+                      </th>
+                      <th>
+                        Presión{" "}
+                        <FaTachometerAlt
+                          style={{ marginLeft: 4, color: "#9c27b0" }}
+                        />
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -291,28 +350,56 @@ export const Clima = () => {
                         <td>{formatFecha(d.dt)}</td>
                         <td>{Math.round(d.tempMax)}°</td>
                         <td>{Math.round(d.tempMin)}°</td>
-                        <td style={{ textTransform: 'capitalize' }}>{d.descripcion}</td>
-                        <td>{d.humedad ? d.humedad + '%' : '-'}</td>
-                        <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
-                        <td>{d.presion ? d.presion + ' hPa' : '-'}</td>
+                        <td style={{ textTransform: "capitalize" }}>
+                          {d.descripcion}
+                        </td>
+                        <td>{d.humedad ? d.humedad + "%" : "-"}</td>
+                        <td>{d.viento ? d.viento + " km/h" : "-"}</td>
+                        <td>{d.presion ? d.presion + " hPa" : "-"}</td>
                       </tr>
                     ))}
                   </tbody>
                 </Table>
               </div>
               {/* San Manuel */}
-              <div className='table-weather'>
+              <div className="table-weather">
                 <h3>San Manuel</h3>
                 <Table striped bordered hover>
                   <thead>
                     <tr>
                       <th>Fecha</th>
-                      <th>Temp. Máx <FaTemperatureHigh style={{ marginLeft: 4, color: '#ff9800' }} /></th>
-                      <th>Temp. Mín <FaTemperatureLow style={{ marginLeft: 4, color: '#2196f3' }} /></th>
-                      <th>Estado <FaCloudSun style={{ marginLeft: 4, color: '#ffc107' }} /></th>
-                      <th>Humedad <FaTint style={{ marginLeft: 4, color: '#00bcd4' }} /></th>
-                      <th>Viento <FaWind style={{ marginLeft: 4, color: '#90a4ae' }} /></th>
-                      <th>Presión <FaTachometerAlt style={{ marginLeft: 4, color: '#9c27b0' }} /></th>
+                      <th>
+                        Temp. Máx{" "}
+                        <FaTemperatureHigh
+                          style={{ marginLeft: 4, color: "#ff9800" }}
+                        />
+                      </th>
+                      <th>
+                        Temp. Mín{" "}
+                        <FaTemperatureLow
+                          style={{ marginLeft: 4, color: "#2196f3" }}
+                        />
+                      </th>
+                      <th>
+                        Estado{" "}
+                        <FaCloudSun
+                          style={{ marginLeft: 4, color: "#ffc107" }}
+                        />
+                      </th>
+                      <th>
+                        Humedad{" "}
+                        <FaTint style={{ marginLeft: 4, color: "#00bcd4" }} />
+                      </th>
+                      <th>
+                        Viento{" "}
+                        <FaWind style={{ marginLeft: 4, color: "#90a4ae" }} />
+                      </th>
+                      <th>
+                        Presión{" "}
+                        <FaTachometerAlt
+                          style={{ marginLeft: 4, color: "#9c27b0" }}
+                        />
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -321,28 +408,56 @@ export const Clima = () => {
                         <td>{formatFecha(d.dt)}</td>
                         <td>{Math.round(d.tempMax)}°</td>
                         <td>{Math.round(d.tempMin)}°</td>
-                        <td style={{ textTransform: 'capitalize' }}>{d.descripcion}</td>
-                        <td>{d.humedad ? d.humedad + '%' : '-'}</td>
-                        <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
-                        <td>{d.presion ? d.presion + ' hPa' : '-'}</td>
+                        <td style={{ textTransform: "capitalize" }}>
+                          {d.descripcion}
+                        </td>
+                        <td>{d.humedad ? d.humedad + "%" : "-"}</td>
+                        <td>{d.viento ? d.viento + " km/h" : "-"}</td>
+                        <td>{d.presion ? d.presion + " hPa" : "-"}</td>
                       </tr>
                     ))}
                   </tbody>
                 </Table>
               </div>
               {/* Arenas Verdes */}
-              <div className='table-weather'>
+              <div className="table-weather">
                 <h3>Arenas Verdes</h3>
                 <Table striped bordered hover>
                   <thead>
                     <tr>
                       <th>Fecha</th>
-                      <th>Temp. Máx <FaTemperatureHigh style={{ marginLeft: 4, color: '#ff9800' }} /></th>
-                      <th>Temp. Mín <FaTemperatureLow style={{ marginLeft: 4, color: '#2196f3' }} /></th>
-                      <th>Estado <FaCloudSun style={{ marginLeft: 4, color: '#ffc107' }} /></th>
-                      <th>Humedad <FaTint style={{ marginLeft: 4, color: '#00bcd4' }} /></th>
-                      <th>Viento <FaWind style={{ marginLeft: 4, color: '#90a4ae' }} /></th>
-                      <th>Presión <FaTachometerAlt style={{ marginLeft: 4, color: '#9c27b0' }} /></th>
+                      <th>
+                        Temp. Máx{" "}
+                        <FaTemperatureHigh
+                          style={{ marginLeft: 4, color: "#ff9800" }}
+                        />
+                      </th>
+                      <th>
+                        Temp. Mín{" "}
+                        <FaTemperatureLow
+                          style={{ marginLeft: 4, color: "#2196f3" }}
+                        />
+                      </th>
+                      <th>
+                        Estado{" "}
+                        <FaCloudSun
+                          style={{ marginLeft: 4, color: "#ffc107" }}
+                        />
+                      </th>
+                      <th>
+                        Humedad{" "}
+                        <FaTint style={{ marginLeft: 4, color: "#00bcd4" }} />
+                      </th>
+                      <th>
+                        Viento{" "}
+                        <FaWind style={{ marginLeft: 4, color: "#90a4ae" }} />
+                      </th>
+                      <th>
+                        Presión{" "}
+                        <FaTachometerAlt
+                          style={{ marginLeft: 4, color: "#9c27b0" }}
+                        />
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -351,10 +466,12 @@ export const Clima = () => {
                         <td>{formatFecha(d.dt)}</td>
                         <td>{Math.round(d.tempMax)}°</td>
                         <td>{Math.round(d.tempMin)}°</td>
-                        <td style={{ textTransform: 'capitalize' }}>{d.descripcion}</td>
-                        <td>{d.humedad ? d.humedad + '%' : '-'}</td>
-                        <td>{d.viento ? d.viento + ' km/h' : '-'}</td>
-                        <td>{d.presion ? d.presion + ' hPa' : '-'}</td>
+                        <td style={{ textTransform: "capitalize" }}>
+                          {d.descripcion}
+                        </td>
+                        <td>{d.humedad ? d.humedad + "%" : "-"}</td>
+                        <td>{d.viento ? d.viento + " km/h" : "-"}</td>
+                        <td>{d.presion ? d.presion + " hPa" : "-"}</td>
                       </tr>
                     ))}
                   </tbody>
