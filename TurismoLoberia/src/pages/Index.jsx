@@ -160,7 +160,6 @@ export const Index = () => {
                 </p>
               </div>
             )}
-            {iframeLoaded ? null : <p style={{ color: "red" }}>No se cargó el iframe aún</p>}
             <iframe
               className="facebook-iframe"
               title="Plugin de página de Facebook de Turismo Lobería"

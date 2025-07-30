@@ -15,14 +15,11 @@ import PanelAdmin from "../pages/PanelAdmin";
 import UpdateUser from '../components/layout/panel-admin/UpdateAdmin';
 import CreateAdmin from '../components/layout/panel-admin/CreateAdmin';
 import ListAdmins from '../components/layout/panel-admin/ListAdmins';
-<<<<<<< HEAD
 import CardPage from "../pages/CardPage";
 
 
-=======
 import ForgotPassword from'../pages/ForgotPassword';
 import ResetPassword from "../pages/ResetPassword";
->>>>>>> 96a01c5200c83615ec948245c69beda4aecaeb17
 
 export const Routing = () => {
   return (
@@ -37,14 +34,11 @@ export const Routing = () => {
       <Route path="/Buscador" element={<Searcher />} />
       <Route path="/Suscribirse" element={<Suscribe />} />
       <Route path="/Admin" element={<Admin />} />
-<<<<<<< HEAD
+      <Route path="/recuperar-password" element={<ForgotPassword />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
       <Route path="/Register" element={<Register />} />
       <Route path="/cards/:id" element={<CardPage />} />
 
-=======
-      <Route path="/recuperar-password" element={<ForgotPassword />} />
-      <Route path="/reset-password/:token" element={<ResetPassword />} />
->>>>>>> 96a01c5200c83615ec948245c69beda4aecaeb17
       {/*Rutas panel Admin renderizadas en el mismo componente*/}
       <Route path="/PanelAdmin" element={<PanelAdmin />}>
         <Route path="modificar-datos" element={<UpdateUser />} />
