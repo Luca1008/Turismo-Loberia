@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -37,6 +37,7 @@ const ResetPassword = () => {
 
       if (data.status === "success") {
         toast.success("Contraseña actualizada correctamente.");
+        localStorage.removeItem("token"); // Borra el token viejo
         setTimeout(() => navigate("/Admin"), 2500);
       } else {
         toast.error(data.message || "Error al actualizar la contraseña.");
