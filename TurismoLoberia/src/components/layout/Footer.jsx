@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import logoLoberiaFooter from "../../assets/icons/logoLoberiaFooter.svg";
 import "../../styles/footer.css";
 import handleExternalLink from "../common/handleExternalLink";
+import { useTranslation } from "react-i18next";
 
 // Íconos - Todos de Font Awesome para consistencia
 import {
@@ -17,8 +18,10 @@ import {
 } from "react-icons/fa";
 
 export const Footer = () => {
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
   return (
-    <footer className="footer">
+    <footer className="footer" key={i18n.language}>
       <div className="footer__container">
         {/* Logo institucional */}
         <Link to="/" className="text-decoration-none">
@@ -32,12 +35,12 @@ export const Footer = () => {
           <Link to="/Contacto" className="text-decoration-none">
             <div className="footer__item">
               <FaEnvelope />
-              <p>Contactate con nosotros</p>
+              <p>{t("footer_contact")}</p>
             </div>
           </Link>
           <div className="footer__item">
             <FaMapMarkerAlt />
-            <p>Dirección de Turismo, Av. Campos 500</p>
+            <p>{t("footer_direccion")}</p>
           </div>
         </div>
 
@@ -46,7 +49,7 @@ export const Footer = () => {
           <Link to="/Suscribirse" className="text-decoration-none">
             <div className="footer__item">
               <FaBell />
-              <p>Suscribite a los newsletter</p>
+              <p>{t("footer_newsletter")}</p>
             </div>
           </Link>
           <div className="footer__social">
