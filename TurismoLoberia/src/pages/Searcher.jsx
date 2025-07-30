@@ -8,8 +8,9 @@ import { useSearchParams } from "react-router-dom";
 import ContentCard from "../components/cards/ContentCard";
 import "../styles/searcher.css";
 import { useTranslation } from 'react-i18next';
+import { useCallback } from "react";
 
-const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }, ref) => {
+const Searcher = forwardRef(({ isAdmin = false, onEdit = null}, ref) => {
   // --- Estados principales
   const [cards, setCards] = useState([]);
   const [search, setSearch] = useState("");
@@ -145,9 +146,9 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }
             }}
           >
             <option value="">{t("ciudad")}</option>
-            <option value="Lobería">Lobería</option>
-            <option value="Arenas Verdes">Arenas Verdes</option>
-            <option value="San Manuel">San Manuel</option>
+            <option value="Lobería">{t("ciudad_loberia")}</option>
+            <option value="Arenas Verdes">[{t("arenas_verdes")}</option>
+            <option value="San Manuel">{t("san_manuel")}</option>
           </Form.Select>
 
           <Form.Select

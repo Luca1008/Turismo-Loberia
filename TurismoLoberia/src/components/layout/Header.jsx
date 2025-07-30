@@ -31,11 +31,12 @@ export const Header = () => {
   // 🔍 Enviar búsqueda
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/buscador?title=${encodeURIComponent(searchQuery.trim())}`);
-      setShowSearch(false);
-      setShowMenu(false);
-    }
+  const query = searchQuery.trim();
+  const url = query ? `/buscador?title=${encodeURIComponent(query)}` : "/buscador";
+
+  navigate(url);
+  setShowSearch(false);
+  setShowMenu(false);
   };
 
   // 🎯 Scroll transparente
@@ -224,12 +225,11 @@ export const Header = () => {
         <div className="mobile-menu d-flex flex-column p-3 pt-5 menu-padding">
           <div className="search-container mb-4">
             <form className="input-group search-bar-custom" onSubmit={(e) => {
-              e.preventDefault();
-              const query = e.target.elements.searchMobile.value;
-              if (query.trim()) {
-                window.location.href = `/buscador?title=${encodeURIComponent(query.trim())}`;
-              }
-            }}>
+                e.preventDefault();
+                const query = e.target.elements.searchMobile.value.trim();
+                const url = query ? `/buscador?title=${encodeURIComponent(query)}` : "/buscador";
+                window.location.href = url;
+              }}>
               <input name="searchMobile" type="text" className="form-control search-input" placeholder="Buscar..." />
               <button className="btn-buscador btn btn-outline-secondary" type="submit">
                 <FaSearch />

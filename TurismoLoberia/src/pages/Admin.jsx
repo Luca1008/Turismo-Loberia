@@ -60,6 +60,7 @@ const Admin = () => {
         toast.error(data.message || "Credenciales incorrectas");
       }
     } catch (error) {
+      console.error("Error en login:", error); // ✅ ahora sí se usa
       toast.error("Error de conexión con el servidor");
     } finally {
       setLoading(false);

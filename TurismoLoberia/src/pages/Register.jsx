@@ -59,6 +59,7 @@ export const Register = () => {
         toast.error(data.message || "Error al registrar usuario");
       }
     } catch (error) {
+      console.error("Error en Registrar:", error);
       setError(t("error_conexion2"));
       toast.error(t("error_conexion2"));
     }
@@ -97,6 +98,7 @@ export const Register = () => {
               {t("registrarse")}
             </button>
           </Form>
+          {error && <p className="text-danger mt-3">{error}</p>}
         </div>
         <ToastContainer />
       </section>

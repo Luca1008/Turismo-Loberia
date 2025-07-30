@@ -54,6 +54,7 @@ export const Contact = () => {
         setErrorMessage(data.error || "Error al enviar el mensaje");
       }
     } catch (error) {
+      console.error("Error en enviado:", error);
       setStatus("error");
       setErrorMessage(
         "No se pudo conectar con el servidor. Por favor, verifica que el servidor esté corriendo en http://localhost:5000"

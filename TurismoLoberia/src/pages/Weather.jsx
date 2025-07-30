@@ -14,6 +14,7 @@ import {
 import WeatherCard from "../components/cards/WeatherCard";
 import "../styles/weather.css";
 import ButtonSubmit from "../components/common/ButtonSubmit";
+import { useTranslation } from "react-i18next";
 
 export const Clima = () => {
   const ciudades = [
@@ -24,6 +25,8 @@ export const Clima = () => {
 
   const [detalles, setDetalles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
 
   // Estados para pronóstico extendido
   const [forecastLoberia, setForecastLoberia] = useState([]);
@@ -215,8 +218,8 @@ export const Clima = () => {
 
   return (
     <div>
-      <section className="weather">
-        <h1>Consultá el Clima</h1>
+      <section className="weather" key={i18n.language}>
+        <h1>{t("consultar_clima")}</h1>
         <div className="section-weather">
           <WeatherCard ciudad="Lobería" />
           <WeatherCard ciudad="San Manuel" />
@@ -225,7 +228,7 @@ export const Clima = () => {
         {/* Tabla de detalles */}
         <div className="table-weather" style={{ background: bgGradient }}>
           <h3>
-            Pronóstico detallado para el día de hoy:{" "}
+            {t("detalle_hoy")}{" "}
             <span style={{ fontWeight: 400 }}>{fechaCompleta}</span>
           </h3>
           {loading ? (
@@ -237,37 +240,37 @@ export const Clima = () => {
               <thead>
                 <tr>
                   <th>
-                    Ciudad{" "}
+                    {t("ciudad")}{" "}
                     <FaCity style={{ marginLeft: 4, color: "#4caf50" }} />
                   </th>
                   <th>
-                    Temp. Actual{" "}
+                    {t("temp_actual")}{" "}
                     <FaTemperatureHigh
                       style={{ marginLeft: 4, color: "#ff9800" }}
                     />
                   </th>
                   <th>
-                    Sensación{" "}
+                    {t("sensacion")}{" "}
                     <FaTemperatureLow
                       style={{ marginLeft: 4, color: "#2196f3" }}
                     />
                   </th>
                   <th>
-                    Humedad{" "}
+                    {t("humedad")}{" "}
                     <FaTint style={{ marginLeft: 4, color: "#00bcd4" }} />
                   </th>
                   <th>
-                    Viento{" "}
+                    {t("viento")}{" "}
                     <FaWind style={{ marginLeft: 4, color: "#90a4ae" }} />
                   </th>
                   <th>
-                    Presión{" "}
+                    {t("presion")}{" "}
                     <FaTachometerAlt
                       style={{ marginLeft: 4, color: "#9c27b0" }}
                     />
                   </th>
                   <th>
-                    Estado{" "}
+                    {t("estado")} {" "}
                     <FaCloudSun style={{ marginLeft: 4, color: "#ffc107" }} />
                   </th>
                 </tr>
@@ -293,7 +296,7 @@ export const Clima = () => {
           )}
         </div>
         {/* Tablas de pronóstico extendido: una por ciudad, cada una con los cinco días como filas */}
-        <h2 className="h2-weather">Pronóstico Extendido</h2>
+        <h2 className="h2-weather">{t("pronostico_extendido")}</h2>
         <div
           className="section-weather"
           style={{ flexDirection: "column", gap: "2rem", marginTop: "2rem" }}
@@ -306,39 +309,39 @@ export const Clima = () => {
             <>
               {/* Lobería */}
               <div className="table-weather">
-                <h3>Lobería</h3>
+                <h3>{t("ciudad_loberia")}</h3>
                 <Table striped bordered hover>
                   <thead>
                     <tr>
-                      <th>Fecha</th>
+                      <th>{t("fecha")}</th>
                       <th>
-                        Temp. Máx{" "}
+                        {t("temp_max")}{" "}
                         <FaTemperatureHigh
                           style={{ marginLeft: 4, color: "#ff9800" }}
                         />
                       </th>
                       <th>
-                        Temp. Mín{" "}
+                        {t("temp_min")}{" "}
                         <FaTemperatureLow
                           style={{ marginLeft: 4, color: "#2196f3" }}
                         />
                       </th>
                       <th>
-                        Estado{" "}
+                        {t("estado")}{" "}
                         <FaCloudSun
                           style={{ marginLeft: 4, color: "#ffc107" }}
                         />
                       </th>
                       <th>
-                        Humedad{" "}
+                        {t("humedad")}{" "}
                         <FaTint style={{ marginLeft: 4, color: "#00bcd4" }} />
                       </th>
                       <th>
-                        Viento{" "}
+                        {t("viento")}{" "}
                         <FaWind style={{ marginLeft: 4, color: "#90a4ae" }} />
                       </th>
                       <th>
-                        Presión{" "}
+                        {t("presion")}{" "}
                         <FaTachometerAlt
                           style={{ marginLeft: 4, color: "#9c27b0" }}
                         />
