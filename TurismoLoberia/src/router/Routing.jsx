@@ -16,8 +16,7 @@ import UpdateUser from '../components/layout/panel-admin/UpdateAdmin';
 import CreateAdmin from '../components/layout/panel-admin/CreateAdmin';
 import ListAdmins from '../components/layout/panel-admin/ListAdmins';
 import CardPage from "../pages/CardPage";
-
-
+import { Register } from "../pages/Register";
 import ForgotPassword from'../pages/ForgotPassword';
 import ResetPassword from "../pages/ResetPassword";
 
