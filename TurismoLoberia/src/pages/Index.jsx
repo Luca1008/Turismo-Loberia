@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ContentCard from "../components/cards/ContentCard";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
 import { Global } from "../helpers/Global";
-
+import { useNavigate } from "react-router-dom"; 
 import { FaInfo, FaPaintBrush } from "react-icons/fa";
 import {
   MdHotel,
@@ -21,6 +21,8 @@ export const Index = () => {
   const { t } = useTranslation();
   const { i18n } = useTranslation();
   const [iframeLoaded, setIframeLoaded] = useState(false);
+  const navigate = useNavigate();
+
 
   /*---Spinner facebook----*/
   const [isVisible, setIsVisible] = useState(true);
@@ -107,7 +109,13 @@ export const Index = () => {
             />
           ))}
         </div>
-        <ButtonSuccess />
+        <ButtonSuccess
+          onClick={() =>
+            navigate("/Buscador", {
+              state: { category: "Alojamiento" }
+            })
+          }
+        />
       </section>
       <section className="upcoming-events">
         <h2>{t("proximos_eventos")}</h2>
@@ -126,7 +134,13 @@ export const Index = () => {
             />
           ))}
         </div>
-        <ButtonSuccess />
+        <ButtonSuccess
+          onClick={() =>
+            navigate("/Buscador", {
+              state: { category: "Evento" }
+            })
+          }
+        />
       </section>
       <section className="more-info">
         <h2>{t("actualidad")}</h2>

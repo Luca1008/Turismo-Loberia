@@ -1,38 +1,37 @@
 import axios from "axios";
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Pagination from "react-bootstrap/Pagination";
 import { FaSearch } from "react-icons/fa";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import ContentCard from "../components/cards/ContentCard";
 import "../styles/searcher.css";
 import { useTranslation } from 'react-i18next';
-import { useCallback } from "react";
 
-const Searcher = forwardRef(({ isAdmin = false, onEdit = null}, ref) => {
+const Searcher = ({ isAdmin = false, onEdit = null }) => {
+  const location = useLocation();
+  const { t, i18n } = useTranslation();
+
   // --- Estados principales
   const [cards, setCards] = useState([]);
   const [search, setSearch] = useState("");
-  const [city, setCity] = useState("");
-  const [category, setCategory] = useState("");
-  const [noResults, setNoResults] = useState(false);
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  const [city, setCity] = useState(location.state?.city || "");
+  const [category, setCategory] = useState(location.state?.category || "");
 
-  // --- Estados para paginación
+  // --- Paginación
   const [page, setPage] = useState(1);
   const limit = 6;
   const [totalPages, setTotalPages] = useState(1);
   const [searchParams] = useSearchParams();
 
+  // 🔍 Detectar query string "?title="
   useEffect(() => {
-  const titleFromUrl = searchParams.get("title");
-  if (titleFromUrl) {
-    setSearch(titleFromUrl);
-  }
+    const titleFromUrl = searchParams.get("title");
+    if (titleFromUrl) {
+      setSearch(titleFromUrl);
+    }
   }, [searchParams]);
-
 
   // === Utilidad: convertir Bytea (imagen) a base64
   const bufferToBase64 = (buffer) => {
@@ -53,8 +52,7 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null}, ref) => {
       };
 
       const response = await axios.get("http://localhost:5000/api/cards", { params });
-
-      const cardsDB = response.data.cards || response.data; // fallback
+      const cardsDB = response.data.cards || response.data;
       const total = response.data.total || cardsDB.length;
 
       const parsed = cardsDB.map((card) => ({
@@ -64,50 +62,28 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null}, ref) => {
 
       setCards(parsed);
       setTotalPages(Math.ceil(total / limit));
-      setNoResults(parsed.length === 0);
     } catch (error) {
       console.error("Error al obtener las cards:", error);
       setCards([]);
-      setNoResults(true);
     }
   };
+
+  useEffect(() => {
+    fetchCards();
+  }, [page, search, city, category]);
 
   // === Función para eliminar card
   const handleDeleteCard = async (cardId) => {
     try {
       const response = await axios.delete(`http://localhost:5000/api/cards/${cardId}`);
-      if (response.status === 200) {
-        // Recargar las cards después de eliminar
-        fetchCards();
-      }
+      if (response.status === 200) fetchCards();
     } catch (error) {
       console.error("Error al eliminar la card:", error);
     }
   };
 
-  // === Función para editar card
   const handleEditCard = (cardId) => {
-    if (onEdit) {
-      onEdit(cardId);
-    } else {
-      console.log("Editar card con ID:", cardId);
-    }
-  };
-
-  // === Efectos
-  useEffect(() => {
-    fetchCards();
-  }, [page, search, city, category]);
-
-  useImperativeHandle(ref, () => ({
-    fetchCards
-  }));
-
-  // === Handlers
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setPage(1); // Reset a la primera página
-    fetchCards();
+    if (onEdit) onEdit(cardId);
   };
 
   const handleReset = () => {
@@ -136,28 +112,16 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null}, ref) => {
           <button onClick={fetchCards}><FaSearch /></button>
         </div>
 
-        {/* 🎯 Filtros de ciudad y categoría */}
+        {/* 🎯 Filtros */}
         <div className="search-filters">
-          <Form.Select
-            value={city}
-            onChange={(e) => {
-              setCity(e.target.value);
-              setPage(1);
-            }}
-          >
+          <Form.Select value={city} onChange={(e) => { setCity(e.target.value); setPage(1); }}>
             <option value="">{t("ciudad")}</option>
             <option value="Lobería">{t("ciudad_loberia")}</option>
-            <option value="Arenas Verdes">[{t("arenas_verdes")}</option>
+            <option value="Arenas Verdes">{t("arenas_verdes")}</option>
             <option value="San Manuel">{t("san_manuel")}</option>
           </Form.Select>
 
-          <Form.Select
-            value={category}
-            onChange={(e) => {
-              setCategory(e.target.value);
-              setPage(1);
-            }}
-          >
+          <Form.Select value={category} onChange={(e) => { setCategory(e.target.value); setPage(1); }}>
             <option value="">{t("categoria")}</option>
             <option value="Alojamiento">{t("alojamiento")}</option>
             <option value="Gastronomía">{t("gastronomia")}</option>
@@ -172,24 +136,22 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null}, ref) => {
 
         {/* 🗂️ Resultados */}
         <div className="results-grid">
-          {cards.length > 0 ? (
-            cards.map((card) => (
-              <ContentCard
-                key={card.id}
-                id={card.id}
-                title={card.card_title}
-                description={card.card_description}
-                city={card.card_city}
-                img={card.card_img_portada}
-                category={card.card_category}
-                card_date={card.card_date}
-                {...(isAdmin && { onEdit: handleEditCard, onDelete: handleDeleteCard })}
-              />
-            ))
-          ) : null}
+          {cards.map((card) => (
+            <ContentCard
+              key={card.id}
+              id={card.id}
+              title={card.card_title}
+              description={card.card_description}
+              city={card.card_city}
+              img={card.card_img_portada}
+              category={card.card_category}
+              card_date={card.card_date}
+              {...(isAdmin && { onEdit: handleEditCard, onDelete: handleDeleteCard })}
+            />
+          ))}
         </div>
 
-        {/* 📄 Paginación con Bootstrap */}
+        {/* 📄 Paginación */}
         {totalPages > 1 && (
           <Pagination className="pagination-container">
             <Pagination.First onClick={() => setPage(1)} disabled={page === 1} />
@@ -206,7 +168,6 @@ const Searcher = forwardRef(({ isAdmin = false, onEdit = null}, ref) => {
       </main>
     </div>
   );
-});
+};
 
 export default Searcher;
-
