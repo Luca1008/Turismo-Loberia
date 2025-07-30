@@ -22,6 +22,11 @@ router.put('/user/:id', auth, userController.updateUser);
 // Delete
 router.delete('/user/:id', auth, userController.deleteUser);
 
+// Forgot password
+router.post('/user/recuperar-password', userController.forgotPassword);
+
+// Reset Password
+router.post('/user/reset-password', userController.resetPassword);
 
 
 module.exports = router; 

@@ -17,15 +17,15 @@ const Admin = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Por favor ingrese un email válido";
     }
-    
+
     if (!formData.password || formData.password.length < 8) {
       newErrors.password = "La contraseña debe tener al menos 8 caracteres";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -89,14 +89,15 @@ const Admin = () => {
             placeholder="name@example.com"
             required
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             isInvalid={!!errors.email}
           />
           <Form.Control.Feedback type="invalid">
             {errors.email}
           </Form.Control.Feedback>
         </Form.Group>
-
 
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
           <Form.Label>{t("password")}</Form.Label>
@@ -105,7 +106,9 @@ const Admin = () => {
             placeholder={t("placeholder_password")}
             required
             value={formData.password}
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
             isInvalid={!!errors.password}
           />
           <Form.Control.Feedback type="invalid">
@@ -114,12 +117,11 @@ const Admin = () => {
         </Form.Group>
 
         <div style={{ marginTop: "1rem" }}>
-          <a href="/Register">{t("no_account")}</a>
+          <a href="/recuperar-password">Olvidé mi contraseña</a>
         </div>
 
         <ButtonSubmit
           type="submit"
-
           text={loading ? t("loading") : t("login")}
           className={`btn btn-success ${loading ? "loading" : ""}`}
           disabled={loading}
