@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ResetPassword = () => {
-  const [searchParams] = useSearchParams();
+  const { token } = useParams(); // Captura el token desde la URL /recuperar-password/:token
   const navigate = useNavigate();
-  const token = searchParams.get("token");
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -43,6 +42,7 @@ const ResetPassword = () => {
         toast.error(data.message || "Error al actualizar la contraseña.");
       }
     } catch (err) {
+      console.error("Error al restablecer la contraseña:", err);
       toast.error("Error de red.");
     } finally {
       setLoading(false);

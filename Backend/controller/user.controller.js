@@ -296,7 +296,7 @@ exports.forgotPassword = async (req, res) => {
       },
     });
 
-    const resetLink = `${BASE_URL}/recuperar-password/${resetToken}`;
+    const resetLink = `${BASE_URL}/reset-password/${resetToken}`;
     const mailOptions = {
       from: `"Turismo Lobería" <${process.env.EMAIL_USER}>`,
       to: email,
