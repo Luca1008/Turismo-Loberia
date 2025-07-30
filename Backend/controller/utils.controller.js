@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const axios = require('axios');
 
+/*-----------------------Email de contacto-----------------------*/
 exports.sendEmail = async (req, res) => {
   const { name, email, subject, message } = req.body;
 
@@ -33,6 +34,7 @@ exports.sendEmail = async (req, res) => {
   }
 };
 
+/*--------------------Clima------------------*/
 exports.getForecast = async (req, res) => {
   let { city, lat, lon } = req.query;
   if (city && city.trim().toLowerCase() === 'arenas verdes') city = 'Forest';

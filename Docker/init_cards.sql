@@ -66,6 +66,7 @@ INSERT INTO turismo_prueba."card" (
 ('Café Literario', 'Cafetería temática con libros y ambiente bohemio.', 'Calle San Martín 600', 'https://maps.google.com', 
 '08-22hs', '0221-147258', 'Eventos culturales semanales', 'San Manuel', 'Gastronomia');
 
+-- Tabla "users"
 CREATE TABLE IF NOT EXISTS turismo_prueba.users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -73,13 +74,15 @@ CREATE TABLE IF NOT EXISTS turismo_prueba.users (
     email VARCHAR(150) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL DEFAULT 'admin',
+    reset_token TEXT,
+    reset_token_expires BIGINT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT valid_role CHECK (role IN ('superadmin', 'admin'))
 );
 
--- Usuarios de ejemplo password: loberia1234
+-- Usuarios de ejemplo con password: loberia1234
 INSERT INTO turismo_prueba.users (name, surname, email, password, role) VALUES
-('loberia', 'loberia', 'loberia@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'superadmin'),
+('loberia', 'loberia', 'loberiaturismo@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'superadmin'),
 ('Ana', 'Martínez', 'ana.martinez@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'admin'),
 ('Carlos', 'Pérez', 'carlos.perez@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'admin'),
 ('Laura', 'González', 'laura.gonzalez@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'admin'),
