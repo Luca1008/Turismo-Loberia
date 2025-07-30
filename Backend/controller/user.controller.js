@@ -5,7 +5,7 @@ const moment = require("moment");
 const JWT_SECRET = process.env.JWT_SECRET || "SecretClaveProjectLoberia_2025";
 const nodemailer = require("nodemailer");
 const User = require("../models/User");
-const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
+const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
 
 //------------------------------POST user Ok (Registrar)----------------------------------
 exports.registerUser = async (req, res) => {
