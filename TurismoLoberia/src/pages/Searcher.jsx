@@ -8,8 +8,9 @@ import { useSearchParams } from "react-router-dom";
 import ContentCard from "../components/cards/ContentCard";
 import "../styles/searcher.css";
 import { useTranslation } from 'react-i18next';
+import { useCallback } from "react";
 
-const Searcher = forwardRef(({ isAdmin = false, onEdit = null, onDelete = null }, ref) => {
+const Searcher = forwardRef(({ isAdmin = false, onEdit = null}, ref) => {
   // --- Estados principales
   const [cards, setCards] = useState([]);
   const [search, setSearch] = useState("");
