@@ -94,7 +94,7 @@ export const Index = () => {
         </div>
       </section>
       <section className="places">
-        <h2>{t("descubri_loberia")}</h2>
+        <h1>{t("descubri_loberia")}</h1>
         <p>{t("explora_loberia")}</p>
         <div className="places-items">
           {alojamientos.map((card) => (

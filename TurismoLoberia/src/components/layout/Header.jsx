@@ -195,7 +195,7 @@ export const Header = () => {
             <div className="vertical-divider"></div>
             <div className="d-flex align-items-center border-item-nav" onClick={(e) => toggleLanguage(e)}>
               <FaGlobe className="me-1" />
-              <span>Español</span>
+              <strong>Español</strong>
               <FaChevronDown className={`primary transition-arrow${showLanguage ? " rotate" : ""}`} size={12} />
             </div>
             <div className="vertical-divider"></div>
