@@ -3,10 +3,13 @@ import Form from "react-bootstrap/Form";
 import ButtonSubmit from "../components/common/ButtonSubmit";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,11 +37,11 @@ const ForgotPassword = () => {
   };
 
   return (
-    <section className="forgot-password">
-      <h2>Recuperar contraseña</h2>
+    <section className="forgot-password" key={i18n.language}>
+      <h2>Recuperar Contraseña</h2>
       <Form onSubmit={handleSubmit} className="form-forgot">
         <Form.Group controlId="formEmail">
-          <Form.Label>{"email"}</Form.Label>
+          <Form.Label>{ t("email")}</Form.Label>
           <Form.Control
             type="email"
             placeholder="name@example.com"
@@ -51,7 +54,7 @@ const ForgotPassword = () => {
         <div style={{ marginTop: "1rem" }}>
           <ButtonSubmit
             type="submit"
-            text={loading ? "sending" : "Enviar link"}
+            text={loading ? "Enviando..." : "Enviar Link"}
             disabled={loading}
             className="btn btn-primary"
           />
