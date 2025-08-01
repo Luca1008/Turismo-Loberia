@@ -9,6 +9,7 @@ import { Footer } from "./components/layout/Footer";
 import { Header } from "./components/layout/Header";
 import { Routing } from "./router/Routing";
 import { AuthProvider } from "./context/AuthProvider"; 
+import ScrollToTopButton from "./components/common/ScrollToTopButton";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <div className="accessibility-container">
             <AccessibilityButtton />
           </div>
+          <ScrollToTopButton />
           <Whatsapp />
         </div>
       </div>
