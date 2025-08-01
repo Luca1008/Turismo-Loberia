@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import ButtonSubmit from "../common/ButtonSubmit";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
+import NominatimAutocomplete from "../common/NominatimAutocomplete";
+
 const Edit = ({ cardId, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
     titulo: "",
     descripcion: "",
     ubicacion: "",
+    linkUbicacion: "",
+    lat: "",
+    lon: "",
     horario: "",
+    contacto: "",
     informacion: "",
     ciudad: "",
     categoria: "",
@@ -35,11 +41,15 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
           titulo: card.card_title || "",
           descripcion: card.card_description || "",
           ubicacion: card.card_ubicacion || "",
+          linkUbicacion: card.card_link_ubicacion || "",
+          lat: card.card_lat || "",
+          lon: card.card_lon || "",
           horario: card.card_horario || "",
+          contacto: card.card_contacto || "",
           informacion: card.card_info || "",
           ciudad: card.card_city || "",
           categoria: card.card_category || "",
-          fecha: card.card_date || "",
+          fecha: card.card_date ? card.card_date.substring(0, 10) : "",
         });
         setImagenActual(card.card_img_portada || "");
       } else {
@@ -52,7 +62,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFileChange = (e) => {
@@ -64,13 +74,17 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
     setLoading(true);
     setMensaje("");
     setError("");
-    
+
     try {
       const data = new FormData();
       data.append("card_title", formData.titulo);
       data.append("card_description", formData.descripcion);
       data.append("card_ubicacion", formData.ubicacion);
+      data.append("card_link_ubicacion", formData.linkUbicacion);
+      data.append("card_lat", formData.lat);
+      data.append("card_lon", formData.lon);
       data.append("card_horario", formData.horario);
+      data.append("card_contacto", formData.contacto);
       data.append("card_info", formData.informacion);
       data.append("card_city", formData.ciudad);
       data.append("card_category", formData.categoria);
@@ -80,20 +94,22 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
       if (imagen) {
         data.append("card_img_portada", imagen);
       }
-      
+
       const response = await fetch(`http://localhost:5000/api/cards/${cardId}`, {
         method: "PUT",
         body: data,
       });
-      
+
       if (response.ok) {
         setMensaje("¡Card actualizada exitosamente!");
         setTimeout(() => {
           if (onClose) onClose();
-          window.location.reload();
-        }, 1200); // Espera 1.2 segundos para mostrar el mensaje
+          if (onUpdate) onUpdate();
+          // window.location.reload(); // opcional, mejor no recargar toda la página
+        }, 1200);
       } else {
-        setError("Error al actualizar la card.");
+        const errorData = await response.json();
+        setError(errorData.error || "Error al actualizar la card.");
       }
     } catch (err) {
       setError("Error de conexión con el servidor.");
@@ -117,8 +133,12 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
           aria-label="Cerrar"
         ></button>
       </div>
-      
-      <Form className="form-edit-card" onSubmit={handleSubmit} encType="multipart/form-data">
+
+      <Form
+        className="form-edit-card"
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+      >
         <Form.Group className="mb-3" controlId="titulo">
           <Form.Label>Título del lugar</Form.Label>
           <Form.Control
@@ -130,7 +150,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             required
           />
         </Form.Group>
-        
+
         <Form.Group className="mb-3" controlId="descripcion">
           <Form.Label>Descripción</Form.Label>
           <Form.Control
@@ -142,19 +162,38 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             required
           />
         </Form.Group>
-        
+
         <Form.Group className="mb-3" controlId="ubicacion">
           <Form.Label>Ubicación</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Ubicación"
-            name="ubicacion"
-            value={formData.ubicacion}
-            onChange={handleChange}
-            required
+          <NominatimAutocomplete
+            onSelect={(place) => {
+              const ubicacion = place.display_name;
+              const linkUbicacion = `https://www.openstreetmap.org/?mlat=${place.lat}&mlon=${place.lon}#map=18/${place.lat}/${place.lon}`;
+              setFormData((prev) => ({
+                ...prev,
+                ubicacion,
+                linkUbicacion,
+                lat: place.lat,
+                lon: place.lon,
+              }));
+            }}
           />
         </Form.Group>
-        
+        {formData.linkUbicacion && (
+          <Form.Group className="mb-3" controlId="linkUbicacion">
+            <Form.Label>Vista previa en OpenStreetMap</Form.Label>
+            <div>
+              <a
+                href={formData.linkUbicacion}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {formData.linkUbicacion}
+              </a>
+            </div>
+          </Form.Group>
+        )}
+
         <Form.Group className="mb-3" controlId="horario">
           <Form.Label>Horario</Form.Label>
           <Form.Control
@@ -165,7 +204,18 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             onChange={handleChange}
           />
         </Form.Group>
-        
+
+        <Form.Group className="mb-3" controlId="contacto">
+          <Form.Label>Contacto</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Teléfono, email, etc."
+            name="contacto"
+            value={formData.contacto}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
         <Form.Group className="mb-3" controlId="informacion">
           <Form.Label>Información</Form.Label>
           <Form.Control
@@ -176,7 +226,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             onChange={handleChange}
           />
         </Form.Group>
-        
+
         <Form.Group className="mb-3" controlId="ciudad">
           <Form.Label>Ciudad</Form.Label>
           <Form.Select
@@ -184,6 +234,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             name="ciudad"
             value={formData.ciudad}
             onChange={handleChange}
+            required
           >
             <option value="">Selecciona una ciudad</option>
             <option value="Lobería">Lobería</option>
@@ -191,7 +242,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             <option value="San Manuel">San Manuel</option>
           </Form.Select>
         </Form.Group>
-        
+
         <Form.Group className="mb-3" controlId="categoria">
           <Form.Label>Categoría</Form.Label>
           <Form.Select
@@ -199,6 +250,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             name="categoria"
             value={formData.categoria}
             onChange={handleChange}
+            required
           >
             <option value="">Selecciona una categoría</option>
             <option value="Alojamiento">Alojamiento</option>
@@ -207,6 +259,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             <option value="Evento">Evento</option>
           </Form.Select>
         </Form.Group>
+
         {formData.categoria === "Evento" && (
           <Form.Group className="mb-3" controlId="fecha">
             <Form.Label>Fecha del evento</Form.Label>
@@ -219,9 +272,9 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             />
           </Form.Group>
         )}
-        
+
         <Form.Group className="mb-3" controlId="formFile">
-          {imagenActual && (
+          {imagenActual && !imagen && (
             <div style={{ marginBottom: "1rem" }}>
               <img
                 src={imagenActual}
@@ -232,26 +285,22 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             </div>
           )}
           <Form.Label>Imagen de Portada</Form.Label>
-          <Form.Control
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
-          <Form.Text className="text-muted">
-            Deja vacío para mantener la imagen actual
-          </Form.Text>
+          <Form.Control type="file" accept="image/*" onChange={handleFileChange} />
+          <Form.Text className="text-muted">Deja vacío para mantener la imagen actual</Form.Text>
         </Form.Group>
-        
+
         {mensaje && <div className="alert alert-success mt-2">{mensaje}</div>}
         {error && <div className="alert alert-danger mt-2">{error}</div>}
-        
+
         <div className="modal-footer">
-          <Button variant="secondary"
+          <Button
+            variant="secondary"
             type="button"
-            text="Cancelar"
-            className="btn btn-secondary me-2"
+            className="me-2"
             onClick={handleCancel}
-          >Cancelar</Button>
+          >
+            Cancelar
+          </Button>
           <ButtonSubmit
             type="submit"
             text={loading ? "Actualizando..." : "Actualizar"}
@@ -264,4 +313,4 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
   );
 };
 
-export default Edit; 
+export default Edit;
