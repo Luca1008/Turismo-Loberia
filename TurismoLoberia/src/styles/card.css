@@ -64,6 +64,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
+  font-weight: bolder;
 }
 
 .card-city-ellipsis {
@@ -72,6 +73,10 @@
   text-overflow: ellipsis;
   display: block;
   max-width: 100%;
+}
+
+.location-icon{
+  color: var(--primary-color);
 }
 
 /*--------------------Event cards---------------*/
@@ -86,12 +91,14 @@
   padding: 0.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   text-align: center;
-  min-width: 3.75rem; /* 60px */
+  min-width: 3.75rem;
 }
 
 .event-card__month {
   display: block;
   line-height: 1;
+  text-transform: capitalize;
+  font-weight: bolder;
 }
 
 .event-card__day {
@@ -112,4 +119,23 @@
  .card-body, .content-card {
   text-align: left !important;
   align-items: flex-start !important;
+}
+
+/*---------------Edit Cards-------------*/
+.card-buttons-wrapper {
+  background-color: rgba(128, 128, 128, 0.329);
+  padding: 5px;
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.card-buttons {
+  pointer-events: auto;
+}
+.card {
+  position: relative;
 }

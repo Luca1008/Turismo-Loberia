@@ -24,7 +24,7 @@ const ContentCard = ({
   if (isEvent && card_date) {
     // card_date puede venir como YYYY-MM-DD o ISO
     const dateObj = new Date(card_date);
-    dateMonth = dateObj.toLocaleString('es-ES', { month: 'short' });
+    dateMonth = dateObj.toLocaleString("es-ES", { month: "short" });
     dateDay = dateObj.getDate();
   }
   return (
@@ -35,10 +35,11 @@ const ContentCard = ({
           <Card.Title className="card-title-ellipsis">{title}</Card.Title>
           <Card.Text className="card-description">{description}</Card.Text>
           <Card.Text className="card-city-ellipsis">
-            <strong>
+            <strong className="location-icon">
               <FaLocationDot />
-            </strong>{" "}
+            {" "}
             {city}
+            </strong>
           </Card.Text>
         </div>
         <Button
@@ -47,31 +48,40 @@ const ContentCard = ({
           as={Link}
           to={`/cards/${id}`}
         >
-          Ver más
+          Ver Más
         </Button>
         {(onEdit || onDelete) && (
-          <div className="card-buttons-wrapper" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '0.5rem' }}>
-            <div className="card-buttons" style={{ background: '#f6f8fa', borderRadius: '10px', padding: '0.5rem 0.75rem', display: 'flex', gap: '0.75rem', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+          <div className="card-buttons-wrapper">
+            <div className="card-buttons">
               {onEdit && (
                 <Button
-                  variant="outline-primary"
+                  variant="primary"
                   size="sm"
                   className="btn-edit"
                   onClick={() => onEdit(id)}
                 >
-                  <MdModeEdit style={{ marginRight: 4, verticalAlign: 'middle' }} />
-                  Editar
+                  <strong>
+                    {" "}
+                    <MdModeEdit
+                      style={{ marginRight: 4, verticalAlign: "middle" }}
+                    />
+                    Editar
+                  </strong>
                 </Button>
               )}
               {onDelete && (
                 <Button
-                  variant="outline-danger"
+                  variant="danger"
                   size="sm"
                   className="btn-delete"
                   onClick={() => onDelete(id)}
                 >
-                  <MdDeleteForever style={{ marginRight: 4, verticalAlign: 'middle' }} />
-                  Eliminar
+                  <strong>
+                    <MdDeleteForever
+                      style={{ marginRight: 4, verticalAlign: "middle" }}
+                    />
+                    Eliminar
+                  </strong>
                 </Button>
               )}
             </div>
@@ -79,7 +89,7 @@ const ContentCard = ({
         )}
         {isEvent && (
           <div className="event-card__date">
-            <p className="event-card__month">{dateMonth}</p>
+            <p className="event-card__month">{dateMonth}.</p>
             <p className="event-card__day">{dateDay}</p>
           </div>
         )}
@@ -88,4 +98,4 @@ const ContentCard = ({
   );
 };
 
-export default ContentCard; 
+export default ContentCard;
