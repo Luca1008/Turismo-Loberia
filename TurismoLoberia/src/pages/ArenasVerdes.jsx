@@ -3,12 +3,16 @@ import ButtonSuccess from "../components/common/ButtonSuccess";
 import "../styles/city.css";
 import { FaCar } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
 
 
 
 const ArenasVerdes = () => {
   const { t } = useTranslation();
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
+
 
   return (
     <div className="city" key={i18n.language}>
@@ -78,7 +82,7 @@ const ArenasVerdes = () => {
           Los campings ofrecen servicios básicos como parrillas, duchas, baños y
           en algunos casos electricidad y proveeduría.
         </p>
-        <ButtonSuccess />
+        <ButtonSuccess onClick={() => navigate("/Buscador", { state: { category: "Alojamiento" } })} />
       </section>
       <section className="gastronomy" id="gastronomia">
         <h2>{t("gastronomia")}</h2>
@@ -92,7 +96,7 @@ const ArenasVerdes = () => {
           minutas y opciones vegetarianas. En temporada alta también hay food
           trucks y ferias gastronómicas.
         </p>
-        <ButtonSuccess />
+        <ButtonSuccess onClick={() => navigate("/Buscador", { state: { category: "Gastronomía" } })} />
       </section>
       <section className="transport" id="transporte">
         <h2>{t("transporte")}</h2>
@@ -123,7 +127,7 @@ const ArenasVerdes = () => {
           Las fechas varían cada año y son organizadas por la municipalidad o
           asociaciones locales.
         </p>
-        <ButtonSuccess />
+        <ButtonSuccess onClick={() => navigate("/Buscador", { state: { category: "Evento" } })} />
       </section>
       <section className="event" id="que-hacer">
         <h2>{t("que_hacer2")}</h2>

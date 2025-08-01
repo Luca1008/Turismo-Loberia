@@ -67,27 +67,27 @@ export const Index = () => {
       <section className="services">
         <h2>{t("guia_servicios")}</h2>
         <div className="item-services-container">
-          <div className="item-services">
+          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Alojamiento" } })}>
             <MdHotel />
             <p>{t("alojamientos")}</p>
           </div>
-          <div className="item-services">
+          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Gastronomía" } })}>
             <MdOutlineRestaurant />
             <p>{t("gastronomia")}</p>
           </div>
-          <div className="item-services">
+          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Lugares de Interés" } })}>
             <MdPlace />
             <p>{t("lugares_interes")}</p>
           </div>
-          <div className="item-services">
+          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Artesanos" } })}>
             <FaPaintBrush />
             <p>{t("artesanos")}</p>
           </div>
-          <div className="item-services">
+          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Servicios Públicos" } })}>
             <MdMuseum />
             <p>{t("servicios_publicos")}</p>
           </div>
-          <div className="item-services">
+          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Información Útil" } })}>
             <FaInfo />
             <p>{t("info_util")}</p>
           </div>
