@@ -60,7 +60,7 @@ const Admin = () => {
         toast.error(data.message || "Credenciales incorrectas");
       }
     } catch (error) {
-      console.error("Error en login:", error); // ✅ ahora sí se usa
+      console.error("Error en login:", error);
       toast.error("Error de conexión con el servidor");
     } finally {
       setLoading(false);
@@ -117,7 +117,7 @@ const Admin = () => {
         </Form.Group>
 
         <div style={{ marginTop: "1rem" }}>
-          <a href="/recuperar-password">Olvidé mi contraseña</a>
+          <a href="/recuperar-password"><strong>{t("forgot_password")}</strong></a>
         </div>
 
         <ButtonSubmit
