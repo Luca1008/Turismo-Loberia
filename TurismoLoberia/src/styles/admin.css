@@ -1,7 +1,7 @@
 
 /*----------------------Admin Login, Register------------------*/
 
-section.login, section.login h2, section.forgot-password, section.form-forgot h2{
+section.login, section.login h2, section.forgot-password, section.form-forgot h2, section.reset-password, .reset-password h2{
     margin-top: 0%;
 }
 
@@ -28,7 +28,7 @@ section.login, section.register{
     width: 280px;
 }
 
-.form-forgot{
+.form-forgot, .form-reset{
     display: flex;
     flex-direction: column;
     align-items: center;

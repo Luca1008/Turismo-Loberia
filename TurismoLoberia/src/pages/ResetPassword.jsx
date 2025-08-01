@@ -53,7 +53,7 @@ const ResetPassword = () => {
   return (
     <section className="reset-password">
       <ToastContainer />
-      <h2>Restablecer contraseña</h2>
+      <h2>Restablecer Contraseña</h2>
       <form onSubmit={handleReset} className="form-reset">
         <div className="mb-3">
           <label>Nueva contraseña</label>
