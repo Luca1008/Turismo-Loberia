@@ -37,7 +37,6 @@ const PartidoLoberia = () => {
         <p>
           A lo largo de los siglos XIX y XX, el partido experimentó un desarrollo significativo con la llegada del ferrocarril y la inmigración europea.
         </p>
-        <ButtonSuccess />
       </section>
       <section className="nature" id="naturaleza">
         <h2>{t("naturaleza")}</h2>
@@ -54,7 +53,6 @@ const PartidoLoberia = () => {
         <p>
           En el interior, los campos ofrecen paisajes serranos ideales para el ecoturismo, la observación de aves y actividades al aire libre.
         </p>
-        <ButtonSuccess />
       </section>
       <section className="producciones" id="producciones">
         <h2>{t("producciones")}</h2>
@@ -71,7 +69,7 @@ const PartidoLoberia = () => {
         <p>
           El sector turístico ha crecido significativamente en las últimas décadas, aprovechando los atractivos naturales y culturales del partido.
         </p>
-        <ButtonSuccess />
+
       </section>
       <section className="go-to" id="como-llegar">
         <h2>{t("como_llegar")}</h2>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { FaAsterisk } from "react-icons/fa";
 import ButtonSubmit from "../components/common/ButtonSubmit";
+import { useTranslation } from "react-i18next";
 
 export const Suscribe = () => {
   const [formData, setFormData] = useState({

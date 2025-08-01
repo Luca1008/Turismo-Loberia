@@ -3,10 +3,14 @@ import ButtonSuccess from "../components/common/ButtonSuccess";
 import "../styles/city.css";
 import { FaCar, FaBus, FaBicycle } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from "react-router-dom";
+
 
 export const SanManuel = () => {
   const { t } = useTranslation();
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
+
   return (
     <div className="city" key={i18n.language}>
       <h1 id="informacion-general">{t("san_manuel")}</h1>
@@ -68,7 +72,13 @@ export const SanManuel = () => {
         <p>
           Además, la Estancia Don Manuel, ubicada en Cañuelas, ofrece una experiencia más completa con actividades de polo, eventos sociales y empresariales, y alojamiento en un entorno rural de calidad.
         </p>
-        <ButtonSuccess />
+        <ButtonSuccess
+          onClick={() =>
+            navigate("/Buscador", {
+              state: { category: "Alojamiento" }
+            })
+          }
+        />
       </section>
       <section className="gastronomy" id="gastronomia">
         <h2>{t("gastronomia")}</h2>
@@ -88,7 +98,13 @@ export const SanManuel = () => {
         <p>
           Si bien San Manuel es una localidad pequeña, su gastronomía refleja el espíritu de la vida rural argentina, donde la comida casera y los sabores tradicionales son los protagonistas.
         </p>
-        <ButtonSuccess />
+        <ButtonSuccess
+          onClick={() =>
+            navigate("/Buscador", {
+              state: { category: "Gastronomía" }
+            })
+          }
+        />
       </section>
       <section className="transport" id="transporte">
         <h2>{t("transporte")}</h2>
@@ -127,7 +143,13 @@ export const SanManuel = () => {
         <p>
           Por ejemplo, en 2024, se llevó a cabo una carrera aniversario organizada por la Asociación Atlética y Deportiva San Manuel, con el apoyo del Gobierno Local.
         </p>
-        <ButtonSuccess />
+        <ButtonSuccess
+          onClick={() =>
+            navigate("/Buscador", {
+              state: { category: "Evento" }
+            })
+          }
+        />
       </section>
       <section className="event" id="que-hacer">
         <h2>{t("que_hacer2")}</h2>
