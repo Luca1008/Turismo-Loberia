@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS turismo_prueba."card" (
     card_description TEXT,
     card_ubicacion VARCHAR(255),
     card_link_ubicacion VARCHAR(500),
+    card_lat DOUBLE PRECISION,      -- Latitud
+    card_lon DOUBLE PRECISION,      -- Longitud
     card_horario VARCHAR(100),
     card_contacto VARCHAR(100),
     card_info TEXT,
@@ -14,6 +16,54 @@ CREATE TABLE IF NOT EXISTS turismo_prueba."card" (
     card_img_portada BYTEA,
     card_img BYTEA,
     card_date DATE
+);
+
+INSERT INTO turismo_prueba."card" (
+    card_title, card_description, card_ubicacion, card_link_ubicacion,
+    card_lat, card_lon, card_horario, card_contacto, card_info,
+    card_city, card_category, card_date
+) VALUES
+(
+    'Hotel Costa Azul',
+    'Hotel frente al mar con todas las comodidades.',
+    'Av. Costanera 1200',
+    'https://www.openstreetmap.org/?mlat=-38.25&mlon=-58.75#map=18/-38.25/-58.75',
+    -38.25,
+    -58.75,
+    'Check-in: 14hs, Check-out: 10hs',
+    '0221-478596',
+    'WiFi gratuito, piscina, estacionamiento',
+    'Arenas Verdes',
+    'Alojamiento',
+    NULL
+),
+(
+    'Festival de Jazz',
+    'Tercera edición del festival internacional de jazz.',
+    'Anfiteatro Municipal',
+    'https://www.openstreetmap.org/?mlat=-38.30&mlon=-58.80#map=18/-38.30/-58.80',
+    -38.30,
+    -58.80,
+    '20-02hs',
+    '0221-963258',
+    'Venta de entradas en boletería',
+    'Lobería',
+    'Evento',
+    '2024-11-15'
+),
+(
+    'Teatro Municipal',
+    'Edificio histórico con programación cultural variada.',
+    'Av. Belgrano 350',
+    'https://www.openstreetmap.org/?mlat=-38.28&mlon=-58.77#map=18/-38.28/-58.77',
+    -38.28,
+    -58.77,
+    'Mié-Dom 18-23hs',
+    '0221-369852',
+    'Cartelera en página web',
+    'Lobería',
+    'Cultura',
+    NULL
 );
 
 -- Alojamientos

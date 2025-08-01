@@ -28,7 +28,11 @@ const CardPage = () => {
     <div className="card-detail" key={i18n.language}>
       {/* Imagen Portada */}
       {card.card_img_portada && (
-        <img src={card.card_img_portada} alt={card.card_title} className="card-img-portada" />
+        <img
+          src={card.card_img_portada}
+          alt={card.card_title}
+          className="card-img-portada"
+        />
       )}
 
       {/* Título */}
@@ -36,8 +40,16 @@ const CardPage = () => {
 
       {/* Mostrar fecha si es un evento y tiene fecha */}
       {card.card_category === "Evento" && card.card_date && (
-        <div className="event-date-detail" style={{ marginBottom: '1rem', fontWeight: 'bold', fontSize: '1.2rem' }}>
-          {t("fecha_evento")}: {new Date(card.card_date).toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' })}
+        <div
+          className="event-date-detail"
+          style={{ marginBottom: "1rem", fontWeight: "bold", fontSize: "1.2rem" }}
+        >
+          {t("fecha_evento")}:{" "}
+          {new Date(card.card_date).toLocaleDateString("es-AR", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
         </div>
       )}
 
@@ -48,16 +60,28 @@ const CardPage = () => {
       <section className="card-section">
         <h2>{t("ubicacion")}</h2>
         <p>{card.card_ubicacion}</p>
-        {card.card_link_ubicacion && (
-          <iframe
-            title="Mapa"
-            src={card.card_link_ubicacion}
-            width="100%"
-            height="300"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-          />
+
+        {/* Mapa OpenStreetMap embebido */}
+        {card.card_lat && card.card_lon && (
+          <>
+            <iframe
+              title="Mapa OpenStreetMap"
+              src={`https://www.openstreetmap.org/export/embed.html?bbox=${card.card_lon - 0.01}%2C${card.card_lat - 0.01}%2C${card.card_lon + 0.01}%2C${card.card_lat + 0.01}&layer=mapnik&marker=${card.card_lat}%2C${card.card_lon}`}
+              width="100%"
+              height="300"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+            />
+            <br />
+            <a
+              href={`https://www.openstreetmap.org/?mlat=${card.card_lat}&mlon=${card.card_lon}#map=18/${card.card_lat}/${card.card_lon}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t("ver_en_openstreetmap")}
+            </a>
+          </>
         )}
       </section>
 

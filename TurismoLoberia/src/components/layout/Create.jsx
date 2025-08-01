@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import ButtonSubmit from "../common/ButtonSubmit";
+import NominatimAutocomplete from "../common/NominatimAutocomplete";
 
 const Create = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,8 @@ const Create = () => {
     descripcion: "",
     ubicacion: "",
     linkUbicacion: "",
+    lat: "",      // Agregado para latitud
+    lon: "",      // Agregado para longitud
     horario: "",
     contacto: "",
     informacion: "",
@@ -37,12 +40,14 @@ const Create = () => {
     console.log("Datos enviados:", formData);
     try {
       const data = new FormData();
-      
+
       // Mapear los campos del frontend a los nombres que espera el backend
       data.append("card_title", formData.titulo);
       data.append("card_description", formData.descripcion);
       data.append("card_ubicacion", formData.ubicacion);
       data.append("card_link_ubicacion", formData.linkUbicacion);
+      data.append("card_lat", formData.lat);    // Enviamos latitud
+      data.append("card_lon", formData.lon);    // Enviamos longitud
       data.append("card_horario", formData.horario);
       data.append("card_contacto", formData.contacto);
       data.append("card_info", formData.informacion);
@@ -51,16 +56,16 @@ const Create = () => {
       if (formData.categoria === "Evento") {
         data.append("card_date", formData.fecha);
       }
-      
+
       if (imagen) {
         data.append("card_img_portada", imagen);
       }
-      
+
       const response = await fetch("http://localhost:5000/api/cards", {
         method: "POST",
         body: data,
       });
-      
+
       if (response.ok) {
         setMensaje("¡Contenido creado exitosamente!");
         setFormData({
@@ -68,6 +73,8 @@ const Create = () => {
           descripcion: "",
           ubicacion: "",
           linkUbicacion: "",
+          lat: "",
+          lon: "",
           horario: "",
           contacto: "",
           informacion: "",
@@ -77,7 +84,7 @@ const Create = () => {
         });
         setImagen(null);
         setTimeout(() => {
-         window.location.reload();
+          window.location.reload();
         }, 1200); // Espera 1.2 segundos para mostrar el mensaje
       } else {
         const errorData = await response.json();
@@ -93,7 +100,11 @@ const Create = () => {
   return (
     <div>
       <h3>Agregar Contenido</h3>
-      <Form className="form-create-card" onSubmit={handleSubmit} encType="multipart/form-data">
+      <Form
+        className="form-create-card"
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+      >
         <Form.Group className="mb-3" controlId="titulo">
           <Form.Label>Título del lugar</Form.Label>
           <Form.Control
@@ -118,25 +129,35 @@ const Create = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="ubicacion">
           <Form.Label>Ubicación</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Ubicación"
-            name="ubicacion"
-            value={formData.ubicacion}
-            onChange={handleChange}
-            required
+          <NominatimAutocomplete
+            onSelect={(place) => {
+              const ubicacion = place.display_name;
+              // Cambié linkUbicacion para que use OpenStreetMap
+              const linkUbicacion = `https://www.openstreetmap.org/?mlat=${place.lat}&mlon=${place.lon}#map=18/${place.lat}/${place.lon}`;
+              setFormData((prev) => ({
+                ...prev,
+                ubicacion,
+                linkUbicacion,
+                lat: place.lat,
+                lon: place.lon,
+              }));
+            }}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="linkUbicacion">
-          <Form.Label>Link de Ubicación (Google Maps)</Form.Label>
-          <Form.Control
-            type="url"
-            placeholder="https://maps.google.com/..."
-            name="linkUbicacion"
-            value={formData.linkUbicacion}
-            onChange={handleChange}
-          />
-        </Form.Group>
+        {formData.linkUbicacion && (
+          <Form.Group className="mb-3" controlId="linkUbicacion">
+            <Form.Label>Vista previa en OpenStreetMap</Form.Label>
+            <div>
+              <a
+                href={formData.linkUbicacion}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {formData.linkUbicacion}
+              </a>
+            </div>
+          </Form.Group>
+        )}
         <Form.Group className="mb-3" controlId="horario">
           <Form.Label>Horario</Form.Label>
           <Form.Control

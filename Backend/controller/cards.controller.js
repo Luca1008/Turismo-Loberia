@@ -92,10 +92,10 @@ exports.createCard = async (req, res) => {
   try {
     const {
       card_title, card_description, card_ubicacion, card_link_ubicacion,
-  card_horario, card_contacto, card_info, card_city, card_category, card_date
-} = req.body;
+      card_horario, card_contacto, card_info, card_city, card_category, card_date,
+      card_lat, card_lon
+    } = req.body;
 
-    console.log('REQ.BODY:', req.body);
     const imgPortada = req.files?.card_img_portada?.[0]?.buffer || null;
     const imgExtra = req.files?.card_img?.[0]?.buffer || null;
 
@@ -103,11 +103,13 @@ exports.createCard = async (req, res) => {
       `INSERT INTO turismo_prueba."card" (
         card_title, card_description, card_ubicacion, card_link_ubicacion,
         card_horario, card_contacto, card_info, card_city, card_category,
+        card_lat, card_lon,
         card_img_portada, card_img, card_date
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING *`,
       [
         card_title, card_description, card_ubicacion, card_link_ubicacion,
         card_horario, card_contacto, card_info, card_city, card_category,
+        card_lat || null, card_lon || null,
         imgPortada, imgExtra, card_date || null
       ]
     );
@@ -119,14 +121,16 @@ exports.createCard = async (req, res) => {
   }
 };
 
+
 // PUT (actualizar una card)
 exports.updateCard = async (req, res) => {
   const { id } = req.params;
   try {
     const {
       card_title, card_description, card_ubicacion, card_link_ubicacion,
-  card_horario, card_contacto, card_info, card_city, card_category, card_date
-} = req.body;
+      card_horario, card_contacto, card_info, card_city, card_category, card_date,
+      card_lat, card_lon
+    } = req.body;
 
     const imgPortada = req.files?.card_img_portada?.[0]?.buffer || null;
     const imgExtra = req.files?.card_img?.[0]?.buffer || null;
@@ -135,11 +139,13 @@ exports.updateCard = async (req, res) => {
       `UPDATE turismo_prueba."card" SET
         card_title=$1, card_description=$2, card_ubicacion=$3, card_link_ubicacion=$4,
         card_horario=$5, card_contacto=$6, card_info=$7, card_city=$8, card_category=$9,
-        card_img_portada=$10, card_img=$11, card_date=$12
-      WHERE id = $13 RETURNING *`,
+        card_lat=$10, card_lon=$11,
+        card_img_portada=$12, card_img=$13, card_date=$14
+      WHERE id = $15 RETURNING *`,
       [
         card_title, card_description, card_ubicacion, card_link_ubicacion,
         card_horario, card_contacto, card_info, card_city, card_category,
+        card_lat || null, card_lon || null,
         imgPortada, imgExtra, card_date || null, id
       ]
     );
