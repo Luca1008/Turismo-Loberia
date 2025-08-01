@@ -99,3 +99,27 @@ aside.sidebar-admin li svg{
   border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 1.5px 4px rgba(60, 180, 60, 0.18);
 }
+
+/*-------Form Carousel------*/
+.form-carousel {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: auto;
+}
+
+.form-carousel label{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  margin-bottom: 2rem;
+}
+
+.form-carousel label.default-image {
+  display: flex;
+  flex-direction: row;
+}
+.form-carousel input[type="checkbox"] {
+  margin-right: 0.5rem;
+}

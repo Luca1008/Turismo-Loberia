@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import Nav from "react-bootstrap/Nav";
+import Offcanvas from "react-bootstrap/Offcanvas";
+import { FaPencilAlt, FaUserCheck, FaUsersCog } from "react-icons/fa";
+import { MdLogout, MdOutlineSettings } from "react-icons/md";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Create from "../components/layout/Create";
 import Edit from "../components/layout/Edit";
+import { useAuth } from "../hooks/useAuth.jsx";
 import "../styles/panelAdmin.css";
 import Searcher from "./Searcher";
-import Nav from "react-bootstrap/Nav";
-import { useAuth } from "../hooks/useAuth.jsx";
-import { MdLogout, MdOutlineSettings } from "react-icons/md";
-import { FaPencilAlt, FaUserCheck, FaUsersCog } from "react-icons/fa";
-import Offcanvas from "react-bootstrap/Offcanvas";
-
 
 const PanelAdmin = () => {
   const { auth, logout } = useAuth();
@@ -24,6 +25,10 @@ const PanelAdmin = () => {
   const handleShow = () => setShow(true);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedCardId, setSelectedCardId] = useState(null);
+  const [selectedCity, setSelectedCity] = useState("loberia");
+  const [image, setImage] = useState(null);
+  const [useDefault, setUseDefault] = useState(false);
+  const [loading, setLoading] = useState(false);
   const editModalRef = useRef(null);
   const searcherRef = useRef(null);
 
@@ -43,6 +48,45 @@ const PanelAdmin = () => {
     setSelectedCardId(null);
     if (searcherRef.current) {
       searcherRef.current.fetchCards();
+    }
+  };
+
+  const handleCityChange = (e) => {
+    setSelectedCity(e.target.value);
+    setImage(null);
+    setUseDefault(false);
+  };
+  const handleImageChange = (e) => setImage(e.target.files[0]);
+  const handleUseDefaultChange = (e) => setUseDefault(e.target.checked);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      if (useDefault) {
+        await fetch(`http://localhost:5000/api/carousel/${selectedCity}`, {
+          method: "DELETE",
+        });
+        toast.success("Se usará la imagen default para esta ciudad.");
+      } else {
+        if (!image) {
+          toast.error("Selecciona una imagen o marca 'Usar imagen default'");
+          setLoading(false);
+          return;
+        }
+        const formData = new FormData();
+        formData.append("city", selectedCity);
+        formData.append("image", image);
+        await fetch("http://localhost:5000/api/carousel", {
+          method: "POST",
+          body: formData,
+        });
+        toast.success("Imagen personalizada actualizada.");
+      }
+      setImage(null);
+      setUseDefault(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -98,7 +142,39 @@ const PanelAdmin = () => {
           </div>
         )}
 
-        <h3>Modificar Carrousel Portada</h3>
+        <h3>Modificar Carrousel de Portada</h3>
+        <form onSubmit={handleSubmit} className="form-carousel">
+          <label>
+            Ciudad:
+            <select value={selectedCity} onChange={handleCityChange}>
+              <option value="loberia">Lobería</option>
+              <option value="arenas_verdes">Arenas Verdes</option>
+              <option value="san_manuel">San Manuel</option>
+            </select>
+          </label>
+          <label>
+            Imagen personalizada:
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              disabled={useDefault}
+              key={selectedCity + (useDefault ? "-default" : "-custom")}
+            />
+          </label>
+          <label className="default-image">
+            <input
+              type="checkbox"
+              checked={useDefault}
+              onChange={handleUseDefaultChange}
+            />
+            Usar imagen default
+          </label>
+          <button type="submit" disabled={loading}>
+            {loading ? "Actualizando..." : "Actualizar Carrusel"}
+          </button>
+        </form>
+        <ToastContainer position="top-right" autoClose={2500} />
       </section>
 
       {/*----------------------Ajustes-----------------*/}
