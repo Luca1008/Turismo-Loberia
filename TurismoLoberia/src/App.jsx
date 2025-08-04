@@ -1,6 +1,3 @@
-import { BrowserRouter } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import AccessibilityButtton from "./components/common/AccessibilityButtton";
 import ScrollToHash from "./components/common/ScrollToHash";
 import ScrollToTop from "./components/common/ScrollToTop";
@@ -8,12 +5,30 @@ import Whatsapp from "./components/common/Whatsapp";
 import { Footer } from "./components/layout/Footer";
 import { Header } from "./components/layout/Header";
 import { Routing } from "./router/Routing";
-import { AuthProvider } from "./context/AuthProvider"; 
+import { AuthProvider } from "./context/AuthProvider";
 import ScrollToTopButton from "./components/common/ScrollToTopButton";
 
-function App() {
+import { initGA, trackPageview } from "./analytics";
+
+import { useLocation, BrowserRouter } from "react-router-dom";
+import { useEffect, useRef } from "react";
+
+function AppContent() {
+  const location = useLocation();
+  const didInit = useRef(false);
+
+  useEffect(() => {
+    if (!didInit.current) {
+      initGA(); // Inicializa GA una sola vez
+      didInit.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    trackPageview(location.pathname + location.search); // Trackea cada vista de página
+  }, [location]);
+
   return (
-    <BrowserRouter>
     <AuthProvider>
       <ScrollToTop />
       <ScrollToHash />
@@ -31,7 +46,14 @@ function App() {
           <Whatsapp />
         </div>
       </div>
-      </AuthProvider>
+    </AuthProvider>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import { FaAsterisk } from "react-icons/fa";
 import ButtonSubmit from "../components/common/ButtonSubmit";
 import "../styles/contact.css";
 import { useTranslation } from "react-i18next";
+import { trackEvent } from "../analytics"; // 👈 Importar función GA4
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -17,13 +18,42 @@ export const Contact = () => {
   const { t } = useTranslation();
   const { i18n } = useTranslation();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const interactionTracked = useRef(false);
 
+  // 📌 Evento: Vista de la página
+  useEffect(() => {
+    trackEvent({
+      category: "Formulario",
+      action: "Vista página contacto",
+      label: "Página Contacto",
+    });
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // ✅ Evento: interacción con formulario (solo la primera vez)
+    if (!interactionTracked.current) {
+      trackEvent({
+        category: "Formulario",
+        action: "Inicio interacción",
+        label: "Contacto",
+      });
+      interactionTracked.current = true;
+    }
+
+    // ✅ Evento: usuario limpia un error
     if (status === "error") {
+      trackEvent({
+        category: "Formulario",
+        action: "Corrige error",
+        label: `Campo: ${name}`,
+      });
       setStatus("");
       setErrorMessage("");
     }
@@ -47,20 +77,41 @@ export const Contact = () => {
       const data = await response.json();
 
       if (response.ok) {
+        // ✅ Evento: envío exitoso
+        trackEvent({
+          category: "Formulario",
+          action: "Envío exitoso",
+          label: "Formulario de contacto",
+        });
         setStatus("exitoso");
         setFormData({ name: "", email: "", subject: "", message: "" });
+        interactionTracked.current = false;
       } else {
+        // ❌ Evento: error de validación o backend
+        trackEvent({
+          category: "Formulario",
+          action: "Error en envío",
+          label: data.error || "Error desconocido",
+        });
         setStatus("error");
         setErrorMessage(data.error || "Error al enviar el mensaje");
       }
     } catch (error) {
       console.error("Error en enviado:", error);
+
+      // ❌ Evento: error de conexión
+      trackEvent({
+        category: "Formulario",
+        action: "Error técnico",
+        label: "Fallo conexión backend",
+      });
       setStatus("error");
       setErrorMessage(
         "No se pudo conectar con el servidor. Por favor, verifica que el servidor esté corriendo en http://localhost:5000"
       );
     }
   };
+
   return (
     <div>
       <section className="contact" key={i18n.language}>
@@ -122,20 +173,20 @@ export const Contact = () => {
               placeholder={t("placeholder_mensaje")}
             />
           </Form.Group>
+
           <p className="required-info">
             {t("campos_obligatorios")} (
             <FaAsterisk className="requerided" />) son obligatorios.
           </p>
+
           <ButtonSubmit
-            text={status === "enviando" ? t("enviando") :t("enviar")}
+            text={status === "enviando" ? t("enviando") : t("enviar")}
             disabled={status === "enviando"}
             className={`.btn-success${status === "enviando" ? " sending" : ""}`}
           />
 
           {status === "exitoso" && (
-            <p className="success-message">
-              {t("mensaje_exitoso")}
-            </p>
+            <p className="success-message">{t("mensaje_exitoso")}</p>
           )}
           {status === "error" && (
             <p className="error-message">{errorMessage}</p>

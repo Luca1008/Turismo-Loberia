@@ -7,40 +7,47 @@ import { FaSearch } from "react-icons/fa";
 import { useLocation, useSearchParams } from "react-router-dom";
 import ContentCard from "../components/cards/ContentCard";
 import "../styles/searcher.css";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
+import { trackEvent } from "../analytics"; // 👈 Importar
 
 const Searcher = ({ isAdmin = false, onEdit = null }) => {
   const location = useLocation();
   const { t, i18n } = useTranslation();
 
-  // --- Estados principales
   const [cards, setCards] = useState([]);
   const [search, setSearch] = useState("");
   const [city, setCity] = useState(location.state?.city || "");
   const [category, setCategory] = useState(location.state?.category || "");
 
-  // --- Paginación
   const [page, setPage] = useState(1);
   const limit = 6;
   const [totalPages, setTotalPages] = useState(1);
   const [searchParams] = useSearchParams();
 
-  // 🔍 Detectar query string "?title="
   useEffect(() => {
+    trackEvent({
+      category: "Páginas",
+      action: "Vista página",
+      label: "Buscador",
+    });
+
     const titleFromUrl = searchParams.get("title");
     if (titleFromUrl) {
       setSearch(titleFromUrl);
+      trackEvent({
+        category: "Buscador",
+        action: "Búsqueda por nombre",
+        label: titleFromUrl,
+      });
     }
   }, [searchParams]);
 
-  // === Utilidad: convertir Bytea (imagen) a base64
   const bufferToBase64 = (buffer) => {
     if (!buffer?.data) return null;
     const binary = buffer.data.reduce((acc, byte) => acc + String.fromCharCode(byte), "");
     return `data:image/jpeg;base64,${window.btoa(binary)}`;
   };
 
-  // === Llamada al backend para traer las cards con filtros
   const fetchCards = async () => {
     try {
       const params = {
@@ -55,10 +62,18 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
       const cardsDB = response.data.cards || response.data;
       const total = response.data.total || cardsDB.length;
 
-      const parsed = cardsDB.map((card) => ({
-        ...card,
-        img: bufferToBase64(card.card_img_portada),
-      }));
+      const parsed = cardsDB.map((card) => {
+        // ✅ Evento: cada card vista
+        trackEvent({
+          category: "Resultados",
+          action: "Card vista",
+          label: card.card_title,
+        });
+        return {
+          ...card,
+          img: bufferToBase64(card.card_img_portada),
+        };
+      });
 
       setCards(parsed);
       setTotalPages(Math.ceil(total / limit));
@@ -70,9 +85,14 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
 
   useEffect(() => {
     fetchCards();
+    // ✅ Evento: cambio de página
+    trackEvent({
+      category: "Paginación",
+      action: "Cambio de página",
+      label: `Página ${page}`,
+    });
   }, [page, search, city, category]);
 
-  // === Función para eliminar card
   const handleDeleteCard = async (cardId) => {
     try {
       const response = await axios.delete(`http://localhost:5000/api/cards/${cardId}`);
@@ -91,6 +111,12 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     setCity("");
     setCategory("");
     setPage(1);
+    // ✅ Evento: limpiar filtros
+    trackEvent({
+      category: "Botón",
+      action: "Limpiar filtros",
+      label: "Buscador",
+    });
   };
 
   return (
@@ -107,6 +133,11 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
             onChange={(e) => {
               setSearch(e.target.value);
               setPage(1);
+              trackEvent({
+                category: "Buscador",
+                action: "Búsqueda por nombre",
+                label: e.target.value,
+              });
             }}
           />
           <button onClick={fetchCards}><FaSearch /></button>
@@ -114,14 +145,36 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
 
         {/* 🎯 Filtros */}
         <div className="search-filters">
-          <Form.Select value={city} onChange={(e) => { setCity(e.target.value); setPage(1); }}>
+          <Form.Select
+            value={city}
+            onChange={(e) => {
+              setCity(e.target.value);
+              setPage(1);
+              trackEvent({
+                category: "Filtro",
+                action: "Ciudad seleccionada",
+                label: e.target.value || "Todas",
+              });
+            }}
+          >
             <option value="">{t("ciudad")}</option>
             <option value="Lobería">{t("ciudad_loberia")}</option>
             <option value="Arenas Verdes">{t("arenas_verdes")}</option>
             <option value="San Manuel">{t("san_manuel")}</option>
           </Form.Select>
 
-          <Form.Select value={category} onChange={(e) => { setCategory(e.target.value); setPage(1); }}>
+          <Form.Select
+            value={category}
+            onChange={(e) => {
+              setCategory(e.target.value);
+              setPage(1);
+              trackEvent({
+                category: "Filtro",
+                action: "Categoría seleccionada",
+                label: e.target.value || "Todas",
+              });
+            }}
+          >
             <option value="">{t("categoria")}</option>
             <option value="Alojamiento">{t("alojamiento")}</option>
             <option value="Gastronomía">{t("gastronomia")}</option>

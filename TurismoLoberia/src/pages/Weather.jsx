@@ -15,6 +15,7 @@ import WeatherCard from "../components/cards/WeatherCard";
 import "../styles/weather.css";
 import ButtonSubmit from "../components/common/ButtonSubmit";
 import { useTranslation } from "react-i18next";
+import { trackEvent } from "../analytics";
 
 export const Clima = () => {
   const ciudades = [
@@ -35,6 +36,14 @@ export const Clima = () => {
   const [loadingForecast, setLoadingForecast] = useState(true);
 
   useEffect(() => {
+    trackEvent({
+      category: "Páginas",
+      action: "Vista página",
+      label: "Clima",
+    });
+  }, []);
+  
+  useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -45,6 +54,11 @@ export const Clima = () => {
               : `http://localhost:5000/api/weather?city=${c.ciudad}`;
           try {
             const res = await axios.get(url);
+            trackEvent({
+              category: "Clima",
+              action: "Clima cargado",
+              label: c.ciudad,
+            });
             return {
               ciudad: res.data.ciudad,
               temp: res.data.temp,
@@ -56,6 +70,11 @@ export const Clima = () => {
             };
           } catch (error) {
             console.error(`Error al obtener clima de ${c.ciudad}:`, error);
+            trackEvent({
+              category: "Clima",
+              action: "Error clima",
+              label: c.ciudad,
+            });
             return {
               ciudad: c.ciudad,
               temp: "-",
@@ -89,18 +108,23 @@ export const Clima = () => {
           `http://localhost:5000/api/forecast?city=Lobería`
         );
         setForecastLoberia(resLob.data);
+        trackEvent({ category: "Pronóstico", action: "Cargado", label: "Lobería" });
 
         const resSan = await axios.get(
           `http://localhost:5000/api/forecast?city=San Manuel`
         );
         setForecastSanManuel(resSan.data);
+        trackEvent({ category: "Pronóstico", action: "Cargado", label: "San Manuel" });
 
         const resArenas = await axios.get(
           `http://localhost:5000/api/forecast?lat=-38.8083&lon=-58.6036`
         );
         setForecastArenasVerdes(resArenas.data);
+        trackEvent({ category: "Pronóstico", action: "Cargado", label: "Arenas Verdes" });
+
       } catch (error) {
         console.error("Error al obtener el pronóstico extendido:", error);
+        trackEvent({ category: "Pronóstico", action: "Error", label: "Alguno de los destinos" });
       } finally {
         setLoadingForecast(false);
       }

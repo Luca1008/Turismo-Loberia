@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "../styles/cardPage.css"; // lo podés personalizar vos
+import "../styles/cardPage.css";
 import { useTranslation } from "react-i18next";
+import { trackEvent } from "../analytics"; // 👈 GA4
 
 const CardPage = () => {
   const { id } = useParams();
@@ -15,10 +16,43 @@ const CardPage = () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/cards/${id}`);
         setCard(res.data);
+
+        // ✅ Evento: Card vista
+        trackEvent({
+          category: "Contenido",
+          action: "Vista Card",
+          label: res.data.card_title || `ID: ${id}`,
+        });
+
+        // ✅ Evento: Si es evento con fecha
+        if (res.data.card_category === "Evento" && res.data.card_date) {
+          trackEvent({
+            category: "Evento",
+            action: "Vista evento con fecha",
+            label: res.data.card_title || `ID: ${id}`,
+          });
+        }
+
+        // ✅ Eventos por secciones
+        trackEvent({ category: "Sección", action: "Vista", label: "Ubicación" });
+        trackEvent({ category: "Sección", action: "Vista", label: "Horarios" });
+        trackEvent({ category: "Sección", action: "Vista", label: "Contactos" });
+        trackEvent({ category: "Sección", action: "Vista", label: "Información" });
+
+        // ✅ Si tiene mapa
+        if (res.data.card_lat && res.data.card_lon) {
+          trackEvent({
+            category: "Mapa",
+            action: "Renderizado",
+            label: res.data.card_title || `ID: ${id}`,
+          });
+        }
+
       } catch (err) {
         console.error("Error al cargar la card", err);
       }
     };
+
     fetchCard();
   }, [id]);
 
@@ -26,7 +60,6 @@ const CardPage = () => {
 
   return (
     <div className="card-detail" key={i18n.language}>
-      {/* Imagen Portada */}
       {card.card_img_portada && (
         <img
           src={card.card_img_portada}
@@ -35,10 +68,8 @@ const CardPage = () => {
         />
       )}
 
-      {/* Título */}
       <h1>{card.card_title}</h1>
 
-      {/* Mostrar fecha si es un evento y tiene fecha */}
       {card.card_category === "Evento" && card.card_date && (
         <div
           className="event-date-detail"
@@ -53,7 +84,6 @@ const CardPage = () => {
         </div>
       )}
 
-      {/* Descripción */}
       <p>{card.card_description}</p>
 
       {/* Ubicación */}
@@ -61,7 +91,6 @@ const CardPage = () => {
         <h2>{t("ubicacion")}</h2>
         <p>{card.card_ubicacion}</p>
 
-        {/* Mapa OpenStreetMap embebido */}
         {card.card_lat && card.card_lon && (
           <>
             <iframe
@@ -78,6 +107,13 @@ const CardPage = () => {
               href={`https://www.openstreetmap.org/?mlat=${card.card_lat}&mlon=${card.card_lon}#map=18/${card.card_lat}/${card.card_lon}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackEvent({
+                  category: "Mapa",
+                  action: "Click ver en OpenStreetMap",
+                  label: card.card_title || `ID: ${id}`,
+                })
+              }
             >
               {t("ver_en_openstreetmap")}
             </a>
@@ -90,13 +126,6 @@ const CardPage = () => {
         <h2>{t("horarios")}</h2>
         <p>{card.card_horario}</p>
       </section>
-
-      {/* Imagen Extra
-      {card.card_img && (
-        <section className="card-section">
-          <img src={card.card_img} alt="Imagen adicional" className="card-img-extra" />
-        </section>
-      )} */}
 
       {/* Contactos */}
       <section className="card-section">

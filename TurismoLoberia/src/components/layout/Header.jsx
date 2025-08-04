@@ -14,6 +14,7 @@ import {
 import { useTranslation } from "react-i18next";
 import logoLoberia from "../../assets/icons/logoLoberia.svg";
 import "../../styles/Navbar.css";
+import { trackEvent } from "../../analytics";
 export const Header = () => {
   const { t, i18n } = useTranslation();
 
@@ -29,10 +30,24 @@ export const Header = () => {
   const searchRef = useRef(null);
   const navigate = useNavigate();
 
+
+   useEffect(() => {
+    trackEvent({
+      category: "Header",
+      action: "Render",
+      label: "Componente Header cargado",
+    });
+  }, []);
+
   // 🌍 Cambio de idioma
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
     setShowLanguage(false);
+    trackEvent({
+      category: "Idioma",
+      action: "Cambio idioma",
+      label: lang,
+    });
   };
 
   // 🔍 Enviar búsqueda
@@ -46,6 +61,11 @@ export const Header = () => {
     navigate(url);
     setShowSearch(false);
     setShowMenu(false);
+    trackEvent({
+      category: "Búsqueda",
+      action: "Buscar desde header",
+      label: query || "Vacío",
+    });
   };
 
   // 🎯 Scroll transparente
@@ -168,6 +188,11 @@ export const Header = () => {
     setOpenItem(openItem === item ? null : item);
     setShowSearch(false);
     setShowLanguage(false);
+    trackEvent({
+        category: "Menú",
+        action: "Abrir sección",
+        label: item,
+      });
   };
 
   const toggleLanguage = (e) => {
@@ -175,11 +200,19 @@ export const Header = () => {
     setShowLanguage(!showLanguage);
     setOpenItem(null);
     setShowSearch(false);
+    trackEvent({
+      category: "Menú",
+      action: "Abrir menú idioma",
+    });
   };
 
   const handleSearchToggle = () => {
     setShowSearch(!showSearch);
     setOpenItem(null);
+    trackEvent({
+      category: "Búsqueda",
+      action: "Mostrar barra",
+    });
   };
 
   return (

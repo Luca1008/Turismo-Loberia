@@ -14,6 +14,7 @@ import ButtonSuccess from "../components/common/ButtonSuccess";
 import WeatherCarousel from "../components/layout/WeatherCarousel";
 import { useTranslation } from "react-i18next";
 import "../styles/button.css";
+import { trackEvent } from "../analytics";
 
 export const Index = () => {
   const [alojamientos, setAlojamientos] = useState([]);
@@ -22,6 +23,7 @@ export const Index = () => {
   const { i18n } = useTranslation();
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const navigate = useNavigate();
+  
 
 
   /*---Spinner facebook----*/
@@ -67,27 +69,87 @@ export const Index = () => {
       <section className="services">
         <h2>{t("guia_servicios")}</h2>
         <div className="item-services-container">
-          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Alojamiento" } })}>
+          <div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Alojamiento",
+              });
+              navigate("/Buscador", { state: { category: "Alojamiento" } });
+            }}
+          >
             <MdHotel />
             <p>{t("alojamientos")}</p>
           </div>
-          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Gastronomía" } })}>
+          <div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Gastronomía",
+              });
+              navigate("/Buscador", { state: { category: "Gastronomía" } });
+            }}
+          >
             <MdOutlineRestaurant />
             <p>{t("gastronomia")}</p>
           </div>
-          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Lugares de Interés" } })}>
+            <div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Lugares de Interés",
+              });
+              navigate("/Buscador", { state: { category: "Lugares de Interés" } });
+            }}
+          >
             <MdPlace />
             <p>{t("lugares_interes")}</p>
           </div>
-          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Artesanos" } })}>
+          <div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Artesanos",
+              });
+              navigate("/Buscador", { state: { category: "Artesanos" } });
+            }}
+          >
             <FaPaintBrush />
             <p>{t("artesanos")}</p>
           </div>
-          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Servicios Públicos" } })}>
+          <div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Servicios Públicos",
+              });
+              navigate("/Buscador", { state: { category: "Servicios Públicos" } });
+            }}
+          >
             <MdMuseum />
             <p>{t("servicios_publicos")}</p>
           </div>
-          <div className="item-services" onClick={() => navigate("/Buscador", { state: { category: "Información Útil" } })}>
+          <div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Información Útil",
+              });
+              navigate("/Buscador", { state: { category: "Información Útil" } });
+            }}
+          >
             <FaInfo />
             <p>{t("info_util")}</p>
           </div>
@@ -110,12 +172,18 @@ export const Index = () => {
           ))}
         </div>
         <ButtonSuccess
-          onClick={() =>
+          onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Ver más",
+              label: " Alojamiento",
+            });
             navigate("/Buscador", {
-              state: { category: "Alojamiento" }
-            })
-          }
+              state: { category: "Alojamiento" },
+            });
+          }}
         />
+
       </section>
       <section className="upcoming-events">
         <h2>{t("proximos_eventos")}</h2>
@@ -135,12 +203,18 @@ export const Index = () => {
           ))}
         </div>
         <ButtonSuccess
-          onClick={() =>
+          onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Ver más",
+              label: "Eventos",
+            });
             navigate("/Buscador", {
-              state: { category: "Evento" }
-            })
-          }
+              state: { category: "Evento" },
+            });
+          }}
         />
+
       </section>
       <section className="more-info">
         <h2>{t("actualidad")}</h2>
@@ -191,7 +265,14 @@ export const Index = () => {
                 height: "600px",
                 display: iframeLoaded ? "block" : "none",
               }}
-              onLoad={() => setIframeLoaded(true)}
+              onLoad={() => {
+                setIframeLoaded(true);
+                trackEvent({
+                  category: "Facebook",
+                  action: "Carga de iframe",
+                  label: "Plugin FB",
+                });
+              }}
             />
           </div>
         </div>
