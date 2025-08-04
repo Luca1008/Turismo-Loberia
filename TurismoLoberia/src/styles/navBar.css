@@ -65,7 +65,7 @@ li {
   width: 100%;
   height: calc(100vh - 60px);
   background-color: var(--primary-color);
-  z-index: 9999;
+  z-index: 1000;
   color: white;
   overflow-y: auto;
 }
@@ -229,6 +229,28 @@ button.btn.btn-white{
 .header.nav-transparent:hover {
   background-color: #fff !important;
   transition: background-color 0.2s;
+}
+
+/* Efecto de animación para la campana */
+/* Animación constante para la campana */
+.bell-icon {
+  animation: ring 2s infinite ease-in-out;
+  transform-origin: top center;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+@keyframes ring {
+  0% { transform: rotate(0deg); }
+  5% { transform: rotate(15deg); }
+  10% { transform: rotate(-15deg); }
+  15% { transform: rotate(10deg); }
+  20% { transform: rotate(-10deg); }
+  25% { transform: rotate(5deg); }
+  30% { transform: rotate(-5deg); }
+  35% { transform: rotate(2deg); }
+  40% { transform: rotate(-2deg); }
+  45%, 100% { transform: rotate(0deg); }
 }
 
 @media (min-width: 768px) {
