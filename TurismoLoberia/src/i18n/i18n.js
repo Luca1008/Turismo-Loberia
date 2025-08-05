@@ -1,8 +1,7 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 /* import HttpBackend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector'; */
-
 
 // 🧠 Traducciones en memoria
 const resources = {
@@ -37,7 +36,8 @@ const resources = {
       servicios_publicos: "Serv. Públicos",
       info_util: "Info. Útil",
       descubri_loberia: "Descubrí Lobería",
-      explora_loberia: "Explorá la naturaleza, historia y cultura de Lobería, Arenas Verdes y San Manuel.",
+      explora_loberia:
+        "Explorá la naturaleza, historia y cultura de Lobería, Arenas Verdes y San Manuel.",
       proximos_eventos: "Próximos Eventos",
       eventos_intro: "No te pierdas todos los eventos que tenemos para vos!!!",
       actualidad: "Actualidad",
@@ -72,27 +72,32 @@ const resources = {
       enviar: "Enviar",
       enviar_link: "Enviar link",
       enviando: "Enviando...",
-      mensaje_exitoso: "¡Mensaje enviado exitosamente! Te responderemos a la brevedad.",
+      mensaje_exitoso:
+        "¡Mensaje enviado exitosamente! Te responderemos a la brevedad.",
       registro: "Registro",
       nombre: "Nombre",
       apellido: "Apellido",
       correo_electronico: "Correo electrónico",
       contrasena: "Contraseña",
       registrarse: "Registrarse",
-      error_contrasena_minima: "La contraseña debe tener al menos 8 caracteres.",
+      error_contrasena_minima:
+        "La contraseña debe tener al menos 8 caracteres.",
       error_usuario_existente: "El usuario ya existe en el sistema",
       usuario_registrado: "Usuario registrado correctamente",
       error_conexion2: "Error al conectar con el servidor",
       busqueda_contenido: "Búsqueda de contenido",
       buscar_por_nombre: "Buscar por nombre...",
-      ciudad: "Ciudad",
+      ciudad_provincia_pais: "Ciudad, Provincia, País",
+      pais: "País",
+      provincia: "Provincia",
       categoria: "Categoría",
       alojamiento: "Alojamiento",
       cultura: "Cultura",
       evento: "Evento",
       limpiar_filtros: "Limpiar filtros",
-      suscribete_titulo: "Queremos conocerte",
+      suscribete_titulo: "Queremos Conocerte",
       vivo_en: "Vivo en:",
+      iria_en: "Iría en...",
       placeholder_ciudad: "Ciudad, Provincia, País",
       me_entere: "Me enteré de Lobería por...",
       conocidos: "Conocidos",
@@ -111,7 +116,6 @@ const resources = {
       con_familia: "Con familia",
       con_amigos: "Con amigos",
       con_mascotas: "Con mis mascotas",
-      iria_en: "Iría en...",
       micro_larga: "Micro de larga distancia",
       vehiculo_propio: "Vehículo propio",
       viajes_compartidos: "Viajes compartidos",
@@ -121,9 +125,13 @@ const resources = {
       email3: "Email:",
       telefono: "Teléfono / WhatsApp:",
       placeholder_telefono: "(cod) 12345",
-      acepto_politicas: "Acepto recibir información por correo electrónico y las Políticas de Privacidad",
-      campos_obligatorios: "Los campos marcados con un asterisco (*) son obligatorios.",
-      mensaje_enviado: "¡Mensaje enviado exitosamente! Te responderemos a la brevedad.",
+      acepto_politicas:
+        "Acepto recibir información por correo electrónico y las Políticas de Privacidad",
+      campos_obligatorios:
+        "Los campos marcados con un asterisco (",
+      son_obligatorios: ") son obligatorios.",
+      mensaje_enviado:
+        "¡Mensaje enviado exitosamente! Te responderemos a la brevedad.",
       consultar_clima: "Consultá el Clima",
       detalle_hoy: "Pronóstico detallado para el día de hoy:",
       pronostico_extendido: "Pronóstico Extendido",
@@ -138,7 +146,37 @@ const resources = {
       temp_min: "Temp. Mín",
       footer_contact: "Contactate con nosotros",
       footer_direccion: "Dirección de Turismo, Av. Campos 500",
-      footer_newsletter: "Suscribite a los newsletter"
+      footer_newsletter: "Suscribite a los newsletter",
+
+      // Suscribirse
+      Vivo_en: "Vivo en",
+      Me_enteré_de_Lobería_por: "Me enteré de Lobería por...",
+      Cuando_pienso_en_Lobería_pienso_en: "Cuando pienso en Lobería pienso en...",
+      Cuando_vaya_a_Lobería_quiero: "Cuando vaya a Lobería quiero...",
+      Me_gustaría_ir: "Me gustaría ir...",
+      Iría_en: "Iría en...",
+      Nombre_y_Apellido: "Nombre y Apellido:",
+      Mi_correo_electrónico_es: "Mi correo electrónico es",
+      Mi_teléfono_WhatsApp_es: "Mi teléfono/WhatsApp es",
+      Conocidos: "Conocidos",
+      Radio: "Radio",
+      Televisión: "Televisión",
+      Redes_Sociales: "Redes Sociales",
+      Nunca_escuché: "Nunca escuché",
+      Sólo_a: "Sólo/a",
+      En_pareja: "En pareja",
+      Con_familia: "Con familia",
+      Con_amigos: "Con amigos",
+      Con_mis_mascotas: "Con mis mascotas",
+      Micro_de_larga_distancia: "Micro de larga distancia",
+      Vehículo_propio: "Vehículo propio",
+      Viajes_compartidos: "Viajes compartidos",
+      Motorhome: "Motorhome",
+      Tour_de_Agencia_de_viajes: "Tour de Agencia de viajes",
+      Otros: "Otros",
+      Acepto_politicas:
+        "Acepto recibir información por correo electrónico y los",
+      Políticas_de_Privacidad: "Políticas de Privacidad",
     },
   },
   en: {
@@ -172,7 +210,8 @@ const resources = {
       servicios_publicos: "Pub. Services",
       info_util: "Useful Info",
       descubri_loberia: "Discover Lobería",
-      explora_loberia: "Explore the nature, history and culture of Lobería, Arenas Verdes and San Manuel.",
+      explora_loberia:
+        "Explore the nature, history and culture of Lobería, Arenas Verdes and San Manuel.",
       proximos_eventos: "Upcoming Events",
       eventos_intro: "Don't miss all the events we have for you!!!",
       actualidad: "News",
@@ -207,7 +246,8 @@ const resources = {
       enviar: "Send",
       enviar_link: "Send link",
       enviando: "Sending...",
-      mensaje_exitoso: "Message sent successfully! We’ll get back to you shortly.",
+      mensaje_exitoso:
+        "Message sent successfully! We’ll get back to you shortly.",
       registro: "Register",
       nombre: "Name",
       apellido: "Surname",
@@ -220,7 +260,7 @@ const resources = {
       error_conexion2: "Failed to connect to the server",
       busqueda_contenido: "Content Search",
       buscar_por_nombre: "Search by name...",
-      ciudad: "City",
+      ciudad_provincia_pais: "City, Province, Country",
       categoria: "Category",
       alojamiento: "Accommodation",
       cultura: "Culture",
@@ -247,7 +287,7 @@ const resources = {
       con_amigos: "With friends",
       con_mascotas: "With my pets",
       iria_en: "I would go by...",
-      micro_larga: "Long-distance bus",
+      Micro_de_larga_distancia: "Long distance bus",
       vehiculo_propio: "Own vehicle",
       viajes_compartidos: "Carpooling",
       motorhome: "Motorhome",
@@ -256,8 +296,10 @@ const resources = {
       email3: "Email:",
       telefono: "Phone / WhatsApp:",
       placeholder_telefono: "(code) 12345",
-      acepto_politicas: "I accept to receive information by email and the Privacy Policy",
-      campos_obligatorios: "Fields marked with an asterisk (*) are required.",
+      Acepto_politicas:
+        "I accept to receive information by email and the Privacy Policy",
+      campos_obligatorios: "Fields marked with an asterisk (",
+      son_obligatorios: ") are required.",
       mensaje_enviado: "Message sent successfully! We’ll get back to you soon.",
       consultar_clima: "Check the Weather",
       detalle_hoy: "Detailed forecast for today:",
@@ -273,23 +315,51 @@ const resources = {
       temp_min: "Min Temp",
       footer_contact: "Contact us",
       footer_direccion: "Tourism Office, Av. Campos 500",
-      footer_newsletter: "Subscribe to our newsletter"
+      footer_newsletter: "Subscribe to our newsletter",
+
+      // Suscribirse
+
+      Vivo_en: "I live in",
+      Me_enteré_de_Lobería_por: "I heard about Lobería through..",
+      Cuando_pienso_en_Lobería_pienso_en: "When I think of Lobería I think of",
+      Cuando_vaya_a_Lobería_quiero: "When I go to Lobería I want to",
+      Me_gustaría_i: "I would like to go..",
+      Nombre_y_Apellido: "Full Name:",
+      Mi_correo_electrónico_es: "My email address is",
+      Mi_teléfono_WhatsApp_es: "My phone/WhatsApp number is",
+      Conocidos: "Friends/Family",
+      Radio: "Radio",
+      Televisión: "TV",
+      Redes_Sociales: "Social Media",
+      Nunca_escuché: "Never heard of it",
+      Sólo_a: "Alone",
+      En_pareja: "With partner",
+      Con_familia: "With family",
+      Con_amigos: "With friends",
+      Con_mis_mascotas: "With my pets",
+      Vehículo_propio: "Own vehicle",
+      Viajes_compartidos: "Rideshare",
+      Motohome: "Motorhome",
+      Tour_de_Agencia_de_viajes: "Travel agency tour",
+      Otros: "Other",
+      Acepto_recibir_información_por_correo_electrónico_y_los:
+        "I agree to receive information by email and accept the",
+      Políticas_de_Privacidad: "Privacy Policy",
     },
   },
 };
 
-
 i18n
-/*   .use(HttpBackend)                  // 🔌 Carga los archivos .json por HTTP
+  /*   .use(HttpBackend)                  // 🔌 Carga los archivos .json por HTTP
   .use(LanguageDetector)            // 🌍 Detecta idioma del navegador */
-  .use(initReactI18next)            // 🔁 Integra con React
+  .use(initReactI18next) // 🔁 Integra con React
   .init({
     resources,
-    fallbackLng: 'es',
+    fallbackLng: "es",
     debug: false,
     interpolation: {
-      escapeValue: false
-    }
+      escapeValue: false,
+    },
   });
 /*     fallbackLng: 'es',              // 🌐 Idioma por defecto
     debug: true,                   // Cambiá a true para debuggear
@@ -300,41 +370,8 @@ i18n
       escapeValue: false            // ✅ No hace falta escape en React
     }
   }); */
-  
 
 export default i18n;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';

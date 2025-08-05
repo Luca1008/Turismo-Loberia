@@ -4,7 +4,7 @@ import logoLoberiaFooter from "../../assets/icons/logoLoberiaFooter.svg";
 import "../../styles/footer.css";
 import handleExternalLink from "../common/handleExternalLink";
 import { useTranslation } from "react-i18next";
-import { trackEvent } from "../analytics"; // ✅ GA4
+import { trackEvent } from "../../analytics"; // ✅ GA4
 
 import {
   FaBell,
