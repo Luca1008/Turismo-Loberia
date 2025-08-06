@@ -95,17 +95,20 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
         data.append("card_img_portada", imagen);
       }
 
-      const response = await fetch(`http://localhost:5000/api/cards/${cardId}`, {
-        method: "PUT",
-        body: data,
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/cards/${cardId}`,
+        {
+          method: "PUT",
+          body: data,
+        }
+      );
 
       if (response.ok) {
         setMensaje("¡Card actualizada exitosamente!");
         setTimeout(() => {
           if (onClose) onClose();
           if (onUpdate) onUpdate();
-          // window.location.reload(); // opcional, mejor no recargar toda la página
+          window.location.reload(); // opcional, mejor no recargar toda la página
         }, 1200);
       } else {
         const errorData = await response.json();
@@ -254,9 +257,12 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
           >
             <option value="">Selecciona una categoría</option>
             <option value="Alojamiento">Alojamiento</option>
-            <option value="Gastronomía">Gastronomía</option>
+            <option value="Gastronomia">Gastronomía</option>
             <option value="Cultura">Cultura</option>
             <option value="Evento">Evento</option>
+            <option value="Artesanos">Artesanos</option>
+            <option value="ServPublicos">Servicios Públicos</option>
+            <option value="InfoUtil">Información Útil</option>
           </Form.Select>
         </Form.Group>
 
@@ -279,14 +285,26 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
               <img
                 src={imagenActual}
                 alt="Imagen actual"
-                style={{ maxWidth: "100%", maxHeight: "180px", borderRadius: "8px" }}
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "180px",
+                  borderRadius: "8px",
+                }}
               />
-              <div style={{ fontSize: "0.9rem", color: "#888" }}>Imagen actual</div>
+              <div style={{ fontSize: "0.9rem", color: "#888" }}>
+                Imagen actual
+              </div>
             </div>
           )}
           <Form.Label>Imagen de Portada</Form.Label>
-          <Form.Control type="file" accept="image/*" onChange={handleFileChange} />
-          <Form.Text className="text-muted">Deja vacío para mantener la imagen actual</Form.Text>
+          <Form.Control
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+          <Form.Text className="text-muted">
+            Deja vacío para mantener la imagen actual
+          </Form.Text>
         </Form.Group>
 
         {mensaje && <div className="alert alert-success mt-2">{mensaje}</div>}

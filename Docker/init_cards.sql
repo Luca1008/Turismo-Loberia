@@ -18,103 +18,625 @@ CREATE TABLE IF NOT EXISTS turismo_prueba."card" (
     card_date DATE
 );
 
+
+-- Alojamientos
 INSERT INTO turismo_prueba."card" (
     card_title, card_description, card_ubicacion, card_link_ubicacion,
     card_lat, card_lon, card_horario, card_contacto, card_info,
     card_city, card_category, card_date
 ) VALUES
 (
-    'Hotel Costa Azul',
-    'Hotel frente al mar con todas las comodidades.',
-    'Av. Costanera 1200',
-    'https://www.openstreetmap.org/?mlat=-38.25&mlon=-58.75#map=18/-38.25/-58.75',
-    -38.25,
-    -58.75,
-    'Check-in: 14hs, Check-out: 10hs',
-    '0221-478596',
-    'WiFi gratuito, piscina, estacionamiento',
+    'Hostería El Descanso',
+    'Alojamiento familiar en el centro de Lobería con desayuno incluido.',
+    'Calle San Martín 456',
+    'https://www.openstreetmap.org/?mlat=-38.2601&mlon=-58.7685#map=18/-38.2601/-58.7685',
+    -38.2601,
+    -58.7685,
+    'Check-in: 13hs, Check-out: 10hs',
+    '02261-432198',
+    'WiFi, cochera, aire acondicionado',
+    'Lobería',
+    'Alojamiento',
+    NULL
+),
+(
+    'Cabañas Aires del Campo',
+    'Cabañas rústicas rodeadas de naturaleza en las afueras de San Manuel.',
+    'Ruta 227 km 45',
+    'https://www.openstreetmap.org/?mlat=-38.3452&mlon=-58.9651#map=18/-38.3452/-58.9651',
+    -38.3452,
+    -58.9651,
+    'Check-in: 14hs, Check-out: 11hs',
+    '02261-477321',
+    'Parrilla, pileta, espacio para niños',
+    'San Manuel',
+    'Alojamiento',
+    NULL
+),
+(
+    'Camping Arenas Verdes',
+    'Camping con parcelas frente al mar, ideal para familias y mochileros.',
+    'Acceso Principal s/n',
+    'https://www.openstreetmap.org/?mlat=-38.2489&mlon=-58.7452#map=18/-38.2489/-58.7452',
+    -38.2489,
+    -58.7452,
+    'Recepción de 08 a 20hs',
+    '02261-481234',
+    'Duchas, proveeduría, fogones, energía solar',
     'Arenas Verdes',
     'Alojamiento',
     NULL
 ),
 (
-    'Festival de Jazz',
-    'Tercera edición del festival internacional de jazz.',
-    'Anfiteatro Municipal',
-    'https://www.openstreetmap.org/?mlat=-38.30&mlon=-58.80#map=18/-38.30/-58.80',
-    -38.30,
-    -58.80,
-    '20-02hs',
-    '0221-963258',
-    'Venta de entradas en boletería',
-    'Lobería',
-    'Evento',
-    '2024-11-15'
+    'Cabañas El Bosque',
+    'Complejo de cabañas con entorno arbolado y acceso directo a la playa.',
+    'Av. de los Pinos 789',
+    'https://www.openstreetmap.org/?mlat=-38.2515&mlon=-58.7437#map=18/-38.2515/-58.7437',
+    -38.2515,
+    -58.7437,
+    'Check-in: 15hs, Check-out: 10hs',
+    '02261-489456',
+    'Estacionamiento, cocina equipada, bicicletas',
+    'Arenas Verdes',
+    'Alojamiento',
+    NULL
 ),
 (
-    'Teatro Municipal',
-    'Edificio histórico con programación cultural variada.',
-    'Av. Belgrano 350',
-    'https://www.openstreetmap.org/?mlat=-38.28&mlon=-58.77#map=18/-38.28/-58.77',
-    -38.28,
-    -58.77,
-    'Mié-Dom 18-23hs',
-    '0221-369852',
-    'Cartelera en página web',
+    'Posada San Manuel',
+    'Pequeña posada con atención personalizada en pleno centro de San Manuel.',
+    'Calle Mitre 123',
+    'https://www.openstreetmap.org/?mlat=-38.3421&mlon=-58.9603#map=18/-38.3421/-58.9603',
+    -38.3421,
+    -58.9603,
+    'Check-in: 12hs, Check-out: 10hs',
+    '02261-423678',
+    'Desayuno casero, TV por cable, calefacción',
+    'San Manuel',
+    'Alojamiento',
+    NULL
+);
+
+-- Gastronomia
+INSERT INTO turismo_prueba."card" (
+    card_title, card_description, card_ubicacion, card_link_ubicacion,
+    card_lat, card_lon, card_horario, card_contacto, card_info,
+    card_city, card_category, card_date
+) VALUES
+(
+    'Restaurante El Buen Sabor',
+    'Cocina casera con especialidades locales y menú diario económico.',
+    'Av. San Martín 320',
+    'https://www.openstreetmap.org/?mlat=-38.2609&mlon=-58.7672#map=18/-38.2609/-58.7672',
+    -38.2609,
+    -58.7672,
+    'Lun-Dom 12 a 15hs y 20 a 23hs',
+    '02261-421123',
+    'Menú vegetariano, platos típicos, delivery',
+    'Lobería',
+    'Gastronomia',
+    NULL
+),
+(
+    'La Trattoria de San Manuel',
+    'Pizzería artesanal y pastas caseras en un ambiente familiar.',
+    'Calle Belgrano 202',
+    'https://www.openstreetmap.org/?mlat=-38.3425&mlon=-58.9600#map=18/-38.3425/-58.9600',
+    -38.3425,
+    -58.9600,
+    'Jue-Dom 20 a 00hs',
+    '02261-423456',
+    'Horno a leña, empanadas, pastas caseras',
+    'San Manuel',
+    'Gastronomia',
+    NULL
+),
+(
+    'Café del Mar',
+    'Cafetería y pastelería con vista al mar, ideal para desayunos y meriendas.',
+    'Costanera y Calle 1',
+    'https://www.openstreetmap.org/?mlat=-38.2475&mlon=-58.7445#map=18/-38.2475/-58.7445',
+    -38.2475,
+    -58.7445,
+    'Todos los días 8 a 20hs',
+    '02261-487654',
+    'Tortas caseras, café orgánico, jugos naturales',
+    'Arenas Verdes',
+    'Gastronomia',
+    NULL
+),
+(
+    'Parrilla El Fogón',
+    'Parrilla tradicional con carnes de la región y ambiente campestre.',
+    'Ruta 88 km 10',
+    'https://www.openstreetmap.org/?mlat=-38.2750&mlon=-58.7800#map=18/-38.2750/-58.7800',
+    -38.2750,
+    -58.7800,
+    'Vie-Dom 12 a 15hs y 20 a 23hs',
+    '02261-422789',
+    'Parrilla libre, postres caseros, vino artesanal',
+    'Lobería',
+    'Gastronomia',
+    NULL
+),
+(
+    'Heladería Las Delicias',
+    'Heladería artesanal con sabores regionales y productos sin TACC.',
+    'Calle Mitre 199',
+    'https://www.openstreetmap.org/?mlat=-38.2607&mlon=-58.7680#map=18/-38.2607/-58.7680',
+    -38.2607,
+    -58.7680,
+    'Todos los días 14 a 23hs',
+    '02261-431111',
+    'Helados artesanales, sin azúcar, sin TACC',
+    'Lobería',
+    'Gastronomia',
+    NULL
+);
+
+
+-- Cultura
+INSERT INTO turismo_prueba."card" (
+    card_title, card_description, card_ubicacion, card_link_ubicacion,
+    card_lat, card_lon, card_horario, card_contacto, card_info,
+    card_city, card_category, card_date
+) VALUES
+(
+    'Museo Histórico de Lobería',
+    'Espacio cultural dedicado a preservar la historia local y regional.',
+    'Calle Italia 150',
+    'https://www.openstreetmap.org/?mlat=-38.2615&mlon=-58.7690#map=18/-38.2615/-58.7690',
+    -38.2615,
+    -58.7690,
+    'Mar-Dom 10 a 18hs',
+    '02261-432500',
+    'Entrada libre, visitas guiadas, archivo fotográfico',
+    'Lobería',
+    'Cultura',
+    NULL
+),
+(
+    'Centro Cultural San Manuel',
+    'Espacio comunitario con talleres de arte, música y teatro.',
+    'Av. Principal 210',
+    'https://www.openstreetmap.org/?mlat=-38.3435&mlon=-58.9607#map=18/-38.3435/-58.9607',
+    -38.3435,
+    -58.9607,
+    'Lun-Vie 14 a 20hs',
+    '02261-411002',
+    'Talleres gratuitos, ferias artesanales, biblioteca popular',
+    'San Manuel',
+    'Cultura',
+    NULL
+),
+(
+    'Anfiteatro Municipal',
+    'Escenario al aire libre donde se realizan espectáculos y eventos culturales.',
+    'Parque Municipal Narciso del Valle',
+    'https://www.openstreetmap.org/?mlat=-38.2590&mlon=-58.7702#map=18/-38.2590/-58.7702',
+    -38.2590,
+    -58.7702,
+    'Según programación',
+    '02261-400123',
+    'Festival de jazz, teatro, cine bajo las estrellas',
+    'Lobería',
+    'Cultura',
+    NULL
+),
+(
+    'Biblioteca Popular Arenas Verdes',
+    'Pequeña biblioteca comunitaria con actividades para todas las edades.',
+    'Calle de los Álamos s/n',
+    'https://www.openstreetmap.org/?mlat=-38.2502&mlon=-58.7430#map=18/-38.2502/-58.7430',
+    -38.2502,
+    -58.7430,
+    'Lun-Vie 10 a 13hs y 16 a 19hs',
+    '02261-489321',
+    'Préstamo de libros, talleres infantiles, cineclub',
+    'Arenas Verdes',
+    'Cultura',
+    NULL
+),
+(
+    'Casa de la Cultura',
+    'Centro cultural de Lobería con exposiciones temporales y talleres artísticos.',
+    'Calle Mitre 499',
+    'https://www.openstreetmap.org/?mlat=-38.2603&mlon=-58.7681#map=18/-38.2603/-58.7681',
+    -38.2603,
+    -58.7681,
+    'Mar-Sáb 9 a 13hs y 17 a 21hs',
+    '02261-430890',
+    'Clases de pintura, muestras fotográficas, música en vivo',
     'Lobería',
     'Cultura',
     NULL
 );
 
--- Alojamientos
+--Eventos
 INSERT INTO turismo_prueba."card" (
     card_title, card_description, card_ubicacion, card_link_ubicacion,
-    card_horario, card_contacto, card_info, card_city, card_category
+    card_lat, card_lon, card_horario, card_contacto, card_info,
+    card_city, card_category, card_date
 ) VALUES
-('Hotel Costa Azul', 'Hotel frente al mar con todas las comodidades.', 'Av. Costanera 1200', 'https://maps.google.com', 
-'Check-in: 14hs, Check-out: 10hs', '0221-478596', 'WiFi gratuito, piscina, estacionamiento', 'Arenas Verdes', 'Alojamiento'),
-('Cabañas del Bosque', 'Cabañas rústicas en medio de la naturaleza.', 'Ruta 226 km 12', 'https://maps.google.com', 
-'Flexible', '0221-362514', 'Cabañas para 2-6 personas, parrillas', 'Lobería', 'Alojamiento'),
-('Posada Don Juan', 'Encantadora posada con estilo colonial.', 'Calle San Martín 450', 'https://maps.google.com', 
-'Check-in: 15hs, Check-out: 11hs', '0221-785412', 'Desayuno incluido, jardín', 'San Manuel', 'Alojamiento');
+(
+    'Festival de Jazz de Lobería',
+    'Edición anual del festival con artistas nacionales e internacionales.',
+    'Anfiteatro Municipal',
+    'https://www.openstreetmap.org/?mlat=-38.2590&mlon=-58.7702#map=18/-38.2590/-58.7702',
+    -38.2590,
+    -58.7702,
+    '20:00 a 02:00 hs',
+    '02261-400321',
+    'Entrada gratuita. Puestos gastronómicos y feria de artesanos',
+    'Lobería',
+    'Evento',
+    '2025-01-17'
+),
+(
+    'Fiesta del Agricultor',
+    'Evento tradicional de San Manuel con desfiles, música y comidas típicas.',
+    'Plaza Principal',
+    'https://www.openstreetmap.org/?mlat=-38.3430&mlon=-58.9615#map=18/-38.3430/-58.9615',
+    -38.3430,
+    -58.9615,
+    '10:00 a 23:00 hs',
+    '02261-414159',
+    'Desfile de maquinarias, espectáculos folclóricos, concurso de tortas',
+    'San Manuel',
+    'Evento',
+    '2025-09-07'
+),
+(
+    'Verano Cultural en Arenas Verdes',
+    'Ciclo de actividades culturales en la playa durante todo enero.',
+    'Playa Principal',
+    'https://www.openstreetmap.org/?mlat=-38.2485&mlon=-58.7440#map=18/-38.2485/-58.7440',
+    -38.2485,
+    -58.7440,
+    'Todos los sábados de enero 18:00 a 23:00 hs',
+    '02261-481500',
+    'Bandas en vivo, cine al aire libre, talleres para niños',
+    'Arenas Verdes',
+    'Evento',
+    '2025-01-04'
+),
+(
+    'Encuentro Coral de Lobería',
+    'Concierto con coros de distintas localidades y repertorio variado.',
+    'Iglesia Nuestra Señora del Carmen',
+    'https://www.openstreetmap.org/?mlat=-38.2605&mlon=-58.7684#map=18/-38.2605/-58.7684',
+    -38.2605,
+    -58.7684,
+    '19:30 a 22:00 hs',
+    '02261-432800',
+    'Entrada libre y gratuita',
+    'Lobería',
+    'Evento',
+    '2025-08-23'
+),
+(
+    'Feria de Sabores Regionales',
+    'Evento gastronómico con productos locales, foodtrucks y música.',
+    'Parque Narciso del Valle',
+    'https://www.openstreetmap.org/?mlat=-38.2592&mlon=-58.7700#map=18/-38.2592/-58.7700',
+    -38.2592,
+    -58.7700,
+    '11:00 a 20:00 hs',
+    '02261-430900',
+    'Degustaciones, productores locales, patio cervecero',
+    'Lobería',
+    'Evento',
+    '2025-10-12'
+);
 
--- Eventos
+-- Interes
 INSERT INTO turismo_prueba."card" (
     card_title, card_description, card_ubicacion, card_link_ubicacion,
-    card_horario, card_contacto, card_info, card_city, card_category, card_date
+    card_lat, card_lon, card_horario, card_contacto, card_info,
+    card_city, card_category, card_date
 ) VALUES
-('Festival de Jazz', 'Tercera edición del festival internacional de jazz.', 'Anfiteatro Municipal', 'https://maps.google.com', 
-'20-02hs', '0221-963258', 'Venta de entradas en boletería', 'Lobería', 'Evento', '2024-11-15'),
-('Feria Artesanal', 'Productos regionales y artesanías locales.', 'Plaza San Martín', 'https://maps.google.com', 
-'Sáb y Dom 10-20hs', '0221-741852', 'Más de 50 expositores', 'San Manuel', 'Evento', '2024-10-05'),
-('Maratón Costera', 'Carrera de 10k por la costa con premios.', 'Balneario Municipal', 'https://maps.google.com', 
-'08-12hs', '0221-852963', 'Inscripciones online', 'Arenas Verdes', 'Evento', '2024-12-08');
+(
+    'Parque Narciso del Valle',
+    'Espacio verde central de Lobería ideal para caminatas, picnic y descanso.',
+    'Av. Mitre y Av. Campos',
+    'https://www.openstreetmap.org/?mlat=-38.2593&mlon=-58.7703#map=18/-38.2593/-58.7703',
+    -38.2593,
+    -58.7703,
+    'Abierto todo el día',
+    NULL,
+    'Juegos infantiles, laguna, anfiteatro, bicisenda',
+    'Lobería',
+    'Interes',
+    NULL
+),
+(
+    'Playa Arenas Verdes',
+    'Extensión de costa tranquila, rodeada de naturaleza y dunas.',
+    'Acceso Arenas Verdes',
+    'https://www.openstreetmap.org/?mlat=-38.2483&mlon=-58.7435#map=18/-38.2483/-58.7435',
+    -38.2483,
+    -58.7435,
+    'Acceso libre',
+    NULL,
+    'Ideal para caminatas, pesca y descanso sin aglomeraciones',
+    'Arenas Verdes',
+    'Interes',
+    NULL
+),
+(
+    'Capilla San Manuel',
+    'Ícono histórico del pueblo, construida a fines del siglo XIX.',
+    'Calle Principal y Belgrano',
+    'https://www.openstreetmap.org/?mlat=-38.3428&mlon=-58.9613#map=18/-38.3428/-58.9613',
+    -38.3428,
+    -58.9613,
+    'Consultar horarios de misa',
+    '02261-411111',
+    'Arquitectura colonial, centro religioso de la comunidad',
+    'San Manuel',
+    'Interes',
+    NULL
+),
+(
+    'Mirador del Bosque',
+    'Punto panorámico natural sobre las dunas y pinos en Arenas Verdes.',
+    'Sendero de los Eucaliptos',
+    'https://www.openstreetmap.org/?mlat=-38.2510&mlon=-58.7450#map=18/-38.2510/-58.7450',
+    -38.2510,
+    -58.7450,
+    'Libre acceso',
+    NULL,
+    'Vista al mar y al bosque, ideal para fotos al atardecer',
+    'Arenas Verdes',
+    'Interes',
+    NULL
+),
+(
+    'Plazoleta del Bicentenario',
+    'Espacio conmemorativo con arte urbano y esculturas en Lobería.',
+    'Esquina Rivadavia y Alem',
+    'https://www.openstreetmap.org/?mlat=-38.2620&mlon=-58.7687#map=18/-38.2620/-58.7687',
+    -38.2620,
+    -58.7687,
+    'Abierto 24 hs',
+    NULL,
+    'Esculturas, murales, bancos y sectores para descanso',
+    'Lobería',
+    'Interes',
+    NULL
+);
 
--- Cultura
+-- Artesanos
 INSERT INTO turismo_prueba."card" (
     card_title, card_description, card_ubicacion, card_link_ubicacion,
-    card_horario, card_contacto, card_info, card_city, card_category
+    card_lat, card_lon, card_horario, card_contacto, card_info,
+    card_city, card_category, card_date
 ) VALUES
-('Teatro Municipal', 'Edificio histórico con programación cultural variada.', 'Av. Belgrano 350', 'https://maps.google.com', 
-'Mié-Dom 18-23hs', '0221-369852', 'Cartelera en página web', 'Lobería', 'Cultura'),
-('Biblioteca Popular', 'Más de 20,000 ejemplares y sala de lectura.', 'Calle Rivadavia 200', 'https://maps.google.com', 
-'Lun-Vie 8-20hs, Sáb 9-13hs', '0221-456123', 'Acceso gratuito', 'San Manuel', 'Cultura'),
-('Centro Cultural', 'Exposiciones de arte y talleres culturales.', 'Calle 3 entre 10 y 11', 'https://maps.google.com', 
-'Mar-Dom 10-22hs', '0221-987654', 'Programación mensual', 'Arenas Verdes', 'Cultura');
+(
+    'Feria de Artesanos de Lobería',
+    'Espacio permanente donde artesanos locales exponen y venden sus productos.',
+    'Plaza Mitre',
+    'https://www.openstreetmap.org/?mlat=-38.2604&mlon=-58.7686#map=18/-38.2604/-58.7686',
+    -38.2604,
+    -58.7686,
+    'Sábados y feriados de 10 a 19hs',
+    '02261-430210',
+    'Cuero, cerámica, tejidos, bijouterie artesanal',
+    'Lobería',
+    'Artesanos',
+    NULL
+),
+(
+    'Taller El Sauce',
+    'Emprendimiento familiar dedicado a la carpintería artesanal con maderas recicladas.',
+    'Calle Alsina 780',
+    'https://www.openstreetmap.org/?mlat=-38.2618&mlon=-58.7701#map=18/-38.2618/-58.7701',
+    -38.2618,
+    -58.7701,
+    'Lun-Vie 9 a 17hs',
+    '02261-400879',
+    'Muebles rústicos, objetos decorativos, restauraciones',
+    'Lobería',
+    'Artesanos',
+    NULL
+),
+(
+    'Artesanías del Campo',
+    'Productores rurales de San Manuel que elaboran tejidos y dulces artesanales.',
+    'Predio del ferrocarril',
+    'https://www.openstreetmap.org/?mlat=-38.3445&mlon=-58.9622#map=18/-38.3445/-58.9622',
+    -38.3445,
+    -58.9622,
+    'Domingos de 10 a 14hs',
+    '02261-412300',
+    'Ponchos, dulces caseros, cuchillería criolla',
+    'San Manuel',
+    'Artesanos',
+    NULL
+),
+(
+    'Feria de Verano Arenas Verdes',
+    'Feria estacional con puestos de artesanos, diseño y productos locales.',
+    'Paseo de los Artesanos',
+    'https://www.openstreetmap.org/?mlat=-38.2490&mlon=-58.7441#map=18/-38.2490/-58.7441',
+    -38.2490,
+    -58.7441,
+    'Todos los días (enero y febrero) de 18 a 23hs',
+    '02261-481700',
+    'Souvenirs, joyería artesanal, arte reciclado',
+    'Arenas Verdes',
+    'Artesanos',
+    NULL
+),
+(
+    'Taller de Cerámica María Paz',
+    'Taller artesanal que realiza piezas únicas de cerámica inspiradas en la naturaleza local.',
+    'Calle Jujuy 1120',
+    'https://www.openstreetmap.org/?mlat=-38.2609&mlon=-58.7712#map=18/-38.2609/-58.7712',
+    -38.2609,
+    -58.7712,
+    'Con cita previa',
+    '02261-409321',
+    'Venta de piezas únicas, talleres para turistas',
+    'Lobería',
+    'Artesanos',
+    NULL
+);
 
--- Gastronomía
+-- Serv Publicos
 INSERT INTO turismo_prueba."card" (
     card_title, card_description, card_ubicacion, card_link_ubicacion,
-    card_horario, card_contacto, card_info, card_city, card_category
+    card_lat, card_lon, card_horario, card_contacto, card_info,
+    card_city, card_category, card_date
 ) VALUES
-('La Parrilla de Pepe', 'Carnes asadas y especialidades regionales.', 'Ruta 11 km 42', 'https://maps.google.com', 
-'12-15hs y 20-24hs', '0221-321654', 'Reservas recomendadas', 'Arenas Verdes', 'Gastronomia'),
-('El Viejo Almacén', 'Comida casera y postres tradicionales.', 'Calle 5 N° 1234', 'https://maps.google.com', 
-'08-23hs', '0221-654987', 'Menú ejecutivo de lunes a viernes', 'Lobería', 'Gastronomia'),
-('Sushi Mar', 'Sushi y cocina japonesa con vista al mar.', 'Av. Costanera 1500', 'https://maps.google.com', 
-'19-01hs', '0221-789456', 'Take away disponible', 'Arenas Verdes', 'Gastronomia'),
-('Café Literario', 'Cafetería temática con libros y ambiente bohemio.', 'Calle San Martín 600', 'https://maps.google.com', 
-'08-22hs', '0221-147258', 'Eventos culturales semanales', 'San Manuel', 'Gastronomia');
+(
+    'Hospital Municipal Gaspar Campos',
+    'Centro de salud pública de referencia para toda la región.',
+    'Av. Mitre 950',
+    'https://www.openstreetmap.org/?mlat=-38.2617&mlon=-58.7705#map=18/-38.2617/-58.7705',
+    -38.2617,
+    -58.7705,
+    'Atención 24 hs',
+    '02261-432100',
+    'Guardia médica, atención general, laboratorio, ambulancias',
+    'Lobería',
+    'ServPublicos',
+    NULL
+),
+(
+    'Comisaría de Lobería',
+    'Dependencia policial local para atención de emergencias y trámites.',
+    'Av. San Martín 625',
+    'https://www.openstreetmap.org/?mlat=-38.2610&mlon=-58.7692#map=18/-38.2610/-58.7692',
+    -38.2610,
+    -58.7692,
+    'Guardia 24 hs',
+    '02261-430911',
+    'Emergencias, denuncias, seguridad ciudadana',
+    'Lobería',
+    'ServPublicos',
+    NULL
+),
+(
+    'Delegación Municipal San Manuel',
+    'Oficina de atención municipal para trámites y consultas vecinales.',
+    'Calle Principal 450',
+    'https://www.openstreetmap.org/?mlat=-38.3439&mlon=-58.9618#map=18/-38.3439/-58.9618',
+    -38.3439,
+    -58.9618,
+    'Lun-Vie 8 a 14hs',
+    '02261-411100',
+    'Atención al vecino, servicios públicos, reclamos',
+    'San Manuel',
+    'ServPublicos',
+    NULL
+),
+(
+    'Unidad Sanitaria Arenas Verdes',
+    'Centro de atención primaria para residentes y turistas.',
+    'Calle Principal s/n',
+    'https://www.openstreetmap.org/?mlat=-38.2487&mlon=-58.7433#map=18/-38.2487/-58.7433',
+    -38.2487,
+    -58.7433,
+    'Lun-Sáb 8 a 18hs',
+    '02261-481300',
+    'Consultas generales, primeros auxilios, enfermería',
+    'Arenas Verdes',
+    'ServPublicos',
+    NULL
+),
+(
+    'Oficina de Turismo Lobería',
+    'Centro de información para visitantes, con mapas y recomendaciones.',
+    'Av. Campos 401',
+    'https://www.openstreetmap.org/?mlat=-38.2606&mlon=-58.7684#map=18/-38.2606/-58.7684',
+    -38.2606,
+    -58.7684,
+    'Todos los días 9 a 17hs',
+    '02261-430800',
+    'Folletos, guías turísticas, asistencia en viajes',
+    'Lobería',
+    'ServPublicos',
+    NULL
+);
+
+
+-- Info Util
+INSERT INTO turismo_prueba."card" (
+    card_title, card_description, card_ubicacion, card_link_ubicacion,
+    card_lat, card_lon, card_horario, card_contacto, card_info,
+    card_city, card_category, card_date
+) VALUES
+(
+    'Estación de Servicio YPF Lobería',
+    'Estación de servicio con combustibles, tienda y aire para neumáticos.',
+    'Ruta 88 km 55',
+    'https://www.openstreetmap.org/?mlat=-38.2600&mlon=-58.7700#map=18/-38.2600/-58.7700',
+    -38.2600,
+    -58.7700,
+    'Abierto 24 horas',
+    '02261-430500',
+    'Combustibles, tienda, lavado de autos',
+    'Lobería',
+    'InfoUtil',
+    NULL
+),
+(
+    'Banco Nación Lobería',
+    'Sucursal bancaria con atención al público y cajeros automáticos.',
+    'Av. Campos 512',
+    'https://www.openstreetmap.org/?mlat=-38.2612&mlon=-58.7698#map=18/-38.2612/-58.7698',
+    -38.2612,
+    -58.7698,
+    'Lun-Vie 9 a 15 hs',
+    '02261-430600',
+    'Cajeros automáticos, caja, atención personalizada',
+    'Lobería',
+    'InfoUtil',
+    NULL
+),
+(
+    'Farmacia Central San Manuel',
+    'Farmacia con atención y delivery de medicamentos.',
+    'Calle Belgrano 250',
+    'https://www.openstreetmap.org/?mlat=-38.3425&mlon=-58.9610#map=18/-38.3425/-58.9610',
+    -38.3425,
+    -58.9610,
+    'Lun-Dom 8 a 22 hs',
+    '02261-411555',
+    'Medicamentos, productos de cuidado personal, delivery',
+    'San Manuel',
+    'InfoUtil',
+    NULL
+),
+(
+    'Cajero Automático Banco Provincia Arenas Verdes',
+    'Cajero automático ubicado en el centro comercial de Arenas Verdes.',
+    'Plaza Central',
+    'https://www.openstreetmap.org/?mlat=-38.2487&mlon=-58.7439#map=18/-38.2487/-58.7439',
+    -38.2487,
+    -58.7439,
+    'Disponible 24 horas',
+    NULL,
+    'Operaciones bancarias básicas, extracción de efectivo',
+    'Arenas Verdes',
+    'InfoUtil',
+    NULL
+),
+(
+    'Terminal de Ómnibus Lobería',
+    'Terminal con servicios de transporte interurbano y atención al pasajero.',
+    'Av. San Martín 800',
+    'https://www.openstreetmap.org/?mlat=-38.2617&mlon=-58.7687#map=18/-38.2617/-58.7687',
+    -38.2617,
+    -58.7687,
+    'Lun-Dom 5 a 23 hs',
+    '02261-430777',
+    'Venta de pasajes, sala de espera, sanitarios',
+    'Lobería',
+    'InfoUtil',
+    NULL
+);
+
 
 -- Tabla "users"
 CREATE TABLE IF NOT EXISTS turismo_prueba.users (

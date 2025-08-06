@@ -37,7 +37,7 @@ const resources = {
       info_util: "Info. Útil",
       descubri_loberia: "Descubrí Lobería",
       explora_loberia:
-        "Explorá la naturaleza, historia y cultura de Lobería, Arenas Verdes y San Manuel.",
+        "En el corazón de la provincia de Buenos Aires, Lobería te espera con paisajes encantadores, historia viva y una calidez que sólo los pueblos auténticos conservan. Entre sierras suaves, campos dorados y un litoral agreste que acaricia el Atlántico, este rincón bonaerense es perfecto para quienes buscan desconectar y redescubrir la tranquilidad. Explorá sus playas vírgenes como Arenas Verdes, caminá por senderos rurales, degustá sabores caseros, y maravillate con su patrimonio arquitectónico y natural. Lobería no es sólo un destino, es una experiencia que te reconecta con lo simple, lo genuino, lo nuestro. Lobería, donde la naturaleza, la historia y el descanso se encuentran.",
       proximos_eventos: "Próximos Eventos",
       eventos_intro: "No te pierdas todos los eventos que tenemos para vos!!!",
       actualidad: "Actualidad",
@@ -175,7 +175,7 @@ const resources = {
       Tour_de_Agencia_de_viajes: "Tour de Agencia de viajes",
       Otros: "Otros",
       Acepto_politicas:
-        "Acepto recibir información por correo electrónico y los",
+        "Acepto recibir información por correo electrónico",
       Políticas_de_Privacidad: "Políticas de Privacidad",
     },
   },
@@ -211,7 +211,7 @@ const resources = {
       info_util: "Useful Info",
       descubri_loberia: "Discover Lobería",
       explora_loberia:
-        "Explore the nature, history and culture of Lobería, Arenas Verdes and San Manuel.",
+        "In the heart of Buenos Aires Province, Lobería awaits you with charming landscapes, living history, and the warmth only authentic towns preserve. Nestled among gentle hills, golden fields, and a rugged coastline that meets the Atlantic Ocean, this hidden gem is perfect for those seeking to unplug and rediscover peace. Explore its unspoiled beaches like Arenas Verdes, walk through rural trails, savor homemade flavors, and marvel at its rich architectural and natural heritage. Lobería isn’t just a destination — it’s an experience that reconnects you with simplicity, authenticity, and the essence of Argentina. Lobería — where nature, history, and relaxation meet.",
       proximos_eventos: "Upcoming Events",
       eventos_intro: "Don't miss all the events we have for you!!!",
       actualidad: "News",

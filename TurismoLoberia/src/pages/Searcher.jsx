@@ -177,13 +177,13 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
           >
             <option value="">{t("categoria")}</option>
             <option value="Alojamiento">{t("alojamiento")}</option>
-            <option value="Gastronomía">{t("gastronomia")}</option>
+            <option value="Gastronomia">{t("gastronomia")}</option>
             <option value="Cultura">{t("cultura")}</option>
             <option value="Evento">{t("evento")}</option>
-            <option value="Lugares de Interés">{t("lugares_interes")}</option>
+            <option value="Interes">{t("lugares_interes")}</option>
             <option value="Artesanos">{t("artesanos")}</option>
-            <option value="Servicios Públicos">{t("servicios_publicos")}</option>
-            <option value="Información Útil">{t("info_util")}</option>
+            <option value="ServPublicos">{t("servicios_publicos")}</option>
+            <option value="InfoUtil">{t("info_util")}</option>
           </Form.Select>
 
           <Button className="btn-reset" variant="outline-secondary" onClick={handleReset}>

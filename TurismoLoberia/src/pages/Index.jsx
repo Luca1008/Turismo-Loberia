@@ -17,6 +17,8 @@ import "../styles/button.css";
 import { trackEvent } from "../analytics";
 
 export const Index = () => {
+  const [interes, setInteres] = useState([]);
+  const [gastronomia, setGastronomia] = useState([]);
   const [alojamientos, setAlojamientos] = useState([]);
   const [eventos, setEventos] = useState([]);
   const { t } = useTranslation();
@@ -38,6 +40,32 @@ export const Index = () => {
   }, []);
 
   useEffect(() => {
+    // Traer solo los 6 primeros interes
+    fetch(`${Global.url}cards?category=Interes&limit=6&page=1`)
+      .then((res) => res.json())
+      .then((data) => {
+        // Si la respuesta es { cards: [...] }
+        const cards = data.cards || data;
+        setInteres(cards.slice(0, 3));
+      })
+      .catch((err) => {
+        console.error("Error al cargar lugares de interés:", err);
+        setInteres([]);
+      });
+
+ // Traer solo los tres primeros gastrnomia
+    fetch(`${Global.url}cards?category=Gastronomia&limit=3&page=1`)
+      .then((res) => res.json())
+      .then((data) => {
+        // Si la respuesta es { cards: [...] }
+        const cards = data.cards || data;
+        setGastronomia(cards.slice(0, 3));
+      })
+      .catch((err) => {
+        console.error("Error al cargar Gastronmía:", err);
+        setGastronomia([]);
+      });
+
     // Traer solo los tres primeros alojamientos
     fetch(`${Global.url}cards?category=Alojamiento&limit=3&page=1`)
       .then((res) => res.json())
@@ -50,6 +78,7 @@ export const Index = () => {
         console.error("Error al cargar alojamientos:", err);
         setAlojamientos([]);
       });
+
     // Traer solo los tres primeros eventos
     fetch(`${Global.url}cards?category=Evento&limit=3&page=1`)
       .then((res) => res.json())
@@ -157,7 +186,59 @@ export const Index = () => {
       </section>
       <section className="places">
         <h1>{t("descubri_loberia")}</h1>
-        <p>{t("explora_loberia")}</p>
+        <p className="text-left">{t("explora_loberia")}</p>
+        <div className="places-items">
+          {interes.map((card) => (
+            <ContentCard
+              key={card.id}
+              id={card.id}
+              title={card.card_title}
+              description={card.card_description}
+              city={card.card_city}
+              img={card.card_img_portada}
+              category={card.card_category}
+            />
+          ))}
+        </div>
+        <ButtonSuccess
+          onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Ver más",
+              label: "Información Útil",
+            });
+            navigate("/Buscador", {
+              state: { category: "InfoUtil" },
+            });
+          }}
+        />
+        <h2>{t("gastronomia")}</h2>
+        <div className="places-items">
+          {gastronomia.map((card) => (
+            <ContentCard
+              key={card.id}
+              id={card.id}
+              title={card.card_title}
+              description={card.card_description}
+              city={card.card_city}
+              img={card.card_img_portada}
+              category={card.card_category}
+            />
+          ))}
+        </div>
+        <ButtonSuccess
+          onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Ver más",
+              label: "Gastronomia",
+            });
+            navigate("/Buscador", {
+              state: { category: "Gastronomia" },
+            });
+          }}
+        />
+        <h2>{t("alojamientos")}</h2>
         <div className="places-items">
           {alojamientos.map((card) => (
             <ContentCard

@@ -20,6 +20,11 @@
   text-align: center;
 }
 
+.places .text-left{
+  text-align: left;
+  margin-top: 1rem;
+}
+
 /*------------------Guía de servicios------------------*/
   .services h2 {
   margin-top: 0%;

@@ -33,7 +33,7 @@ const ContentCard = ({
       <Card.Body className="card-body">
         <div className="content-card">
           <Card.Title className="card-title-ellipsis">{title}</Card.Title>
-          <Card.Text className="card-description">{description}</Card.Text>
+          <Card.Text className="text-left">{description}</Card.Text>
           <Card.Text className="card-city-ellipsis">
             <strong className="location-icon">
               <FaLocationDot />

@@ -214,9 +214,13 @@ const Create = () => {
           >
             <option value="">Selecciona una categoría</option>
             <option value="Alojamiento">Alojamiento</option>
-            <option value="Gastronomía">Gastronomía</option>
+            <option value="Gastronomia">Gastronomía</option>
             <option value="Cultura">Cultura</option>
             <option value="Evento">Evento</option>
+            <option value="Interes">Lugares de Interés</option>
+            <option value="Artesanos">Artesanos</option>
+            <option value="ServPublicos">Servicios Públicos</option>
+            <option value="InfoUtil">Información Útil</option>
           </Form.Select>
         </Form.Group>
         {formData.categoria === "Evento" && (
