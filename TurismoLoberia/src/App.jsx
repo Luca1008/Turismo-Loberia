@@ -35,7 +35,9 @@ function AppContent() {
       <div className="layout">
         <div id="main-content">
           <Header />
+          <div className="main-content">
           <Routing />
+          </div>
           <Footer />
         </div>
         <div className="floating-buttons-container">

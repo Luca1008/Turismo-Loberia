@@ -2,6 +2,29 @@
   text-align: center;
 }
 
+/* Carrusel fullscreen con ajuste para el navbar */
+.carousel-index {
+  height: 100vh;
+  margin-top: -90px; /* Compensar altura del navbar */
+  padding-top: 90px; /* Empujar contenido hacia abajo */
+  box-sizing: border-box;
+  position: relative;
+}
+
+.carousel-index .carousel-inner,
+.carousel-index .carousel-item {
+  height: 100%;
+}
+
+.carousel-index .carousel-item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .carousel-index img {
   width: 100%;
   height: 18.75rem; /* 300px */
@@ -311,4 +334,12 @@ section .container-info{
   }
 
 }
+
+.carousel-index {
+    height: 100vh !important;
+  }
+  
+  .carousel-index img {
+    height: 100% !important;
+  }
 }

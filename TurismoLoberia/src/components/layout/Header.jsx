@@ -12,9 +12,12 @@ import {
   FaCheck,
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
-import logoLoberia from "../../assets/icons/logoLoberia.svg";
+import logoLoberia from "../../assets/icons/logoLoberia.jpg";
 import "../../styles/Navbar.css";
 import { trackEvent } from "../../analytics";
+import { useLocation } from "react-router-dom";
+import Typewriter from "typewriter-effect";
+
 export const Header = () => {
   const { t, i18n } = useTranslation();
 
@@ -30,8 +33,7 @@ export const Header = () => {
   const searchRef = useRef(null);
   const navigate = useNavigate();
 
-
-   useEffect(() => {
+  useEffect(() => {
     trackEvent({
       category: "Header",
       action: "Render",
@@ -189,10 +191,10 @@ export const Header = () => {
     setShowSearch(false);
     setShowLanguage(false);
     trackEvent({
-        category: "Menú",
-        action: "Abrir sección",
-        label: item,
-      });
+      category: "Menú",
+      action: "Abrir sección",
+      label: item,
+    });
   };
 
   const toggleLanguage = (e) => {
@@ -215,22 +217,46 @@ export const Header = () => {
     });
   };
 
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
   return (
     <>
       {/* 🧭 NAVBAR PRINCIPAL */}
       <nav
         ref={navRef}
-        className={`navbar sticky-top shadow-sm border-nav navBar primary header ${
+        className={`navbar sticky-top shadow-sm navBar text-nav header border-nav ${
           scrolled ? "nav-transparent" : ""
-        }`}
+        } ${isHome ? "nav-index" : "nav-other"}`}
       >
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
-          <Link
-            to="/"
-            className="navbar-brand d-flex align-items-center gap-2 m-0"
-          >
-            <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
-          </Link>
+          <div className="logo-container">
+            <Link
+              to="/"
+              className="navbar-brand d-flex align-items-center gap-2 m-0"
+            >
+              <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
+              <div className={`logo-text ${scrolled ? "nav-transparent" : ""}`}>
+                <strong>Lobería |</strong>
+                <span className="typewriter-react">
+                  <Typewriter
+                    options={{
+                      strings: [
+                        "Patrimonio Vivo",
+                        "Cultura",
+                        "Historia",
+                        "Naturaleza",
+                        "Tradición",
+                      ],
+                      autoStart: true,
+                      loop: true,
+                      deleteSpeed: 50,
+                    }}
+                  />
+                </span>
+              </div>
+            </Link>
+          </div>
 
           {/* 🔍 DESKTOP NAV */}
           <div className="d-none d-md-flex align-items-center gap-4">
@@ -242,7 +268,7 @@ export const Header = () => {
               >
                 <strong>{t(id)}</strong>
                 <FaChevronDown
-                  className={`primary transition-arrow${
+                  className={` transition-arrow${
                     openItem === id ? " rotate" : ""
                   }`}
                   size={12}
@@ -269,12 +295,13 @@ export const Header = () => {
               </div>
             ))}
 
-            <Link to="/Clima" className="text-decoration-none">
+            <Link to="/Clima" className="text-decoration-none text-inherit">
               <strong className="ms-3 d-flex align-items-center gap-1">
-                <FaCloudSun className="primary logoNav" />
+                <FaCloudSun className="text-inherit logoNav" />
                 <span className="nav-hover-effect">{t("Clima")}</span>
               </strong>
             </Link>
+
             {/* Menu de idioma */}
             {/* 🌍 Language Switcher */}
             <div
@@ -288,7 +315,8 @@ export const Header = () => {
                   {i18n.language === "es" ? t("espanol") : t("ingles")}
                 </strong>
                 <FaChevronDown
-                  className={`primary transition-arrow${
+                  className={`
+                     transition-arrow${
                     showLanguage ? " rotate" : ""
                   }`}
                   size={12}
@@ -321,10 +349,7 @@ export const Header = () => {
               )}
             </div>
 
-            <FaSearch
-              className="search-icon-nav"
-              onClick={handleSearchToggle}
-            />
+            <FaSearch className="text-inherit" onClick={handleSearchToggle} />
           </div>
 
           {/* 🔧 MOBILE ICONOS */}
@@ -343,8 +368,8 @@ export const Header = () => {
                 className="d-flex align-items-center border-item-nav"
                 onClick={(e) => toggleLanguage(e)}
               >
-                <FaGlobe className="me-1" />
-                <strong>
+                <FaGlobe className="me-1 primary" />
+                <strong className="primary">
                   {i18n.language === "es" ? t("espanol") : t("ingles")}
                 </strong>
                 <FaChevronDown
@@ -455,14 +480,14 @@ export const Header = () => {
           </div>
           <ul className="menu-list px-0">
             <li className="menu-item d-flex justify-content-between align-items-center mb-3">
-              <Link 
-          to="/Suscribirse" 
-          className="d-flex justify-content-between align-items-center text-decoration-none text-white"
-          onClick={() => setShowMenu(false)}
-        >
-          <strong className="text-white">{t("suscribirme")}</strong> 
-          <FaBell className="text-white bell-icon" />
-        </Link>
+              <Link
+                to="/Suscribirse"
+                className="d-flex justify-content-between align-items-center text-decoration-none text-white"
+                onClick={() => setShowMenu(false)}
+              >
+                <strong className="text-white">{t("suscribirme")}</strong>
+                <FaBell className="text-white bell-icon" />
+              </Link>
             </li>
             {menuData.map(({ id, subitems }, idx) => (
               <li key={idx} className="menu-item">

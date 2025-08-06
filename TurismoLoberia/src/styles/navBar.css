@@ -5,24 +5,43 @@
   z-index: 1020;
 }
 
-.desktop-search-bar {
-  position: sticky !important;
-  top: 90px;
-  z-index: 1000;
+.logoLoberia {
+  width: 3rem;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+  width: 7.5rem;
+  background-color: transparent;
 }
 
+.typewriter-react{
+  display: none;
+}
 .primary {
   color: var(--primary-color) !important;
+}
+
+
+
+.text-nav {
+  color: var(--white) !important;
+}
+
+.text-light {
+  color: var(--black) !important;
 }
 
 .navBar,
 .menu-padding {
   padding-left: 15px;
   padding-right: 15px;
+  background-color: transparent;
 }
 
-.logoLoberia {
-  width: 7.5rem; /* 120px */
+.border-nav {
+  border-top: 10px solid var(--primary-color);
+  border-bottom: 10px solid var(--primary-color);
 }
 
 .logoNav {
@@ -36,6 +55,7 @@
   display: block;
   overflow: visible;
 }
+
 
 li {
   list-style: none;
@@ -85,8 +105,11 @@ li {
 
 a{
   text-decoration: none;
-  color: var(--primary-color);
 }
+
+.text-inherit{
+  color: inherit !important;  
+} 
 
 .menu-item .arrow {
   transition: transform 0.3s ease;
@@ -220,12 +243,25 @@ button.btn.btn-white{
   display: block;
 }
 
-.header.nav-transparent {
+.nav-transparent {
   background-color: rgba(255, 255, 255, 0.7) !important;
+  color: var(--primary-color) !important;
   transition: background-color 0.3s;
   backdrop-filter: blur(4px);
 }
 
+.nav-other{
+  background-color: var(--white) !important;
+  color: var(--primary-color) !important;
+  position: fixed !important;
+  top: 0;
+  border-top: solid 10px var(--primary-color) !important;
+  border-bottom: solid 10px var(--primary-color) !important;
+}
+
+.nav-other ~ .main-content {
+  padding-top: 90px !important; /* igual a la altura del nav */
+}
 .header.nav-transparent:hover {
   background-color: #fff !important;
   transition: background-color 0.2s;
@@ -254,6 +290,46 @@ button.btn.btn-white{
 }
 
 @media (min-width: 768px) {
+
+  .border-nav
+  {
+  border: none
+  ;}
+  
+.desktop-search-bar {
+  position: sticky !important;
+  top: 90px;
+  z-index: 1000;
+}
+  .header {
+ position: fixed !important;
+  top: 0;
+  background-color: transparent !important;
+  backdrop-filter: blur(5px);
+  height: 90px; /* Altura de tu navbar */
+  width: 100%;
+}
+  .typewriter-react{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .logoLoberia {
+  width: 3rem;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+  width: 7.5rem;
+  background-color: transparent;
+}
+
+.logo-text{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--white);
+}
   .mobile-menu {
     display: none !important;
   }
