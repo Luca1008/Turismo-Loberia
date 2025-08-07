@@ -297,9 +297,14 @@ button.btn.btn-white{
   ;}
   
 .desktop-search-bar {
-  position: sticky !important;
-  top: 90px;
-  z-index: 1000;
+  position: absolute !important; /* Cambia de sticky a absolute */
+  top: 90px; /* Se posiciona justo debajo del navbar */
+  left: 0;
+  width: 100%;
+  z-index: 1040;
+  background-color: var(--primary-color);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  animation: fadeIn 0.3s ease-in-out;
 }
   .header {
  position: fixed !important;
