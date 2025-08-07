@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ContentCard from "../components/cards/ContentCard";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
 import { Global } from "../helpers/Global";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { FaInfo, FaPaintBrush } from "react-icons/fa";
 import {
   MdHotel,
@@ -15,6 +15,7 @@ import WeatherCarousel from "../components/layout/WeatherCarousel";
 import { useTranslation } from "react-i18next";
 import "../styles/button.css";
 import { trackEvent } from "../analytics";
+import { Trans } from "react-i18next";
 
 export const Index = () => {
   const [interes, setInteres] = useState([]);
@@ -25,8 +26,6 @@ export const Index = () => {
   const { i18n } = useTranslation();
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const navigate = useNavigate();
-  
-
 
   /*---Spinner facebook----*/
   const [isVisible, setIsVisible] = useState(true);
@@ -53,7 +52,7 @@ export const Index = () => {
         setInteres([]);
       });
 
- // Traer solo los tres primeros gastrnomia
+    // Traer solo los tres primeros gastrnomia
     fetch(`${Global.url}cards?category=Gastronomia&limit=3&page=1`)
       .then((res) => res.json())
       .then((data) => {
@@ -126,7 +125,7 @@ export const Index = () => {
             <MdOutlineRestaurant />
             <p>{t("gastronomia")}</p>
           </div>
-            <div
+          <div
             className="item-services"
             onClick={() => {
               trackEvent({
@@ -134,7 +133,9 @@ export const Index = () => {
                 action: "Clic en servicio",
                 label: "Lugares de Interés",
               });
-              navigate("/Buscador", { state: { category: "Lugares de Interés" } });
+              navigate("/Buscador", {
+                state: { category: "Lugares de Interés" },
+              });
             }}
           >
             <MdPlace />
@@ -162,7 +163,9 @@ export const Index = () => {
                 action: "Clic en servicio",
                 label: "Servicios Públicos",
               });
-              navigate("/Buscador", { state: { category: "Servicios Públicos" } });
+              navigate("/Buscador", {
+                state: { category: "Servicios Públicos" },
+              });
             }}
           >
             <MdMuseum />
@@ -176,7 +179,9 @@ export const Index = () => {
                 action: "Clic en servicio",
                 label: "Información Útil",
               });
-              navigate("/Buscador", { state: { category: "Información Útil" } });
+              navigate("/Buscador", {
+                state: { category: "Información Útil" },
+              });
             }}
           >
             <FaInfo />
@@ -186,7 +191,15 @@ export const Index = () => {
       </section>
       <section className="places">
         <h1>{t("descubri_loberia")}</h1>
-        <p className="text-left">{t("explora_loberia")}</p>
+        <p className="text-left">
+          <Trans
+            i18nKey="intro_loberia_index"
+            components={{
+              strong: <strong />,
+              br: <br />,
+            }}
+          />
+        </p>
         <div className="places-items">
           {interes.map((card) => (
             <ContentCard
@@ -264,7 +277,6 @@ export const Index = () => {
             });
           }}
         />
-
       </section>
       <section className="upcoming-events">
         <h2>{t("proximos_eventos")}</h2>
@@ -295,7 +307,6 @@ export const Index = () => {
             });
           }}
         />
-
       </section>
       <section className="more-info">
         <h2>{t("actualidad")}</h2>

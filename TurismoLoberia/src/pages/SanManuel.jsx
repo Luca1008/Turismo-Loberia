@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import "../styles/city.css";
 import { FaCar, FaBus, FaBicycle } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics"; // 👈 Importamos función GA4
 
 export const SanManuel = () => {
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,14 +52,33 @@ export const SanManuel = () => {
       <div className="portada-city"></div>
 
       <section className="information">
-        <p>San Manuel es una localidad del partido de Lobería...</p>
+        <Trans components={{ p: <p /> }} i18nKey="descripcion_san_manuel" />
       </section>
 
       <section className="go-to" id="como-llegar">
         <h2>{t("como_llegar")}</h2>
-        <p><strong><FaCar />En auto:</strong> ...</p>
-        <p><strong><FaBus />En colectivo:</strong> ...</p>
-        <p><strong><FaBicycle />En bicicleta:</strong> ...</p>
+        <Trans
+          components={{ p: <p /> }}
+          i18nKey="como_llegar_san_manuel.titulo"
+        />
+        <p>
+          <strong className="primary">
+            <FaCar />
+           { t("en_auto")}
+          </strong>
+        </p>
+        <Trans
+          components={{ p: <p /> }}
+          i18nKey="como_llegar_san_manuel.desde_loberia"
+        />
+        <Trans
+          components={{ p: <p /> }}
+          i18nKey="como_llegar_san_manuel.desde_tandil"
+        />
+        <Trans
+          components={{ p: <p /> }}
+          i18nKey="como_llegar_san_manuel.desde_necochea"
+        />
         <div className="photo"></div>
       </section>
 
@@ -131,7 +149,10 @@ export const SanManuel = () => {
 
       <section className="download" id="descargas">
         <h2>{t("descargas")}</h2>
-        <p>Puedes descargar material útil para tu visita como: Mapa turístico, listado actualizado de alojamientos y guía gastronómica local.</p>
+        <p>
+          Puedes descargar material útil para tu visita como: Mapa turístico,
+          listado actualizado de alojamientos y guía gastronómica local.
+        </p>
       </section>
     </div>
   );

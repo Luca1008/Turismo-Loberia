@@ -26,6 +26,24 @@
 
 .city section p {
   text-align: left;
+  margin-bottom: 0.5rem;
+}
+.car, .bus{
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.city .information p{
+  margin-bottom: 2rem;
+}
+
+.h3-city {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.information-city-loberia p{
+  margin-bottom: 1em;
 }
 
 .city .download p {
