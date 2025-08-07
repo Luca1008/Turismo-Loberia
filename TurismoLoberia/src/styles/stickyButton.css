@@ -161,7 +161,7 @@
 
 /* Modo oscuro */
 #main-content.dark-mode {
-  background: var(--black) !important;
+  background: #212529 !important;
   color: var(--white) !important;
 }
 
