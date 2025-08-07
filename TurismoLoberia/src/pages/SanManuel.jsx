@@ -49,14 +49,14 @@ export const SanManuel = () => {
   return (
     <div className="city" key={i18n.language}>
       <h1 id="informacion-general">{t("san_manuel")}</h1>
-      <div className="portada-city"></div>
-
+      <div className="portada-san-manuel"></div>
       <section className="information">
         <Trans components={{ p: <p /> }} i18nKey="descripcion_san_manuel" />
       </section>
 
       <section className="go-to" id="como-llegar">
         <h2>{t("como_llegar")}</h2>
+        <div className="photo-como-llegar-san-manuel"></div>
         <Trans
           components={{ p: <p /> }}
           i18nKey="como_llegar_san_manuel.titulo"
@@ -79,12 +79,11 @@ export const SanManuel = () => {
           components={{ p: <p /> }}
           i18nKey="como_llegar_san_manuel.desde_necochea"
         />
-        <div className="photo"></div>
       </section>
 
       <section className="accommodation" id="alojamientos">
         <h2>{t("alojamientos")}</h2>
-        <div className="photo"></div>
+        <div className="photo-alojamiento-san-manuel"></div>
         <p>San Manuel ofrece opciones de alojamiento sencillas...</p>
         <ButtonSuccess
           onClick={() => {
@@ -102,7 +101,7 @@ export const SanManuel = () => {
 
       <section className="gastronomy" id="gastronomia">
         <h2>{t("gastronomia")}</h2>
-        <div className="photo"></div>
+        <div className="photo-gastronomia-san-manuel"></div>
         <p>San Manuel ofrece una propuesta gastronómica sencilla...</p>
         <ButtonSuccess
           onClick={() => {
@@ -120,13 +119,13 @@ export const SanManuel = () => {
 
       <section className="transport" id="transporte">
         <h2>{t("transporte")}</h2>
-        <div className="photo"></div>
+        <div className="photo-transporte-san-manuel"></div>
         <p>San Manuel ofrece opciones limitadas de transporte público...</p>
       </section>
 
       <section className="agenda" id="agenda">
         <h2>{t("agenda")}</h2>
-        <div className="photo"></div>
+        <div className="photo-agenda-san-manuel"></div>
         <p>San Manuel celebra diversos eventos a lo largo del año...</p>
         <ButtonSuccess
           onClick={() => {
@@ -144,6 +143,7 @@ export const SanManuel = () => {
 
       <section className="event" id="que-hacer">
         <h2>{t("que_hacer2")}</h2>
+        <div className="photo-que-hacer-san-manuel"></div>
         <p>En San Manuel podés disfrutar de varias actividades...</p>
       </section>
 

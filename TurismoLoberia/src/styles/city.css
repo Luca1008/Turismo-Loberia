@@ -1,25 +1,133 @@
-
 .city h1 {
   padding-top: 2rem;
   text-align: center;
 }
 
-.portada-city {
+.portada-city,
+.photo-como-llegar-partido-loberia,
+.photo-gastronomia-partido-loberia,
+.photo-alojamiento-partido-loberia,
+.photo-transporte-partido-loberia,
+.photo-agenda-partido-loberia,
+.portada-loberia,
+.photo-como-llegar-loberia,
+.photo-que-hacer-loberia,
+.photo-agenda-loberia,
+.photo-alojamiento-loberia
+.photo-gastronomia-loberia,
+.portada-san-manuel,
+.photo-como-llegar-san-manuel,
+.photo-gastronomia-san-manuel,
+.photo-alojamiento-san-manuel,
+.photo-transporte-san-manuel,
+.photo-agenda-san-manuel,
+.photo-que-hacer-san-manuel,
+.portada-arenas-verdes,
+.photo-como-llegar-arenas-verdes,
+.photo-transporte-arenas-verdes,
+.photo-agenda-arenas-verdes,
+.photo-que-hacer-arenas-verdes,
+.photo-gastronomia-arenas-verdes,
+.photo-alojamiento-loberia {
   width: 100%;
-  height: 350px;
-  background-image: cover;
+  height: 500px;
   background-position: center;
-  background-color: grey;
-  margin-top: 2rem;
-  margin-bottom: 4rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.portada-city {
+  background-image: url("../assets/images/partido_loberia/portada.jpg");
+}
+.photo-como-llegar-partido-loberia {
+  background-image: url("../assets/images/partido_loberia/como_llegar.jpg");
+}
+.photo-gastronomia-partido-loberia {
+  background-image: url("../assets/images/partido_loberia/gastronomia.jpg");
+}
+.photo-alojamiento-partido-loberia {
+  background-image: url("../assets/images/partido_loberia/alojamiento.jpg");
+}
+.photo-transporte-partido-loberia {
+  background-image: url("../assets/images/partido_loberia/transporte.jpg");
+}
+.photo-agenda-partido-loberia {
+  background-image: url("../assets/images/partido_loberia/agenda.jpg");
+}
+
+.portada-loberia {
+  background-image: url("../assets/images/loberia/portada.jpg");
+}
+.photo-como-llegar-loberia {
+  background-image: url("../assets/images/loberia/como_llegar.jpg");
+}
+.photo-alojamiento-loberia {
+  background-image: url("../assets/images/loberia/alojamiento.jpg");
+}
+.photo-que-hacer-loberia {
+  background-image: url("../assets/images/loberia/que_hacer.jpg");
+}
+.photo-agenda-loberia {
+  background-image: url("../assets/images/loberia/agenda.jpg");
+}
+.photo-gastronomia-loberia {
+  background-image: url("../assets/images/loberia/gastronomia.jpg");
+}
+.photo-alojamiento-loberia {
+  background-image: url("../assets/images/loberia/alojamiento.jpg");
+}
+
+.portada-san-manuel {
+  background-image: url("../assets/images/san_manuel/portada.jpg");
+}
+
+.photo-como-llegar-san-manuel {
+  background-image: url("../assets/images/san_manuel/como_llegar.jpg");
+}
+.photo-gastronomia-san-manuel {
+  background-image: url("../assets/images/san_manuel/gastronomia.jpg");
+}
+.photo-alojamiento-san-manuel {
+  background-image: url("../assets/images/san_manuel/alojamiento.jpg");
+}
+.photo-transporte-san-manuel {
+  background-image: url("../assets/images/san_manuel/transporte.jpg");
+}
+.photo-agenda-san-manuel {
+  background-image: url("../assets/images/san_manuel/agenda.jpg");
+}
+.photo-que-hacer-san-manuel {
+  background-image: url("../assets/images/san_manuel/que_hacer.jpg");
+}
+
+.portada-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/portada.jpg");
+}
+.photo-como-llegar-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/como_llegar.jpg");
+}
+.photo-transporte-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/transporte.jpg");
+}
+.photo-agenda-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/agenda.jpg");
+}
+.photo-que-hacer-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/que_hacer.jpg");
+}
+.photo-gastronomia-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/gastronomia.jpg");
+}
+.photo-alojamiento-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/alojamiento.jpg");
 }
 
 .photo {
   width: 100%;
   height: 250px;
-  background-size: cover;
-  background-position: center;
-  background-color: grey;
   margin-top: 2rem;
   margin-bottom: 3rem;
 }
@@ -28,12 +136,13 @@
   text-align: left;
   margin-bottom: 0.5rem;
 }
-.car, .bus{
+.car,
+.bus {
   margin-top: 1rem;
   margin-bottom: 2rem;
 }
 
-.city .information p{
+.city .information p {
   margin-bottom: 2rem;
 }
 
@@ -42,7 +151,7 @@
   margin-bottom: 1rem;
 }
 
-.information-city-loberia p{
+.information-city-loberia p {
   margin-bottom: 1em;
 }
 
@@ -56,13 +165,12 @@
   text-align: center;
 }
 
-.city svg{
+.city svg {
   color: var(--primary-color);
   margin-right: 8px;
 }
 
 @media (min-width: 768px) {
-
   .portada-city {
     height: 600px;
   }
@@ -71,7 +179,7 @@
     height: 400px;
   }
 
-  .city svg{
+  .city svg {
     font-size: 30px;
   }
 }

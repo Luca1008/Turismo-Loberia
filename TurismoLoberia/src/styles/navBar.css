@@ -253,7 +253,6 @@ button.btn.btn-white{
 .nav-other{
   background-color: var(--white) !important;
   color: var(--primary-color) !important;
-  position: fixed !important;
   top: 0;
   border-top: solid 10px var(--primary-color) !important;
   border-bottom: solid 10px var(--primary-color) !important;
@@ -289,8 +288,22 @@ button.btn.btn-white{
   45%, 100% { transform: rotate(0deg); }
 }
 
-@media (min-width: 768px) {
+.navBar.nav-index .logo-text {
+  color: var(--primary-color);
+}
+.navBar.nav-other .logo-text {
+  color: var(--primary-color);
+}
 
+
+@media (min-width: 768px) {
+  .navBar.nav-index .logo-text {
+  color: var(--white) !important;
+  }
+
+  .nav-other{
+      position: fixed !important;
+  }
   .border-nav
   {
   border: none
@@ -334,6 +347,7 @@ button.btn.btn-white{
   flex-direction: row;
   align-items: center;
   color: var(--white);
+  background-color: transparent !important;
 }
   .mobile-menu {
     display: none !important;

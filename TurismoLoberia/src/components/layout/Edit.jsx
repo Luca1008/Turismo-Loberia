@@ -260,6 +260,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             <option value="Gastronomia">Gastronomía</option>
             <option value="Cultura">Cultura</option>
             <option value="Evento">Evento</option>
+            <option value="Interes">Lugares de Interés</option>
             <option value="Artesanos">Artesanos</option>
             <option value="ServPublicos">Servicios Públicos</option>
             <option value="InfoUtil">Información Útil</option>

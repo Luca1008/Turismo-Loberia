@@ -144,12 +144,13 @@
   background-color: rgba(128, 128, 128, 0.329);
   padding: 5px;
   position: absolute;
-  bottom: -20px;
+  bottom: -5px;
   left: 0;
   width: 100%;
   display: flex;
   justify-content: center;
   pointer-events: none;
+
 }
 .card-buttons {
   pointer-events: auto;

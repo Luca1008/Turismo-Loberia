@@ -51,7 +51,7 @@ const ArenasVerdes = () => {
   return (
     <div className="city" key={i18n.language}>
       <h1 id="informacion-general">{t("arenas_verdes")}</h1>
-      <div className="portada-city"></div>
+      <div className="portada-arenas-verdes"></div>
 
       <section className="information">
         <Trans components={{ p: <p /> }}>{data_arenas.descripcion_1}</Trans>
@@ -60,7 +60,7 @@ const ArenasVerdes = () => {
 
       <section className="go-to" id="como-llegar">
         <h2>{t("como_llegar")}</h2>
-        <div className="photo"></div>
+        <div className="photo-como-llegar-arenas-verdes"></div>
         <p>
           <strong className="primary">
             <FaCar />
@@ -81,7 +81,7 @@ const ArenasVerdes = () => {
 
       <section className="accommodation" id="alojamientos">
         <h2>{t("alojamientos")}</h2>
-        <div className="photo"></div>
+        <div className="photo-alojamiento-arenas-verdes"></div>
         <Trans components={{ p: <p />, strong: <strong /> }}>
           {data_arenas.alojamiento}
         </Trans>
@@ -101,7 +101,7 @@ const ArenasVerdes = () => {
 
       <section className="gastronomy" id="gastronomia">
         <h2>{t("gastronomia")}</h2>
-        <div className="photo"></div>
+        <div className="photo-gastronomia-arenas-verdes"></div>
         <Trans components={{ p: <p />, strong: <strong /> }}>
           {data_arenas.gastronomia}
         </Trans>
@@ -121,13 +121,13 @@ const ArenasVerdes = () => {
 
       <section className="transport" id="transporte">
         <h2>{t("transporte")}</h2>
-        <div className="photo"></div>
+        <div className="photo-transporte-arenas-verdes"></div>
         <p>Durante la temporada alta...</p>
       </section>
 
       <section className="agenda" id="agenda">
         <h2>{t("agenda")}</h2>
-        <div className="photo"></div>
+        <div className="photo-agenda-arenas-verdes"></div>
         <p>Durante el verano se realizan actividades...</p>
         <ButtonSuccess
           onClick={() => {
@@ -145,6 +145,7 @@ const ArenasVerdes = () => {
 
       <section className="event" id="que-hacer">
         <h2>{t("que_hacer2")}</h2>
+        <div className="photo-que-hacer-arenas-verdes"></div>
         <Trans components={{ p: <p /> }}>{data_arenas.actividades_intro}</Trans>
         <Trans components={{ p: <p />, strong: <strong /> }}>
           {data_arenas.relax_naturaleza}

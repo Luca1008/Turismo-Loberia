@@ -218,10 +218,10 @@ export const Index = () => {
             trackEvent({
               category: "Botón",
               action: "Ver más",
-              label: "Información Útil",
+              label: "Interes",
             });
             navigate("/Buscador", {
-              state: { category: "InfoUtil" },
+              state: { category: "Interes" },
             });
           }}
         />

@@ -158,7 +158,8 @@ const PartidoLoberia = () => {
 
       <section className="go-to" id="como-llegar">
         <h2>{t("como_llegar")}</h2>
-        <div className="photo"></div>
+        <div className="photo-como-llegar-partido-loberia">
+        </div>
         <div className="car">
           <p>
             <strong className="primary">
@@ -228,7 +229,7 @@ const PartidoLoberia = () => {
 
       <section className="accommodation" id="alojamientos">
         <h2>{t("alojamientos")}</h2>
-        <div className="photo"></div>
+        <div className="photo-alojamiento-partido-loberia"></div>
         <p>La ciudad de Lobería ofrece una variedad de opciones...</p>
         <ButtonSuccess
           onClick={() => {
@@ -246,7 +247,7 @@ const PartidoLoberia = () => {
 
       <section className="gastronomy" id="gastronomia">
         <h2>{t("gastronomia")}</h2>
-        <div className="photo"></div>
+        <div className="photo-gastronomia-partido-loberia"></div>
         <p>La gastronomía en Lobería se destaca por...</p>
         <ButtonSuccess
           onClick={() => {
@@ -264,13 +265,13 @@ const PartidoLoberia = () => {
 
       <section className="transport" id="transporte">
         <h2>{t("transporte")}</h2>
-        <div className="photo"></div>
+        <div className="photo-transporte-partido-loberia"></div>
         <p>Lobería cuenta con una terminal de ómnibus...</p>
       </section>
 
       <section className="agenda" id="agenda">
         <h2>{t("agenda")}</h2>
-        <div className="photo"></div>
+        <div className="photo-agenda-partido-loberia"></div>
         <p>Lobería ofrece una variada agenda cultural...</p>
         <ButtonSuccess
           onClick={() => {

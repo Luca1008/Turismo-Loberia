@@ -53,7 +53,7 @@ const Loberia = () => {
   return (
     <div className="city" key={i18n.language}>
       <h1 id="informacion-general">{t("ciudad_loberia")}</h1>
-      <div className="portada-city"></div>
+      <div className="portada-loberia"></div>
 
       <section className="information-city-loberia">
         <Trans
@@ -121,7 +121,7 @@ const Loberia = () => {
 
       <section className="go-to" id="como-llegar">
         <h2>{t("como_llegar")}</h2>
-        <div className="photo"></div>
+        <div className="photo-como-llegar-loberia"></div>
         <div className="car">
           <p>
             <strong className="primary">
@@ -191,7 +191,7 @@ const Loberia = () => {
 
       <section className="accommodation" id="alojamientos">
         <h2>{t("alojamientos")}</h2>
-        <div className="photo"></div>
+        <div className="photo-alojamiento-loberia"></div>
         <p>La ciudad de Lobería ofrece una variedad de opciones...</p>
         <ButtonSuccess
           onClick={() => {
@@ -209,7 +209,7 @@ const Loberia = () => {
 
       <section className="gastronomy" id="gastronomia">
         <h2>{t("gastronomia")}</h2>
-        <div className="photo"></div>
+        <div className="photo-gastronomia-loberia"></div>
         <p>La gastronomía en Lobería se destaca por...</p>
         <ButtonSuccess
           onClick={() => {
@@ -227,13 +227,13 @@ const Loberia = () => {
 
       <section className="transport" id="transporte">
         <h2>{t("transporte")}</h2>
-        <div className="photo"></div>
+        <div className="photo-transporte-partido-loberia"></div>
         <p>Lobería cuenta con una terminal de ómnibus...</p>
       </section>
 
       <section className="agenda" id="agenda">
         <h2>{t("agenda")}</h2>
-        <div className="photo"></div>
+        <div className="photo-agenda-loberia"></div>
         <p>Lobería ofrece una variada agenda cultural...</p>
         <ButtonSuccess
           onClick={() => {
@@ -251,6 +251,7 @@ const Loberia = () => {
 
       <section className="event" id="que-hacer">
         <h2>{t("que_hacer2")}</h2>
+        <div className="photo-que-hacer-loberia"></div>
         <p>
           <strong>Playas y naturaleza:</strong> ...
         </p>
