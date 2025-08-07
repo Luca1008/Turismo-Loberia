@@ -30,6 +30,15 @@ export const Footer = () => {
     handleExternalLink(e, url);
   };
 
+  // Nueva función para trackear divs que se puedan clicar
+  const handleTrackDivClick = (label) => () => {
+    trackEvent({
+      category: "Footer",
+      action: "Clic div",
+      label: label,
+    });
+  };
+
   return (
     <footer className="footer" key={i18n.language}>
       <div className="footer__container">
@@ -45,35 +54,40 @@ export const Footer = () => {
             })
           }
         >
-          <div className="footer__logo">
+          <div className="footer__logo" onClick={handleTrackDivClick("Logo footer div")}>
             <img src={logoLoberiaFooter} alt="Lobería Gobierno Local" />
           </div>
         </Link>
 
         {/* Contacto y Dirección */}
         <div className="footer__info">
-          <Link
-            to="/Contacto"
-            className="text-decoration-none"
-            onClick={() =>
-              trackEvent({
-                category: "Footer",
-                action: "Clic enlace",
-                label: "Contacto",
-              })
-            }
+          <div
+            className="footer__item"
+            onClick={handleTrackDivClick("Contacto div")}
+            role="button"
+            tabIndex={0}
+            onKeyPress={(e) => { if (e.key === 'Enter') handleTrackDivClick("Contacto div")(); }}
           >
-            <div className="footer__item">
-              <FaEnvelope />
+            <FaEnvelope />
+            <a href="/Contacto">
               <p>{t("footer_contact")}</p>
-            </div>
-          </Link>
+            </a>
+          </div>
 
-          <div className="footer__item">
+          <div
+            className="footer__item"
+            onClick={handleTrackDivClick("Dirección div")}
+            role="button"
+            tabIndex={0}
+            onKeyPress={(e) => { if (e.key === 'Enter') handleTrackDivClick("Dirección div")(); }}
+          >
             <FaMapMarkerAlt />
             <a
               href="https://www.google.com/maps/dir//Av.+Campos+500,+B7635+Lobería"
-              onClick={handleTrackLink("Dirección mapa", "https://www.google.com/maps/dir//Av.+Campos+500,+B7635+Lobería")}
+              onClick={handleTrackLink(
+                "Dirección mapa",
+                "https://www.google.com/maps/dir//Av.+Campos+500,+B7635+Lobería"
+              )}
             >
               <p>{t("footer_direccion")}</p>
             </a>
@@ -82,39 +96,51 @@ export const Footer = () => {
 
         {/* Newsletter + Redes sociales */}
         <div className="footer__extra">
-          <Link
-            to="/Suscribirse"
-            className="text-decoration-none"
-            onClick={() =>
-              trackEvent({
-                category: "Footer",
-                action: "Clic enlace",
-                label: "Suscribirme",
-              })
-            }
+          <div
+            className="footer__item"
+            onClick={handleTrackDivClick("Newsletter div")}
+            role="button"
+            tabIndex={0}
+            onKeyPress={(e) => { if (e.key === 'Enter') handleTrackDivClick("Newsletter div")(); }}
           >
-            <div className="footer__item">
-              <FaBell />
+            <FaBell />
+            <a
+              href="/Suscribirse"
+            >
               <p>{t("footer_newsletter")}</p>
-            </div>
-          </Link>
+            </a>
+          </div>
 
-          <div className="footer__social">
+          <div
+            className="footer__social"
+            onClick={handleTrackDivClick("Redes sociales div")}
+            role="group"
+            tabIndex={-1}
+          >
             <a
               href="https://www.facebook.com/loberiaturismo"
-              onClick={handleTrackLink("Facebook", "https://www.facebook.com/loberiaturismo")}
+              onClick={handleTrackLink(
+                "Facebook",
+                "https://www.facebook.com/loberiaturismo"
+              )}
             >
               <FaFacebook className="svg-social" />
             </a>
             <a
               href="https://www.instagram.com/turismoloberia"
-              onClick={handleTrackLink("Instagram", "https://www.instagram.com/turismoloberia")}
+              onClick={handleTrackLink(
+                "Instagram",
+                "https://www.instagram.com/turismoloberia"
+              )}
             >
               <FaInstagram className="svg-social" />
             </a>
             <a
               href="https://www.youtube.com/channel/UCsAuGNjsbHgbGKn-1rG8mGA"
-              onClick={handleTrackLink("YouTube", "https://www.youtube.com/channel/UCsAuGNjsbHgbGKn-1rG8mGA")}
+              onClick={handleTrackLink(
+                "YouTube",
+                "https://www.youtube.com/channel/UCsAuGNjsbHgbGKn-1rG8mGA"
+              )}
             >
               <FaYoutube className="svg-social" />
             </a>
@@ -130,3 +156,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export default Footer;
