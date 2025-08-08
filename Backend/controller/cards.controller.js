@@ -29,6 +29,7 @@ exports.getAllCardsRaw = async (req, res) => {
 // GET con filtros dinámicos
 exports.getAllCards = async (req, res) => {
   const { city, category, title, page = 1, limit = 6 } = req.query;
+  const isAdmin = req.user?.role === "admin";
   try {
     let query = 'SELECT * FROM turismo_prueba."card"';
     let countQuery = 'SELECT COUNT(*) FROM turismo_prueba."card"';
@@ -46,6 +47,10 @@ exports.getAllCards = async (req, res) => {
     if (category) {
       params.push(category);
       conditions.push(`"card_category" = $${params.length}`);
+      if (category === 'Evento' && !isAdmin) {
+        params.push(new Date());
+        conditions.push(`"card_date" >= $${params.length}`);
+      }
     }
 
     if (conditions.length > 0) {
