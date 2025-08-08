@@ -175,8 +175,9 @@ export const Contact = () => {
           </Form.Group>
 
           <p className="required-info">
-            {t("campos_obligatorios")} (
-            <FaAsterisk className="requerided" />) son obligatorios.
+            {t("campos_obligatorios")}
+            <FaAsterisk className="requerided" />
+            {t("son_obligatorios")}
           </p>
 
           <ButtonSubmit
