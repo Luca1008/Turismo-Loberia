@@ -7,13 +7,16 @@ import defaultArenas from '../../assets/images/carousel-index/default-arenas.jpg
 import defaultLoberia from '../../assets/images/carousel-index/default-loberia.jpg';
 import defaultSanManuel from '../../assets/images/carousel-index/default-sanmanuel.jpg';
 
-const cities = [
+const defaultCities = [
   { key: "loberia", caption: "Lobería", defaultImg: defaultLoberia },
   { key: "arenas_verdes", caption: "Arenas Verdes", defaultImg: defaultArenas },
   { key: "san_manuel", caption: "San Manuel", defaultImg: defaultSanManuel }
 ];
 
-export const ControlledCarousel = () => {
+export const ControlledCarousel = ({ 
+  cities = defaultCities, 
+  renderCaption = (caption) => <h1>{caption}</h1> 
+}) => {
   const [index, setIndex] = useState(0);
   const [carouselImages, setCarouselImages] = useState([]);
 
@@ -28,7 +31,7 @@ export const ControlledCarousel = () => {
           : { src: city.defaultImg, caption: city.caption };
       })
     ).then((imgs) => setCarouselImages(imgs));
-  }, []);
+  }, [cities]);
 
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
@@ -40,7 +43,7 @@ export const ControlledCarousel = () => {
         <Carousel.Item key={i}>
           <img src={img.src} alt={img.caption} />
           <Carousel.Caption>
-            <h1>{img.caption}</h1>
+            {renderCaption(img.caption)}
           </Carousel.Caption>
         </Carousel.Item>
       ))}

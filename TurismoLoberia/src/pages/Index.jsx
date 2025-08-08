@@ -93,7 +93,9 @@ export const Index = () => {
 
   return (
     <div className="index" key={i18n.language}>
-      <ControlledCarousel />
+      <ControlledCarousel
+        renderCaption={(caption) => <h1 className="text-shadow">{caption}</h1>}
+      />
       <section className="services">
         <h2>{t("guia_servicios")}</h2>
         <div className="item-services-container">
