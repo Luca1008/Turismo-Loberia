@@ -15,14 +15,12 @@
   background-color: transparent;
 }
 
-.typewriter-react{
+.typewriter-react {
   display: none;
 }
 .primary {
   color: var(--primary-color) !important;
 }
-
-
 
 .text-nav {
   color: var(--white) !important;
@@ -55,7 +53,6 @@
   display: block;
   overflow: visible;
 }
-
 
 li {
   list-style: none;
@@ -103,13 +100,13 @@ li {
   color: white;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
-.text-inherit{
-  color: inherit !important;  
-} 
+.text-inherit {
+  color: inherit !important;
+}
 
 .menu-item .arrow {
   transition: transform 0.3s ease;
@@ -119,12 +116,18 @@ a{
   transform: rotate(180deg);
 }
 
-.submenu,
 .submenu-desktop {
   background-color: var(--primary-color-light-1);
   padding: 0.5rem 1rem;
   border-radius: 5px;
   margin-top: 0.5rem;
+  box-shadow: 0 6px 24px 0 rgba(87, 175, 49, 0.15);
+}
+.submenu {
+  padding: 0.5rem 0.5rem;
+  border-radius: 5px;
+  background-color: #60b83a;
+  margin-top: 0.2rem;
   box-shadow: 0 6px 24px 0 rgba(87, 175, 49, 0.15);
 }
 
@@ -139,8 +142,7 @@ a{
   border-radius: 8px;
   transition: background 0.3s, color 0.3s;
   background-color: white;
-  color: var(--primary-color);
-  border: solid 0.1px var(--primary-color);
+  color: var(--white);
   text-decoration: none;
 }
 
@@ -186,13 +188,19 @@ a{
 .search-bar-custom .btn:hover svg {
   color: var(--primary-color);
 }
-.btn-buscador{
+.btn-buscador {
   margin: 0% !important;
 }
+form.input-group.search-bar-custom {
+  padding: 0% !important;
+  margin: 0% !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 0 4px rgba(0, 79, 45, 0.15);
+}
 
-.search-desktop-form{ 
+.search-desktop-form {
   width: 100%;
-  display: flex ;
+  display: flex;
   justify-content: between;
   align-items: center;
   padding-top: 0;
@@ -203,7 +211,7 @@ a{
   box-shadow: none !important;
 }
 
-button.btn.btn-white{
+button.btn.btn-white {
   background-color: transparent !important;
   box-shadow: none;
 }
@@ -213,15 +221,6 @@ button.btn.btn-white{
 }
 .rotate {
   transform: rotate(180deg);
-}
-
-/* Efecto invertido para los items del submenú en mobile */
-.submenu li:hover,
-.submenu li:focus,
-.submenu li:active {
-  background-color: var(--primary-color);
-  color: var(--white) !important;
-  border-radius: 8px;
 }
 
 .submenu li:hover a,
@@ -250,7 +249,7 @@ button.btn.btn-white{
   backdrop-filter: blur(4px);
 }
 
-.nav-other{
+.nav-other {
   background-color: var(--white) !important;
   color: var(--primary-color) !important;
   top: 0;
@@ -276,16 +275,37 @@ button.btn.btn-white{
 }
 
 @keyframes ring {
-  0% { transform: rotate(0deg); }
-  5% { transform: rotate(15deg); }
-  10% { transform: rotate(-15deg); }
-  15% { transform: rotate(10deg); }
-  20% { transform: rotate(-10deg); }
-  25% { transform: rotate(5deg); }
-  30% { transform: rotate(-5deg); }
-  35% { transform: rotate(2deg); }
-  40% { transform: rotate(-2deg); }
-  45%, 100% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  5% {
+    transform: rotate(15deg);
+  }
+  10% {
+    transform: rotate(-15deg);
+  }
+  15% {
+    transform: rotate(10deg);
+  }
+  20% {
+    transform: rotate(-10deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  30% {
+    transform: rotate(-5deg);
+  }
+  35% {
+    transform: rotate(2deg);
+  }
+  40% {
+    transform: rotate(-2deg);
+  }
+  45%,
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 .navBar.nav-index .logo-text {
@@ -298,67 +318,73 @@ button.btn.btn-white{
 
 @media (min-width: 768px) {
   .navBar.nav-index .logo-text {
-  color: var(--white) !important;
+    color: var(--white) !important;
   }
 
-  .nav-other{
-      position: fixed !important;
+  .nav-other {
+    position: fixed !important;
   }
-  .border-nav
-  {
-  border: none
-  ;}
-  
-.desktop-search-bar {
-  position: absolute !important; /* Cambia de sticky a absolute */
-  top: 90px; /* Se posiciona justo debajo del navbar */
-  left: 0;
-  width: 100%;
-  z-index: 1040;
-  background-color: var(--primary-color);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  animation: fadeIn 0.3s ease-in-out;
-}
+  .border-nav {
+    border: none;
+  }
+
+  .desktop-search-bar {
+    position: absolute !important; /* Cambia de sticky a absolute */
+    top: 90px; /* Se posiciona justo debajo del navbar */
+    left: 0;
+    width: 100%;
+    z-index: 1040;
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+  }
   .header {
- position: fixed !important;
-  top: 0;
-  background-color: transparent !important;
-  backdrop-filter: blur(5px);
-  height: 90px; /* Altura de tu navbar */
-  width: 100%;
-}
-  .typewriter-react{
+    position: fixed !important;
+    top: 0;
+    background-color: transparent !important;
+    backdrop-filter: blur(5px);
+    height: 90px; /* Altura de tu navbar */
+    width: 100%;
+  }
+  .typewriter-react {
     display: flex;
     flex-direction: row;
   }
 
   .logoLoberia {
-  width: 3rem;
-}
-.logo-container {
-  display: flex;
-  align-items: center;
-  width: 7.5rem;
-  background-color: transparent;
-}
+    width: 3rem;
+  }
+  .logo-container {
+    display: flex;
+    align-items: center;
+    width: 7.5rem;
+    background-color: transparent;
+  }
 
-.logo-text{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  color: var(--white);
-  background-color: transparent !important;
-}
+  .logo-text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--white);
+    background-color: transparent !important;
+  }
   .mobile-menu {
     display: none !important;
   }
 
   /*------Efecto hover nav item----------*/
+  .logo-container .logo-text.nav-transparent {
+    transition: all 0.3s ease;
+  }
+  .logo-container .logo-text.nav-transparent {
+    color: var(--primary-color) !important;
+  }
+
   .desktop-nav-item,
   .nav-hover-effect {
     position: relative;
   }
-  
+
   .desktop-nav-item::after,
   .nav-hover-effect::after {
     content: "";
@@ -370,12 +396,12 @@ button.btn.btn-white{
     background-color: var(--primary-color);
     transition: width 0.3s ease-in-out;
   }
-  
+
   .desktop-nav-item:hover::after,
   .nav-hover-effect:hover::after {
     width: 100%;
   }
-  
+
   .desktop-nav-item:hover,
   .nav-hover-effect:hover {
     background-color: rgba(87, 175, 49, 0.05);
@@ -406,14 +432,14 @@ button.btn.btn-white{
     transition: color 0.3s ease, transform 0.2s ease;
     cursor: pointer;
   }
-  
+
   .search-icon-nav:hover {
     color: var(--primary-color-dark-2);
     transform: scale(1.5);
     text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
   }
 
-  .desktop-search-icon{
+  .desktop-search-icon {
     color: var(--white);
     transition: transform 0.2s ease;
     width: 30px;
@@ -424,7 +450,7 @@ button.btn.btn-white{
     transform: scale(1.5);
     text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
   }
-  
+
   .submenu-desktop {
     background-color: var(--primary-color) !important;
     color: var(--white) !important;
