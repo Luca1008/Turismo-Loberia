@@ -63,7 +63,6 @@ button.btn-reset{
   gap: 0.75rem;
   width: 100%;
   max-width: 720px;
-  max-height: 50px;
 }
 
 .filter-select {
