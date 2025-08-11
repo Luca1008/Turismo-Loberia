@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import '../../styles/index.css';
-import { Global } from '../../helpers/global';
+import { Global } from '../../helpers/Global';
 
 // Puedes poner tus imágenes default en assets o en public
 import defaultArenas from '../../assets/images/carousel-index/default-arenas.jpg';

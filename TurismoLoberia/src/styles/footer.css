@@ -194,7 +194,7 @@
   .footer__container {
     flex-direction: row;
     justify-content: space-around;
-    align-items: flex-start;
+    align-items: center;
     text-align: left;
     padding: 1rem 3rem;
   }

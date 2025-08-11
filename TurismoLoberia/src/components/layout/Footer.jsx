@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logoLoberiaFooter from "../../assets/icons/logoLoberiaFooter.svg";
+import logoLoberiaFooter from "../../assets/icons/logoLoberia.svg";
 import "../../styles/footer.css";
 import handleExternalLink from "../common/handleExternalLink";
 import { useTranslation } from "react-i18next";
