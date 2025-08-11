@@ -342,7 +342,7 @@ button.btn.btn-white {
   }
 
   .desktop-search-bar {
-    position: absolute !important; /* Cambia de sticky a absolute */
+    position: fixed !important;
     top: 90px; /* Se posiciona justo debajo del navbar */
     left: 0;
     width: 100%;

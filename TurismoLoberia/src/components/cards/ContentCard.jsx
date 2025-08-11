@@ -88,7 +88,7 @@ const ContentCard = ({
           </div>
         )}
         {isEvent && (
-          <div className="event-card__date">
+          <div className="event-card__date blurred">
             <p className="event-card__month">{dateMonth}.</p>
             <p className="event-card__day">{dateDay}</p>
           </div>
