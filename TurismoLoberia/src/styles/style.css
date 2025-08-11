@@ -12,6 +12,7 @@
   --black-2: #7f7e7e;
   --form: #a2a0a023;
   --dark-mode: #212529;
+  --grey-dark: #2c2c2c;
 
   /* Tonos de blanco */
   --white: #f9fafb;
@@ -49,7 +50,7 @@ h1,
 h2,
 h3 {
   font-family: var(--font-base);
-  color: var(--primary-color);
+  color: var(--grey-dark);
   font-weight: bolder;
 }
 
