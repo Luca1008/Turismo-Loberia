@@ -18,7 +18,6 @@
   --white: #f9fafb;
   --white-1-background: #f2f2f2;
   --white-2: #a2a0a0;
-  --blurred: rgba(255, 255, 255, 0.7);
 
   /* Tipografía */
   --font-base: "Poppins", sans-serif;
@@ -43,6 +42,11 @@
   --spacing-md: 2rem; /* 32px */
   --spacing-lg: 3rem; /* 48px */
   --spacing-xl: 5rem; /* 80px */
+}
+
+.blurred{
+    background-color: transparent !important;
+    backdrop-filter: blur(5px);
 }
 
 /*Tamaño Mobile*/

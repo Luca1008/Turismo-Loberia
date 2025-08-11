@@ -243,7 +243,7 @@ button.btn.btn-white {
 }
 
 .nav-transparent {
-  background-color: rgba(255, 255, 255, 0.7) !important;
+  background-color: var(--blurred) !important;
   color: var(--primary-color) !important;
   transition: background-color 0.3s;
   backdrop-filter: blur(4px);
@@ -452,7 +452,8 @@ button.btn.btn-white {
   }
 
   .submenu-desktop {
-    background-color: var(--primary-color) !important;
+    background-color: transparent !important;
+    backdrop-filter: blur(5px);
     color: var(--white) !important;
     min-width: 200px;
     z-index: 1050;
