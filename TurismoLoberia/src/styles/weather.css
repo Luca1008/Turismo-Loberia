@@ -6,6 +6,7 @@
   gap: 1.5rem;
   padding-top: 2rem;
 }
+
 section.weather h1{
   text-align: center;
 }
@@ -268,6 +269,11 @@ section.weather h1{
 
 /* Forzar scroll horizontal y hacer la tabla más compacta en mobile */
 @media (max-width: 600px) {
+
+  .main-content section.weather {
+    margin-top: 0% !important;
+    padding-top: 0% !important;
+  }
   .table-weather {
     padding: 0.5rem 0.2rem;
   }

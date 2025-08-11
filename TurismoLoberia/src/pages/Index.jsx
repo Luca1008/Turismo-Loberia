@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import "../styles/button.css";
 import { trackEvent } from "../analytics";
 import { Trans } from "react-i18next";
+import "../styles/index.css";
 
 export const Index = () => {
   const [interes, setInteres] = useState([]);

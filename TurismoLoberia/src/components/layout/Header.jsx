@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import logoLoberia from "../../assets/icons/logoLoberia.jpg";
 import "../../styles/Navbar.css";
 import { trackEvent } from "../../analytics";
-import { useLocation } from "react-router-dom";
+//import { useLocation } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 
 export const Header = () => {
@@ -231,9 +231,10 @@ export const Header = () => {
       >
       */}
       <nav
-        className={`navbar sticky-top shadow-sm navBar text-nav header border-nav ${
-          scrolled ? "nav-transparent" : ""
-        }`}
+        className={`navbar sticky-top shadow-sm navBar text-nav header border-nav
+    ${scrolled ? "nav-transparent" : ""}
+    ${showMenu ? "nav-menu-open" : ""}
+  `}
       >
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
           <div className="logo-container">
@@ -243,7 +244,7 @@ export const Header = () => {
             >
               <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
               <div className={`logo-text ${scrolled ? "nav-transparent" : ""}`}>
-                <strong className="primary-other">Lobería</strong>
+                <strong className="primary">Lobería</strong>
                 <span className="typewriter-react">
                   <Typewriter
                     options={{
@@ -486,7 +487,7 @@ export const Header = () => {
             <li className="menu-item d-flex justify-content-between align-items-center mb-3">
               <Link
                 to="/Suscribirse"
-                className="d-flex justify-content-between align-items-center text-decoration-none text-white"
+                className="d-flex justify-content-between align-items-center text-decoration-none"
                 onClick={() => setShowMenu(false)}
               >
                 <strong className="text-white">{t("suscribirme")}</strong>
