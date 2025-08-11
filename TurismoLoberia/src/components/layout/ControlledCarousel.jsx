@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import '../../styles/index.css';
+import { Global } from '../../helpers/global';
 
 // Puedes poner tus imágenes default en assets o en public
 import defaultArenas from '../../assets/images/carousel-index/default-arenas.jpg';
@@ -20,18 +21,29 @@ export const ControlledCarousel = ({
   const [index, setIndex] = useState(0);
   const [carouselImages, setCarouselImages] = useState([]);
 
-  useEffect(() => {
-    Promise.all(
-      cities.map(async (city) => {
-        const res = await fetch(`http://localhost:5000/api/carousel/${city.key}`);
+useEffect(() => {
+  Promise.all(
+    cities.map(async (city) => {
+      try {
+        const res = await fetch(`${Global.apiUrl}carousel/${city.key}`);
         const data = await res.json();
-        // Si hay imagen subida, úsala; si no, usa la default
-        return data.images[0]
-          ? { src: `http://localhost:5000${data.images[0].url}`, caption: city.caption }
-          : { src: city.defaultImg, caption: city.caption };
-      })
-    ).then((imgs) => setCarouselImages(imgs));
-  }, [cities]);
+        
+        return {
+          src: data.images?.[0]?.url 
+            ? `${Global.baseUrl}${data.images[0].url.replace(/^\//, '')}` 
+            : city.defaultImg,
+          caption: city.caption
+        };
+      } catch (error) {
+        console.error(`Error loading image for ${city.key}:`, error);
+        return {
+          src: city.defaultImg,
+          caption: city.caption
+        };
+      }
+    })
+  ).then(setCarouselImages);
+}, [cities]);
 
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
