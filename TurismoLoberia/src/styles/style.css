@@ -18,6 +18,7 @@
   --white: #f9fafb;
   --white-1-background: #f2f2f2;
   --white-2: #a2a0a0;
+  --blurred: rgba(255, 255, 255, 0.7);
 
   /* Tipografía */
   --font-base: "Poppins", sans-serif;
