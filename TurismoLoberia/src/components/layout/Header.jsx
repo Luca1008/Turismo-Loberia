@@ -217,17 +217,23 @@ export const Header = () => {
     });
   };
 
-  const location = useLocation();
-  const isHome = location.pathname === "/";
+  //const location = useLocation();
+  //const isHome = location.pathname === "/";
 
   return (
     <>
-      {/* 🧭 NAVBAR PRINCIPAL */}
+      {/* 🧭 NAVBAR PRINCIPAL 
       <nav
         ref={navRef}
         className={`navbar sticky-top shadow-sm navBar text-nav header border-nav ${
           scrolled ? "nav-transparent" : ""
         } ${isHome ? "nav-index" : "nav-other"}`}
+      >
+      */}
+      <nav
+        className={`navbar sticky-top shadow-sm navBar text-nav header border-nav ${
+          scrolled ? "nav-transparent" : ""
+        }`}
       >
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
           <div className="logo-container">
@@ -316,9 +322,7 @@ export const Header = () => {
                 </strong>
                 <FaChevronDown
                   className={`
-                     transition-arrow${
-                    showLanguage ? " rotate" : ""
-                  }`}
+                     transition-arrow${showLanguage ? " rotate" : ""}`}
                   size={12}
                 />
               </div>

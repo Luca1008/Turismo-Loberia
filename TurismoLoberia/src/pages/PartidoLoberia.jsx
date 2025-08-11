@@ -6,8 +6,19 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics";
 import { Trans } from "react-i18next";
+import imagen1 from "../assets/images/partido_loberia/portada.jpg";
+import imagen2 from "../assets/images/partido_loberia/gastronomia.jpg";
+import imagen3 from "../assets/images/partido_loberia/transporte.jpg";
+import imagen4 from "../assets/images/partido_loberia/alojamiento.jpg";
 
 const PartidoLoberia = () => {
+  const slidesData = [
+    { id: 1, title: "Slide 1", description: "Descripción 1", img: imagen1 },
+    { id: 2, title: "Slide 2", description: "Descripción 2", img: imagen2 },
+    { id: 3, title: "Slide 3", description: "Descripción 3", img: imagen3 },
+    { id: 4, title: "Slide 4", description: "Descripción 4", img: imagen4 },
+  ];
+
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
@@ -52,9 +63,8 @@ const PartidoLoberia = () => {
 
   return (
     <div className="city" key={i18n.language}>
-      <h1 id="informacion-general">{t("partido_loberia")}</h1>
       <div className="portada-city"></div>
-
+      <h1 id="informacion-general">{t("partido_loberia")}</h1>
       <section className="information">
         <Trans components={{ p: <p /> }}>{data_intro.presentacion}</Trans>
         <br />
@@ -158,8 +168,7 @@ const PartidoLoberia = () => {
 
       <section className="go-to" id="como-llegar">
         <h2>{t("como_llegar")}</h2>
-        <div className="photo-como-llegar-partido-loberia">
-        </div>
+        <div className="photo-como-llegar-partido-loberia"></div>
         <div className="car">
           <p>
             <strong className="primary">
@@ -224,7 +233,7 @@ const PartidoLoberia = () => {
             </li>
           </ul>
         </div>
-        <p>{t("cierre_como_llegar_partido_loberia") }</p>
+        <p>{t("cierre_como_llegar_partido_loberia")}</p>
       </section>
 
       <section className="accommodation" id="alojamientos">

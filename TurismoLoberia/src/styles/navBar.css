@@ -452,9 +452,8 @@ button.btn.btn-white {
   }
 
   .submenu-desktop {
-    background-color: transparent !important;
-    backdrop-filter: blur(5px);
-    color: var(--white) !important;
+    background-color: #f9fafbf0!important;
+    color: var(--primary-color) !important;
     min-width: 200px;
     z-index: 1050;
     left: 0;
@@ -466,18 +465,17 @@ button.btn.btn-white {
   }
 
   .submenu-desktop a {
-    color: var(--white);
+    color: var(--primary-color);
     z-index: 100;
   }
 
-  .submenu-desktop li:hover {
-    background-color: var(--white);
-    color: var(--primary-color) !important;
+  .submenu-desktop li:hover,  .submenu-desktop li:hover a  {
+    background-color: var(--primary-color);
+    color: var(--white) !important;
     border-radius: 8px;
   }
 
   .submenu-desktop li:hover a {
-    color: var(--primary-color) !important;
     border-radius: 8px;
   }
 

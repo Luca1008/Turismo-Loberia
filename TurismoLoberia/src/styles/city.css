@@ -28,7 +28,8 @@
 .photo-agenda-arenas-verdes,
 .photo-que-hacer-arenas-verdes,
 .photo-gastronomia-arenas-verdes,
-.photo-alojamiento-loberia {
+.photo-alojamiento-loberia,
+.portada-weather {
   width: 100%;
   height: 500px;
   background-position: center;
@@ -38,7 +39,9 @@
   margin-bottom: 2rem;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
-
+.portada-weather{
+  background-image: url("../assets/images/arenas_verdes/agenda.jpg");
+}
 .portada-city {
   background-image: url("../assets/images/partido_loberia/portada.jpg");
 }

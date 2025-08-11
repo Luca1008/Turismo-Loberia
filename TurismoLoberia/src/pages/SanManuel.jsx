@@ -48,8 +48,8 @@ export const SanManuel = () => {
 
   return (
     <div className="city" key={i18n.language}>
-      <h1 id="informacion-general">{t("san_manuel")}</h1>
       <div className="portada-san-manuel"></div>
+      <h1 id="informacion-general">{t("san_manuel")}</h1>
       <section className="information">
         <Trans components={{ p: <p /> }} i18nKey="descripcion_san_manuel" />
       </section>
