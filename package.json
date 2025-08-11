@@ -31,7 +31,9 @@
     "multer": "^2.0.2",
     "react-ga4": "^2.1.0",
     "react-i18next": "^15.6.1",
+    "react-slick": "^0.31.0",
     "react-toastify": "^11.0.5",
+    "slick-carousel": "^1.8.1",
     "typewriter-effect": "^2.22.0"
   }
 }

@@ -243,6 +243,7 @@ export const Clima = () => {
   return (
     <div>
       <section className="weather" key={i18n.language}>
+        <div className="portada-weather"></div>
         <h1>{t("consultar_clima")}</h1>
         <div className="section-weather">
           <WeatherCard ciudad="Lobería" />
@@ -256,8 +257,8 @@ export const Clima = () => {
             <span style={{ fontWeight: 400 }}>{fechaCompleta}</span>
           </h3>
           {loading ? (
-            <div class="weather-spinner-container">
-              <div class="weather-spinner"></div>
+            <div className="weather-spinner-container">
+              <div className="weather-spinner"></div>
             </div>
           ) : (
             <Table striped bordered hover>

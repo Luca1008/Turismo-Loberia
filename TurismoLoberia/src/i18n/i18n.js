@@ -220,7 +220,7 @@ const resources = {
       error_password_min: "La contraseña debe tener al menos 8 caracteres.",
       error_login: "Error al iniciar sesión",
       error_conexion: "Error de conexión",
-      base_campamentos: "Base de campamento",
+      base_campamentos: "Base Campamento",
       que_hacer2: "¿Qué hacer?",
       cargando: "Cargando...",
       ubicacion: "Ubicación",
