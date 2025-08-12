@@ -3,13 +3,6 @@ import ContentCard from "../components/cards/ContentCard";
 import { ControlledCarousel } from "../components/layout/ControlledCarousel";
 import { Global } from "../helpers/Global";
 import { useNavigate } from "react-router-dom";
-import { FaInfo, FaPaintBrush } from "react-icons/fa";
-import {
-  MdHotel,
-  MdMuseum,
-  MdOutlineRestaurant,
-  MdPlace,
-} from "react-icons/md";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import WeatherCarousel from "../components/layout/WeatherCarousel";
 import { useTranslation } from "react-i18next";
@@ -17,6 +10,13 @@ import "../styles/button.css";
 import { trackEvent } from "../analytics";
 import { Trans } from "react-i18next";
 import "../styles/index.css";
+import artesanos_icon from "../assets/icons/services/artesanos.png";
+import lugares_interes_icon from "../assets/icons/services/interes.png";
+import serv_publicos_icon from "../assets/icons/services/serv_publicos.png";
+import gastronomia_icon from "../assets/icons/services/gastronomia.png";
+import alojamientos_icon from "../assets/icons/services/alojamientos.png";
+import info_util_icon from "../assets/icons/services/info_util.png";
+
 
 export const Index = () => {
   const [interes, setInteres] = useState([]);
@@ -111,7 +111,7 @@ export const Index = () => {
               navigate("/Buscador", { state: { category: "Alojamiento" } });
             }}
           >
-            <MdHotel />
+            <img src={alojamientos_icon} alt="alojamientos" />
             <p>{t("alojamientos")}</p>
           </div>
           <div
@@ -125,7 +125,7 @@ export const Index = () => {
               navigate("/Buscador", { state: { category: "Gastronomía" } });
             }}
           >
-            <MdOutlineRestaurant />
+            <img src={gastronomia_icon} alt="gastronomia" />
             <p>{t("gastronomia")}</p>
           </div>
           <div
@@ -141,7 +141,7 @@ export const Index = () => {
               });
             }}
           >
-            <MdPlace />
+            <img src={lugares_interes_icon} alt="lugares de interes" />
             <p>{t("lugares_interes")}</p>
           </div>
           <div
@@ -155,7 +155,7 @@ export const Index = () => {
               navigate("/Buscador", { state: { category: "Artesanos" } });
             }}
           >
-            <FaPaintBrush />
+            <img src={artesanos_icon} alt="artesanos" />
             <p>{t("artesanos")}</p>
           </div>
           <div
@@ -171,7 +171,7 @@ export const Index = () => {
               });
             }}
           >
-            <MdMuseum />
+            <img src={serv_publicos_icon} alt="servicios publicos" />
             <p>{t("servicios_publicos")}</p>
           </div>
           <div
@@ -187,7 +187,7 @@ export const Index = () => {
               });
             }}
           >
-            <FaInfo />
+            <img src={info_util_icon} alt="info util" />
             <p>{t("info_util")}</p>
           </div>
         </div>
