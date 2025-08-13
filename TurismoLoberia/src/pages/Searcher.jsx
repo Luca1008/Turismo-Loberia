@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Pagination from "react-bootstrap/Pagination";
@@ -8,47 +8,31 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import ContentCard from "../components/cards/ContentCard";
 import "../styles/searcher.css";
 import { useTranslation } from "react-i18next";
-import { trackEvent } from "../analytics"; // 👈 Importar
+import { trackEvent } from "../analytics";
 
 const Searcher = ({ isAdmin = false, onEdit = null }) => {
   const location = useLocation();
   const { t, i18n } = useTranslation();
+  const [searchParams] = useSearchParams();
 
+  // Estados
   const [cards, setCards] = useState([]);
   const [search, setSearch] = useState("");
   const [city, setCity] = useState(location.state?.city || "");
   const [category, setCategory] = useState(location.state?.category || "");
-
   const [page, setPage] = useState(1);
-  const limit = 6;
   const [totalPages, setTotalPages] = useState(1);
-  const [searchParams] = useSearchParams();
+  const limit = 6;
 
-  useEffect(() => {
-    trackEvent({
-      category: "Páginas",
-      action: "Vista página",
-      label: "Buscador",
-    });
-
-    const titleFromUrl = searchParams.get("title");
-    if (titleFromUrl) {
-      setSearch(titleFromUrl);
-      trackEvent({
-        category: "Buscador",
-        action: "Búsqueda por nombre",
-        label: titleFromUrl,
-      });
-    }
-  }, [searchParams]);
-
-  const bufferToBase64 = (buffer) => {
+  // Función para convertir buffer a base64
+  const bufferToBase64 = useCallback((buffer) => {
     if (!buffer?.data) return null;
     const binary = buffer.data.reduce((acc, byte) => acc + String.fromCharCode(byte), "");
     return `data:image/jpeg;base64,${window.btoa(binary)}`;
-  };
+  }, []);
 
-  const fetchCards = async () => {
+  // fetchCards memoizada con useCallback
+  const fetchCards = useCallback(async () => {
     try {
       const params = {
         ...(search && { title: search }),
@@ -63,7 +47,6 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
       const total = response.data.total || cardsDB.length;
 
       const parsed = cardsDB.map((card) => {
-        // ✅ Evento: cada card vista
         trackEvent({
           category: "Resultados",
           action: "Card vista",
@@ -81,17 +64,34 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
       console.error("Error al obtener las cards:", error);
       setCards([]);
     }
-  };
+  }, [search, city, category, page, limit, bufferToBase64]);
 
+  // Efecto para manejar parámetros iniciales de URL
   useEffect(() => {
-    fetchCards();
-    // ✅ Evento: cambio de página
+    const titleFromUrl = searchParams.get("title");
+    if (titleFromUrl) {
+      setSearch(titleFromUrl);
+    }
     trackEvent({
-      category: "Paginación",
-      action: "Cambio de página",
-      label: `Página ${page}`,
+      category: "Páginas",
+      action: "Vista página",
+      label: "Buscador",
     });
-  }, [page, search, city, category]);
+  }, [searchParams]);
+
+  // Efecto principal con debounce para búsquedas
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchCards();
+      trackEvent({
+        category: "Búsqueda",
+        action: "Filtros cambiados",
+        label: `Página: ${page}, Búsqueda: ${search}, Ciudad: ${city}, Categoría: ${category}`,
+      });
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [fetchCards, page, search, city, category]);
 
   const handleDeleteCard = async (cardId) => {
     try {
