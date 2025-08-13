@@ -33,6 +33,7 @@
   padding-left: 15px;
   padding-right: 15px;
   background-color: transparent;
+  height: 90px;
 }
 
 .logoNav {
@@ -64,11 +65,10 @@ li {
 }
 
 .mobile-menu {
-  position: fixed;
-  margin-top: 160px;
+  margin-top: 90px;
   left: 0;
   width: 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 90px);
   background-color: var(--white);
   z-index: 1000;
   color: var(--primary-color) !important;
@@ -86,6 +86,7 @@ li {
   font-weight: bold;
   margin-bottom: 1rem;
   color: var(--primary-color) !important;
+  border-bottom: solid 1px var(--primary-color-dark-2);
 }
 
 .text-white {
@@ -179,23 +180,38 @@ a {
 .search-bar-custom .btn:hover svg {
   color: var(--primary-color);
 }
+
 .btn-buscador {
   margin: 0% !important;
-}
-form.input-group.search-bar-custom {
-  padding: 0% !important;
-  margin: 0% !important;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 0 4px rgba(0, 79, 45, 0.15);
+  border-top: solid 3px var(--primary-color) !important;
+  border-bottom: solid 3px var(--primary-color) !important;
+  border-right: solid 3px var(--primary-color) !important;
 }
 
-.search-desktop-form {
+form.input-group.search-bar-custom {
+  margin: 0% !important;
+  padding: 0% !important;
+  transition: all 0.3s ease;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.input-group > .form-control {
+  border: solid 3px var(--primary-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-desktop-form .form-control{
+  border: solid 3px var(--primary-color);
+}
+.desktop-search-bar .search-desktop-form {
   width: 100%;
   display: flex;
   justify-content: between;
   align-items: center;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin: 0% !important;
   padding-left: 2rem;
   padding-left: 2rem;
   background-color: transparent;
@@ -251,6 +267,7 @@ button.btn.btn-white {
 .nav-other ~ .main-content {
   padding-top: 90px !important; /* igual a la altura del nav */
 }
+
 .header.nav-transparent:hover {
   background-color: #fff !important;
   transition: background-color 0.2s;
@@ -302,6 +319,7 @@ button.btn.btn-white {
 .navBar.nav-index .logo-text {
   color: var(--primary-color);
 }
+
 .navBar.nav-other .logo-text {
   color: var(--primary-color);
 }
@@ -318,20 +336,40 @@ button.btn.btn-white {
 .nav-menu-open .vertical-divider {
   background-color: var(--primary-color);
 }
+.loberia{
+  display: none;
+}
 
 @media (min-width: 768px) {
+
+  .loberia{
+    display: flex;
+  }
+  
   .navBar {
     color: var(--white) !important;
   }
+
+  .nav-transparent-desktop-scroll {
+    background-color: var(--blurred) !important;
+    color: var(--primary-color) !important;
+    transition: background-color 0.3s;
+    backdrop-filter: blur(4px);
+  }
+
+  .nav-transparent-desktop-scroll strong.primary{
+    color: var(--primary-color) !important;
+  } 
+
   .navBar:hover,
-  .navBar:hover .logo-text {
+  .navBar:hover .logo-text strong.primary {
     background-color: var(--white) !important;
     color: var(--primary-color) !important;
     transition: all 0.3s ease;
   }
 
-  .navBar.nav-index .logo-text {
-    color: var(--white) !important;
+  .navBar:hover .logo-text {
+    color: var(--primary-color) !important;
   }
 
   .nav-other {
@@ -343,11 +381,11 @@ button.btn.btn-white {
 
   .desktop-search-bar {
     position: fixed !important;
-    top: 90px; /* Se posiciona justo debajo del navbar */
+    top: 90px;
     left: 0;
     width: 100%;
     z-index: 1040;
-    background-color: var(--primary-color);
+    background-color: var(--primary-color-light-1) !important;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.3s ease-in-out;
   }
@@ -453,7 +491,7 @@ button.btn.btn-white {
   }
 
   .desktop-search-icon {
-    color: var(--white);
+    color: var(--primary-color);
     transition: transform 0.2s ease;
     width: 30px;
     height: 30px;

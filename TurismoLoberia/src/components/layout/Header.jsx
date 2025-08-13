@@ -217,22 +217,11 @@ export const Header = () => {
     });
   };
 
-  //const location = useLocation();
-  //const isHome = location.pathname === "/";
-
   return (
     <>
-      {/* 🧭 NAVBAR PRINCIPAL 
-      <nav
-        ref={navRef}
-        className={`navbar sticky-top shadow-sm navBar text-nav header border-nav ${
-          scrolled ? "nav-transparent" : ""
-        } ${isHome ? "nav-index" : "nav-other"}`}
-      >
-      */}
       <nav
         className={`navbar sticky-top shadow-sm navBar text-nav header border-nav
-    ${scrolled ? "nav-transparent" : ""}
+    ${scrolled ? "nav-transparent-desktop-scroll" : ""}
     ${showMenu ? "nav-menu-open" : ""}
   `}
       >
@@ -244,7 +233,7 @@ export const Header = () => {
             >
               <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
               <div className={`logo-text ${scrolled ? "nav-transparent" : ""}`}>
-                <strong className="primary">Lobería</strong>
+                <strong className="primary loberia" style={{ fontFamily: 'MADE Tommy Soft, sans-serif', letterSpacing: '0.5px', fontSize: '24px', marginRight: '5px', marginBottom: '3px'}}>Lobería</strong>
                 <span className="typewriter-react">
                   <Typewriter
                     options={{
