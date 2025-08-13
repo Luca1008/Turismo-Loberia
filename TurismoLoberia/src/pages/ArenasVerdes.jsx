@@ -5,6 +5,7 @@ import { FaCar } from "react-icons/fa";
 import { useTranslation, Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics"; // 👈 Importa GA tracking
+import DownloadButton from "../components/ui/DownloadButton";
 
 const ArenasVerdes = () => {
   const { t } = useTranslation();
@@ -159,7 +160,24 @@ const ArenasVerdes = () => {
 
       <section className="download" id="descargas">
         <h2>{t("descargas")}</h2>
-        <p>Puedes descargar material útil...</p>
+        <DownloadButton
+          filePath="/downloads/arenas_verdes/info_aves_arenas_verdes.pdf"
+          fileName="Info Arenas Verdes"
+          label="Descargar PDF - Info Arenas Verdes"
+          className="button"
+        />
+        <DownloadButton
+          filePath="/downloads/arenas_verdes/alojamientos_arenas_verdes.pdf"
+          fileName="Alojamientos Arenas Verdes"
+          label="Descargar PDF - Alojamientos Arenas Verdes"
+          className="button"
+        />
+        <DownloadButton
+          filePath="/downloads/arenas_verdes/aves_arenas_verdes.pdf"
+          fileName="Aves Arenas Verdes"
+          label="Descargar PDF - Aves Arenas Verdes"
+          className="button"
+        />
       </section>
     </div>
   );

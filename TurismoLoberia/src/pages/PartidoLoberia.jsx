@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics";
 import { Trans } from "react-i18next";
-import DownloadButton from "../components/ui/DownloadButton";
 
 const PartidoLoberia = () => {
   // Configuración de i18n y navegación
@@ -49,7 +48,6 @@ const PartidoLoberia = () => {
     });
   }, []);
 
-  const data = t("como_llegar_partido_loberia", { returnObjects: true });
   const data_intro = t("intro_partido_loberia", { returnObjects: true });
 
   return (
@@ -302,16 +300,6 @@ const PartidoLoberia = () => {
         <p>
           <strong>Gastronomía y relax:</strong> ...
         </p>
-      </section>
-
-      <section className="download" id="descargas">
-        <h2>{t("descargas")}</h2>
-        <DownloadButton
-          filePath="/downloads/partido_loberia/camino_de_sirga.pdf"
-          fileName="Camino de Sirga"
-          label="Descargar PDF Camino de Sirga"
-          className="button"
-        />
       </section>
     </div>
   );
