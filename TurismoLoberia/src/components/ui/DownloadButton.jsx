@@ -13,8 +13,8 @@ const DownloadButton = ({
       download={fileName}
       className={className}
     >
-      <FiDownload className="text-lg" />
-      <span>{label}</span>
+      <FiDownload />
+      <span style={{ marginLeft: "0.5rem", color: "var(--primary-color)", fontWeight: "bold" }}>{label}</span>
     </a>
   );
 };

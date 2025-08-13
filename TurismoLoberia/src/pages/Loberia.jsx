@@ -5,6 +5,7 @@ import { FaCar, FaBus, FaTrain } from "react-icons/fa";
 import { useTranslation, Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics"; // 👈 Importamos GA4
+import DownloadButton from "../components/ui/DownloadButton";
 
 const Loberia = () => {
   const { t, i18n } = useTranslation();
@@ -12,7 +13,6 @@ const Loberia = () => {
   const data_descripcion = t("descripcion_ciudad_loberia", {
     returnObjects: true,
   });
-  const data = t("como_llegar_partido_loberia", { returnObjects: true });
 
   useEffect(() => {
     // ✅ Evento: Vista general de la página
@@ -267,9 +267,20 @@ const Loberia = () => {
 
       <section className="download" id="descargas">
         <h2>{t("descargas")}</h2>
-        <p>Puedes descargar material útil para tu visita como: ...</p>
+        <DownloadButton
+          filePath="/downloads/loberia/camino_de_sirga.pdf"
+          fileName="Camino de Sirga"
+          label="Descargar PDF - Camino de Sirga"
+          className="button"
+        />
+        <DownloadButton
+          filePath="/downloads/loberia/corredor_biologico_camino_de_los_curros.pdf"
+          fileName="Corredor Biológico Camino de los Curros"
+          label="Descargar PDF - Corredor Biológico Camino de los Curros"
+          className="button"
+        />
       </section>
-    </div>
+      </div>
   );
 };
 
