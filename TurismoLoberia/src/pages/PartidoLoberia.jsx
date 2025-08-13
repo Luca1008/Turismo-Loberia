@@ -170,7 +170,7 @@ const PartidoLoberia = () => {
         <div className="photo-como-llegar-partido-loberia"></div>
         <div className="car">
           <p>
-            <strong className="primary">
+            <strong>
               <FaCar />
               {t("en_auto")}
             </strong>{" "}
@@ -202,7 +202,7 @@ const PartidoLoberia = () => {
         </div>
         <div className="bus">
           <p>
-            <strong className="primary">
+            <strong>
               <FaBus />
               {t("en_micro")}
             </strong>{" "}
