@@ -1,11 +1,11 @@
 /* === Footer base === */
 .footer {
-  background-color: var(--white);
+  background-color: #f1f3f4;
   font-family: var(--font-base);
   padding: 2rem 1rem;
-  color: var(--primary-color);
-  border-top: 20px solid var(--primary-color);
-  border-bottom: 20px solid var(--primary-color);
+  color: var(--ry-color);
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 
+              0 -2px 4px -2px rgba(0, 0, 0, 0.1);
 }
 
 /* Normalizar todos los SVG del footer para que tengan el mismo viewBox efectivo */
@@ -21,6 +21,20 @@
 .footer__social svg{
   width: 30px !important;
   height: 30px !important;
+}
+
+.svg-social{
+    text-align: center;
+    background-color: #e7efdc;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    text-decoration: none;
+    margin-right: 4px;
+    margin-left: 4px;
+    line-height: 40px;
+    color: var(--black);
+    border-radius: 40px;
 }
 
 /* === Layout general (Mobile First) === */
@@ -77,7 +91,7 @@
 
 .footer__item p {
   margin: 0;
-  color: var(--primary-color)
+  color: var(--black)
 }
 
 /* Efecto UX al pasar el mouse - Items de contacto */
@@ -101,31 +115,9 @@
 .footer__item:focus {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  background: var(--primary-color);
-  border: 1px solid var(--primary-color);
-  color: white;
+  color: var(--primary-color);
 }
-
-/* Efecto más suave para móvil */
-.footer__item:active {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  background: var(--primary-color);
-  border: 1px solid var(--primary-color);
-  color: white;
-}
-
-.footer__item:hover p,
-.footer__item:active p,
-.footer__item:focus p {
-  color: white;
-}
-
-.footer__item:hover svg,
-.footer__item:active svg,
-.footer__item:focus svg {
-  color: white;
-}
+ 
 
 /* === Redes sociales === */
 .footer__social {
@@ -135,12 +127,16 @@
   margin-top: 0.5rem;
   width: auto;
   height: auto;
+
 }
 
 .footer__social a {
-  color: var(--primary-color);
   font-size: 1.6rem;
   transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.footer__item p:hover{
+  color: var(--primary-color);
 }
 
 .footer__social svg {
@@ -161,11 +157,13 @@
   left: 50%;
   width: 0;
   height: 0;
-  background: var(--primary-color);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: -1;
+}
+.svg-social:hover{
+  color: var(--primary-color);
 }
 
 .footer__social a:hover::before,

@@ -12,7 +12,6 @@ import {
   FaFacebook,
   FaInstagram,
   FaMapMarkerAlt,
-  FaTiktok,
   FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
@@ -146,9 +145,6 @@ export const Footer = () => {
             </a>
             <a href="#" onClick={handleTrackLink("WhatsApp", "#")}>
               <FaWhatsapp className="svg-social" />
-            </a>
-            <a href="#" onClick={handleTrackLink("TikTok", "#")}>
-              <FaTiktok className="svg-social" />
             </a>
           </div>
         </div>
