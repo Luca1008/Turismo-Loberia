@@ -232,7 +232,7 @@ export const Header = () => {
       */}
       <nav
         className={`navbar sticky-top shadow-sm navBar text-nav header border-nav
-    ${scrolled ? "nav-transparent" : ""}
+    ${scrolled ? "nav-transparent-desktop-scroll" : ""}
     ${showMenu ? "nav-menu-open" : ""}
   `}
       >

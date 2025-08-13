@@ -196,9 +196,9 @@ form.input-group.search-bar-custom {
   background-color: transparent;
 }
 
-.input-group>.form-control{
+.input-group > .form-control {
   border: solid 3px var(--primary-color);
-  box-shadow:0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .search-desktop-form {
@@ -336,15 +336,23 @@ button.btn.btn-white {
   .navBar {
     color: var(--white) !important;
   }
+
+  .nav-transparent-desktop-scroll {
+    background-color: var(--blurred) !important;
+    color: var(--primary-color) !important;
+    transition: background-color 0.3s;
+    backdrop-filter: blur(4px);
+  }
+
   .navBar:hover,
-  .navBar:hover .logo-text {
+  .navBar:hover .logo-text strong.primary {
     background-color: var(--white) !important;
     color: var(--primary-color) !important;
     transition: all 0.3s ease;
   }
 
-  .navBar.nav-index .logo-text {
-    color: var(--white) !important;
+  .navBar:hover .logo-text {
+    color: var(--primary-color) !important;
   }
 
   .nav-other {
@@ -356,7 +364,7 @@ button.btn.btn-white {
 
   .desktop-search-bar {
     position: fixed !important;
-    top: 90px; /* Se posiciona justo debajo del navbar */
+    top: 90px;
     left: 0;
     width: 100%;
     z-index: 1040;
