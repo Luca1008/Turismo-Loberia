@@ -10,6 +10,7 @@ import imagen1 from "../assets/images/partido_loberia/portada.jpg";
 import imagen2 from "../assets/images/partido_loberia/gastronomia.jpg";
 import imagen3 from "../assets/images/partido_loberia/transporte.jpg";
 import imagen4 from "../assets/images/partido_loberia/alojamiento.jpg";
+import DownloadButton from "../components/ui/DownloadButton";
 
 const PartidoLoberia = () => {
   const slidesData = [
@@ -314,7 +315,12 @@ const PartidoLoberia = () => {
 
       <section className="download" id="descargas">
         <h2>{t("descargas")}</h2>
-        <p>Puedes descargar material útil para tu visita como: ...</p>
+        <DownloadButton
+          filePath="/downloads/partido_loberia/camino_de_sirga.pdf"
+          fileName="Camino de Sirga"
+          label="Descargar PDF Camino de Sirga"
+          className="button"
+        />
       </section>
     </div>
   );
