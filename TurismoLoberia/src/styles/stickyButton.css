@@ -176,7 +176,33 @@
   border-top: solid 10px var(--primary-color-dark-1) !important;
   border-bottom: solid 10px var(--primary-color-dark-1) !important;
 }
+#main-content.dark-mode h1, 
+#main-content.dark-mode h2, 
+#main-content.dark-mode h3{
+  color: var(--white) !important;
+}
 
+/*Footer*/
+#main-content.dark-mode .footer__item p{
+  color: var(--white) !important;
+}
+
+#main-content.dark-mode .footer__social svg{
+  color: var(--white) !important;
+  background-color: transparent !important;
+}
+
+#main-content.dark-mode .footer__item p:hover{
+  color: var(--primary-color) !important;
+}
+
+#main-content.dark-mode .footer__social svg:hover{
+  color: var(--primary-color) !important;
+  background-color: transparent !important;
+}
+#main-content.dark-mode strong.loberia-footer,#main-content.dark-mode span.patrimonio{
+  color: var(--white) !important;
+}
 /* Modo oscuro para WeatherCarousel (compacto) y card Weather */
 #main-content.dark-mode .compact-temp,
 #main-content.dark-mode .compact-desc,

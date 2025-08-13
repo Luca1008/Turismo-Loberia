@@ -4,8 +4,8 @@
   font-family: var(--font-base);
   padding: 2rem 1rem;
   color: var(--ry-color);
-  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 
-              0 -2px 4px -2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 -2px 4px -2px rgba(0, 0, 0, 0.1);
 }
 
 /* Normalizar todos los SVG del footer para que tengan el mismo viewBox efectivo */
@@ -14,27 +14,27 @@
   display: inline-block;
   vertical-align: middle;
 }
-.footer__item svg{
+.footer__item svg {
   width: 20px !important;
   height: 20px !important;
 }
-.footer__social svg{
+.footer__social svg {
   width: 30px !important;
   height: 30px !important;
 }
 
-.svg-social{
-    text-align: center;
-    background-color: #e7efdc;
-    height: 30px;
-    width: 30px;
-    display: inline-block;
-    text-decoration: none;
-    margin-right: 4px;
-    margin-left: 4px;
-    line-height: 40px;
-    color: var(--black);
-    border-radius: 40px;
+.svg-social {
+  text-align: center;
+  background-color: #e7efdc;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  text-decoration: none;
+  margin-right: 4px;
+  margin-left: 4px;
+  line-height: 40px;
+  color: var(--black);
+  border-radius: 40px;
 }
 
 /* === Layout general (Mobile First) === */
@@ -49,13 +49,14 @@
 /* === Logo institucional === */
 .footer__logo {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 }
 
 .footer__logo img {
-  width: 120px;
+  width: 100px;
   height: auto;
+  margin-right: 1rem;
 }
 
 .footer__logo p {
@@ -91,7 +92,7 @@
 
 .footer__item p {
   margin: 0;
-  color: var(--black)
+  color: var(--black);
 }
 
 /* Efecto UX al pasar el mouse - Items de contacto */
@@ -117,7 +118,6 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   color: var(--primary-color);
 }
- 
 
 /* === Redes sociales === */
 .footer__social {
@@ -127,7 +127,6 @@
   margin-top: 0.5rem;
   width: auto;
   height: auto;
-
 }
 
 .footer__social a {
@@ -135,7 +134,7 @@
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.footer__item p:hover{
+.footer__item p:hover {
   color: var(--primary-color);
 }
 
@@ -151,7 +150,7 @@
 }
 
 .footer__social a::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -162,7 +161,7 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: -1;
 }
-.svg-social:hover{
+.svg-social:hover {
   color: var(--primary-color);
 }
 
@@ -187,6 +186,39 @@
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
 
+strong.loberia-footer {
+  font-family: "MADE Tommy Soft", sans-serif;
+  letter-spacing: 0.5px;
+  font-size: 38px;
+  text-transform: uppercase;
+  padding: 0%;
+  margin: 0%;
+  color: #56AE5B;
+}
+
+span.patrimonio {
+  font-family: "MADE Tommy Regular", sans-serif;
+  font-size: 24px;
+  padding: 0%;
+  margin: 0%;
+  color: var(--black);
+}
+
+.footer__logo__text {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  text-align: left;
+  padding: 0%;
+  margin: 0%;
+}
+
+strong .primary.loberia-footer p{
+  padding: 0%;
+  margin: 0%;
+}
+
 /* === Versión Desktop (≥768px): layout en 3 columnas === */
 @media (min-width: 768px) {
   .footer__container {
@@ -203,19 +235,12 @@
   }
 
   .footer__social {
-    justify-content:center;
+    justify-content: center;
     padding-left: 25px;
   }
 
-  .footer__social .svg-social{
+  .footer__social .svg-social {
     width: 30px;
-    height: 30px
-  }
-
-  .footer__logo img{
-    width: 150px;
+    height: 30px;
   }
 }
-
-
-

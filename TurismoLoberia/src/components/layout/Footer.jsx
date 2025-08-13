@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logoLoberiaFooter from "../../assets/icons/logoLoberia.svg";
+import logoLoberiaFooter from "../../assets/icons/logoLoberia.jpg";
 import "../../styles/footer.css";
 import handleExternalLink from "../common/handleExternalLink";
 import { useTranslation } from "react-i18next";
@@ -54,7 +54,11 @@ export const Footer = () => {
           }
         >
           <div className="footer__logo" onClick={handleTrackDivClick("Logo footer div")}>
-            <img src={logoLoberiaFooter} alt="Lobería Gobierno Local" />
+            <img src={logoLoberiaFooter} alt="Lobería Patrimnio Vivo" />
+            <div className="footer__logo__text">
+            <strong className="primary loberia-footer">Lobería</strong>
+            <span className="patrimonio" >Patrimonio<strong className="vivo" style={{ fontFamily: 'MADE Tommy Bold, sans-serif', letterSpacing: '0.5px', fontSize: '24px', marginRight: '5px', marginBottom: '3px'}}>Vivo</strong></span>
+          </div>
           </div>
         </Link>
 
