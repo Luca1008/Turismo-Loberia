@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics";
 import { Trans } from "react-i18next";
+import DownloadButton from "../components/ui/DownloadButton";
 
 const PartidoLoberia = () => {
   // Configuración de i18n y navegación
@@ -48,6 +49,7 @@ const PartidoLoberia = () => {
     });
   }, []);
 
+  const data = t("como_llegar_partido_loberia", { returnObjects: true });
   const data_intro = t("intro_partido_loberia", { returnObjects: true });
 
   return (
@@ -68,6 +70,40 @@ const PartidoLoberia = () => {
         </Trans>
         <br />
         <br />
+
+          <h2>{t("historia")}</h2>
+        <div className="photo-historia-partido-loberia"></div>
+        <Trans components={{ h3: <h3 className="h3-city" /> }}>
+          {data_intro.cultura.titulo}
+        </Trans>
+        <Trans
+          components={{
+            p: <p />,
+            strong: <strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.cultura.identidad}
+        </Trans>
+        <Trans
+          components={{
+            p: <p />,
+            strong: <strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.cultura.historia}
+        </Trans>
+        <Trans
+          components={{
+            p: <p />,
+            strong: <strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.cultura.talento}
+        </Trans>
+        <br />
+
+        <h2>{t("naturaleza")}</h2>
+        <div className="photo-naturaleza-partido-loberia"></div>
         <Trans components={{ h3: <h3 className="h3-city" /> }}>
           {data_intro.paisaje.titulo}
         </Trans>
@@ -99,34 +135,11 @@ const PartidoLoberia = () => {
         <Trans components={{ p: <p /> }}>{data_intro.paisaje.cierre}</Trans>
         <br />
         <br />
-        <Trans components={{ h3: <h3 className="h3-city" /> }}>
-          {data_intro.cultura.titulo}
-        </Trans>
-        <Trans
-          components={{
-            p: <p />,
-            strong: <strong className="font-semibold mt-2" />,
-          }}
-        >
-          {data_intro.cultura.identidad}
-        </Trans>
-        <Trans
-          components={{
-            p: <p />,
-            strong: <strong className="font-semibold mt-2" />,
-          }}
-        >
-          {data_intro.cultura.historia}
-        </Trans>
-        <Trans
-          components={{
-            p: <p />,
-            strong: <strong className="font-semibold mt-2" />,
-          }}
-        >
-          {data_intro.cultura.talento}
-        </Trans>
-        <br />
+        
+        
+
+        <h2>{t("producciones")}</h2>
+        <div className="photo-produccion-partido-loberia"></div>
         <Trans components={{ p: <p /> }}>{data_intro.economia.intro}</Trans>
         <Trans
           components={{
@@ -225,81 +238,14 @@ const PartidoLoberia = () => {
         <p>{t("cierre_como_llegar_partido_loberia")}</p>
       </section>
 
-      <section className="accommodation" id="alojamientos">
-        <h2>{t("alojamientos")}</h2>
-        <div className="photo-alojamiento-partido-loberia"></div>
-        <p>La ciudad de Lobería ofrece una variedad de opciones...</p>
-        <ButtonSuccess
-          onClick={() => {
-            trackEvent({
-              category: "Botón",
-              action: "Clic alojamiento",
-              label: "Partido Lobería",
-            });
-            navigate("/Buscador", {
-              state: { category: "Alojamiento" },
-            });
-          }}
+      <section className="download" id="descargas">
+        <h2>{t("descargas")}</h2>
+        <DownloadButton
+          filePath="/downloads/partido_loberia/camino_de_sirga.pdf"
+          fileName="Camino de Sirga"
+          label="Descargar PDF Camino de Sirga"
+          className="button"
         />
-      </section>
-
-      <section className="gastronomy" id="gastronomia">
-        <h2>{t("gastronomia")}</h2>
-        <div className="photo-gastronomia-partido-loberia"></div>
-        <p>La gastronomía en Lobería se destaca por...</p>
-        <ButtonSuccess
-          onClick={() => {
-            trackEvent({
-              category: "Botón",
-              action: "Clic gastronomía",
-              label: "Partido Lobería",
-            });
-            navigate("/Buscador", {
-              state: { category: "Gastronomía" },
-            });
-          }}
-        />
-      </section>
-
-      <section className="transport" id="transporte">
-        <h2>{t("transporte")}</h2>
-        <div className="photo-transporte-partido-loberia"></div>
-        <p>Lobería cuenta con una terminal de ómnibus...</p>
-      </section>
-
-      <section className="agenda" id="agenda">
-        <h2>{t("agenda")}</h2>
-        <div className="photo-agenda-partido-loberia"></div>
-        <p>Lobería ofrece una variada agenda cultural...</p>
-        <ButtonSuccess
-          onClick={() => {
-            trackEvent({
-              category: "Botón",
-              action: "Clic eventos",
-              label: "Partido Lobería",
-            });
-            navigate("/Buscador", {
-              state: { category: "Evento" },
-            });
-          }}
-        />
-      </section>
-
-      <section className="event" id="que-hacer">
-        <h2>{t("que_hacer2")}</h2>
-        <div className="photo-que_hacer-partido-loberia"></div>
-        <p>
-          <strong>Playas y naturaleza:</strong> ...
-        </p>
-        <p>
-          <strong>Cultura e historia:</strong> ...
-        </p>
-        <p>
-          <strong>Turismo rural:</strong> ...
-        </p>
-        <p>
-          <strong>Gastronomía y relax:</strong> ...
-        </p>
       </section>
     </div>
   );
