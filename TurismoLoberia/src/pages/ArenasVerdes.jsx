@@ -51,8 +51,8 @@ const ArenasVerdes = () => {
 
   return (
     <div className="city" key={i18n.language}>
-      <div className="portada-arenas-verdes"></div>
-      <h1 id="informacion-general">{t("arenas_verdes")}</h1>
+      <div id="informacion-general" className="portada-arenas-verdes"></div>
+      <h1>{t("arenas_verdes")}</h1>
       <section className="information">
         <Trans components={{ p: <p /> }}>{data_arenas.descripcion_1}</Trans>
         <Trans components={{ p: <p /> }}>{data_arenas.descripcion_2}</Trans>

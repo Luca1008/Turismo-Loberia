@@ -169,7 +169,7 @@ export const Header = () => {
       .replace(/\s+/g, "-");
 
   const getSubitemRoute = (sectionId, subKey) => {
-    const hash = toHash(t(subKey));
+    const hash = toHash(subKey);
     switch (sectionId) {
       case "partido_loberia":
         return `/PartidoLoberia#${hash}`;
@@ -233,7 +233,7 @@ export const Header = () => {
             >
               <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
               <div className={`logo-text ${scrolled ? "nav-transparent" : ""}`}>
-                <strong className="primary loberia" style={{ fontFamily: 'MADE Tommy Soft, sans-serif', letterSpacing: '0.5px', fontSize: '24px', marginRight: '5px', marginBottom: '3px'}}>Lobería</strong>
+                <strong className="primary" style={{ fontFamily: 'MADE Tommy Soft, sans-serif', letterSpacing: '0.5px', fontSize: '24px', marginRight: '5px', marginBottom: '3px'}}>Lobería</strong>
                 <span className="typewriter-react">
                   <Typewriter
                     options={{

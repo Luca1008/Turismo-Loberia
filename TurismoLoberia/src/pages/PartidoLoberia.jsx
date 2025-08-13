@@ -3,7 +3,6 @@ import ButtonSuccess from "../components/common/ButtonSuccess";
 import "../styles/city.css";
 import { FaCar, FaBus, FaTrain } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics";
 import { Trans } from "react-i18next";
 import DownloadButton from "../components/ui/DownloadButton";
@@ -11,7 +10,6 @@ import DownloadButton from "../components/ui/DownloadButton";
 const PartidoLoberia = () => {
   // Configuración de i18n y navegación
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     // ✅ Vista de página
@@ -49,13 +47,12 @@ const PartidoLoberia = () => {
     });
   }, []);
 
-  const data = t("como_llegar_partido_loberia", { returnObjects: true });
   const data_intro = t("intro_partido_loberia", { returnObjects: true });
 
   return (
     <div className="city" key={i18n.language}>
-      <div className="portada-city"></div>
-      <h1 id="informacion-general">{t("partido_loberia")}</h1>
+      <div id="informacion_general" className="portada-city"></div>
+      <h1>{t("partido_loberia")}</h1>
       <section className="information">
         <Trans components={{ p: <p /> }}>{data_intro.presentacion}</Trans>
         <br />
@@ -71,7 +68,7 @@ const PartidoLoberia = () => {
         <br />
         <br />
 
-          <h2>{t("historia")}</h2>
+          <h2 id="historia">{t("historia")}</h2>
         <div className="photo-historia-partido-loberia"></div>
         <Trans components={{ h3: <h3 className="h3-city" /> }}>
           {data_intro.cultura.titulo}
@@ -102,7 +99,7 @@ const PartidoLoberia = () => {
         </Trans>
         <br />
 
-        <h2>{t("naturaleza")}</h2>
+        <h2 id="naturaleza">{t("naturaleza")}</h2>
         <div className="photo-naturaleza-partido-loberia"></div>
         <Trans components={{ h3: <h3 className="h3-city" /> }}>
           {data_intro.paisaje.titulo}
@@ -138,7 +135,7 @@ const PartidoLoberia = () => {
         
         
 
-        <h2>{t("producciones")}</h2>
+        <h2 id="producciones">{t("producciones")}</h2>
         <div className="photo-produccion-partido-loberia"></div>
         <Trans components={{ p: <p /> }}>{data_intro.economia.intro}</Trans>
         <Trans
@@ -169,7 +166,7 @@ const PartidoLoberia = () => {
       </section>
 
       <section className="go-to" id="como-llegar">
-        <h2>{t("como_llegar")}</h2>
+        <h2 id="como-llegar">{t("como_llegar")}</h2>
         <div className="photo-como-llegar-partido-loberia"></div>
         <div className="car">
           <p>

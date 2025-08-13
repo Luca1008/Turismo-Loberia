@@ -51,9 +51,9 @@ const Loberia = () => {
   }, []);
 
   return (
-    <div className="city" key={i18n.language}>
-      <div className="portada-loberia"></div>
-      <h1 id="informacion-general">{t("ciudad_loberia")}</h1>
+    <div id="informacion-general" className="city" key={i18n.language}>
+      <div id="informacion-general"className="portada-loberia"></div>
+      <h1>{t("ciudad_loberia")}</h1>
       <section className="information-city-loberia">
         <Trans
           components={{ p: <p />, span: <span className="font-semibold" /> }}
