@@ -44,6 +44,15 @@
   --spacing-xl: 5rem; /* 80px */
 }
 
+/* Fuentes Institucionales*/
+  @font-face {
+    font-family: "MADE Tommy Soft";
+    src: url("../assets/fonts/MADE Tommy Soft ExtraBold PERSONAL USE.otf")
+      format("opentype");
+    font-weight: 800; /* ExtraBold */
+    font-style: normal;
+  }
+
 .blurred {
   background-color: transparent !important;
   backdrop-filter: blur(5px);
@@ -118,7 +127,6 @@ body {
   color: var(--black);
   background-color: var(--white);
 }
-
 
 @media (min-width: 768px) {
   h1 {
