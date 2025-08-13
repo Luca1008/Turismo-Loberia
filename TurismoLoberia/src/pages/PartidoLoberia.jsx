@@ -10,16 +10,9 @@ import imagen1 from "../assets/images/partido_loberia/portada.jpg";
 import imagen2 from "../assets/images/partido_loberia/gastronomia.jpg";
 import imagen3 from "../assets/images/partido_loberia/transporte.jpg";
 import imagen4 from "../assets/images/partido_loberia/alojamiento.jpg";
-import DownloadButton from "../components/ui/DownloadButton";
 
 const PartidoLoberia = () => {
-  const slidesData = [
-    { id: 1, title: "Slide 1", description: "Descripción 1", img: imagen1 },
-    { id: 2, title: "Slide 2", description: "Descripción 2", img: imagen2 },
-    { id: 3, title: "Slide 3", description: "Descripción 3", img: imagen3 },
-    { id: 4, title: "Slide 4", description: "Descripción 4", img: imagen4 },
-  ];
-
+  // Configuración de i18n y navegación
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
@@ -299,6 +292,7 @@ const PartidoLoberia = () => {
 
       <section className="event" id="que-hacer">
         <h2>{t("que_hacer2")}</h2>
+        <div className="photo-que_hacer-partido-loberia"></div>
         <p>
           <strong>Playas y naturaleza:</strong> ...
         </p>
