@@ -233,7 +233,7 @@ export const Header = () => {
             >
               <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
               <div className={`logo-text ${scrolled ? "nav-transparent" : ""}`}>
-                <strong className="primary" style={{ fontFamily: 'MADE Tommy Soft, sans-serif', letterSpacing: '0.5px', fontSize: '24px', marginRight: '5px', marginBottom: '3px'}}>Lobería</strong>
+                <strong className="primary loberia" style={{ fontFamily: 'MADE Tommy Soft, sans-serif', letterSpacing: '0.5px', fontSize: '24px', marginRight: '5px', marginBottom: '3px'}}>Lobería</strong>
                 <span className="typewriter-react">
                   <Typewriter
                     options={{

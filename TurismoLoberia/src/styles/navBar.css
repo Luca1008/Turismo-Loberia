@@ -319,6 +319,7 @@ button.btn.btn-white {
 .navBar.nav-index .logo-text {
   color: var(--primary-color);
 }
+
 .navBar.nav-other .logo-text {
   color: var(--primary-color);
 }
@@ -335,8 +336,16 @@ button.btn.btn-white {
 .nav-menu-open .vertical-divider {
   background-color: var(--primary-color);
 }
+.loberia{
+  display: none;
+}
 
 @media (min-width: 768px) {
+
+  .loberia{
+    display: flex;
+  }
+  
   .navBar {
     color: var(--white) !important;
   }
