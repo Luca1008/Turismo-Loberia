@@ -6,10 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics";
 import { Trans } from "react-i18next";
-import imagen1 from "../assets/images/partido_loberia/portada.jpg";
-import imagen2 from "../assets/images/partido_loberia/gastronomia.jpg";
-import imagen3 from "../assets/images/partido_loberia/transporte.jpg";
-import imagen4 from "../assets/images/partido_loberia/alojamiento.jpg";
+import DownloadButton from "../components/ui/DownloadButton";
 
 const PartidoLoberia = () => {
   // Configuración de i18n y navegación
