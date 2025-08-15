@@ -6,16 +6,21 @@ import '../../styles/panelAdmin.css';
 export default function SendContent() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  const [sending, setSending] = useState(false); // Nuevo estado
+  const [file, setFile] = useState(null);
+  const [sending, setSending] = useState(false); // Estado de envío
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true); // Inicio de envío
     try {
+      const formData = new FormData();
+      formData.append("subject", subject);
+      formData.append("message", message);
+      if (file) formData.append("file", file);
+
       const res = await fetch("http://localhost:5000/api/send/send", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ subject, message }),
+        body: formData,
       });
 
       const data = await res.json();
@@ -24,6 +29,7 @@ export default function SendContent() {
         toast.success(data.message || "Contenido enviado correctamente!");
         setSubject("");
         setMessage("");
+        setFile(null);
       } else {
         toast.error(data.message || "Error enviando contenido");
       }
@@ -51,6 +57,11 @@ export default function SendContent() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           required
+        />
+        <input
+          type="file"
+          accept=".jpg,.jpeg,.png,.pdf"
+          onChange={(e) => setFile(e.target.files[0])}
         />
         <button type="submit" disabled={sending}>
           {sending ? "Enviando..." : "Enviar"}

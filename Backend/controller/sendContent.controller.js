@@ -1,15 +1,19 @@
 const db = require("../models/db");
 const nodemailer = require("nodemailer");
+const path = require("path");
 
 exports.sendToSubscribers = async (req, res) => {
   try {
     const { subject, message } = req.body;
+    const file = req.file; // <-- archivo subido
 
-    // Obtener emails de los suscriptores
     const result = await db.query(`SELECT email, name FROM turismo_prueba.subscriptions`);
     const subscribers = result.rows;
 
-    // Configuración nodemailer (ejemplo con Gmail)
+    if (subscribers.length === 0) {
+      return res.status(400).json({ message: "No hay suscriptores registrados" });
+    }
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -18,14 +22,24 @@ exports.sendToSubscribers = async (req, res) => {
       },
     });
 
-    // Enviar a cada suscriptor
     for (let sub of subscribers) {
-      await transporter.sendMail({
+      const mailOptions = {
         from: process.env.EMAIL_USER,
         to: sub.email,
         subject: subject,
         html: `<p>Hola ${sub.name},</p><p>${message}</p>`,
-      });
+      };
+
+      if (file) {
+        mailOptions.attachments = [
+          {
+            filename: file.originalname,
+            path: path.join(__dirname, "../public/uploads", file.filename),
+          },
+        ];
+      }
+
+      await transporter.sendMail(mailOptions);
     }
 
     res.status(200).json({ message: "Contenido enviado a todos los suscriptores" });
