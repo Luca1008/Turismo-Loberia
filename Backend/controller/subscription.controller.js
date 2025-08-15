@@ -95,3 +95,37 @@ exports.getSubscriptions = async (req, res) => {
     res.status(500).json({ message: "Error fetching subscriptions", error: error.message });
   }
 };
+
+// Estadísticas para panel admin
+exports.getStats = async (req, res) => {
+  try {
+    const total = await db.query(`SELECT COUNT(*) FROM turismo_prueba.subscriptions`);
+    const transport = await db.query(`
+      SELECT unnest(transport) AS transporte, COUNT(*) 
+      FROM turismo_prueba.subscriptions
+      GROUP BY transporte
+      ORDER BY count DESC
+    `);
+    const source = await db.query(`
+      SELECT unnest(source) AS source_option, COUNT(*) 
+      FROM turismo_prueba.subscriptions
+      GROUP BY source_option
+      ORDER BY count DESC
+    `);
+    const accept = await db.query(`
+      SELECT accept, COUNT(*) 
+      FROM turismo_prueba.subscriptions
+      GROUP BY accept
+    `);
+
+    res.json({
+      total: parseInt(total.rows[0].count),
+      transport: transport.rows,
+      source: source.rows,
+      accept: accept.rows
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching stats", error: error.message });
+  }
+};
