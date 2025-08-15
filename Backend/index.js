@@ -9,6 +9,7 @@ const carouselRoutes = require('./routes/carousel.routes');
 const multer = require('multer'); // ⬅️ Agregado para configuración global si se necesita
 const path = require('path');
 const subscriptionRoutes = require('./routes/subscription.routes');
+const sendContentRoutes = require("./routes/sendContent.routes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -33,6 +34,8 @@ app.use('/api', carouselRoutes);
 app.use("/api/translate", translateRoutes);
 // Suscripciones
 app.use('/api/subscriptions', subscriptionRoutes);
+// Enviar contenido a suscriptores
+app.use("/api/send", sendContentRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor backend escuchando en http://localhost:${PORT}`);

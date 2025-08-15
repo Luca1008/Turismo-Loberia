@@ -231,3 +231,48 @@ aside.sidebar-admin li svg{
   justify-content: center !important;
   margin: auto !important;
 }
+
+/*--------------Send Content--------------*/
+.send-content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.send-content-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.send-content-container input,
+.send-content-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.send-content-container textarea {
+  resize: vertical;
+  height: 120px;
+}
+
+.send-content-container button {
+  width: 100%;
+  padding: 12px;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.send-content-container button:hover {
+  opacity: 0.9;
+}

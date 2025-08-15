@@ -12,6 +12,7 @@ import { useAuth } from "../hooks/useAuth.jsx";
 import "../styles/panelAdmin.css";
 import Searcher from "./Searcher";
 import AdminDashboard from '../components/panelAdmin/AdminDashboard.jsx';
+import SendContent from "../components/panelAdmin/SendContent.jsx";
 
 const PanelAdmin = () => {
   const { auth, logout } = useAuth();
@@ -229,6 +230,9 @@ const PanelAdmin = () => {
             </div>
           </Offcanvas.Body>
         </Offcanvas>
+      </section>
+      <section className="send-content">
+        <SendContent />
       </section>
       <section className="stats">
         <AdminDashboard />

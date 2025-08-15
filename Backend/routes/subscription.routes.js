@@ -5,6 +5,6 @@ const subscriptionController = require("../controller/subscription.controller");
 router.post("/", subscriptionController.createSubscription);
 router.get("/", subscriptionController.getAllSubscriptions);
 router.get("/paginated", subscriptionController.getSubscriptions);
-router.get("/stats", subscriptionController.getStats); // Nuevo endpoint
+router.get("/stats", subscriptionController.getStats);
 
 module.exports = router;
