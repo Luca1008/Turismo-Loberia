@@ -676,8 +676,6 @@ CREATE TABLE IF NOT EXISTS turismo_prueba.subscriptions (
     accept BOOLEAN DEFAULT false,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-ALTER TABLE turismo_prueba.subscriptions
-ADD CONSTRAINT unique_email UNIQUE (email);
 
 INSERT INTO turismo_prueba.subscriptions (direction, think, project, name, email, phone, companions, transport, source) VALUES
 ('Arenas Verdes', 'Me gusta el turismo y quiero aprender sobre el lugar', 'Turismo', 'Luis', 'felicitas.aguerralde@gmail.com', '11223344', '{Maria, Juan}', '{Bus, Carro}', '{Facebook, Instagram}');

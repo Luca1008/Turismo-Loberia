@@ -38,7 +38,7 @@ exports.sendToSubscribers = async (req, res) => {
       };
       const token = jwt.encode(payload, SECRET_KEY);
 
-      const unsubscribeLink = `${process.env.BASE_URL}/api/send/unsubscribe/${token}`;
+      const unsubscribeLink = `${process.env.BASE_URL}/unsubscribe/${token}`;
 
       const mailOptions = {
         from: process.env.EMAIL_USER,
@@ -72,21 +72,35 @@ exports.sendToSubscribers = async (req, res) => {
   }
 };
 
-// Alta suscriptor
+// Alta suscriptor / Re-suscripción
 exports.addSubscriber = async (req, res) => {
   const { name, email, accept } = req.body;
 
   try {
-    // Evitar duplicados (case-insensitive)
+    // Buscamos si existe el email (case-insensitive)
     const check = await db.query(
-      `SELECT id FROM turismo_prueba.subscriptions WHERE LOWER(email) = LOWER($1)`,
+      `SELECT id, accept FROM turismo_prueba.subscriptions WHERE LOWER(email) = LOWER($1)`,
       [email]
     );
 
     if (check.rowCount > 0) {
-      return res.status(400).json({ message: "Este email ya está suscrito." });
+      const existing = check.rows[0];
+      if (existing.accept) {
+        // Ya estaba suscripto
+        return res.status(400).json({ message: "Este email ya está suscrito." });
+      } else {
+        // Estaba desuscripto → actualizamos para volver a suscribir
+        await db.query(
+          `UPDATE turismo_prueba.subscriptions 
+           SET accept = true, name = $1 
+           WHERE id = $2`,
+          [name, existing.id]
+        );
+        return res.status(200).json({ message: "Te has vuelto a suscribir correctamente." });
+      }
     }
 
+    // No existe → insertamos nuevo
     await db.query(
       `INSERT INTO turismo_prueba.subscriptions (name, email, accept) VALUES ($1, $2, $3)`,
       [name, email, accept ?? true]
@@ -98,6 +112,7 @@ exports.addSubscriber = async (req, res) => {
     res.status(500).json({ message: "Error en la suscripción" });
   }
 };
+
 
 // Desuscripción
 exports.unsubscribe = async (req, res) => {
@@ -125,8 +140,8 @@ exports.unsubscribe = async (req, res) => {
     }
 
     res.send(`
-      <h2>Te has desuscrito correctamente</h2>
-      <p>Siempre podés volver a suscribirte en nuestro sitio.</p>
+      Te has desuscrito correctamente
+      Siempre podés volver a suscribirte en nuestro sitio.
     `);
   } catch (error) {
     console.error(error);

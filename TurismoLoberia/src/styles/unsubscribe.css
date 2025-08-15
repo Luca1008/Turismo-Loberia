@@ -1,0 +1,29 @@
+.unsubscribe button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    background-color: var(--primary-color);
+    width: 400px;
+    height: 40px;
+    border-radius: 10px;
+    color: var(--white);
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.unsubscribe button:hover
+{
+    background-color: var(--primary-color-dark-2);
+}
+
+.unsubscribe{
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

@@ -5,6 +5,8 @@ import { FaAsterisk } from "react-icons/fa";
 import { trackEvent } from "../analytics"; // GA4
 import ButtonSubmit from "../components/common/ButtonSubmit";
 import { Global } from "../helpers/Global";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Suscribe = () => {
   const [formData, setFormData] = useState({
@@ -19,10 +21,9 @@ export const Suscribe = () => {
     source: [],
     accept: false,
   });
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(""); // 'enviando', 'exitoso', 'error'
   const [errorMessage, setErrorMessage] = useState("");
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     trackEvent("page_view", {
@@ -38,23 +39,14 @@ export const Suscribe = () => {
       const updated = checked
         ? [...formData.companions, value]
         : formData.companions.filter((v) => v !== value);
-
       setFormData((prev) => ({ ...prev, companions: updated }));
-
-      trackEvent("checkbox_marcado", {
-        category: "Formulario",
-        label: `Compañía: ${value}`,
-      });
+      trackEvent("checkbox_marcado", { category: "Formulario", label: `Compañía: ${value}` });
       return;
     }
 
     if (type === "checkbox" && name === "accept") {
       setFormData((prev) => ({ ...prev, accept: checked }));
-
-      trackEvent("checkbox_marcado", {
-        category: "Formulario",
-        label: "Acepta políticas",
-      });
+      trackEvent("checkbox_marcado", { category: "Formulario", label: "Acepta políticas" });
       return;
     }
 
@@ -62,13 +54,8 @@ export const Suscribe = () => {
       const updated = checked
         ? [...formData.source, value]
         : formData.source.filter((v) => v !== value);
-
       setFormData((prev) => ({ ...prev, source: updated }));
-
-      trackEvent("checkbox_marcado", {
-        category: "Formulario",
-        label: `Origen: ${value}`,
-      });
+      trackEvent("checkbox_marcado", { category: "Formulario", label: `Origen: ${value}` });
       return;
     }
 
@@ -76,57 +63,58 @@ export const Suscribe = () => {
       const updated = checked
         ? [...formData.transport, value]
         : formData.transport.filter((v) => v !== value);
-
       setFormData((prev) => ({ ...prev, transport: updated }));
-
-      trackEvent("checkbox_marcado", {
-        category: "Formulario",
-        label: `Transporte: ${value}`,
-      });
+      trackEvent("checkbox_marcado", { category: "Formulario", label: `Transporte: ${value}` });
       return;
     }
 
     setFormData((prev) => ({ ...prev, [name]: value }));
-
-    trackEvent("campo_completado", {
-      category: "Formulario",
-      label: name,
-    });
+    trackEvent("campo_completado", { category: "Formulario", label: name });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setStatus("enviando");
-  setErrorMessage("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("enviando");
+    setErrorMessage("");
 
-try {
-    const res = await fetch(Global.url + "subscriptions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData)
-    });
+    try {
+      const res = await fetch(Global.url + "subscriptions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    if (!res.ok) throw new Error("Error in subscription");
+      const data = await res.json();
 
-    setStatus("exitoso");
-    setFormData({
-      direction: "",
-      think: "",
-      project: "",
-      name: "",
-      email: "",
-      phone: "",
-      companions: [],
-      transport: [],
-      source: [],
-      accept: false,
-    });
-  } catch (err) {
-    setErrorMessage(err.message);
-    setStatus("error");
-  }
-};
+      if (!res.ok) {
+        setStatus("error");
+        setErrorMessage(data.message || "Error en la suscripción");
+        toast.error(data.message || "Error en la suscripción");
+      } else {
+        setStatus("exitoso");
+        setErrorMessage(data.message); // mensaje dinámico del backend
+        toast.success(data.message);
 
+        setFormData({
+          direction: "",
+          think: "",
+          project: "",
+          name: "",
+          email: "",
+          phone: "",
+          companions: [],
+          transport: [],
+          source: [],
+          accept: false,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+      setErrorMessage("Error al conectarse con el servidor");
+      toast.error("Error al conectarse con el servidor");
+    }
+  };
 
   return (
     <div>
@@ -135,11 +123,12 @@ try {
         <Form className="form-direction" onSubmit={handleSubmit}>
           <Form.Group controlId="direction" className="mb-3">
             <Form.Label>
-              {t("vivo_en")}<FaAsterisk className="requerided" />
+              {t("vivo_en")}
+              <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               type="text"
-              placeholder= {t("ciudad_provincia_pais")}
+              placeholder={t("ciudad_provincia_pais")}
               name="direction"
               value={formData.direction}
               onChange={handleChange}
@@ -149,7 +138,8 @@ try {
 
           <Form.Group controlId="source" className="mb-3">
             <Form.Label>
-              {t("me_entere")}<FaAsterisk className="requerided" />
+              {t("me_entere")}
+              <FaAsterisk className="requerided" />
             </Form.Label>
             <div>
               {[
@@ -197,24 +187,29 @@ try {
 
           <Form.Group controlId="companions" className="mb-3">
             <Form.Label>
-              {t("Me_gustaría_ir")}<FaAsterisk className="requerided" />
+              {t("Me_gustaría_ir")}
+              <FaAsterisk className="requerided" />
             </Form.Label>
             <div>
-              {["Sólo/a", "En pareja", "Con familia", "Con amigos", "Con mis mascotas"].map(
-                (item) => (
-                  <Form.Check
-                    key={item}
-                    label={t(item)}
-                    type="checkbox"
-                    name="companions"
-                    value={t(item)}
-                    checked={formData.companions.includes(item)}
-                    onChange={handleChange}
-                    className="mb-1"
-                    required={formData.companions.length === 0}
-                  />
-                )
-              )}
+              {[
+                "Sólo/a",
+                "En pareja",
+                "Con familia",
+                "Con amigos",
+                "Con mis mascotas",
+              ].map((item) => (
+                <Form.Check
+                  key={item}
+                  label={t(item)}
+                  type="checkbox"
+                  name="companions"
+                  value={t(item)}
+                  checked={formData.companions.includes(item)}
+                  onChange={handleChange}
+                  className="mb-1"
+                  required={formData.companions.length === 0}
+                />
+              ))}
             </div>
           </Form.Group>
 
@@ -259,7 +254,8 @@ try {
 
           <Form.Group controlId="email" className="mb-3">
             <Form.Label>
-              {t("Mi_correo_electrónico_es")}<FaAsterisk className="requerided" />
+              {t("Mi_correo_electrónico_es")}
+              <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               type="email"
@@ -272,7 +268,9 @@ try {
           </Form.Group>
 
           <Form.Group controlId="phone" className="mb-3">
-            <Form.Label>{t("Mi_teléfono_WhatsApp_es")}<FaAsterisk className="requerided" />
+            <Form.Label>
+              {t("Mi_teléfono_WhatsApp_es")}
+              <FaAsterisk className="requerided" />
             </Form.Label>
             <Form.Control
               type="tel"
@@ -290,7 +288,11 @@ try {
               label={
                 <>
                   {t("Acepto_politicas")}{" "}
-                  <a href="/politicas" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="/politicas"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {t("")}
                   </a>
                   .
@@ -304,7 +306,8 @@ try {
           </Form.Group>
 
           <p className="required-info">
-            {t("campos_obligatorios")}<FaAsterisk className="requerided" />
+            {t("campos_obligatorios")}
+            <FaAsterisk className="requerided" />
             {t("son_obligatorios")}
           </p>
           <ButtonSubmit
@@ -313,11 +316,25 @@ try {
             className={`btn-success${status === "enviando" ? " sending" : ""}`}
           />
 
+          {/* Mensajes */}
           {status === "exitoso" && (
-            <p className="success-message">{t("mensaje_enviado")}</p>
+            <p className="success-message">{errorMessage || t("mensaje_enviado")}</p>
           )}
           {status === "error" && <p className="error-message">{errorMessage}</p>}
         </Form>
+
+        {/* Toast container */}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </section>
     </div>
   );
