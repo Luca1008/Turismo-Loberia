@@ -123,3 +123,111 @@ aside.sidebar-admin li svg{
 .form-carousel input[type="checkbox"] {
   margin-right: 0.5rem;
 }
+
+/*----------------------------Dashboard----------------*/
+.dashboard-container {
+  font-family: var(--font-base);
+  background: rgba(128, 152, 133, 0.159); /* fondo semi-transparente */
+  backdrop-filter: blur(60px); /* desenfoque */
+  -webkit-backdrop-filter: blur(10px); /* para Safari */
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.dashboard-container h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Tarjetas de resumen */
+.summary-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  flex: 1 1 50px;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  max-height: max-content;
+}
+
+.card.total {
+  background: linear-gradient(135deg, #6babff, #FF8787);
+}
+
+.card.accept {
+  background: linear-gradient(135deg, #FFD93D, #c78bff);
+}
+
+/* Sección transporte y fuente */
+.section {
+  margin-top: 40px;
+}
+
+.section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Tarjetas individuales de transporte/fuente */
+.option-cards {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.option-card {
+  flex: 1 1 150px;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.option-card.transport {
+  background: linear-gradient(135deg, #ff913d, #c78bff);
+}
+
+.option-card.source {
+  background: linear-gradient(135deg, #3dff98, #c78bff);
+}
+
+.option-card h4 {
+  margin: 0 0 5px 0;
+}
+
+.option-card p {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.option-card small {
+  display: block;
+  margin-top: 3px;
+}
+
+.pie-chart{
+  width: 200px !important;
+  height: 200px !important;
+  font-size: 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: auto !important;
+}
+
+.bar-chart-transport, .bar-chart-source{
+  width: 500px !important;
+  height: 250px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: auto !important;
+}
