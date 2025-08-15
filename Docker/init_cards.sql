@@ -1,5 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS turismo_prueba;
 
+--------------------------------------------------- Cards------------------------------------------------------
 CREATE TABLE IF NOT EXISTS turismo_prueba."card" (
     id SERIAL PRIMARY KEY,
     card_title VARCHAR(100),
@@ -638,7 +639,7 @@ INSERT INTO turismo_prueba."card" (
 );
 
 
--- Tabla "users"
+-- --------------------------------------------------- Users------------------------------------------------------
 CREATE TABLE IF NOT EXISTS turismo_prueba.users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -659,3 +660,33 @@ INSERT INTO turismo_prueba.users (name, surname, email, password, role) VALUES
 ('Carlos', 'Pérez', 'carlos.perez@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'admin'),
 ('Laura', 'González', 'laura.gonzalez@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'admin'),
 ('Javier', 'Rodríguez', 'javier.rodriguez@gmail.com', '$2b$10$e/OaIzd87RlIkA7hkR6YnOMiai4X9Mcwh4.RU6yi78EkxqqpkbKNG', 'admin');
+
+-- --------------------------------------------------- Suscripciones------------------------------------------------------
+CREATE TABLE IF NOT EXISTS turismo_prueba.subscriptions (
+    id SERIAL PRIMARY KEY,
+    direction TEXT,
+    think TEXT,
+    project TEXT,
+    name VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    phone VARCHAR(50),
+    companions TEXT[],
+    transport TEXT[],
+    source TEXT[],
+    accept BOOLEAN DEFAULT false,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO subscriptions
+(direction, think, project, name, email, phone, companions, transport, source, accept)
+VALUES
+('Buenos Aires, Argentina', 'Quiero conocer la costa', 'Hacer surf', 'Juan Pérez', 'juan.perez@example.com', '+54 9 11 1234 5678', ARRAY['Sólo/a'], ARRAY['Micro_de_larga_distancia'], ARRAY['Redes Sociales'], true),
+('La Plata, Argentina', 'Disfrutar de la naturaleza', 'Hacer picnic en familia', 'María López', 'maria.lopez@example.com', '+54 9 221 987 654', ARRAY['Con familia', 'Con mis mascotas'], ARRAY['Vehículo_propio', 'Motorhome'], ARRAY['Conocidos', 'Televisión'], true),
+('Mar del Plata, Argentina', 'Practicar deportes acuáticos', 'Surf y kayak', 'Lucas Fernández', 'lucas.fernandez@example.com', '+54 9 223 456 789', ARRAY['En pareja'], ARRAY['Vehículo_propio'], ARRAY['Radio'], true),
+('Bahía Blanca, Argentina', 'Fotografía de paisajes', 'Hacer un book de fotos', 'Ana Gómez', 'ana.gomez@example.com', '+54 9 291 123 456', ARRAY['Con amigos'], ARRAY['Motorhome'], ARRAY['Redes Sociales', 'Televisión'], true),
+('Córdoba, Argentina', 'Conocer la gastronomía local', 'Probar platos típicos', 'Pedro Martínez', 'pedro.martinez@example.com', '+54 9 351 987 654', ARRAY['Sólo/a'], ARRAY['Micro_de_larga_distancia'], ARRAY['Conocidos'], true),
+('Rosario, Argentina', 'Disfrutar de la playa', 'Tomar sol y relajarse', 'Sofía Ramírez', 'sofia.ramirez@example.com', '+54 9 341 123 987', ARRAY['Con amigos', 'Con mis mascotas'], ARRAY['Vehículo_propio', 'Viajes_compartidos'], ARRAY['Redes Sociales'], true),
+('Santa Fe, Argentina', 'Explorar la ciudad', 'Visitas culturales', 'Diego Torres', 'diego.torres@example.com', '+54 9 342 987 321', ARRAY['En pareja'], ARRAY['Tour_de_Agencia_de_viajes'], ARRAY['Televisión', 'Radio'], true),
+('Neuquén, Argentina', 'Aventuras al aire libre', 'Excursión a la montaña', 'Carla Núñez', 'carla.nunez@example.com', '+54 9 299 123 654', ARRAY['Con familia'], ARRAY['Motorhome'], ARRAY['Redes Sociales', 'Conocidos'], true),
+('San Martín, Argentina', 'Descansar y desconectar', 'Spa y relax', 'Martín Díaz', 'martin.diaz@example.com', '+54 9 261 987 123', ARRAY['Sólo/a'], ARRAY['Vehículo_propio'], ARRAY['Nunca escuché'], true),
+('Tandil, Argentina', 'Explorar nuevos lugares', 'Senderismo y trekking', 'Laura Castillo', 'laura.castillo@example.com', '+54 9 249 321 987', ARRAY['Con amigos'], ARRAY['Viajes_compartidos'], ARRAY['Redes Sociales', 'Conocidos'], true);

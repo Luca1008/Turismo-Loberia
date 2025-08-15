@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { FaAsterisk } from "react-icons/fa";
 import { trackEvent } from "../analytics"; // GA4
 import ButtonSubmit from "../components/common/ButtonSubmit";
+import { Global } from "../helpers/Global";
 
 export const Suscribe = () => {
   const [formData, setFormData] = useState({
@@ -93,23 +94,39 @@ export const Suscribe = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("enviando");
-    setErrorMessage("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setStatus("enviando");
+  setErrorMessage("");
 
-    trackEvent("formulario_enviado", {
-      category: "Formulario",
-      label: "Inicio envío",
+try {
+    const res = await fetch(Global.url + "subscriptions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
     });
 
-    // Aquí iría el fetch de envío real si lo implementás
+    if (!res.ok) throw new Error("Error in subscription");
 
-    // Simulación:
-    setTimeout(() => {
-      setStatus("exitoso");
-    }, 1000);
-  };
+    setStatus("exitoso");
+    setFormData({
+      direction: "",
+      think: "",
+      project: "",
+      name: "",
+      email: "",
+      phone: "",
+      companions: [],
+      transport: [],
+      source: [],
+      accept: false,
+    });
+  } catch (err) {
+    setErrorMessage(err.message);
+    setStatus("error");
+  }
+};
+
 
   return (
     <div>

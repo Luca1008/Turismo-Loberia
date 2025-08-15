@@ -8,6 +8,7 @@ const translateRoutes = require("./routes/translate");
 const carouselRoutes = require('./routes/carousel.routes');
 const multer = require('multer'); // ⬅️ Agregado para configuración global si se necesita
 const path = require('path');
+const subscriptionRoutes = require('./routes/subscription.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -30,6 +31,8 @@ app.use('/api', userRoutes);
 app.use('/api', carouselRoutes);
 // 💬 Traducción (proxy)
 app.use("/api/translate", translateRoutes);
+// Suscripciones
+app.use('/api/subscriptions', subscriptionRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor backend escuchando en http://localhost:${PORT}`);
