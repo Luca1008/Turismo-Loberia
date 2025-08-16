@@ -242,7 +242,6 @@ export const Clima = () => {
 
   return (
     <div>
-      <div className="portada-weather"></div>
       <section className="weather" key={i18n.language}>
         <h1>{t("consultar_clima")}</h1>
         <div className="section-weather">

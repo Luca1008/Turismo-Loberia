@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import logoLoberia from "../../assets/icons/logoLoberia.jpg";
 import "../../styles/Navbar.css";
 import { trackEvent } from "../../analytics";
-//import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 
 export const Header = () => {
@@ -32,6 +32,21 @@ export const Header = () => {
   const navRef = useRef(null);
   const searchRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const transparentRoutes = [
+    "/Suscribirse",
+    "/Clima",
+    "/Contacto",
+    "/Buscador",
+    "/Admin",
+    "/PanelAdmin",
+    "/recuperar-password",
+    "/reset-password/:token",
+    "/Register",
+    "/cards/:id",
+    "/unsubscribe/:token",
+  ];
+  const isTransparentRoute = transparentRoutes.includes(location.pathname);
 
   useEffect(() => {
     trackEvent({
@@ -219,12 +234,12 @@ export const Header = () => {
 
   return (
     <>
-      <nav
-        className={`navbar sticky-top shadow-sm navBar text-nav header border-nav
-    ${scrolled ? "nav-transparent-desktop-scroll" : ""}
-    ${showMenu ? "nav-menu-open" : ""}
-  `}
-      >
+    <nav
+      className={`navbar sticky-top shadow-sm navBar text-nav header border-nav
+        ${isTransparentRoute ? "nav-transparent-desktop-scroll" : scrolled ? "nav-transparent-desktop-scroll" : ""}
+        ${showMenu ? "nav-menu-open" : ""}
+      `}
+    >
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
           <div className="logo-container">
             <Link
@@ -233,7 +248,18 @@ export const Header = () => {
             >
               <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
               <div className={`logo-text ${scrolled ? "nav-transparent" : ""}`}>
-                <strong className="primary" style={{ fontFamily: 'MADE Tommy Soft, sans-serif', letterSpacing: '0.5px', fontSize: '24px', marginRight: '5px', marginBottom: '3px'}}>Lobería</strong>
+                <strong
+                  className="primary"
+                  style={{
+                    fontFamily: "MADE Tommy Soft, sans-serif",
+                    letterSpacing: "0.5px",
+                    fontSize: "24px",
+                    marginRight: "5px",
+                    marginBottom: "3px",
+                  }}
+                >
+                  Lobería
+                </strong>
                 <span className="typewriter-react">
                   <Typewriter
                     options={{
