@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import ButtonSubmit from "../common/ButtonSubmit";
 import Button from "react-bootstrap/Button";
 import NominatimAutocomplete from "../common/NominatimAutocomplete";
+import {Global} from "../../helpers/Global";
 
 const Edit = ({ cardId, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
@@ -34,7 +35,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
 
   const fetchCardData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/cards/${cardId}`);
+      const response = await fetch(`${Global.url}cards/${cardId}`);
       if (response.ok) {
         const card = await response.json();
         setFormData({
@@ -56,6 +57,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
         setError("Error al cargar los datos de la card.");
       }
     } catch (err) {
+      console.error("Error en fetchCardData:", err);
       setError("Error de conexión al cargar los datos.");
     }
   };
@@ -95,26 +97,24 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
         data.append("card_img_portada", imagen);
       }
 
-      const response = await fetch(
-        `http://localhost:5000/api/cards/${cardId}`,
-        {
-          method: "PUT",
-          body: data,
-        }
-      );
+      const response = await fetch(`${Global.url}cards/${cardId}`, {
+        method: "PUT",
+        body: data,
+      });
 
       if (response.ok) {
         setMensaje("¡Card actualizada exitosamente!");
         setTimeout(() => {
           if (onClose) onClose();
           if (onUpdate) onUpdate();
-          window.location.reload(); // opcional, mejor no recargar toda la página
+          window.location.reload();
         }, 1200);
       } else {
         const errorData = await response.json();
         setError(errorData.error || "Error al actualizar la card.");
       }
     } catch (err) {
+      console.error("Error en handleSubmit:", err);
       setError("Error de conexión con el servidor.");
     } finally {
       setLoading(false);

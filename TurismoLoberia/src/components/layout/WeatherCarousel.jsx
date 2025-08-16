@@ -1,17 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import WeatherCardCompact from "../cards/WeatherCardCompact";
+import { Global } from "../../helpers/Global";
 
 const defaultLocations = [
   { ciudad: "Arenas Verdes", lat: -38.967, lon: -59.005 },
   { ciudad: "San Manuel" },
-  { ciudad: "Loberia" }
+  { ciudad: "Loberia" },
 ];
 
 const WeatherCarousel = ({ locations = defaultLocations, interval = 5000 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [weatherData, setWeatherData] = useState(Array(locations.length).fill(null));
+  const [weatherData, setWeatherData] = useState(
+    Array(locations.length).fill(null)
+  );
 
   useEffect(() => {
     if (isPaused) return;
@@ -26,31 +29,32 @@ const WeatherCarousel = ({ locations = defaultLocations, interval = 5000 }) => {
     locations.forEach((loc, idx) => {
       let url;
       if (loc.lat !== undefined && loc.lon !== undefined) {
-        url = `http://localhost:5000/api/weather?lat=${loc.lat}&lon=${loc.lon}`;
+        url = `${Global.url}weather?lat=${loc.lat}&lon=${loc.lon}`;
       } else {
-        url = `http://localhost:5000/api/weather?city=${encodeURIComponent(loc.ciudad)}`;
+        url = `${Global.url}weather?city=${encodeURIComponent(loc.ciudad)}`;
       }
-      axios.get(url)
-        .then(res => {
-          setWeatherData(prev => {
+      axios
+        .get(url)
+        .then((res) => {
+          setWeatherData((prev) => {
             const nuevo = [...prev];
             nuevo[idx] = {
               ciudad: loc.ciudad,
               temp: res.data.temp,
               icon: res.data.icon,
-              descripcion: res.data.descripcion
+              descripcion: res.data.descripcion,
             };
             return nuevo;
           });
         })
         .catch(() => {
-          setWeatherData(prev => {
+          setWeatherData((prev) => {
             const nuevo = [...prev];
             nuevo[idx] = {
               ciudad: loc.ciudad,
               temp: null,
               icon: null,
-              descripcion: "Sin datos"
+              descripcion: "Sin datos",
             };
             return nuevo;
           });
@@ -65,7 +69,7 @@ const WeatherCarousel = ({ locations = defaultLocations, interval = 5000 }) => {
   const currentWeather = weatherData[activeIndex];
 
   return (
-    <div 
+    <div
       className="weather-carousel"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

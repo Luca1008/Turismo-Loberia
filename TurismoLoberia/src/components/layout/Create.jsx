@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import ButtonSubmit from "../common/ButtonSubmit";
 import NominatimAutocomplete from "../common/NominatimAutocomplete";
+import {Global} from "../../helpers/Global";
 
 const Create = () => {
   const [formData, setFormData] = useState({
@@ -9,8 +10,8 @@ const Create = () => {
     descripcion: "",
     ubicacion: "",
     linkUbicacion: "",
-    lat: "",      // Agregado para latitud
-    lon: "",      // Agregado para longitud
+    lat: "", // Agregado para latitud
+    lon: "", // Agregado para longitud
     horario: "",
     contacto: "",
     informacion: "",
@@ -46,8 +47,8 @@ const Create = () => {
       data.append("card_description", formData.descripcion);
       data.append("card_ubicacion", formData.ubicacion);
       data.append("card_link_ubicacion", formData.linkUbicacion);
-      data.append("card_lat", formData.lat);    // Enviamos latitud
-      data.append("card_lon", formData.lon);    // Enviamos longitud
+      data.append("card_lat", formData.lat); // Enviamos latitud
+      data.append("card_lon", formData.lon); // Enviamos longitud
       data.append("card_horario", formData.horario);
       data.append("card_contacto", formData.contacto);
       data.append("card_info", formData.informacion);
@@ -61,7 +62,7 @@ const Create = () => {
         data.append("card_img_portada", imagen);
       }
 
-      const response = await fetch("http://localhost:5000/api/cards", {
+      const response = await fetch(`${Global.url}cards`, {
         method: "POST",
         body: data,
       });
@@ -91,6 +92,7 @@ const Create = () => {
         setError(errorData.error || "Error al crear la card.");
       }
     } catch (err) {
+      console.error("Error en la petición:", err);
       setError("Error de conexión con el servidor.");
     } finally {
       setLoading(false);
