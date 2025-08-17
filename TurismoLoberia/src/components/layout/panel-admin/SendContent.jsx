@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import '../../styles/panelAdmin.css';
+import '../../../styles/panelAdmin.css';
+import { Global } from "../../../helpers/Global";
 
 export default function SendContent() {
   const [subject, setSubject] = useState("");
@@ -18,7 +19,7 @@ export default function SendContent() {
       formData.append("message", message);
       if (file) formData.append("file", file);
 
-      const res = await fetch("http://localhost:5000/api/send/send", {
+      const res = await fetch(`${Global.url}send/send`, {
         method: "POST",
         body: formData,
       });

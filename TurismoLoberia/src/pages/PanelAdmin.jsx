@@ -11,8 +11,8 @@ import Edit from "../components/layout/Edit";
 import { useAuth } from "../hooks/useAuth.jsx";
 import "../styles/panelAdmin.css";
 import Searcher from "./Searcher";
-import AdminDashboard from '../components/panelAdmin/AdminDashboard.jsx';
-import SendContent from "../components/panelAdmin/SendContent.jsx";
+import AdminDashboard from '../components/layout/panel-admin/AdminDashboard.jsx';
+import SendContent from "../components/layout/panel-admin/SendContent";
 
 const PanelAdmin = () => {
   const { auth, logout } = useAuth();

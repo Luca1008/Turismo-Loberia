@@ -10,7 +10,8 @@ import {
   Legend,
   ArcElement
 } from "chart.js";
-import "../../styles/panelAdmin.css";
+import "../../../styles/panelAdmin.css";
+import { Global } from "../../../helpers/Global";
 
 ChartJS.register(
   CategoryScale,
@@ -25,13 +26,14 @@ ChartJS.register(
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/subscriptions/stats")
-      .then(res => res.json())
-      .then(data => setStats(data))
-      .catch(console.error);
-  }, []);
-
+useEffect(() => {
+  fetch(`${Global.url}subscriptions/stats`)
+    .then(res => res.json())
+    .then(data => setStats(data))
+    .catch(err => {
+      console.error("Error al obtener estadísticas:", err);
+    });
+}, []);
   if (!stats) return <p style={{ textAlign: "center", marginTop: "50px" }}>Cargando estadísticas...</p>;
 
   const transportData = {
