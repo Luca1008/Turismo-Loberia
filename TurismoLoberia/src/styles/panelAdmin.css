@@ -147,7 +147,7 @@ aside.sidebar-admin li svg{
   justify-content: center;
 }
 
-.card {
+.card-dashboard {
   flex: 1 1 50px;
   padding: 20px;
   border-radius: 12px;
@@ -156,11 +156,11 @@ aside.sidebar-admin li svg{
   max-height: max-content;
 }
 
-.card.total {
+.card-dashboard.total {
   background: linear-gradient(135deg, #6babff, #FF8787);
 }
 
-.card.accept {
+.card-dashboard.accept {
   background: linear-gradient(135deg, #FFD93D, #c78bff);
 }
 

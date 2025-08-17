@@ -81,12 +81,12 @@ export default function AdminDashboard() {
 
       {/* Total y Aceptación */}
       <div className="summary-cards">
-        <div className="card total">
+        <div className="card-dashboard total">
           <h2>Total Suscripciones</h2>
           <h1>{stats.total}</h1>
         </div>
 
-        <div className="card accept">
+        <div className="card-dashboard accept">
           <h2>Aceptación</h2>
           <Pie className="pie-chart" data={acceptData} />
         </div>
