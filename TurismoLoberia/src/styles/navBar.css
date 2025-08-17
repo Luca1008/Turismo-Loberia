@@ -6,10 +6,6 @@
   z-index: 1020;
 }
 
-.primary {
-  color: var(--white);
-}
-
 .logoLoberia {
   width: 3rem;
 }
@@ -34,6 +30,18 @@
   padding-right: 15px;
   background-color: transparent;
   height: 90px;
+}
+
+.navBar button.primary,
+.navBar button.primary:hover,
+.navBar button.primary:active,
+.navBar svg.primary.logoNav,
+.navBar .border-item-nav {
+  color: var(--white);
+}
+
+.nav-transparent-desktop-scroll div.vertical-divider {
+  background-color: var(--primary-color);
 }
 
 .logoNav {
@@ -65,7 +73,8 @@ li {
 }
 
 .mobile-menu {
-  margin-top: 90px;
+  position: fixed;
+  top: 90px;
   left: 0;
   width: 100%;
   height: calc(100vh - 90px);
@@ -201,7 +210,7 @@ form.input-group.search-bar-custom {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.search-desktop-form .form-control{
+.search-desktop-form .form-control {
   border: solid 3px var(--primary-color);
 }
 .desktop-search-bar .search-desktop-form {
@@ -336,30 +345,41 @@ button.btn.btn-white {
 .nav-menu-open .vertical-divider {
   background-color: var(--primary-color);
 }
-.loberia{
+.loberia {
   display: none;
 }
 
-@media (min-width: 768px) {
+.nav-transparent-desktop-scroll {
+  background-color: var(--white);
+  color: var(--primary-color) !important;
+  transition: background-color 0.3s;
+}
 
-  .loberia{
+.nav-transparent-desktop-scroll strong.primary,
+.nav-transparent-desktop-scroll button.primary,
+.nav-transparent-desktop-scroll button.primary:hover,
+.nav-transparent-desktop-scroll button.primary:active,
+.nav-transparent-desktop-scroll svg.primary.logoNav,
+.nav-transparent-desktop-scroll .border-item-nav {
+  color: var(--primary-color) !important;
+}
+
+.nav-transparent-desktop-scroll div.vertical-divider {
+  background-color: var(--primary-color);
+}
+
+@media (min-width: 768px) {
+  .loberia {
     display: flex;
   }
-  
+
   .navBar {
     color: var(--white) !important;
   }
 
-  .nav-transparent-desktop-scroll {
-    background-color: var(--blurred) !important;
+  .nav-transparent-desktop-scroll strong.primary {
     color: var(--primary-color) !important;
-    transition: background-color 0.3s;
-    backdrop-filter: blur(4px);
   }
-
-  .nav-transparent-desktop-scroll strong.primary{
-    color: var(--primary-color) !important;
-  } 
 
   .navBar:hover,
   .navBar:hover .logo-text strong.primary {
@@ -396,6 +416,11 @@ button.btn.btn-white {
     backdrop-filter: blur(5px);
     height: 90px; /* Altura de tu navbar */
     width: 100%;
+  }
+
+  .nav-transparent-desktop-scroll {
+    background-color: var(--white) !important;
+    color: var(--primary-color) !important;
   }
   .typewriter-react {
     display: flex;
