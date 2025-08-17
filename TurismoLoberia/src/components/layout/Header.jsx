@@ -46,7 +46,12 @@ export const Header = () => {
     "/cards/:id",
     "/unsubscribe/:token",
   ];
-  const isTransparentRoute = transparentRoutes.includes(location.pathname);
+
+  const isTransparentRoute = transparentRoutes.some((route) =>
+    route.includes(":")
+      ? location.pathname.startsWith(route.split("/:")[0])
+      : location.pathname === route
+  );
 
   useEffect(() => {
     trackEvent({
@@ -234,12 +239,18 @@ export const Header = () => {
 
   return (
     <>
-    <nav
-      className={`navbar sticky-top shadow-sm navBar text-nav header border-nav
-        ${isTransparentRoute ? "nav-transparent-desktop-scroll" : scrolled ? "nav-transparent-desktop-scroll" : ""}
+      <nav
+        className={`navbar sticky-top shadow-sm navBar text-nav header border-nav
+        ${
+          isTransparentRoute
+            ? "nav-transparent-desktop-scroll"
+            : scrolled
+            ? "nav-transparent-desktop-scroll"
+            : ""
+        }
         ${showMenu ? "nav-menu-open" : ""}
       `}
-    >
+      >
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
           <div className="logo-container">
             <Link
