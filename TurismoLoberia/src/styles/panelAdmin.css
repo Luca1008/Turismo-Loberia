@@ -2,37 +2,132 @@
   text-align: center;
 }
 
-.nav-user{
+.nav-user {
   background-color: rgba(0, 0, 0, 0.058);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
   padding: 1rem;
+  margin-top: 90px;
 }
 
-.nav-user li{
+.nav-user li {
   padding-left: 1rem;
 }
+.container-tools {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  justify-content: flex-start;
+  align-items: flex-end;
+  color: var(--white);
+  position: fixed;
+  top: 0;
+  height: max-content;
+  margin-top: 150px;
+  padding: 1rem;
+  z-index: 10000;
+  box-sizing: border-box;
+  right: -250px;
+  left: auto;
+}
 
-aside.sidebar-admin{
+.container-tools,
+.menu-toggle.right {
+  background-color: rgba(128, 128, 128, 0.637);
+  backdrop-filter: blur(5px);
+}
+
+.container-tools ul {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.container-tools li {
+  padding-bottom: 0.5rem;
+  width: 100%;
+  text-align: left;
+  align-items: center;
+}
+
+.container-tools a {
+  color: var(--white);
+  font-weight: bold;
+  text-decoration: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.container-tools a:hover {
+  color: var(--black);
+}
+
+.container-tools svg {
+  margin-right: 0.3rem;
+}
+
+.container-tools.open {
+  transition: left 0.3s ease;
+  right: 0;
+}
+
+/* Botón en el lado derecho */
+.menu-toggle.right {
+  position: fixed;
+  right: 15px;
+  top: 35%;
+  transform: translateY(-50%);
+  color: var(--white);
+  border: none;
+  width: 30px;
+  height: 60px;
+  border-radius: 5px 0 0 5px;
+  cursor: pointer;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.menu-toggle.right.open {
+  right: 219px;
+  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.side-menu h3,
+.side-menu h4 {
+  color: #ecf0f1;
+  margin-top: 20px;
+}
+aside.sidebar-admin {
   display: flex;
   flex-direction: column;
   justify-content: left;
   align-items: left;
 }
 
-aside.sidebar-admin li{
+aside.sidebar-admin li {
   text-align: left;
   font-weight: bold;
   padding: 0.3rem;
 }
 
-aside.sidebar-admin li svg{
+aside.sidebar-admin li svg {
   margin-right: 0.5rem;
 }
 
-.register-form{
+.sidebar-admin a {
+  color: var(--primary-color);
+}
+
+.register-form {
   width: 100%;
   text-align: left;
   padding: 10px;
@@ -40,24 +135,25 @@ aside.sidebar-admin li svg{
   padding: 20px;
 }
 
-.btn-admin{
+.btn-admin {
   background-color: transparent;
   border: none;
 }
 
-.buttons-container{
+.buttons-container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
 }
 
-.buttons-container button{
+.buttons-container button {
   font-weight: bold;
   font-size: 1rem;
   font-family: var(--size-h3-mobile);
   border: none;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 1.5px 4px rgba(60, 180, 60, 0.18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25),
+    0 1.5px 4px rgba(60, 180, 60, 0.18);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.5rem;
@@ -71,14 +167,15 @@ aside.sidebar-admin li svg{
   margin-right: 8px;
 }
 
-.modal-header{
+.modal-header {
   width: 650px;
   display: flex;
   flex-direction: row;
-  margin: auto
+  margin: auto;
 }
 
-.form-edit-card, .form-create-card{
+.form-edit-card,
+.form-create-card {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -86,7 +183,7 @@ aside.sidebar-admin li svg{
   text-align: left;
 }
 
-.modal-footer{
+.modal-footer {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -94,10 +191,11 @@ aside.sidebar-admin li svg{
   margin: auto;
 }
 
-.modal-footer button{
+.modal-footer button {
   font-weight: bold;
   border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 1.5px 4px rgba(60, 180, 60, 0.18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25),
+    0 1.5px 4px rgba(60, 180, 60, 0.18);
 }
 
 /*-------Form Carousel------*/
@@ -108,7 +206,7 @@ aside.sidebar-admin li svg{
   margin: auto;
 }
 
-.form-carousel label{
+.form-carousel label {
   display: flex;
   flex-direction: column;
   justify-content: left;
@@ -152,16 +250,16 @@ aside.sidebar-admin li svg{
   padding: 20px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-height: max-content;
 }
 
 .card-dashboard.total {
-  background: linear-gradient(135deg, #6babff, #FF8787);
+  background: linear-gradient(135deg, #6babff, #ff8787);
 }
 
 .card-dashboard.accept {
-  background: linear-gradient(135deg, #FFD93D, #c78bff);
+  background: linear-gradient(135deg, #ffd93d, #c78bff);
 }
 
 /* Sección transporte y fuente */
@@ -188,7 +286,7 @@ aside.sidebar-admin li svg{
   padding: 15px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .option-card.transport {
@@ -213,7 +311,7 @@ aside.sidebar-admin li svg{
   margin-top: 3px;
 }
 
-.pie-chart{
+.pie-chart {
   width: 200px !important;
   height: 200px !important;
   font-size: 30px !important;
@@ -223,7 +321,8 @@ aside.sidebar-admin li svg{
   margin: auto !important;
 }
 
-.bar-chart-transport, .bar-chart-source{
+.bar-chart-transport,
+.bar-chart-source {
   width: 500px !important;
   height: 250px !important;
   display: flex !important;

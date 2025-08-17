@@ -101,7 +101,7 @@ const Create = () => {
 
   return (
     <div>
-      <h3>Agregar Contenido</h3>
+      <h2>Agregar Contenido</h2>
       <Form
         className="form-create-card"
         onSubmit={handleSubmit}

@@ -1,8 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { FaPencilAlt, FaUserCheck, FaUsersCog } from "react-icons/fa";
-import { MdLogout, MdOutlineSettings } from "react-icons/md";
+import {
+  FaChevronRight,
+  FaChevronLeft,
+  FaPencilAlt,
+  FaUserCheck,
+  FaUsersCog,
+  FaPlus,
+} from "react-icons/fa";
+import { MdLogout, MdOutlineSettings, MdEmail } from "react-icons/md";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,8 +18,9 @@ import Edit from "../components/layout/Edit";
 import { useAuth } from "../hooks/useAuth.jsx";
 import "../styles/panelAdmin.css";
 import Searcher from "./Searcher";
-import AdminDashboard from '../components/layout/panel-admin/AdminDashboard.jsx';
+import AdminDashboard from "../components/layout/panel-admin/AdminDashboard.jsx";
 import SendContent from "../components/layout/panel-admin/SendContent";
+import { IoStatsChartSharp } from "react-icons/io5";
 
 const PanelAdmin = () => {
   const { auth, logout } = useAuth();
@@ -21,6 +29,7 @@ const PanelAdmin = () => {
     logout(); // Limpia estado y localStorage
     navigate("/Admin"); // Redirige a /Admin
   };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -105,7 +114,7 @@ const PanelAdmin = () => {
     <>
       <Nav defaultActiveKey="/Admin" as="ul" className="nav-user">
         <Nav.Item as="li">
-          <span>Bienvenido {auth.name}</span>
+          <strong>Bienvenido {auth.name}</strong>
         </Nav.Item>
         <Nav.Item as="li">
           <button className="btn-admin" onClick={handleShow}>
@@ -120,14 +129,67 @@ const PanelAdmin = () => {
           </span>
         </Nav.Item>
       </Nav>
+      <button
+        className={`menu-toggle right ${isMenuOpen ? "open" : ""}`}
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        {isMenuOpen ? <FaChevronRight /> : <FaChevronLeft />}
+      </button>
+      <div className={`container-tools ${isMenuOpen ? "open" : ""}`}>
+        <ul>
+          <li>
+            <a href="#gestionar-contenido">
+              <span>
+                <FaPencilAlt />
+                Gestionar contenido
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="#crear-contenido">
+              <span>
+                <FaPlus />
+                Crear contenido
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="#modificar-carrusel">
+              <span>
+                <FaPencilAlt />
+                Modificar carrusel
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="#enviar-suscripciones">
+              <span>
+                <MdEmail />
+                Enviar contenido
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="#estadisticas">
+              <span>
+                <IoStatsChartSharp />
+                Estadísticas
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
       <section className="panel-admin">
         <h2>Bienvenido al Panel de Administración</h2>
-
         {/* Buscador en modo admin */}
-        <Searcher ref={searcherRef} isAdmin={true} onEdit={handleEditCard} />
-
+        <div id="gestionar-contenido"> </div>
+        <Searcher
+          ref={searcherRef}
+          isAdmin={true}
+          onEdit={handleEditCard}
+        />
         {/* Formulario de creación */}
-        <section className="add-card">
+        <section id="crear-contenido" className="add-card">
           <Create />
         </section>
 
@@ -144,7 +206,7 @@ const PanelAdmin = () => {
           </div>
         )}
 
-        <h3>Modificar Carrousel de Portada</h3>
+        <h2 id="modificar-carrusel">Modificar Carrusel de Portada</h2>
         <form onSubmit={handleSubmit} className="form-carousel">
           <label>
             Ciudad:
@@ -231,10 +293,10 @@ const PanelAdmin = () => {
           </Offcanvas.Body>
         </Offcanvas>
       </section>
-      <section className="send-content">
+      <section id="enviar-suscripciones" className="send-content">
         <SendContent />
       </section>
-      <section className="stats">
+      <section id="estadisticas" className="stats">
         <AdminDashboard />
       </section>
     </>
