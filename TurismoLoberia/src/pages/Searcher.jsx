@@ -9,6 +9,7 @@ import ContentCard from "../components/cards/ContentCard";
 import "../styles/searcher.css";
 import { useTranslation } from "react-i18next";
 import { trackEvent } from "../analytics";
+import {Global} from "../helpers/Global";
 
 const Searcher = ({ isAdmin = false, onEdit = null }) => {
   const location = useLocation();
@@ -42,7 +43,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
         limit,
       };
 
-      const response = await axios.get("http://localhost:5000/api/cards", { params });
+      const response = await axios.get(`${Global.url}cards`, { params });
       const cardsDB = response.data.cards || response.data;
       const total = response.data.total || cardsDB.length;
 
@@ -95,7 +96,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
 
   const handleDeleteCard = async (cardId) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/api/cards/${cardId}`);
+      const response = await axios.delete(`${Global.url}cards/${cardId}`);
       if (response.status === 200) fetchCards();
     } catch (error) {
       console.error("Error al eliminar la card:", error);
