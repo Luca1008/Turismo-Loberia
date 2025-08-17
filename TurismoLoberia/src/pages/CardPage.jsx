@@ -59,7 +59,7 @@ const CardPage = () => {
   if (!card) return <p>{t("cargando")}</p>;
 
   return (
-    <div className="card-detail" key={i18n.language}>
+    <section className="card-detail" key={i18n.language}>
       {card.card_img_portada && (
         <img
           src={card.card_img_portada}
@@ -138,7 +138,7 @@ const CardPage = () => {
         <h2>{t("informacion")}</h2>
         <p>{card.card_info}</p>
       </section>
-    </div>
+    </section>
   );
 };
 
