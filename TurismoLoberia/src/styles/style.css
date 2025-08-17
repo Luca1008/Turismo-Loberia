@@ -112,6 +112,12 @@ section h2 {
   align-items: center;
 }
 
+.suscribe h2{
+  text-align: center;
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+}
+
 .form-direction {
   width: 100%;
   max-width: 500px;

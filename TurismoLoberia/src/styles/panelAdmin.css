@@ -2,6 +2,15 @@
   text-align: center;
 }
 
+section.login h2 {
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+}
+
+.form-login strong {
+  color: var(--primary-color);
+}
+
 .nav-user {
   background-color: rgba(0, 0, 0, 0.058);
   display: flex;
@@ -202,8 +211,8 @@ aside.sidebar-admin li svg {
 .form-carousel {
   display: flex;
   flex-direction: column;
-  width: 400px;
   margin: auto;
+  max-width: 390px;
 }
 
 .form-carousel label {
@@ -321,16 +330,6 @@ aside.sidebar-admin li svg {
   margin: auto !important;
 }
 
-.bar-chart-transport,
-.bar-chart-source {
-  width: 500px !important;
-  height: 250px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: auto !important;
-}
-
 /*--------------Send Content--------------*/
 .send-content-container {
   display: flex;
@@ -374,4 +373,29 @@ aside.sidebar-admin li svg {
 
 .send-content-container button:hover {
   opacity: 0.9;
+}
+
+.section div.option-cards {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .form-carousel {
+    max-width: 600px;
+  }
+  .section div.option-cards {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .bar-chart-transport,
+  .bar-chart-source {
+    width: 500px !important;
+    height: 250px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: auto !important;
+  }
 }

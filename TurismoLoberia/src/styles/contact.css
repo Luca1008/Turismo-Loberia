@@ -1,10 +1,15 @@
-.contact{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-form{
+.contact h2 {
+  margin-top: 6rem;
+  margin-bottom: 2rem;
+}
+
+form {
   font-family: var(--font-base);
   width: 18.75rem; /* 300px */
   background-color: var(--form);
@@ -13,28 +18,26 @@ form{
   padding: 2rem;
 }
 
-label{
+label {
   font-weight: bold;
 }
 
-.requerided{
+.requerided {
   color: var(--red);
   width: 8px;
 }
 
-.contact button{
-    align-items: center;
+.contact button {
+  align-items: center;
 }
-  
-section.contact{
+
+section.contact {
   margin-bottom: 3rem;
 }
 
 @media (min-width: 768px) {
-
-  form{
+  form {
     width: 37.5rem; /* 600px */
     padding: 3rem;
   }
-  
 }
