@@ -258,7 +258,7 @@ export const Header = () => {
               className="navbar-brand d-flex align-items-center gap-2 m-0"
             >
               <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
-              <div className={`logo-text ${scrolled ? "nav-transparent" : ""}`}>
+              <div className={`logo-text loberia ${scrolled ? "nav-transparent" : ""}`}>
                 <strong
                   className="primary"
                   style={{
