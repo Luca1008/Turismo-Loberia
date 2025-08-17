@@ -10,13 +10,12 @@ import "../styles/button.css";
 import { trackEvent } from "../analytics";
 import { Trans } from "react-i18next";
 import "../styles/index.css";
-import artesanos_icon from "../assets/icons/services/artesanos.png";
-import lugares_interes_icon from "../assets/icons/services/interes.png";
-import serv_publicos_icon from "../assets/icons/services/serv_publicos.png";
-import gastronomia_icon from "../assets/icons/services/gastronomia.png";
-import alojamientos_icon from "../assets/icons/services/alojamientos.png";
-import info_util_icon from "../assets/icons/services/info_util.png";
-
+import artesanos_icon from "../assets/icons/services/artesanos.svg";
+import lugares_interes_icon from "../assets/icons/services/interes.svg";
+import serv_publicos_icon from "../assets/icons/services/serv_publicos.svg";
+import gastronomia_icon from "../assets/icons/services/gastronomia.svg";
+import alojamientos_icon from "../assets/icons/services/alojamientos.svg";
+import info_util_icon from "../assets/icons/services/info_util.svg";
 
 export const Index = () => {
   const [interes, setInteres] = useState([]);
@@ -95,7 +94,11 @@ export const Index = () => {
   return (
     <div className="index" key={i18n.language}>
       <ControlledCarousel
-        renderCaption={(caption) => <h1 className="text-shadow">{caption}</h1>}
+        renderCaption={(caption, link) => (
+          <h1 className="text-shadow">
+            <a href={link}>{caption}</a>
+          </h1>
+        )}
       />
       <section className="services">
         <h2>{t("guia_servicios")}</h2>
