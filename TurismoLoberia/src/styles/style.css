@@ -124,6 +124,12 @@ section h2 {
   margin: 0 auto;
 }
 
+/* Recuperar contraseña*/
+section.forgot-password h2{
+  margin-top: 7rem;
+  margin-bottom: 2rem;
+}
+
 /* Mobile first */
 /* body */
 body {

@@ -360,7 +360,8 @@ button.btn.btn-white {
 .nav-transparent-desktop-scroll button.primary:hover,
 .nav-transparent-desktop-scroll button.primary:active,
 .nav-transparent-desktop-scroll svg.primary.logoNav,
-.nav-transparent-desktop-scroll .border-item-nav {
+.nav-transparent-desktop-scroll .border-item-nav,
+.nav-transparent-desktop-scroll .typewriter-react{
   color: var(--primary-color) !important;
 }
 

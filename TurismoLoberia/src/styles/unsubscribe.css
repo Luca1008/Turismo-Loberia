@@ -5,7 +5,7 @@
     align-items: center;
     margin: auto;
     background-color: var(--primary-color);
-    width: 400px;
+    width: max-content;
     height: 40px;
     border-radius: 10px;
     color: var(--white);
@@ -15,15 +15,30 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
+.unsubscribe h2{
+    margin-top: 7rem;
+}
+
 .unsubscribe button:hover
 {
     background-color: var(--primary-color-dark-2);
 }
 
 .unsubscribe{
-    min-height: 40vh;
+    min-height: 50vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+@media (min-width: 768px) {
+    .unsubscribe{
+    min-height: 40vh;
+    }
+
+    .unsubscribe button{
+    width: 400px;
+    height: 40px;
+    }
 }
