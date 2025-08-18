@@ -125,7 +125,7 @@ export const Index = () => {
                 action: "Clic en servicio",
                 label: "Gastronomía",
               });
-              navigate("/Buscador", { state: { category: "Gastronomía" } });
+              navigate("/Buscador", { state: { category: "Gastronomia" } });
             }}
           >
             <img src={gastronomia_icon} alt="gastronomia" />
@@ -140,7 +140,7 @@ export const Index = () => {
                 label: "Lugares de Interés",
               });
               navigate("/Buscador", {
-                state: { category: "Lugares de Interés" },
+                state: { category: "Interes" },
               });
             }}
           >
@@ -170,7 +170,7 @@ export const Index = () => {
                 label: "Servicios Públicos",
               });
               navigate("/Buscador", {
-                state: { category: "Servicios Públicos" },
+                state: { category: "ServPublicos" },
               });
             }}
           >
@@ -186,7 +186,7 @@ export const Index = () => {
                 label: "Información Útil",
               });
               navigate("/Buscador", {
-                state: { category: "Información Útil" },
+                state: { category: "InfoUtil" },
               });
             }}
           >
