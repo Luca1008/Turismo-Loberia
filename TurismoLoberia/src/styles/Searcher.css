@@ -1,6 +1,7 @@
 /* Main container */
 .search-main {
   padding: 2rem 1rem;
+  padding-top: 6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
