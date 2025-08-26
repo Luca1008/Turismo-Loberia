@@ -12,8 +12,7 @@
 .photo-como-llegar-loberia,
 .photo-que-hacer-loberia,
 .photo-agenda-loberia,
-.photo-alojamiento-loberia
-.photo-gastronomia-loberia,
+.photo-alojamiento-loberia .photo-gastronomia-loberia,
 .portada-san-manuel,
 .photo-como-llegar-san-manuel,
 .photo-gastronomia-san-manuel,
@@ -28,7 +27,7 @@
 .photo-que-hacer-arenas-verdes,
 .photo-gastronomia-arenas-verdes,
 .photo-alojamiento-loberia,
-.portada-weather {
+section.accomodation .photo-alojamiento-arenas-verdes .portada-weather {
   width: 100%;
   height: 500px;
   background-position: center;
@@ -37,12 +36,11 @@
   margin-bottom: 2rem;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
-.city{
+.city {
   position: relative;
 }
 
-
-.portada-weather{
+.portada-weather {
   background-image: url("../assets/images/arenas_verdes/agenda.jpg");
 }
 .portada-city {
@@ -132,6 +130,12 @@
 }
 .photo-alojamiento-arenas-verdes {
   background-image: url("../assets/images/arenas_verdes/alojamiento.jpg");
+  height: 500px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .city section p {

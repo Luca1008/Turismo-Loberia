@@ -80,11 +80,23 @@ const ArenasVerdes = () => {
       </section>
 
       <section className="accommodation" id="alojamientos">
-        <h2>{t("alojamientos")}</h2>
+        <h2>{t("alojamientos_arenas_verdes")}</h2>
         <div className="photo-alojamiento-arenas-verdes"></div>
         <Trans components={{ p: <p />, strong: <strong /> }}>
           {data_arenas.alojamiento}
         </Trans>
+        <Trans
+          i18nKey="alojamientos_arenas_verdes_descripcion"
+          components={{
+            p: <p />,
+            h2: <h2 />,
+            h3: <h3 />,
+            ul: <ul />,
+            li: <li />,
+            br: <br />,
+            strong: <strong />,
+          }}
+        />
         <ButtonSuccess
           onClick={() => {
             trackEvent({
@@ -100,7 +112,7 @@ const ArenasVerdes = () => {
       </section>
 
       <section className="gastronomy" id="gastronomia">
-        <h2>{t("gastronomia")}</h2>
+        <h2>{t("gastronomia_arenas_verdes")}</h2>
         <div className="photo-gastronomia-arenas-verdes"></div>
         <Trans components={{ p: <p />, strong: <strong /> }}>
           {data_arenas.gastronomia}
@@ -121,8 +133,7 @@ const ArenasVerdes = () => {
 
       <section className="transport" id="transporte">
         <h2>{t("transporte")}</h2>
-        <div className="photo-transporte-arenas-verdes"></div>
-        <p>Durante la temporada alta...</p>
+        <p>{t("transporte_arenas_verdes")}</p>
       </section>
 
       <section className="agenda" id="agenda">
@@ -144,17 +155,24 @@ const ArenasVerdes = () => {
       </section>
 
       <section className="event" id="que-hacer">
-        <h2>{t("que_hacer2")}</h2>
+        <h2>{t("que_hacer_arenas_verdes")}</h2>
         <div className="photo-que-hacer-arenas-verdes"></div>
         <Trans components={{ p: <p /> }}>{data_arenas.actividades_intro}</Trans>
-        <Trans components={{ p: <p />, strong: <strong /> }}>
-          {data_arenas.relax_naturaleza}
+        <h2>{t("actividades_arenas_verdes")}</h2>
+        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>
+          {data_arenas.mar}
         </Trans>
         <Trans components={{ p: <p />, strong: <strong /> }}>
-          {data_arenas.deportes_acuaticos}
+          {data_arenas.entorno}
         </Trans>
-        <Trans components={{ p: <p />, strong: <strong /> }}>
+        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>
           {data_arenas.aire_libre}
+        </Trans>
+        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>
+          {data_arenas.magico}
+        </Trans>
+        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>
+          {data_arenas.experiencia}
         </Trans>
       </section>
 

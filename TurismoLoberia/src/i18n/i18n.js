@@ -22,7 +22,7 @@ const resources = {
           titulo:
             "<h3>Lobería se destaca por su paisaje excepcionalmente diverso, que combina en un mismo territorio:</h3>",
 
-          mar: "<p><strong>Mar y costa agreste:</strong><br/> En la localidad de Arenas Verdes, con sus médanos y bosques, ideal para el turismo de naturaleza y actividades deportivas.</p>",
+          mar: "<h3>Disfruta del mar y la arena:</h3> Camina por la extensa playa, siente la brisa marina y sumérgete en el océano. Es un lugar ideal para la práctica del <strong>surf</strong>, gracias a sus excelentes olas.</li><li>",
 
           sierras:
             "<p><strong>Sierras:</strong><br/> En San Manuel, un área que invita al descanso y al contacto con la naturaleza serrana.</p>",
@@ -146,7 +146,8 @@ const resources = {
       agenda_loberia_descripcion:
         "Aquí tienes toda la información sobre fiestas y actividades de Lobería, agrupada y organizada para su fácil uso en la web de turismo.",
       agenda_loberia: "Agenda de Fiestas y Actividades en Lobería",
-      que_hacer_loberia: "Lobería: Un destino para conectar con la naturaleza y la historia",
+      que_hacer_loberia:
+        "Lobería: Un destino para conectar con la naturaleza y la historia",
       fiestas_loberia_descripcion:
         "<p>Lobería es un destino que vibra con la energía de sus fiestas y tradiciones a lo largo de todo el año. Te invitamos a planificar tu visita y ser parte de nuestra agenda cultural y comunitaria</p><p><h2>Verano (Enero - Marzo)</h2></p> <ul><li><h3>Carnavales Lobería:</h3> El verano se despide a puro ritmo con los tradicionales carnavales. Las noches se llenan de color, música y alegría con el desfile de comparsas, murgas y carrozas, un espectáculo que convoca a toda la comunidad y sus visitantes.</li><br/><li><h3>Fiesta del Aniversario y Loberfest:</h3> El 31 de enero, Lobería celebra un nuevo aniversario de su fundación. Las celebraciones incluyen espectáculos artísticos, feria de artesanos y una gran fiesta de la cerveza artesanal conocida como la Loberfest, con food trucks y música en vivo en un ambiente festivo.</li><br/><li><h3>Fiesta Popular del Pago:</h3> Nacida como un encuentro de amigos, esta fiesta popular se ha consolidado como un evento imperdible. Es una oportunidad única para vivir el folklore y las tradiciones locales a través de la música en vivo, asado a la parrilla y un ambiente de camaradería.</li></ul><p><h2>Primavera (Septiembre - Diciembre)</h2></p></br><ul><h3>Fiesta de la Primavera y del Estudiante:</h3> En septiembre, Lobería le da la bienvenida a la primavera con una gran celebración llena de color y energía. Con actividades recreativas y música en vivo, la jornada se vive en la plaza principal, invitando a jóvenes y familias a disfrutar.</li><br/><br/><li><h3>Exposiciones Rurales y Encuentros Tradicionales:</h3> La ciudad mantiene viva la conexión con el campo a través de la Expo Lobería, organizada por la Sociedad Rural, un evento que muestra lo mejor de la producción agropecuaria, y la Fiesta de Asadores, donde el aroma del asado se convierte en el gran protagonista.</li><br/><li><h3>Fiesta de las Colectividades:</h3> Lobería celebra su herencia multicultural en este evento que rinde homenaje a las raíces de la comunidad. Disfruta de la música, las danzas típicas y los sabores de las distintas colectividades que conviven en el partido.</li></ul><h2>Actividades a lo Largo del Año</h2><ul><li><h3>Eventos Deportivos:</h3> Carreras, torneos y otras competencias locales.</li><br/><li><h3>Ferias de Emprendedores:</h3> Muestras de productos locales y artesanías.</li><br/><li><h3>Festivales de Música:</h3> Oportunidades para disfrutar de artistas locales y regionales.</li><br/><li><h3>Exposiciones Artísticas:</h3> Muestras en el Centro Cultural y otros espacios de la ciudad.</li></ul><>¡Lobería te espera en cualquier momento del año para que vivas una experiencia auténtica y memorable!",
       que_hacer_loberia_descripcion:
@@ -167,14 +168,15 @@ const resources = {
           "<p><strong>Necochea:</strong> El trayecto es de 160 km, con un tiempo estimado de 1 hora y 31 minutos, utilizando principalmente la RP 227.</p>",
       },
       alojamientos_san_manuel:
-        "<h2>Alojamientos en San Manuel: Tu Lugar para el Descanso</h2>",
+        "<h2>Alojamiento en San Manuel: Tu Lugar para el Descanso</h2>",
       alojamientos_san_manuel_descripcion:
         "Si buscas un lugar tranquilo para desconectar y disfrutar de la paz del campo, San Manuel te ofrece un alojamiento para que puedas concretar tu estadía en la localidad.",
       agenda_san_manuel:
         "<h2>Fiestas y Tradiciones en San Manuel: Un Reencuentro con la Fe y la Comunidad</h2><p>La localidad de San Manuel celebra su identidad y su historia a través de una serie de festividades que marcan el calendario y atraen a vecinos y visitantes.</p><p> Son oportunidades únicas para conectar con la esencia de este pueblo.</p> <ul><li><h3>Aniversario de la localidad:</h3><p>Cada 25 de marzo, San Manuel se viste de fiesta para celebrar su fundación. El evento congrega a la comunidad en un festejo que incluye espectáculos artísticos, feria de emprendedores y un ambiente de alegría que celebra el arraigo y la historia del pueblo.</p></li><li><h3>Celebración de la Virgen de Fátima:</h3><p>La fe es un pilar fundamental en San Manuel.</p><p>En el mes de mayo, la <strong>Parroquia Nuestra Señora de Fátima</strong> se convierte en el epicentro de una gran celebración religiosa. Los fieles participan en misas, procesiones y diversas actividades en honor a su patrona, en un acto de devoción que une a toda la comunidad.</p></li><li><h3>Semana Santa y Vía Crucis del Cerro El Toro:</h3><p>La espiritualidad se vive de una manera muy especial en la localidad. Durante la Semana Santa, los actos religiosos culminan con la emotiva representación del <strong>Vía Crucis en el Cerro El Toro:</strong></p><p>Los participantes recorren las estaciones en un ascenso simbólico, uniendo la devoción con el imponente paisaje natural, en una experiencia de profunda reflexión.</p></li></ul><p>San Manuel te invita a ser parte de estas tradiciones que definen su espíritu y su identidad.</p>",
-      que_hacer_san_manuel:"San Manuel: Un rincón de Historia y Fe en el Corazón de la Pampa",
-      que_hacer_san_manuel_descripcion: "<p>San Manuel te espera para ofrecerte una experiencia de tranquilidad y arraigo a las tradiciones locales. Si buscas un destino para una escapada apacible, aquí encontrarás la oportunidad de conectar con la historia y la naturaleza.</p><ul><li><h3>Fe y Espiritualidad:</h3><p>No te pierdas la visita al <strong>Cerro El Toro</strong>, donde se encuentra un emotivo Vía Crucis. Recorrer sus estaciones es una oportunidad única para la reflexión, mientras disfrutas de una vista panorámica del paisaje.</p></li><li><h3>Viaje al Pasado:</h3><p>Conoce la historia de la localidad en el <strong>Museo Histórico</strong>, ubicado en la antigua estación de tren del Ferrocarril. Este lugar resguarda el legado de los pioneros y el desarrollo del pueblo.</p></li><li><h3>Patrimonio Local:</h3><p>Tómate un momento para apreciar la arquitectura y la paz que transmite la <strong>Parroquia Nuestra Señora de Fátima</strong>, un punto de referencia en San Manuel que se erige frente a la plaza principal, invitándote a una pausa en tu recorrido.</p></li></ul><p>San Manuel es el lugar perfecto para quienes valoran la sencillez, la historia y la calma del entorno rural entre sierras, cuenta también con un parque y pileta municipal ideal para compartir momentos con amigos y familia.</p>",
-
+      que_hacer_san_manuel:
+        "San Manuel: Un rincón de Historia y Fe en el Corazón de la Pampa",
+      que_hacer_san_manuel_descripcion:
+        "<p>San Manuel te espera para ofrecerte una experiencia de tranquilidad y arraigo a las tradiciones locales. Si buscas un destino para una escapada apacible, aquí encontrarás la oportunidad de conectar con la historia y la naturaleza.</p><ul><li><h3>Fe y Espiritualidad:</h3><p>No te pierdas la visita al <strong>Cerro El Toro</strong>, donde se encuentra un emotivo Vía Crucis. Recorrer sus estaciones es una oportunidad única para la reflexión, mientras disfrutas de una vista panorámica del paisaje.</p></li><li><h3>Viaje al Pasado:</h3><p>Conoce la historia de la localidad en el <strong>Museo Histórico</strong>, ubicado en la antigua estación de tren del Ferrocarril. Este lugar resguarda el legado de los pioneros y el desarrollo del pueblo.</p></li><li><h3>Patrimonio Local:</h3><p>Tómate un momento para apreciar la arquitectura y la paz que transmite la <strong>Parroquia Nuestra Señora de Fátima</strong>, un punto de referencia en San Manuel que se erige frente a la plaza principal, invitándote a una pausa en tu recorrido.</p></li></ul><p>San Manuel es el lugar perfecto para quienes valoran la sencillez, la historia y la calma del entorno rural entre sierras, cuenta también con un parque y pileta municipal ideal para compartir momentos con amigos y familia.</p>",
 
       //Arenas Verdes Actualizado
       arenas_verdes: "Arenas Verdes",
@@ -192,18 +194,34 @@ const resources = {
         desde_mar_del_plata:
           "<p><strong>Mar del Plata:</strong> La distancia es de 125 km, con un tiempo de viaje estimado de 1 hora y 50 minutos por la RP 88.</p>",
         actividades_intro:
-          "<p>En el Balneario Arenas Verdes, puedes disfrutar de una variedad de actividades que se centran en su entorno natural único de playa, dunas y bosques.</p>",
-        relax_naturaleza:
-          "<p><strong>Relax y naturaleza:</strong> Es un lugar perfecto para descansar y desconectarse. Puedes caminar por sus playas solitarias, disfrutar del sonido del mar y explorar sus médanos y bosques de pinos. Además, podés conocer la nueva reserva municipal de objetivos mixtos con flora y fauna protegida.</p>",
-        deportes_acuaticos:
-          "<p><strong>Deportes acuáticos:</strong> Sus playas son ideales para practicar actividades como surf y kayak.</p>",
+          "<p>Situado a pocos kilómetros de Lobería, <strong>Arenas Verdes</strong> es un balneario natural que cautiva por su belleza agreste y su tranquilidad. Este rincón único combina un extenso <strong>bosque de pinos y eucaliptos</strong>, imponentes <strong>médanos</strong> y una amplia <strong>playa</strong> bañada por el Atlántico, creando un escenario perfecto para desconectar y conectar con la naturaleza.</p>",
+        mar: "<h3>Disfruta del Mar y la Arena:</h3><p>Camina por la extensa playa, siente la brisa marina y sumérgete en el océano. Es un lugar ideal para la práctica del <strong>surf</strong>, gracias a sus excelentes olas.</p>",
         aire_libre:
-          "<p><strong>Actividades al aire libre:</strong> El entorno natural es propicio para el trekking, caminatas y la fotografía de paisajes, incluyendo la posibilidad de avistar ballenas en temporada.</p>",
+          "<h3>Vive la naturaleza:</h3> La nueva <strong>Reserva Natural</strong> te invita a explorar su flora y fauna, y a capturar en imágenes la belleza de este ecosistema.",
+        magico:
+          "<h3>Momentos mágicos:</h3> No te pierdas los espectaculares <strong>amaneceres y atardeceres</strong> que tiñen el cielo de colores. Y al caer la noche, prepárate para un show único: un cielo completamente despejado, ideal para observar las <strong>estrellas</strong>.",
+        relax:
+          "<h3>Relax y ocio:</h3> Disfruta de la tranquilidad del lugar, visita sus <strong>comercios de artesanías y balnearios</strong>, y pasa tiempo de calidad con la familia, permitiendo que los <strong>niños</strong> jueguen libremente en un entorno seguro y natural.",
+        experiencia:
+          "<p>Arenas Verdes es más que una playa, es una experiencia para todos los sentidos.</p>",
         alojamiento:
-          "<p>El balneario cuenta con opciones de alojamiento como aparts, cabañas, hosterías y dos áreas de camping: la Base Municipal de Campamento y el Complejo de Mar y Camping.</p>",
+          "<p>En Arenas Verdes, te invitamos a encontrar el alojamiento perfecto para disfrutar tus vacaciones o momentos especiales durante el resto del año. Nuestra oferta se adapta a todos los gustos, ya sea que prefieras la cercanía al mar o la tranquilidad del bosque.</p>",
         gastronomia:
-          "<p>Hay lugares para disfrutar de la gastronomía local, como la histórica fonda de Guillermina y los nuevos paradores en la playa.</p>",
+          "<p>En Arenas Verdes, la experiencia culinaria es tan relajada como su entorno. Aquí encontrarás opciones gastronómicas que combinan lo tradicional con el encanto del mar, perfectas para cualquier momento del día.</p><p>Desde los clásicos y acogedores <strong>restaurantes</strong> locales con platos caseros, hasta las propuestas más sofisticadas de los <strong>balnearios</strong>, donde podrás disfrutar de un almuerzo o cena con una vista inigualable del océano.</p><p>Además, si buscas un sabor más arraigado a nuestras tradiciones, no dejes de probar las ricas <strong>empanadas</strong> y las auténticas <strong>pastas caseras</strong> que se preparan en uno de los lugares pioneros de Arenas Verdes.</p><p>Cada opción es una invitación a sentarse, disfrutar y deleitarse con buena compañía.</p>",
       },
+      alojamientos_arenas_verdes:
+        "Alojamiento en Arenas Verdes: Tu lugar ideal para descansar",
+      alojamientos_arenas_verdes_descripcion:
+        "<h2>Para todos los estilos de viaje:</h2><ul><li><h3>Para los Amantes de la Naturaleza:</h3><p>Si buscas una experiencia auténtica, puedes elegir entre un <strong>camping</strong> bajo las estrellas o la intimidad de <strong>cabañas</strong> y <strong>dormis</strong>, algunos de ellos inmersos en el bosque.</p></li><li><br/><h3>Para Mayor Comodidad:</h3><p>Si viajas en familia o con amigos, tienes a tu disposición <strong>casas</strong>, <strong>apart</strong> y <strong>bungalows</strong> totalmente equipados, muchos de ellos con vistas privilegiadas.</p></li></ul><p>Tanto en la zona del bosque como cerca de la playa, cada opción te permitirá vivir una experiencia única, despertando con el sonido del mar o rodeado de la paz de los pinos.</p><p>Prepárate para disfrutar de una <strong>estadia</strong> inolvidable.</p>",
+      gastronomia_arenas_verdes:
+        "Sabores con Vista al Mar: Gastronomía en Arenas Verdes",
+      transporte_arenas_verdes:
+        "Arenas Verdes se encuentra en el partido de Loberia, y se accede de dos maneras. Una es por el camino costero desde Costa Bonita y la otra es por un camino mejorado de 7 km. Que se encuentra a la altura de km. 108.5 de la ruta provincial 88.",
+      que_hacer_arenas_verdes:
+        "Arenas Verdes: Un paraíso entre dunas, mar y bosque",
+      actividades_arenas_verdes: "¿Qué hacer en Arenas Verdes?",
+
+      // General
       informacion_general: "Información General",
       historia: "Historia",
       naturaleza: "Naturaleza",
@@ -510,8 +528,9 @@ const resources = {
       agenda_loberia: "Lobería's Festival and Activity Schedule",
       agenda_loberia_descripcion:
         "Here you have all the information about Lobería's festivals and activities, grouped and organized for easy use on the tourism website.",
-      que_hacer_loberia:"Lobería: A destination to connect with nature and history",
-        fiestas_loberia_descripcion: 
+      que_hacer_loberia:
+        "Lobería: A destination to connect with nature and history",
+      fiestas_loberia_descripcion:
         "<p>Lobería is a destination that vibrates with the energy of its festivals and traditions throughout the year. We invite you to plan your visit and be part of our cultural and community calendar.</p><p><h2>Summer (January - March)</h2></p> <ul><li><h3>Lobería Carnivals:</h3> Summer bids farewell in full swing with the traditional carnivals. The nights fill with color, music, and joy with the parade of comparsas, murgas, and floats, a spectacle that brings together the entire community and its visitors.</li><br/><li><h3>Anniversary Celebration and Loberfest:</h3> On January 31st, Lobería celebrates another anniversary of its founding. The festivities include artistic performances, a craft fair, and the great craft beer festival known as Loberfest, with food trucks and live music in a festive atmosphere.</li><br/><li><h3>Fiesta Popular del Pago:</h3> Born as a gathering of friends, this popular festival has become an unmissable event. It’s a unique opportunity to experience folklore and local traditions through live music, grilled barbecue, and a spirit of camaraderie.</li></ul><p><h2>Spring (September - December)</h2></p></br><ul><li><h3>Spring and Student Festival:</h3> In September, Lobería welcomes spring with a big celebration full of color and energy. With recreational activities and live music, the day takes place in the main square, inviting young people and families to enjoy together.</li><br/><br/><li><h3>Rural Exhibitions and Traditional Gatherings:</h3> The city keeps its bond with the countryside alive through Expo Lobería, organized by the Rural Society, an event that showcases the best of agricultural production, and the Asadores Festival, where the aroma of barbecue becomes the main attraction.</li><br/><li><h3>Festival of Communities:</h3> Lobería celebrates its multicultural heritage in this event that pays tribute to the community’s roots. Enjoy music, traditional dances, and the flavors of the different cultures that coexist in the district.</li></ul><h2>Activities Throughout the Year</h2><ul><li><h3>Sports Events:</h3> Races, tournaments, and other local competitions.</li><br/><li><h3>Entrepreneurs’ Fairs:</h3> Exhibitions of local products and crafts.</li><br/><li><h3>Music Festivals:</h3> Opportunities to enjoy performances by local and regional artists.</li><br/><li><h3>Art Exhibitions:</h3> Shows at the Cultural Center and other venues in the city.</li></ul><>Lobería awaits you at any time of the year so you can enjoy an authentic and memorable experience!",
       que_hacer_loberia_descripcion:
         "<p><h2>Lobería: A destination to connect with nature and history</h2><br /><br />Lobería invites you to discover a unique environment where the city, the inland towns, the countryside, the hills, and the sea come together.<br /><br /><h3>Nature and Adventure:</h3> Explore the beauty of <span>Arenas Verdes</span>, our unspoiled beach ideal for enjoying the sea and the dunes, and also the <span>Quequén River</span> in the Las Cascadas area, offering the perfect setting for fishing and kayaking.<br /><br /><h3>Culture and History:</h3> Immerse yourself in the past of the region by visiting the <span>Museum of Natural Sciences</span> and the <span>Historical Museums of the City of Lobería and the town of San Manuel</span>.<br /><br />For motorsport enthusiasts, a must-see is the <span>Villa Ercilia Cultural Center</span>, from which the Automobile Museum is being developed.<br /><br /><h3>Tradition and Relaxation:</h3> Simply stroll through our streets, discover local monuments, and enjoy the peaceful rhythm of life in Lobería — perfect for disconnecting and recharging your energy.</p>",
@@ -530,12 +549,16 @@ const resources = {
           "<p><strong>Necochea:</strong> The route is 160 km, with an estimated time of 1 hour and 31 minutes, mainly using RP 227.</p>",
       },
       alojamientos_san_manuel:
-        "<h2>Accommodations in San Manuel: Your Place to Rest</h2>",
+        "<h2>Accommodation in San Manuel: Your Place to Rest</h2>",
       alojamientos_san_manuel_descripcion:
         "If you're looking for a quiet place to disconnect and enjoy the peace of the countryside, San Manuel offers accommodations where you can plan your stay in the town.",
-      agenda_san_manuel: "<h2>Festivals and Traditions in San Manuel: A Reunion with Faith and Community</h2><p>The town of San Manuel celebrates its identity and history through a series of festivities that mark the calendar and attract both locals and visitors.</p><p>These are unique opportunities to connect with the essence of this town.</p><ul><li><h3>Town Anniversary:</h3><p>Every March 25, San Manuel dresses up to celebrate its founding. The event brings the community together in a celebration that includes artistic performances, an artisan fair, and a joyful atmosphere that honors the town's heritage and history.</p></li><li><h3>Celebration of the Virgin of Fátima:</h3><p>Faith is a fundamental pillar in San Manuel.</p><p>In May, the <strong>Our Lady of Fátima Parish</strong> becomes the epicenter of a major religious celebration. The faithful participate in masses, processions, and various activities in honor of their patroness, in an act of devotion that unites the entire community.</p></li><li><h3>Holy Week and the Way of the Cross on Cerro El Toro:</h3><p>Spirituality is experienced in a very special way in the town. During Holy Week, the religious events culminate with the moving representation of the <strong>Way of the Cross on Cerro El Toro:</strong></p><p>Participants walk through the stations in a symbolic ascent, combining devotion with the stunning natural landscape, in an experience of deep reflection.</p></li></ul><p>San Manuel invites you to be part of these traditions that define its spirit and identity.</p>",
-      que_hacer_san_manuel: "San Manuel: A Corner of History and Faith in the Heart of the Pampas",
-      que_hacer_san_manuel_descripcion: "<p>San Manuel awaits you to offer an experience of tranquility and deep connection to local traditions. If you are looking for a destination for a peaceful escape, here you will find the opportunity to connect with history and nature.</p><ul><li><h3>Faith and Spirituality:</h3><p>Do not miss the visit to <strong>Cerro El Toro</strong>, home to a moving Via Crucis. Walking its stations is a unique opportunity for reflection, while you enjoy a panoramic view of the landscape.</p></li><li><h3>Journey to the Past:</h3><p>Discover the history of the town at the <strong>Historical Museum</strong>, located in the old train station of the Railway. This place safeguards the legacy of the pioneers and the development of the town.</p></li><li><h3>Local Heritage:</h3><p>Take a moment to appreciate the architecture and peace emanating from the <strong>Parish of Our Lady of Fátima</strong>, a landmark in San Manuel that stands in front of the main square, inviting you to a pause in your tour.</p></li></ul><p>San Manuel is the perfect place for those who value simplicity, history, and the calm of the rural setting among the sierras; it also features a municipal park and pool ideal for sharing moments with friends and family.</p>",
+      agenda_san_manuel:
+        "<h2>Festivals and Traditions in San Manuel: A Reunion with Faith and Community</h2><p>The town of San Manuel celebrates its identity and history through a series of festivities that mark the calendar and attract both locals and visitors.</p><p>These are unique opportunities to connect with the essence of this town.</p><ul><li><h3>Town Anniversary:</h3><p>Every March 25, San Manuel dresses up to celebrate its founding. The event brings the community together in a celebration that includes artistic performances, an artisan fair, and a joyful atmosphere that honors the town's heritage and history.</p></li><li><h3>Celebration of the Virgin of Fátima:</h3><p>Faith is a fundamental pillar in San Manuel.</p><p>In May, the <strong>Our Lady of Fátima Parish</strong> becomes the epicenter of a major religious celebration. The faithful participate in masses, processions, and various activities in honor of their patroness, in an act of devotion that unites the entire community.</p></li><li><h3>Holy Week and the Way of the Cross on Cerro El Toro:</h3><p>Spirituality is experienced in a very special way in the town. During Holy Week, the religious events culminate with the moving representation of the <strong>Way of the Cross on Cerro El Toro:</strong></p><p>Participants walk through the stations in a symbolic ascent, combining devotion with the stunning natural landscape, in an experience of deep reflection.</p></li></ul><p>San Manuel invites you to be part of these traditions that define its spirit and identity.</p>",
+      que_hacer_san_manuel:
+        "San Manuel: A Corner of History and Faith in the Heart of the Pampas",
+      que_hacer_san_manuel_descripcion:
+        "<p>San Manuel awaits you to offer an experience of tranquility and deep connection to local traditions. If you are looking for a destination for a peaceful escape, here you will find the opportunity to connect with history and nature.</p><ul><li><h3>Faith and Spirituality:</h3><p>Do not miss the visit to <strong>Cerro El Toro</strong>, home to a moving Via Crucis. Walking its stations is a unique opportunity for reflection, while you enjoy a panoramic view of the landscape.</p></li><li><h3>Journey to the Past:</h3><p>Discover the history of the town at the <strong>Historical Museum</strong>, located in the old train station of the Railway. This place safeguards the legacy of the pioneers and the development of the town.</p></li><li><h3>Local Heritage:</h3><p>Take a moment to appreciate the architecture and peace emanating from the <strong>Parish of Our Lady of Fátima</strong>, a landmark in San Manuel that stands in front of the main square, inviting you to a pause in your tour.</p></li></ul><p>San Manuel is the perfect place for those who value simplicity, history, and the calm of the rural setting among the sierras; it also features a municipal park and pool ideal for sharing moments with friends and family.</p>",
+
       //Arenas Verdes Actualizado
       arenas_verdes: "Green Sands",
       descripcion_arenas_verdes: {
@@ -552,18 +575,36 @@ const resources = {
         desde_mar_del_plata:
           "<p><strong>Mar del Plata:</strong> The distance is 125 km, with an estimated travel time of 1 hour and 50 minutes via RP 88.</p>",
         actividades_intro:
-          "<p>In Arenas Verdes, you can enjoy a variety of activities focused on its unique natural environment of beach, dunes, and forests.</p>",
-        relax_naturaleza:
-          "<p><strong>Relaxation and nature:</strong> It's a perfect place to unwind and disconnect. You can walk along its quiet beaches, enjoy the sound of the sea, and explore the dunes and pine forests. You can also visit the new municipal reserve with protected flora and fauna.</p>",
-        deportes_acuaticos:
-          "<p><strong>Water sports:</strong> Its beaches are ideal for activities such as surfing and kayaking.</p>",
+          "<p>Located just a few kilometers from Lobería, <strong>Arenas Verdes</strong> is a natural seaside resort that captivates with its rugged beauty and tranquility. This unique spot combines an extensive <strong>forest of pines and eucalyptuses</strong>, imposing <strong>dunes</strong>, and a wide <strong>beach</strong> bathed by the Atlantic, creating the perfect setting to disconnect and reconnect with nature.</p",
+        mar: "<h3>Enjoy the Sea and the Sand:</h3><p>Walk along the extensive beach, feel the sea breeze, and immerse yourself in the ocean. It is an ideal place for <strong>surfing</strong>, thanks to its excellent waves.</p>",
+        entorno:
+          "<p><h3>Explore the surroundings:</h3> Stroll along the sandy streets, ride a <strong>bicycle</strong>, and get lost among the forest trails. The combination of pine and sea salt aromas is an unparalleled experience.</p>",
         aire_libre:
-          "<p><strong>Outdoor activities:</strong> The natural setting is perfect for trekking, walking, and landscape photography, including whale watching during the season.</p>",
+          "<h3>Experience nature:</h3> The new <strong>Natural Reserve</strong> invites you to explore its flora and fauna, and capture the beauty of this ecosystem in images.",
+        magico:
+          "<h3>Magical moments:</h3> Don’t miss the spectacular <strong>sunsets and sunrises</strong> that paint the sky with colors. And when night falls, get ready for a unique show: a completely clear sky, ideal for observing the <strong>stars</strong>.",
+        relax:
+          "<h3>Relaxation and leisure:</h3> Enjoy the tranquility of the place, visit its <strong>craft shops and seaside resorts</strong>, and spend quality time with family, allowing <strong>children</strong> to play freely in a safe and natural environment.",
+        experiencia:
+          "<p>Arenas Verdes is more than a beach—it is an experience for all the senses.</p>",
         alojamiento:
-          "<p>The resort offers accommodation options such as apartments, cabins, inns, and two camping areas: the Municipal Camping Base and the Sea and Camping Complex.</p>",
+          "<p>In Arenas Verdes, we invite you to find the perfect accommodation to enjoy your vacation or special moments throughout the rest of the year. Our offerings cater to all tastes, whether you prefer being close to the sea or the tranquility of the forest.</p>",
         gastronomia:
-          "<p>There are places to enjoy local cuisine, such as the historic Guillermina inn and the new beachside food stands.</p>",
+          "<p>In Arenas Verdes, the culinary experience is as relaxed as its surroundings. Here you will find dining options that blend traditional flavors with seaside charm, perfect for any time of day.</p><p>From classic, cozy local <strong>restaurants</strong> serving homemade dishes to the more sophisticated offerings at beachfront resorts where you can enjoy lunch or dinner with an unparalleled ocean view.</p><p>Additionally, if you’re looking for flavors deeply rooted in our traditions, be sure to try the delicious <strong>empanadas</strong> and authentic <strong>homemade pasta</strong> prepared at one of Arenas Verdes' pioneering establishments.</p><p>Each option is an invitation to sit back, enjoy, and savor the moment with good company.</p>",
       },
+      alojamientos_arenas_verdes:
+        "Accommodation in Arenas Verdes: Your Ideal Place to Rest",
+      alojamientos_arenas_verdes_descripcion:
+        "<p><h2>For all travel styles:</h2></p><ul><li><h3>For Nature Lovers:</h3><p>If you seek an authentic experience, you can choose between <strong>camping</strong> under the stars or the privacy of <strong>cabins</strong> and <strong>dormis</strong>, some nestled in the forest.</p></li><li><br/><h3>For Greater Comfort:</h3><p>If traveling with family or friends, you have at your disposal fully equipped <strong>houses</strong>, <strong>apartments</strong>, and <strong>bungalows</strong>, many with privileged views.</p></li></ul><p>Both in the forest area and near the beach, each option will allow you to live a unique experience, waking up to the sound of the sea or surrounded by the peace of the pine trees.</p><p>Get ready to enjoy an unforgettable <strong>stay</strong>.</p>",
+      gastronomia_arenas_verdes:
+        "<h2>Flavors with a Sea View: Gastronomy in Arenas Verdes</h2>",
+      transporte_arenas_verdes:
+        "Arenas Verdes is located in the district of Lobería and can be accessed in two ways: one is via the coastal road from Costa Bonita, and the other is via a 7 km improved road located at km 108.5 of Provincial Route 88.",
+      que_hacer_arenas_verdes:
+        "Arenas Verdes: A paradise among dunes, sea, and forest",
+      actividades_arenas_verdes: "What to do in Arenas Verdes?",
+
+      //General
       informacion_general: "General Info",
       historia: "History",
       naturaleza: "Nature",
