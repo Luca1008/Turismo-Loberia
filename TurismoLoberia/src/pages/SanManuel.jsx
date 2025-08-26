@@ -82,9 +82,9 @@ export const SanManuel = () => {
       </section>
 
       <section className="accommodation" id="alojamientos">
-        <h2>{t("alojamientos")}</h2>
+        <Trans components={{ h2: <h2 />}} i18nKey="alojamientos_san_manuel" />
         <div className="photo-alojamiento-san-manuel"></div>
-        <p>San Manuel ofrece opciones de alojamiento sencillas...</p>
+        <p>{t("alojamientos_san_manuel_descripcion")}</p>
         <ButtonSuccess
           onClick={() => {
             trackEvent({
@@ -126,7 +126,7 @@ export const SanManuel = () => {
       <section className="agenda" id="agenda">
         <h2>{t("agenda")}</h2>
         <div className="photo-agenda-san-manuel"></div>
-        <p>San Manuel celebra diversos eventos a lo largo del año...</p>
+        <Trans components={{ p: <p />, h2: <h2 />, h3: <h3 />, ul: <ul />, li: <li /> }} i18nKey="agenda_san_manuel" />
         <ButtonSuccess
           onClick={() => {
             trackEvent({
@@ -142,9 +142,9 @@ export const SanManuel = () => {
       </section>
 
       <section className="event" id="que-hacer">
-        <h2>{t("que_hacer2")}</h2>
+        <h2>{t("que_hacer_san_manuel")}</h2>
         <div className="photo-que-hacer-san-manuel"></div>
-        <p>En San Manuel podés disfrutar de varias actividades...</p>
+        <Trans components={{ p: <p />, h3: <h3 />, ul: <ul />, li: <li /> }} i18nKey="que_hacer_san_manuel_descripcion" />
       </section>
 
       <section className="download" id="descargas">
