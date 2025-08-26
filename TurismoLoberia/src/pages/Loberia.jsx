@@ -52,7 +52,7 @@ const Loberia = () => {
 
   return (
     <div id="informacion-general" className="city" key={i18n.language}>
-      <div id="informacion-general"className="portada-loberia"></div>
+      <div id="informacion-general" className="portada-loberia"></div>
       <h1>{t("ciudad_loberia")}</h1>
       <section className="information-city-loberia">
         <Trans
@@ -191,7 +191,7 @@ const Loberia = () => {
       <section className="accommodation" id="alojamientos">
         <h2>{t("alojamientos")}</h2>
         <div className="photo-alojamiento-loberia"></div>
-        <p>La ciudad de Lobería ofrece una variedad de opciones...</p>
+        <p>{t("alojamientos_loberia_descripcion")}</p>
         <ButtonSuccess
           onClick={() => {
             trackEvent({
@@ -209,7 +209,10 @@ const Loberia = () => {
       <section className="gastronomy" id="gastronomia">
         <h2>{t("gastronomia")}</h2>
         <div className="photo-gastronomia-loberia"></div>
-        <p>La gastronomía en Lobería se destaca por...</p>
+        <Trans
+          i18nKey="gastronomia_loberia_descripcion"
+          components={{ p: <p />, span: <span className="font-semibold" /> }}
+        />
         <ButtonSuccess
           onClick={() => {
             trackEvent({
@@ -227,13 +230,19 @@ const Loberia = () => {
       <section className="transport" id="transporte">
         <h2>{t("transporte")}</h2>
         <div className="photo-transporte-partido-loberia"></div>
-        <p>Lobería cuenta con una terminal de ómnibus...</p>
+        <Trans
+          i18nKey="transporte_loberia_descripcion"
+          components={{ p: <p />, strong: <strong /> }}
+        />
       </section>
 
       <section className="agenda" id="agenda">
         <h2>{t("agenda")}</h2>
         <div className="photo-agenda-loberia"></div>
-        <p>Lobería ofrece una variada agenda cultural...</p>
+        <p>{t("agenda_loberia_descripcion")}</p>
+        <h2>{t("fiestas_loberia")}:</h2>
+        <Trans i18nKey="fiestas_loberia_descripcion"
+          components={{ p: <p />, strong: <strong />, h3: <h3 />, h2: <h2 />, ul:<ul/>, li:<li/>}} />
         <ButtonSuccess
           onClick={() => {
             trackEvent({
@@ -251,18 +260,8 @@ const Loberia = () => {
       <section className="event" id="que-hacer">
         <h2>{t("que_hacer2")}</h2>
         <div className="photo-que-hacer-loberia"></div>
-        <p>
-          <strong>Playas y naturaleza:</strong> ...
-        </p>
-        <p>
-          <strong>Cultura e historia:</strong> ...
-        </p>
-        <p>
-          <strong>Turismo rural:</strong> ...
-        </p>
-        <p>
-          <strong>Gastronomía y relax:</strong> ...
-        </p>
+        <Trans
+          i18nKey="que_hacer_loberia_descripcion" components={{ p: <p />,h2: <h2 />, h3: <h3 /> , span: <span className="font-semibold" />}} />
       </section>
 
       <section className="download" id="descargas">
@@ -280,7 +279,7 @@ const Loberia = () => {
           className="button"
         />
       </section>
-      </div>
+    </div>
   );
 };
 
