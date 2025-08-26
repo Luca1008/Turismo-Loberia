@@ -257,7 +257,7 @@ const Loberia = () => {
       </section>
 
       <section className="event" id="que-hacer">
-        <h2>{t("que_hacer2")}</h2>
+        <h2>{t("que_hacer_loberia")}</h2>
         <div className="photo-que-hacer-loberia"></div>
         <Trans
           i18nKey="que_hacer_loberia_descripcion" components={{ p: <p />,h2: <h2 />, h3: <h3 /> , span: <span className="font-semibold" />}} />
