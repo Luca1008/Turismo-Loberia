@@ -195,6 +195,17 @@ export const Index = () => {
           </div>
         </div>
       </section>
+      <section className="Banner">
+            <h2>t(titulo_invites)</h2>
+            <img src="../assets/images/invites.jpg" alt="" onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Ver más",
+              label: "Invites",
+            });
+            navigate("/Invites");
+          }}/>
+      </section>
       <section className="places">
         <h1>{t("descubri_loberia")}</h1>
         <p className="text-left">

@@ -19,8 +19,9 @@ import { Register } from "../pages/Register";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import Unsubscribe from "../pages/Unsubscribe";
+import Invites from "../pages/Invites";
 
-export const Routing = () => {
+export const Routing = () => {  
   return (
     <Routes>
       <Route path="/" element={<Index />} />
@@ -38,6 +39,7 @@ export const Routing = () => {
       <Route path="/Register" element={<Register />} />
       <Route path="/cards/:id" element={<CardPage />} />
       <Route path="/unsubscribe/:token" element={<Unsubscribe />} />
+      <Route path="/invites" element={<Invites />} />
 
       {/*Rutas panel Admin renderizadas en el mismo componente*/}
       <Route path="/PanelAdmin" element={<PanelAdmin />}>

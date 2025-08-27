@@ -386,6 +386,14 @@ const resources = {
       Otros: "Otros",
       Acepto_politicas: "Acepto recibir información por correo electrónico",
       Políticas_de_Privacidad: "Políticas de Privacidad",
+
+      // Loberia te invita
+      titulo_invites: "Lobería te invita",
+      p1_invites: "En tu visita a nuestra ciudad, queremos que disfrutes mucho más.",
+      p2_invites: "Con el programa “Lobería Te Invita” accedés a descuentos exclusivos y beneficios especiales en alojamientos, gastronomía, comercios y experiencias locales.",
+      p3_invites: "Solicitá ahora el listado completo y empezá a planear tu viaje con ventajas que harán de tu estadía una experiencia inolvidable. ¡Lobería te espera con los brazos abiertos y muchas sorpresas!",
+      link_invites: "Pedilo completando un breve formulario haciendo",
+      link_aqui: "click aquí",
     },
   },
   en: {
@@ -764,6 +772,14 @@ const resources = {
       Acepto_recibir_información_por_correo_electrónico_y_los:
         "I agree to receive information by email and accept the",
       Políticas_de_Privacidad: "Privacy Policy",
+
+      //Loberia te invita
+      titulo_invites: "Lobería invites you",
+      p1_invites: "During your visit to our city, we want you to enjoy even more.",
+      p2_invites: "With the program 'Lobería Invites You', you get exclusive discounts and special benefits on accommodations, gastronomy, shops, and local experiences.",
+      p3_invites: "Request the complete list now and start planning your trip with advantages that will make your stay unforgettable. Lobería awaits you with open arms and many surprises!",
+      link_invites: "Request it by filling out a short form by",
+      link_aqui: "clicking here",
     },
   },
 };
