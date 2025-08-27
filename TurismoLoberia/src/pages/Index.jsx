@@ -16,6 +16,7 @@ import serv_publicos_icon from "../assets/icons/services/serv_publicos.svg";
 import gastronomia_icon from "../assets/icons/services/gastronomia.svg";
 import alojamientos_icon from "../assets/icons/services/alojamientos.svg";
 import info_util_icon from "../assets/icons/services/info_util.svg";
+import invitesImg from "../assets/images/invites.jpg";
 
 export const Index = () => {
   const [interes, setInteres] = useState([]);
@@ -196,8 +197,8 @@ export const Index = () => {
         </div>
       </section>
       <section className="Banner">
-            <h2>t(titulo_invites)</h2>
-            <img src="../assets/images/invites.jpg" alt="" onClick={() => {
+            <h1>{t("titulo_invites")}</h1>
+            <img className="banner" src={invitesImg} alt="Lobería Te Invita" onClick={() => {
             trackEvent({
               category: "Botón",
               action: "Ver más",

@@ -86,6 +86,28 @@
   animation: borderGrow 0.4s ease-out;
 }
 
+/*------------------Banner--------------*/
+.Banner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+.banner {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.banner:hover {
+  transform: translateY(-4px);
+  transform: scale(1.08);
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25));
+}
+
 /*------------------Places--------------*/
 .places,
 .upcoming-events {
