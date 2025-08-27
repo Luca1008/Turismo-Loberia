@@ -18,6 +18,22 @@ import { trackEvent } from "../../analytics";
 import { useLocation } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 
+// Custom hook para detectar clics fuera de un elemento
+const useClickOutside = (ref, callback) => {
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        callback();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, callback]);
+};
+
 export const Header = () => {
   const { t, i18n } = useTranslation();
 
@@ -30,6 +46,7 @@ export const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const navRef = useRef(null);
+  const languageRef = useRef(null);
   const searchRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,6 +69,21 @@ export const Header = () => {
       ? location.pathname.startsWith(route.split("/:")[0])
       : location.pathname === route
   );
+
+  // Usar el custom hook para detectar clics fuera del menú principal
+  useClickOutside(navRef, () => {
+    setOpenItem(null);
+  });
+
+  // Usar el custom hook para detectar clics fuera del selector de idioma
+  useClickOutside(languageRef, () => {
+    setShowLanguage(false);
+  });
+
+  // Usar el custom hook para detectar clics fuera de la búsqueda
+  useClickOutside(searchRef, () => {
+    setShowSearch(false);
+  });
 
   useEffect(() => {
     trackEvent({
@@ -95,24 +127,6 @@ export const Header = () => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // 🔐 Cierre al hacer click afuera
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        navRef.current &&
-        !navRef.current.contains(event.target) &&
-        searchRef.current &&
-        !searchRef.current.contains(event.target)
-      ) {
-        setOpenItem(null);
-        setShowLanguage(false);
-        setShowSearch(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // 🔍 Autofocus en búsqueda
@@ -231,6 +245,7 @@ export const Header = () => {
   const handleSearchToggle = () => {
     setShowSearch(!showSearch);
     setOpenItem(null);
+    setShowLanguage(false);
     trackEvent({
       category: "Búsqueda",
       action: "Mostrar barra",
@@ -240,6 +255,7 @@ export const Header = () => {
   return (
     <>
       <nav
+        ref={navRef}
         className={`navbar sticky-top shadow-sm navBar text-nav header border-nav
         ${
           isTransparentRoute
@@ -338,6 +354,7 @@ export const Header = () => {
             {/* Menu de idioma */}
             {/* 🌍 Language Switcher */}
             <div
+              ref={languageRef}
               className="position-relative"
               onClick={toggleLanguage}
               style={{ cursor: "pointer" }}
