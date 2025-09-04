@@ -1,0 +1,195 @@
+/* styles/banner.css */
+.banner-loberia {
+  position: relative;
+  background: linear-gradient(135deg, #8e44ad, #3498db);
+  color: white;
+  padding: 60px 20px;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.banner-content {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.banner-image {
+  flex: 1;
+  max-width: 400px;
+  border-radius: 15px;
+  width: 100%;
+}
+
+.banner-text-container {
+  flex: 2;
+  min-width: 300px;
+  position: relative;
+}
+
+.banner-text {
+  text-align: left;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  transition: max-height 0.5s ease, opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.banner-text p {
+  margin-bottom: 15px;
+}
+
+.banner-link {
+  color: #f3dd12;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  margin-left: 5px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.banner-link:hover {
+  color: #aee622;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Estilos para el cursor animado */
+.animated-hand {
+  position: absolute;
+  font-size: 36px;
+  z-index: 100;
+  display: none;
+  pointer-events: none;
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.3));
+  animation: point 1s infinite ease-in-out;
+}
+
+@keyframes point {
+  0%, 100% {
+    transform: translateY(0) translateX(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) translateX(5px) scale(1.1);
+  }
+}
+
+/* Botón de expandir/colapsar para móviles */
+.expand-button {
+  display: none;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  margin: 15px auto 0;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  align-items: center;
+  gap: 5px;
+}
+
+.expand-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ESTILOS PARA DESKTOP (mayor a 768px) */
+@media (min-width: 768px) {
+  .banner-content {
+    flex-direction: row; /* Imagen y texto en fila */
+    align-items: flex-start; /* Alinear al inicio */
+    text-align: left;
+  }
+  
+  .banner-image {
+    max-width: 400px;
+    margin-right: 40px;
+  }
+  
+  .banner-text-container {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .banner-text {
+    text-align: left;
+    max-height: none !important;
+    opacity: 1 !important;
+  }
+  
+  .banner-text::after {
+    display: none !important;
+  }
+}
+
+/* ESTILOS PARA MÓVIL (menor a 768px) */
+@media (max-width: 767px) {
+  .animated-hand {
+    display: none !important;
+  }
+  
+  .banner-loberia {
+    padding: 30px 15px;
+    margin: 10px;
+  }
+  
+  .banner-content {
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  .banner-image {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  
+  .banner-text-container {
+    width: 100%;
+  }
+  
+  .banner-text {
+    text-align: center;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  /* Estado colapsado */
+  .banner-text.collapsed {
+    max-height: 90px;
+    overflow: hidden;
+    opacity: 0.9;
+    position: relative;
+  }
+  
+  /* Estado expandido */
+  .banner-text.expanded {
+    max-height: 1000px;
+    opacity: 1;
+  }
+  
+  .banner-text.collapsed::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, #8e44ad);
+    pointer-events: none;
+  }
+  
+  .expand-button {
+    display: flex;
+    justify-content: center;
+  }
+}

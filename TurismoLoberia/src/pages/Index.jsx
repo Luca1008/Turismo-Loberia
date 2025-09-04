@@ -17,6 +17,7 @@ import gastronomia_icon from "../assets/icons/services/gastronomia.svg";
 import alojamientos_icon from "../assets/icons/services/alojamientos.svg";
 import info_util_icon from "../assets/icons/services/info_util.svg";
 import invitesImg from "../assets/images/invites.jpg";
+import {Banner} from "../components/layout/Banner";
 
 export const Index = () => {
   const [interes, setInteres] = useState([]);
@@ -207,6 +208,7 @@ export const Index = () => {
             navigate("/Invites");
           }}/>
       </section>
+        <Banner />
       <section className="places">
         <h1>{t("descubri_loberia")}</h1>
         <p className="text-left">
