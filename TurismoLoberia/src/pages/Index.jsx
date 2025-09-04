@@ -16,7 +16,6 @@ import serv_publicos_icon from "../assets/icons/services/serv_publicos.svg";
 import gastronomia_icon from "../assets/icons/services/gastronomia.svg";
 import alojamientos_icon from "../assets/icons/services/alojamientos.svg";
 import info_util_icon from "../assets/icons/services/info_util.svg";
-import invitesImg from "../assets/images/invites.jpg";
 import {Banner} from "../components/layout/Banner";
 
 export const Index = () => {
@@ -196,17 +195,6 @@ export const Index = () => {
             <p>{t("info_util")}</p>
           </div>
         </div>
-      </section>
-      <section className="Banner">
-            <h1>{t("titulo_invites")}</h1>
-            <img className="banner" src={invitesImg} alt="Lobería Te Invita" onClick={() => {
-            trackEvent({
-              category: "Botón",
-              action: "Ver más",
-              label: "Invites",
-            });
-            navigate("/Invites");
-          }}/>
       </section>
         <Banner />
       <section className="places">
