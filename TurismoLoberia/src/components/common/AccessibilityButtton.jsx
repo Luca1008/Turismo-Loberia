@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { IoAccessibility } from "react-icons/io5";
 import '../../styles/stickyButton.css';
 
-const AccessibilityButtton = () => {
+const AccessibilityButton = () => {
     const [fontSize, setFontSize] = useState(1); // 1 = 1rem = 16px
     const [menuOpen, setMenuOpen] = useState(false);
     const [reading, setReading] = useState(false);
@@ -10,6 +10,32 @@ const AccessibilityButtton = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isUnderlineLinks, setIsUnderlineLinks] = useState(false);
     const [isDyslexiaFont, setIsDyslexiaFont] = useState(false);
+
+    // Referencias para el menú y el botón
+    const menuRef = useRef(null);
+    const buttonRef = useRef(null);
+
+    // Efecto para detectar clics fuera del menú
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            // Si el menú está abierto y el clic fue fuera del menú y del botón
+            if (menuOpen && 
+                menuRef.current && 
+                !menuRef.current.contains(event.target) && 
+                buttonRef.current && 
+                !buttonRef.current.contains(event.target)) {
+                setMenuOpen(false);
+            }
+        };
+
+        // Agregar el event listener cuando el componente se monta
+        document.addEventListener('mousedown', handleClickOutside);
+        
+        // Limpiar el event listener cuando el componente se desmonta
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [menuOpen]); // Solo se ejecuta cuando menuOpen cambia
 
     // Cambia el tamaño de fuente usando rem
     const changeFontSize = (size) => {
@@ -106,39 +132,41 @@ const AccessibilityButtton = () => {
         }
     };
 
-  return (
+    return (
         <div className="accessibility-wrapper" role="region" aria-label="Menú de accesibilidad">
-                <button
-                    className="accessibility-trigger"
-                    aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-                    aria-expanded={menuOpen}
-                    aria-controls="accessibility-menu"
-                    onClick={() => setMenuOpen(!menuOpen)}
-                >
-                    <IoAccessibility />
-                </button>
+            <button
+                ref={buttonRef}
+                className="accessibility-trigger"
+                aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+                aria-expanded={menuOpen}
+                aria-controls="accessibility-menu"
+                onClick={() => setMenuOpen(!menuOpen)}
+            >
+                <IoAccessibility />
+            </button>
 
-                {menuOpen && (
-                    <div
-                        className="accessibility-menu"
-                        id="accessibility-menu"
-                        role="menu"
-                        tabIndex={-1}
-                    >
-                        {/* <button onClick={() => changeFontSize(fontSize + 0.1)} aria-label="Aumentar texto" role="menuitem">A+</button>*/}
-                         {/* <button onClick={() => changeFontSize(fontSize - 0.1)} aria-label="Disminuir texto" role="menuitem">A-</button>*/}
-                        <button onClick={toggleContrast} aria-label="Alto contraste" role="menuitem">Alto contraste</button>
-                        <button onClick={toggleDarkMode} aria-label="Modo oscuro" role="menuitem">Modo oscuro</button>
-                        <button onClick={toggleUnderlineLinks} aria-label="Subrayar enlaces" role="menuitem">Subrayar enlaces</button>
-                        <button onClick={toggleDyslexiaFont} aria-label="Fuente dislexia" role="menuitem">Fuente dislexia</button>
-                        <button onClick={readText} aria-label="Leer contenido" role="menuitem" disabled={reading}>Leer contenido</button>
-                        <button onClick={pauseOrResume} aria-label="Pausar/Continuar" role="menuitem">Pausar/Continuar</button>
-                        <button onClick={stopReading} aria-label="Detener lectura" role="menuitem">Detener lectura</button>
-                        <button onClick={resetAccessibility} aria-label="Restablecer" role="menuitem">Restablecer</button>
-                    </div>
-                )}
-            </div>
-  )
+            {menuOpen && (
+                <div
+                    ref={menuRef}
+                    className="accessibility-menu"
+                    id="accessibility-menu"
+                    role="menu"
+                    tabIndex={-1}
+                >
+                    <button onClick={() => changeFontSize(fontSize + 0.1)} aria-label="Aumentar texto" role="menuitem">A+</button>
+                    <button onClick={() => changeFontSize(fontSize - 0.1)} aria-label="Disminuir texto" role="menuitem">A-</button>
+                    <button onClick={toggleContrast} aria-label="Alto contraste" role="menuitem">Alto contraste</button>
+                    <button onClick={toggleDarkMode} aria-label="Modo oscuro" role="menuitem">Modo oscuro</button>
+                    <button onClick={toggleUnderlineLinks} aria-label="Subrayar enlaces" role="menuitem">Subrayar enlaces</button>
+                    <button onClick={toggleDyslexiaFont} aria-label="Fuente dislexia" role="menuitem">Fuente dislexia</button>
+                    <button onClick={readText} aria-label="Leer contenido" role="menuitem" disabled={reading}>Leer contenido</button>
+                    <button onClick={pauseOrResume} aria-label="Pausar/Continuar" role="menuitem">Pausar/Continuar</button>
+                    <button onClick={stopReading} aria-label="Detener lectura" role="menuitem">Detener lectura</button>
+                    <button onClick={resetAccessibility} aria-label="Restablecer" role="menuitem">Restablecer</button>
+                </div>
+            )}
+        </div>
+    );
 }
 
-export default AccessibilityButtton
+export default AccessibilityButton;
