@@ -564,3 +564,78 @@ button.btn.btn-white {
     height: 100%;
   }
 }
+
+/* --------- Rango intermedio: tablet horizontal / notebooks chicas -------- */
+@media (min-width: 768px) and (max-width: 991px) {
+  .navBar {
+    height: 100px;
+    display: flex;
+  }
+
+  .desktop-nav-item, a.text-decoration-none.text-inherit, .nav-hover-effect{
+    font-size: 0.65rem; 
+  }
+
+  .desktop-nav-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .logoLoberia {
+    width: 2.5rem;
+  }
+
+  .logo-container {
+    width: 6rem;
+  }
+
+  .typewriter-react {
+    display: none !important;
+  }
+
+  .desktop-search-bar {
+    top: 80px; /* ajusta al nuevo alto del nav */
+  }
+
+  .submenu-desktop {
+    min-width: max-content; 
+    font-size: 0.65rem;
+  }
+
+  .desktop-search-bar{
+    top:100px;
+    height: 60px;
+  }
+
+  .search-desktop-form{
+    height: 30px;
+  }
+
+  .search-desktop-form .form-control{
+    height: 30px;
+    font-size: 0.9rem;
+  }
+
+  .desktop-search-icon{
+    width: 20px;
+    height: 20px;
+  }
+
+  .item-services{
+    width: 60px;
+    height: 60px;
+  }
+
+  .services .item-services img{
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .services .item-services p{
+    font-size: 0.5rem;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+  }
+}

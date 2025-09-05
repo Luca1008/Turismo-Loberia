@@ -193,3 +193,32 @@
     justify-content: center;
   }
 }
+
+/* ESTILOS INTERMEDIOS (tablets y notebooks chicas: 768px–991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .banner-loberia {
+    padding: 40px 20px;
+  }
+
+  .banner-content {
+    flex-direction: row; /* apilar para no apretar demasiado */
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .banner-image {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .banner-text-container {
+    max-width: 90%;
+    text-align: center;
+  }
+
+  .banner-text {
+    font-size: 0.2rem;
+    line-height: 1.5;
+  }
+}

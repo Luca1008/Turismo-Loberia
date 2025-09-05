@@ -193,7 +193,7 @@ strong.loberia-footer {
   text-transform: uppercase;
   padding: 0%;
   margin: 0%;
-  color: #56AE5B;
+  color: #56ae5b;
 }
 
 span.patrimonio {
@@ -214,7 +214,7 @@ span.patrimonio {
   margin: 0%;
 }
 
-strong .primary.loberia-footer p{
+strong .primary.loberia-footer p {
   padding: 0%;
   margin: 0%;
 }
@@ -242,5 +242,40 @@ strong .primary.loberia-footer p{
   .footer__social .svg-social {
     width: 30px;
     height: 30px;
+  }
+}
+
+/* === Versión Intermedia (Tablets horizontales / notebooks chicas: 768px–991px) === */
+@media (min-width: 768px) and (max-width: 991px) {
+  .footer.footer {
+    height: 250px;
+  }
+
+  .footer__container {
+    flex-direction: row;
+    gap: 1.5rem;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .footer__logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer__info p,
+  .footer__extra p {
+    font-size: 0.8rem;
+    align-items: left;
+    text-align: left;
+  }
+
+  .footer__social {
+    justify-content: center;
+    padding-left: 0;
+    margin-top: 1rem;
+    gap: 0.3rem;
   }
 }
