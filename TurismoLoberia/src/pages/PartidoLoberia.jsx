@@ -165,8 +165,8 @@ const PartidoLoberia = () => {
         </Trans>
       </section>
 
-      <section className="go-to" id="como-llegar">
-        <h2 id="como-llegar">{t("como_llegar")}</h2>
+      <section className="go-to" id="como_llegar">
+        <h2 id="como_llegar">{t("como_llegar")}</h2>
         <div className="photo-como-llegar-partido-loberia"></div>
         <div className="car">
           <p>

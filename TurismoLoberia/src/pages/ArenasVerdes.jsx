@@ -51,14 +51,14 @@ const ArenasVerdes = () => {
 
   return (
     <div className="city" key={i18n.language}>
-      <div id="informacion-general" className="portada-arenas-verdes"></div>
+      <div id="informacion_general" className="portada-arenas-verdes"></div>
       <h1>{t("arenas_verdes")}</h1>
       <section className="information">
         <Trans components={{ p: <p /> }}>{data_arenas.descripcion_1}</Trans>
         <Trans components={{ p: <p /> }}>{data_arenas.descripcion_2}</Trans>
       </section>
 
-      <section className="go-to" id="como-llegar">
+      <section className="go-to" id="como_llegar">
         <h2>{t("como_llegar")}</h2>
         <div className="photo-como-llegar-arenas-verdes"></div>
         <p>
@@ -154,7 +154,7 @@ const ArenasVerdes = () => {
         />
       </section>
 
-      <section className="event" id="que-hacer">
+      <section className="event" id="que_hacer">
         <h2>{t("que_hacer_arenas_verdes")}</h2>
         <div className="photo-que-hacer-arenas-verdes"></div>
         <Trans components={{ p: <p /> }}>{data_arenas.actividades_intro}</Trans>

@@ -48,13 +48,13 @@ export const SanManuel = () => {
 
   return (
     <div className="city" key={i18n.language}>
-      <div id="informacion-general" className="portada-san-manuel"></div>
+      <div id="informacion_general" className="portada-san-manuel"></div>
       <h1>{t("san_manuel")}</h1>
       <section className="information">
         <Trans components={{ p: <p /> }} i18nKey="descripcion_san_manuel" />
       </section>
 
-      <section className="go-to" id="como-llegar">
+      <section className="go-to" id="como_llegar">
         <h2>{t("como_llegar")}</h2>
         <div className="photo-como-llegar-san-manuel"></div>
         <Trans
@@ -141,7 +141,7 @@ export const SanManuel = () => {
         />
       </section>
 
-      <section className="event" id="que-hacer">
+      <section className="event" id="que_hacer">
         <h2>{t("que_hacer_san_manuel")}</h2>
         <div className="photo-que-hacer-san-manuel"></div>
         <Trans components={{ p: <p />, h3: <h3 />, ul: <ul />, li: <li /> }} i18nKey="que_hacer_san_manuel_descripcion" />

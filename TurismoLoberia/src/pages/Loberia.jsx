@@ -51,7 +51,7 @@ const Loberia = () => {
   }, []);
 
   return (
-    <div id="informacion-general" className="city" key={i18n.language}>
+    <div id="informacion_general" className="city" key={i18n.language}>
       <div id="informacion-general" className="portada-loberia"></div>
       <h1>{t("ciudad_loberia")}</h1>
       <section className="information-city-loberia">
@@ -118,7 +118,7 @@ const Loberia = () => {
         </Trans>
       </section>
 
-      <section className="go-to" id="como-llegar">
+      <section className="go-to" id="como_llegar">
         <h2>{t("como_llegar")}</h2>
         <div className="photo-como-llegar-loberia"></div>
         <div className="car">
@@ -256,7 +256,7 @@ const Loberia = () => {
         />
       </section>
 
-      <section className="event" id="que-hacer">
+      <section className="event" id="que_hacer">
         <h2>{t("que_hacer_loberia")}</h2>
         <div className="photo-que-hacer-loberia"></div>
         <Trans
