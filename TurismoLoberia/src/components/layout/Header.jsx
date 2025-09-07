@@ -1,5 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FaBars,
@@ -10,6 +16,7 @@ import {
   FaSearch,
   FaTimes,
   FaCheck,
+  FaArrowRight,
 } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import logoLoberia from "../../assets/icons/logoLoberia.jpg";
@@ -17,6 +24,8 @@ import "../../styles/Navbar.css";
 import { trackEvent } from "../../analytics";
 import { useLocation } from "react-router-dom";
 import Typewriter from "typewriter-effect";
+import axios from "axios";
+import { Global } from "../../helpers/Global";
 
 // Custom hook para detectar clics fuera de un elemento
 const useClickOutside = (ref, callback) => {
@@ -44,6 +53,7 @@ export const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
 
   const navRef = useRef(null);
   const languageRef = useRef(null);
@@ -70,6 +80,18 @@ export const Header = () => {
       : location.pathname === route
   );
 
+  // Categorías disponibles (para sugerencias locales)
+  const categoriasDisponibles = [
+    "Alojamiento",
+    "Gastronomia",
+    "Cultura",
+    "Evento",
+    "Interes",
+    "Artesanos",
+    "ServPublicos",
+    "InfoUtil",
+  ];
+
   // Usar el custom hook para detectar clics fuera del menú principal
   useClickOutside(navRef, () => {
     setOpenItem(null);
@@ -83,6 +105,7 @@ export const Header = () => {
   // Usar el custom hook para detectar clics fuera de la búsqueda
   useClickOutside(searchRef, () => {
     setShowSearch(false);
+    setSuggestions([]);
   });
 
   useEffect(() => {
@@ -92,6 +115,65 @@ export const Header = () => {
       label: "Componente Header cargado",
     });
   }, []);
+
+  // 🔹 Obtener sugerencias (mezcla títulos + categorías)
+  const fetchSuggestions = useCallback(
+    async (texto) => {
+      try {
+        const response = await axios.get(`${Global.url}cards`, {
+          params: { title: texto, limit: 5 },
+        });
+
+        const titles =
+          response.data.cards?.map((c) => ({
+            type: "title",
+            id: c.id,
+            value: c.card_title,
+          })) || [];
+
+        const categories = categoriasDisponibles
+          .filter((cat) => cat.toLowerCase().includes(texto.toLowerCase()))
+          .map((cat) => ({ type: "category", value: cat }));
+
+        setSuggestions([...titles, ...categories]);
+      } catch (error) {
+        console.error("Error al obtener sugerencias:", error);
+        setSuggestions([]);
+      }
+    },
+    [categoriasDisponibles]
+  );
+
+  // 🔹 Efecto para sugerencias
+  useEffect(() => {
+    if (searchQuery.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+    const timer = setTimeout(() => {
+      fetchSuggestions(searchQuery);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery, fetchSuggestions]);
+
+  // 🔹 Click en sugerencia - MODIFICADA
+  const handleSuggestionClick = (s) => {
+    if (s.type === "title") {
+      setSearchQuery(s.value);
+      // Disparar el evento de envío después de un pequeño delay
+      setTimeout(() => {
+        const form = document.querySelector('.search-desktop-form');
+        if (form) {
+          form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+        }
+      }, 100);
+    } else if (s.type === "category") {
+      // Navegar directamente al buscador con la categoría seleccionada
+      navigate(`/buscador?category=${encodeURIComponent(s.value)}`);
+      setShowSearch(false);
+      setSuggestions([]);
+    }
+  };
 
   // 🌍 Cambio de idioma
   const changeLanguage = (lang) => {
@@ -114,6 +196,7 @@ export const Header = () => {
 
     navigate(url);
     setShowSearch(false);
+    setSuggestions([]);
     setShowMenu(false);
     trackEvent({
       category: "Búsqueda",
@@ -224,6 +307,7 @@ export const Header = () => {
     setOpenItem(openItem === item ? null : item);
     setShowSearch(false);
     setShowLanguage(false);
+    setSuggestions([]);
     trackEvent({
       category: "Menú",
       action: "Abrir sección",
@@ -236,19 +320,28 @@ export const Header = () => {
     setShowLanguage(!showLanguage);
     setOpenItem(null);
     setShowSearch(false);
+    setSuggestions([]);
     trackEvent({
       category: "Menú",
       action: "Abrir menú idioma",
     });
   };
 
+  // 🔍 Alternar búsqueda - MODIFICADA
   const handleSearchToggle = () => {
-    setShowSearch(!showSearch);
-    setOpenItem(null);
-    setShowLanguage(false);
+    // Si la barra de búsqueda está visible, ocultarla
+    if (showSearch) {
+      setShowSearch(false);
+      setSuggestions([]);
+    } else {
+      // Si no está visible, mostrarla y cerrar otros elementos
+      setShowSearch(true);
+      setOpenItem(null);
+      setShowLanguage(false);
+    }
     trackEvent({
       category: "Búsqueda",
-      action: "Mostrar barra",
+      action: showSearch ? "Ocultar barra" : "Mostrar barra",
     });
   };
 
@@ -274,7 +367,11 @@ export const Header = () => {
               className="navbar-brand d-flex align-items-center gap-2 m-0"
             >
               <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
-              <div className={`logo-text loberia ${scrolled ? "nav-transparent" : ""}`}>
+              <div
+                className={`logo-text loberia ${
+                  scrolled ? "nav-transparent" : ""
+                }`}
+              >
                 <strong
                   className="primary"
                   style={{
@@ -397,7 +494,20 @@ export const Header = () => {
               )}
             </div>
 
-            <FaSearch className="text-inherit" onClick={handleSearchToggle} />
+            {/* 🔍 Icono de búsqueda - Cambia el icono según el estado */}
+            {showSearch ? (
+              <FaTimes 
+                className="text-inherit" 
+                onClick={handleSearchToggle}
+                style={{ cursor: "pointer" }}
+              />
+            ) : (
+              <FaSearch 
+                className="text-inherit" 
+                onClick={handleSearchToggle}
+                style={{ cursor: "pointer" }}
+              />
+            )}
           </div>
 
           {/* 🔧 MOBILE ICONOS */}
@@ -444,7 +554,7 @@ export const Header = () => {
                   >
                     {i18n.language === "es" && (
                       <FaCheck className="me-2 text-success" />
-                    )}{" "}
+                    )}{ " "}
                     {t("espanol")}
                   </li>
                   <li
@@ -453,7 +563,7 @@ export const Header = () => {
                   >
                     {i18n.language === "en" && (
                       <FaCheck className="me-2 text-success" />
-                    )}{" "}
+                    )}{ " "}
                     {t("ingles")}
                   </li>
                 </ul>
@@ -476,13 +586,17 @@ export const Header = () => {
         </div>
       </nav>
 
-      {/* 🔍 BARRA DE BÚSQUEDA DESKTOP */}
+      {/* 🔍 BARRA DE BÚSQUEDA DESKTOP CON SUGERENCIAS */}
       {showSearch && (
         <div
           ref={searchRef}
           className="desktop-search-bar p-3 border-nav d-none d-md-block position-sticky"
+          style={{ zIndex: 1050 }}
         >
-          <form className="search-desktop-form" onSubmit={handleSearchSubmit}>
+          <form
+            className="search-desktop-form position-relative"
+            onSubmit={handleSearchSubmit}
+          >
             <input
               type="text"
               className="form-control me-3"
@@ -494,13 +608,32 @@ export const Header = () => {
               <FaSearch className="desktop-search-icon" />
             </button>
           </form>
+
+          {/* 📌 Dropdown de sugerencias - FUERA del formulario */}
+          {suggestions.length > 0 && (
+            <ul className="suggestions-dropdown-index">
+              {suggestions.map((s, i) => (
+                <li
+                  key={i}
+                  className="suggestion-item p-2 cursor-pointer d-flex justify-content-between align-items-center"
+                  onClick={() => handleSuggestionClick(s)}
+                >
+                  <span>{s.value}</span>
+                  <span className="suggestion-type text-muted small">
+                    <FaArrowRight className="me-1" />
+                    {s.type === "title" ? "Título" : "Categoría"}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
 
       {/* 📱 PANEL MOBILE */}
       {showMenu && (
         <div className="mobile-menu d-flex flex-column p-3 pt-5 menu-padding">
-          <div className="search-container mb-4">
+          <div className="search-container mb-4 position-relative">
             <form
               className="input-group search-bar-custom"
               onSubmit={(e) => {
@@ -509,7 +642,8 @@ export const Header = () => {
                 const url = query
                   ? `/buscador?title=${encodeURIComponent(query)}`
                   : "/buscador";
-                window.location.href = url;
+                navigate(url);
+                setShowMenu(false);
               }}
             >
               <input
@@ -517,6 +651,8 @@ export const Header = () => {
                 type="text"
                 className="form-control search-input"
                 placeholder="Buscar..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
               <button
                 className="btn-buscador btn btn-outline-secondary"
@@ -525,6 +661,25 @@ export const Header = () => {
                 <FaSearch />
               </button>
             </form>
+
+            {/* 📌 Dropdown de sugerencias para móvil */}
+            {suggestions.length > 0 && (
+              <ul className="suggestions-dropdown-mobile position-absolute start-0 end-0 bg-white shadow rounded mt-1">
+                {suggestions.map((s, i) => (
+                  <li
+                    key={i}
+                    className="suggestion-item p-2 cursor-pointer d-flex justify-content-between align-items-center"
+                    onClick={() => handleSuggestionClick(s)}
+                  >
+                    <span>{s.value}</span>
+                    <span className="suggestion-type text-muted small">
+                      <FaArrowRight className="me-1" />
+                      {s.type === "title" ? "Título" : "Categoría"}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <ul className="menu-list px-0">
             <li className="menu-item d-flex justify-content-between align-items-center mb-3">

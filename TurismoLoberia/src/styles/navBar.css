@@ -213,7 +213,38 @@ form.input-group.search-bar-custom {
 .search-desktop-form .form-control {
   border: solid 3px var(--primary-color);
 }
+
+.suggestions-dropdown-index {
+  position: absolute;
+  left: 4%;
+  top: 90%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 85%;
+  text-align: left;
+  justify-content: start;
+  margin: auto;
+  background-color :white;
+  border: 1px solid var(--white2);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1100;
+}
+.suggestions-dropdown-mobile{
+  z-index: 1100;
+}
+
+.suggestions-dropdown-index li:hover{
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .desktop-search-bar .search-desktop-form {
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: between;
@@ -405,7 +436,7 @@ button.btn.btn-white {
     top: 90px;
     left: 0;
     width: 100%;
-    z-index: 1040;
+    max-height: 100px;
     background-color: var(--primary-color-light-1) !important;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.3s ease-in-out;
