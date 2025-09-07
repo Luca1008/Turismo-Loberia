@@ -6,6 +6,7 @@
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+  min-height: 80vh;
 }
 
 /* Título */
@@ -17,9 +18,11 @@
 
 /* Barra de búsqueda destacada */
 .search-input-group {
+  position: relative;
   display: flex;
   width: 100%;
   max-width: 720px;
+  max-height: 60px;
   border: 2px solid var(--primary-color-dark1);
   border-radius: 12px;
   overflow: hidden;
@@ -28,6 +31,7 @@
 }
 
 .search-input-group input {
+  position: relative;
   flex: 1;
   padding: 0.75rem 1rem;
   border: none;
@@ -37,12 +41,53 @@
 
 .search-input-group button {
   background-color: var(--primary-color-dark1);
-  color: white;
+  color: var(--black);
   padding: 0 1.2rem;
   font-size: 1rem;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s ease;
+}
+
+.suggestions-dropdown {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+  text-align: left;
+  justify-content: start;
+  margin: auto;
+  position: relative;
+  background-color: rgb(209, 228, 208);
+  border: 1px solid var(--white2);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.suggestions-dropdown li {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--white2);
+  font-size: 1rem;
+  color: var(--primary-color-dark2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.suggestions-dropdown li:hover {
+  color: var(--primary-color-dark1);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.search-bar{
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 button.btn-reset{

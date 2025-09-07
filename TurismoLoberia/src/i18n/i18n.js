@@ -295,13 +295,17 @@ const resources = {
       error_usuario_existente: "El usuario ya existe en el sistema",
       usuario_registrado: "Usuario registrado correctamente",
       error_conexion2: "Error al conectar con el servidor",
+      busqueda: "Busqueda",
+      no_se_encontraron_resultados: "No se encontraron resultados",
       busqueda_contenido: "Búsqueda de contenido",
       buscar_por_nombre: "Buscar por nombre...",
       ciudad_provincia_pais: "Ciudad, Provincia, País",
       pais: "País",
       provincia: "Provincia",
+      ciudad: "Ciudad",
       categoria: "Categoría",
       alojamiento: "Alojamiento",
+      filtros_activos: "Filtros Activos",
       cultura: "Cultura",
       evento: "Evento",
       limpiar_filtros: "Limpiar filtros",
@@ -389,9 +393,12 @@ const resources = {
 
       // Loberia te invita
       titulo_invites: "Lobería te invita",
-      p1_invites: "En tu visita a nuestra ciudad, queremos que disfrutes mucho más.",
-      p2_invites: "Con el programa “Lobería Te Invita” accedés a descuentos exclusivos y beneficios especiales en alojamientos, gastronomía, comercios y experiencias locales.",
-      p3_invites: "Solicitá ahora el listado completo y empezá a planear tu viaje con ventajas que harán de tu estadía una experiencia inolvidable. ¡Lobería te espera con los brazos abiertos y muchas sorpresas!",
+      p1_invites:
+        "En tu visita a nuestra ciudad, queremos que disfrutes mucho más.",
+      p2_invites:
+        "Con el programa “Lobería Te Invita” accedés a descuentos exclusivos y beneficios especiales en alojamientos, gastronomía, comercios y experiencias locales.",
+      p3_invites:
+        "Solicitá ahora el listado completo y empezá a planear tu viaje con ventajas que harán de tu estadía una experiencia inolvidable. ¡Lobería te espera con los brazos abiertos y muchas sorpresas!",
       link_invites: "Pedilo completando un breve formulario haciendo ",
       link_aqui: "click aquí",
     },
@@ -685,10 +692,14 @@ const resources = {
       error_usuario_existente: "User already exists in the system",
       usuario_registrado: "User successfully registered",
       error_conexion2: "Failed to connect to the server",
+      busqueda: "Search",
+      no_se_encontraron_resultados: "No results found",
       busqueda_contenido: "Content Search",
       buscar_por_nombre: "Search by name...",
       ciudad_provincia_pais: "City, Province, Country",
+      ciudad: "City",
       categoria: "Category",
+      filtros_activos: "Active Filters",
       alojamiento: "Accommodation",
       cultura: "Culture",
       evento: "Event",
@@ -775,9 +786,12 @@ const resources = {
 
       //Loberia te invita
       titulo_invites: "Lobería invites you",
-      p1_invites: "During your visit to our city, we want you to enjoy even more.",
-      p2_invites: "With the program 'Lobería Invites You', you get exclusive discounts and special benefits on accommodations, gastronomy, shops, and local experiences.",
-      p3_invites: "Request the complete list now and start planning your trip with advantages that will make your stay unforgettable. Lobería awaits you with open arms and many surprises!",
+      p1_invites:
+        "During your visit to our city, we want you to enjoy even more.",
+      p2_invites:
+        "With the program 'Lobería Invites You', you get exclusive discounts and special benefits on accommodations, gastronomy, shops, and local experiences.",
+      p3_invites:
+        "Request the complete list now and start planning your trip with advantages that will make your stay unforgettable. Lobería awaits you with open arms and many surprises!",
       link_invites: "Request it by filling out a short form by ",
       link_aqui: "clicking here",
     },

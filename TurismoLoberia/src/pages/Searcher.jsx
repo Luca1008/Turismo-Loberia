@@ -9,7 +9,7 @@ import ContentCard from "../components/cards/ContentCard";
 import "../styles/searcher.css";
 import { useTranslation } from "react-i18next";
 import { trackEvent } from "../analytics";
-import {Global} from "../helpers/Global";
+import { Global } from "../helpers/Global";
 
 const Searcher = ({ isAdmin = false, onEdit = null }) => {
   const location = useLocation();
@@ -23,12 +23,28 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
   const [category, setCategory] = useState(location.state?.category || "");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [suggestions, setSuggestions] = useState([]);
   const limit = 6;
+
+  // Categorías disponibles (para sugerencias locales)
+  const categoriasDisponibles = [
+    "Alojamiento",
+    "Gastronomia",
+    "Cultura",
+    "Evento",
+    "Interes",
+    "Artesanos",
+    "ServPublicos",
+    "InfoUtil",
+  ];
 
   // Función para convertir buffer a base64
   const bufferToBase64 = useCallback((buffer) => {
     if (!buffer?.data) return null;
-    const binary = buffer.data.reduce((acc, byte) => acc + String.fromCharCode(byte), "");
+    const binary = buffer.data.reduce(
+      (acc, byte) => acc + String.fromCharCode(byte),
+      ""
+    );
     return `data:image/jpeg;base64,${window.btoa(binary)}`;
   }, []);
 
@@ -67,7 +83,35 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     }
   }, [search, city, category, page, limit, bufferToBase64]);
 
-  // Efecto para manejar parámetros iniciales de URL
+  // 🔹 Obtener sugerencias (mezcla títulos + categorías)
+  const fetchSuggestions = useCallback(
+    async (texto) => {
+      try {
+        const response = await axios.get(`${Global.url}cards`, {
+          params: { title: texto, limit: 5 },
+        });
+
+        const titles =
+          response.data.cards?.map((c) => ({
+            type: "title",
+            id: c.id,
+            value: c.card_title,
+          })) || [];
+
+        const categories = categoriasDisponibles
+          .filter((cat) => cat.toLowerCase().includes(texto.toLowerCase()))
+          .map((cat) => ({ type: "category", value: cat }));
+
+        setSuggestions([...titles, ...categories]);
+      } catch (error) {
+        console.error("Error al obtener sugerencias:", error);
+        setSuggestions([]);
+      }
+    },
+    [categoriasDisponibles]
+  );
+
+  // 🔹 Efecto para manejar parámetros iniciales de URL
   useEffect(() => {
     const titleFromUrl = searchParams.get("title");
     if (titleFromUrl) {
@@ -80,7 +124,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     });
   }, [searchParams]);
 
-  // Efecto principal con debounce para búsquedas
+  // 🔹 Efecto principal con debounce para cards
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchCards();
@@ -93,6 +137,31 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
 
     return () => clearTimeout(timer);
   }, [fetchCards, page, search, city, category]);
+
+  // 🔹 Efecto para sugerencias
+  useEffect(() => {
+    if (search.length < 2) {
+      setSuggestions([]);
+      return;
+    }
+    const timer = setTimeout(() => {
+      fetchSuggestions(search);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search, fetchSuggestions]);
+
+  // 🔹 Click en sugerencia
+  const handleSuggestionClick = (s) => {
+    if (s.type === "title") {
+      setSearch(s.value);
+      setPage(1);
+    } else if (s.type === "category") {
+      setCategory(s.value);
+      setSearch(""); // Limpiar búsqueda cuando se selecciona categoría
+      setPage(1);
+    }
+    setSuggestions([]);
+  };
 
   const handleDeleteCard = async (cardId) => {
     try {
@@ -112,7 +181,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     setCity("");
     setCategory("");
     setPage(1);
-    // ✅ Evento: limpiar filtros
+    setSuggestions([]);
     trackEvent({
       category: "Botón",
       action: "Limpiar filtros",
@@ -125,23 +194,45 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
       <main className="search-main">
         <h1 className="search-title">{t("busqueda_contenido")}</h1>
 
-        {/* 🔍 Buscador por título */}
-        <div className="search-input-group">
-          <input
-            type="text"
-            placeholder={t("buscar_por_nombre")}
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(1);
-              trackEvent({
-                category: "Buscador",
-                action: "Búsqueda por nombre",
-                label: e.target.value,
-              });
-            }}
-          />
-          <button onClick={fetchCards}><FaSearch /></button>
+        {/* 🔍 Buscador con sugerencias */}
+        <div className="search-bar">
+          <div className="search-input-group">
+            <input
+              type="text"
+              placeholder={t("buscar_por_nombre")}
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+                trackEvent({
+                  category: "Buscador",
+                  action: "Búsqueda por nombre",
+                  label: e.target.value,
+                });
+              }}
+            />
+            <button onClick={fetchCards}>
+              <FaSearch />
+            </button>
+          </div>
+          
+          {/* 📌 Dropdown de sugerencias*/}
+          {suggestions.length > 0 && (
+            <ul className="suggestions-dropdown">
+              {suggestions.map((s, i) => (
+                <li
+                  key={i}
+                  className="suggestion-item"
+                  onClick={() => handleSuggestionClick(s)}
+                >
+                  <span>{s.value}</span>
+                  <span className="suggestion-type">
+                    {s.type === "title" ? " (Título)" : " (Categoría)"}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {/* 🎯 Filtros */}
@@ -187,40 +278,91 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
             <option value="InfoUtil">{t("info_util")}</option>
           </Form.Select>
 
-          <Button className="btn-reset" variant="outline-secondary" onClick={handleReset}>
+          <Button
+            className="btn-reset"
+            variant="outline-secondary"
+            onClick={handleReset}
+          >
             {t("limpiar_filtros")}
           </Button>
         </div>
 
+        {/* Mostrar filtros activos */}
+        {(search || city || category) && (
+          <div className="active-filters">
+            <span>{t("filtros_activos")}: </span>
+            {search && (
+              <span className="filter-tag">
+                {t("busqueda")}: {search}
+              </span>
+            )}
+            {city && (
+              <span className="filter-tag">
+                {t("ciudad")}: {city}
+              </span>
+            )}
+            {category && (
+              <span className="filter-tag">
+                {t("categoria")}: {category}
+              </span>
+            )}
+          </div>
+        )}
+
         {/* 🗂️ Resultados */}
         <div className="results-grid">
-          {cards.map((card) => (
-            <ContentCard
-              key={card.id}
-              id={card.id}
-              title={card.card_title}
-              description={card.card_description}
-              city={card.card_city}
-              img={card.card_img_portada}
-              category={card.card_category}
-              card_date={card.card_date}
-              {...(isAdmin && { onEdit: handleEditCard, onDelete: handleDeleteCard })}
-            />
-          ))}
+          {cards.length > 0 ? (
+            cards.map((card) => (
+              <ContentCard
+                key={card.id}
+                id={card.id}
+                title={card.card_title}
+                description={card.card_description}
+                city={card.card_city}
+                img={card.img}
+                category={card.card_category}
+                card_date={card.card_date}
+                {...(isAdmin && {
+                  onEdit: handleEditCard,
+                  onDelete: handleDeleteCard,
+                })}
+              />
+            ))
+          ) : (
+            <div className="no-results">
+              <p>{t("no_se_encontraron_resultados")}</p>
+            </div>
+          )}
         </div>
 
         {/* 📄 Paginación */}
         {totalPages > 1 && (
           <Pagination className="pagination-container">
-            <Pagination.First onClick={() => setPage(1)} disabled={page === 1} />
-            <Pagination.Prev onClick={() => setPage((p) => Math.max(p - 1, 1))} disabled={page === 1} />
+            <Pagination.First
+              onClick={() => setPage(1)}
+              disabled={page === 1}
+            />
+            <Pagination.Prev
+              onClick={() => setPage((p) => Math.max(p - 1, 1))}
+              disabled={page === 1}
+            />
             {Array.from({ length: totalPages }, (_, i) => (
-              <Pagination.Item key={i} active={i + 1 === page} onClick={() => setPage(i + 1)}>
+              <Pagination.Item
+                key={i}
+                active={i + 1 === page}
+                onClick={() => setPage(i + 1)}
+              >
                 {i + 1}
               </Pagination.Item>
             ))}
-            <Pagination.Next onClick={() => setPage((p) => Math.min(p + 1, totalPages))} disabled={page === totalPages} />
-            <Pagination.Last onClick={() => setPage(totalPages)} disabled={page === totalPages} />
+            <Pagination.Next
+              onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+              disabled={page === totalPages}
+            />
+            <Pagination.Last
+              onClick={() => setPage(totalPages)}
+              disabled={page === totalPages}
+            />
           </Pagination>
         )}
       </main>
