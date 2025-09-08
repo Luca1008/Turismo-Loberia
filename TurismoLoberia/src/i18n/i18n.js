@@ -231,8 +231,6 @@ const resources = {
 
       // General
       informacion_general: "Información General",
-      historia: "Historia",
-      naturaleza: "Naturaleza",
       producciones: "Producciones",
       alojamientos: "Alojamientos",
       gastronomia: "Gastronomía",
@@ -314,7 +312,6 @@ const resources = {
       categoria: "Categoría",
       alojamiento: "Alojamiento",
       filtros_activos: "Filtros Activos",
-      cultura: "Cultura",
       evento: "Evento",
       limpiar_filtros: "Limpiar filtros",
       suscribete_titulo: "Queremos Conocerte",
@@ -636,8 +633,6 @@ const resources = {
 
       //General
       informacion_general: "General Info",
-      historia: "History",
-      naturaleza: "Nature",
       producciones: "Productions",
       alojamientos: "Accommodations",
       gastronomia: "Gastronomy",
@@ -716,7 +711,6 @@ const resources = {
       categoria: "Category",
       filtros_activos: "Active Filters",
       alojamiento: "Accommodation",
-      cultura: "Culture",
       evento: "Event",
       limpiar_filtros: "Clear filters",
       suscribete_titulo: "We want to get to know you",
