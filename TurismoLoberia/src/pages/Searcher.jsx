@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Pagination from "react-bootstrap/Pagination";
@@ -26,8 +26,22 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
   const [suggestions, setSuggestions] = useState([]);
   const limit = 6;
 
+  // Usar useRef para valores que no deben trigger re-renders
+  const searchRef = useRef(search);
+  const cityRef = useRef(city);
+  const categoryRef = useRef(category);
+  const pageRef = useRef(page);
+
+  // Actualizar refs cuando los estados cambien
+  useEffect(() => {
+    searchRef.current = search;
+    cityRef.current = city;
+    categoryRef.current = category;
+    pageRef.current = page;
+  }, [search, city, category, page]);
+
   // Categorías disponibles (para sugerencias locales)
-  const categoriasDisponibles = [
+  const categoriasDisponibles = useMemo(() => [
     "Alojamiento",
     "Gastronomia",
     "Cultura",
@@ -36,7 +50,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     "Artesanos",
     "ServPublicos",
     "InfoUtil",
-  ];
+  ], []);
 
   // Función para convertir buffer a base64
   const bufferToBase64 = useCallback((buffer) => {
@@ -48,14 +62,14 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     return `data:image/jpeg;base64,${window.btoa(binary)}`;
   }, []);
 
-  // fetchCards memoizada con useCallback
+  // fetchCards estable con useCallback y dependencias mínimas
   const fetchCards = useCallback(async () => {
     try {
       const params = {
-        ...(search && { title: search }),
-        ...(city && { city }),
-        ...(category && { category }),
-        page,
+        ...(searchRef.current && { title: searchRef.current }),
+        ...(cityRef.current && { city: cityRef.current }),
+        ...(categoryRef.current && { category: categoryRef.current }),
+        page: pageRef.current,
         limit,
       };
 
@@ -81,7 +95,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
       console.error("Error al obtener las cards:", error);
       setCards([]);
     }
-  }, [search, city, category, page, limit, bufferToBase64]);
+  }, [limit, bufferToBase64]); // Solo dependencias estables
 
   // 🔹 Obtener sugerencias (mezcla títulos + categorías)
   const fetchSuggestions = useCallback(
@@ -124,7 +138,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     });
   }, [searchParams]);
 
-  // 🔹 Efecto principal con debounce para cards
+  // 🔹 Efecto principal con debounce para cards - CORREGIDO
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchCards();
@@ -136,7 +150,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [fetchCards, page, search, city, category]);
+  }, [fetchCards, page, search, city, category]); // Mantener estas dependencias
 
   // 🔹 Efecto para sugerencias
   useEffect(() => {
