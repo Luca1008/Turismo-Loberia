@@ -290,7 +290,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
         {/* Mostrar filtros activos */}
         {(search || city || category) && (
           <div className="active-filters">
-            <span>{t("filtros_activos")}: </span>
+            <strong>{t("filtros_activos")}: </strong>
             {search && (
               <span className="filter-tag">
                 {t("busqueda")}: {search}
@@ -302,9 +302,9 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
               </span>
             )}
             {category && (
-              <span className="filter-tag">
+              <strong className="filter-tag">
                 {t("categoria")}: {category}
-              </span>
+              </strong>
             )}
           </div>
         )}

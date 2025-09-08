@@ -64,7 +64,7 @@ export const Header = () => {
     "/Suscribirse",
     "/Clima",
     "/Contacto",
-    "/Buscador",
+    "/buscador",
     "/Admin",
     "/PanelAdmin",
     "/recuperar-password",
@@ -81,7 +81,7 @@ export const Header = () => {
   );
 
   // Categorías disponibles (para sugerencias locales)
-  const categoriasDisponibles = [
+  const categoriasDisponibles = useMemo(() => [
     "Alojamiento",
     "Gastronomia",
     "Cultura",
@@ -90,7 +90,7 @@ export const Header = () => {
     "Artesanos",
     "ServPublicos",
     "InfoUtil",
-  ];
+  ], []);
 
   // Usar el custom hook para detectar clics fuera del menú principal
   useClickOutside(navRef, () => {
@@ -144,7 +144,7 @@ export const Header = () => {
     [categoriasDisponibles]
   );
 
-  // 🔹 Efecto para sugerencias
+  // 🔹 Efecto para sugerencias - CORREGIDO
   useEffect(() => {
     if (searchQuery.length < 2) {
       setSuggestions([]);
@@ -154,9 +154,9 @@ export const Header = () => {
       fetchSuggestions(searchQuery);
     }, 300);
     return () => clearTimeout(timer);
-  }, [searchQuery, fetchSuggestions]);
+  }, [searchQuery]); // Eliminada fetchSuggestions de las dependencias
 
-  // 🔹 Click en sugerencia - MODIFICADA
+  // 🔹 Click en sugerencia
   const handleSuggestionClick = (s) => {
     if (s.type === "title") {
       setSearchQuery(s.value);
@@ -327,7 +327,7 @@ export const Header = () => {
     });
   };
 
-  // 🔍 Alternar búsqueda - MODIFICADA
+  // 🔍 Alternar búsqueda
   const handleSearchToggle = () => {
     // Si la barra de búsqueda está visible, ocultarla
     if (showSearch) {
@@ -342,6 +342,22 @@ export const Header = () => {
     trackEvent({
       category: "Búsqueda",
       action: showSearch ? "Ocultar barra" : "Mostrar barra",
+    });
+  };
+
+  // 🔹 Función para manejar clic en el logo
+  const handleLogoClick = (e) => {
+    // Cerrar todos los menús y estados abiertos
+    setShowMenu(false);
+    setOpenItem(null);
+    setShowLanguage(false);
+    setShowSearch(false);
+    setSuggestions([]);
+    
+    trackEvent({
+      category: "Navegación",
+      action: "Clic en logo",
+      label: "Volver al inicio",
     });
   };
 
@@ -365,6 +381,7 @@ export const Header = () => {
             <Link
               to="/"
               className="navbar-brand d-flex align-items-center gap-2 m-0"
+              onClick={handleLogoClick}
             >
               <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
               <div

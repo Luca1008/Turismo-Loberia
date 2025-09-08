@@ -297,7 +297,7 @@ const resources = {
       error_conexion2: "Error al conectar con el servidor",
       busqueda: "Busqueda",
       no_se_encontraron_resultados: "No se encontraron resultados",
-      busqueda_contenido: "Búsqueda de contenido",
+      busqueda_contenido: "Búsqueda de Contenido",
       buscar_por_nombre: "Buscar por nombre...",
       ciudad_provincia_pais: "Ciudad, Provincia, País",
       pais: "País",
