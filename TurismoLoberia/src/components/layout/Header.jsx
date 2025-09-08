@@ -81,16 +81,19 @@ export const Header = () => {
   );
 
   // Categorías disponibles (para sugerencias locales)
-  const categoriasDisponibles = useMemo(() => [
-    "Alojamiento",
-    "Gastronomia",
-    "Cultura",
-    "Evento",
-    "Interes",
-    "Artesanos",
-    "ServPublicos",
-    "InfoUtil",
-  ], []);
+  const categoriasDisponibles = useMemo(
+    () => [
+      "Alojamiento",
+      "Gastronomia",
+      "Cultura",
+      "Evento",
+      "Interes",
+      "Artesanos",
+      "ServPublicos",
+      "InfoUtil",
+    ],
+    []
+  );
 
   // Usar el custom hook para detectar clics fuera del menú principal
   useClickOutside(navRef, () => {
@@ -162,9 +165,11 @@ export const Header = () => {
       setSearchQuery(s.value);
       // Disparar el evento de envío después de un pequeño delay
       setTimeout(() => {
-        const form = document.querySelector('.search-desktop-form');
+        const form = document.querySelector(".search-desktop-form");
         if (form) {
-          form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+          form.dispatchEvent(
+            new Event("submit", { cancelable: true, bubbles: true })
+          );
         }
       }, 100);
     } else if (s.type === "category") {
@@ -346,14 +351,14 @@ export const Header = () => {
   };
 
   // 🔹 Función para manejar clic en el logo
-  const handleLogoClick = (e) => {
+  const handleLogoClick = () => {
     // Cerrar todos los menús y estados abiertos
     setShowMenu(false);
     setOpenItem(null);
     setShowLanguage(false);
     setShowSearch(false);
     setSuggestions([]);
-    
+
     trackEvent({
       category: "Navegación",
       action: "Clic en logo",
@@ -405,11 +410,11 @@ export const Header = () => {
                   <Typewriter
                     options={{
                       strings: [
-                        "Patrimonio Vivo",
-                        "Cultura",
-                        "Historia",
-                        "Naturaleza",
-                        "Tradición",
+                        t("patrimonio"),
+                        t("cultura"),
+                        t("historia"),
+                        t("naturaleza"),
+                        t("tradicion"),
                       ],
                       autoStart: true,
                       loop: true,
@@ -513,14 +518,14 @@ export const Header = () => {
 
             {/* 🔍 Icono de búsqueda - Cambia el icono según el estado */}
             {showSearch ? (
-              <FaTimes 
-                className="text-inherit" 
+              <FaTimes
+                className="text-inherit"
                 onClick={handleSearchToggle}
                 style={{ cursor: "pointer" }}
               />
             ) : (
-              <FaSearch 
-                className="text-inherit" 
+              <FaSearch
+                className="text-inherit"
                 onClick={handleSearchToggle}
                 style={{ cursor: "pointer" }}
               />
@@ -571,7 +576,7 @@ export const Header = () => {
                   >
                     {i18n.language === "es" && (
                       <FaCheck className="me-2 text-success" />
-                    )}{ " "}
+                    )}{" "}
                     {t("espanol")}
                   </li>
                   <li
@@ -580,7 +585,7 @@ export const Header = () => {
                   >
                     {i18n.language === "en" && (
                       <FaCheck className="me-2 text-success" />
-                    )}{ " "}
+                    )}{" "}
                     {t("ingles")}
                   </li>
                 </ul>

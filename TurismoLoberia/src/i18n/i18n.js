@@ -7,6 +7,14 @@ import LanguageDetector from 'i18next-browser-languagedetector'; */
 const resources = {
   es: {
     translation: {
+      // Header logo text
+      patrimonio: "Patrimonio Vivo",
+      cultura: "Cultura",
+      historia: "Historia",
+      naturaleza: "Naturaleza",
+      tradicion: "Tradición",
+
+      // Intro Loberia Actualizado
       intro_loberia_index:
         "En el corazón de la provincia de Buenos Aires, Lobería te espera con paisajes encantadores, historia viva y la calidez que solo conservan los pueblos auténticos. Ubicada entre suaves colinas, campos dorados y una costa agreste que se encuentra con el Océano Atlántico, esta joya escondida es perfecta para quienes buscan desconectarse y redescubrir la paz. Explorá sus playas vírgenes como Arenas Verdes, recorré senderos rurales, saboreá sabores caseros y maravillate con su rico patrimonio arquitectónico y natural. Lobería no es solo un destino — es una experiencia que te reconecta con la simpleza, la autenticidad y la esencia de la Argentina. Lobería — donde la naturaleza, la historia y el descanso se encuentran.",
       // Partido de Lobería Actualizado
@@ -405,6 +413,13 @@ const resources = {
   },
   en: {
     translation: {
+      // Header logo text
+      patrimonio: "Living Heritage",
+      cultura: "Culture",
+      historia: "History",
+      naturaleza: "Nature",
+      tradicion: "Tradition",
+
       // Partido de Lobería
       partido_loberia: "Lobería District",
       intro_partido_loberia: {
