@@ -218,41 +218,6 @@ export const Clima = () => {
     </thead>
   );
 
-  // Función para obtener el ícono del pronóstico
-  const getWeatherIcon = (iconCode) => {
-    switch (iconCode) {
-      case "01d":
-      case "01n":
-        return <FaCloudSun />;
-      case "02d":
-      case "02n":
-        return <FaCloudSun />;
-      case "03d":
-      case "03n":
-        return <FaCloudSun />;
-      case "04d":
-      case "04n":
-        return <FaCloudSun />;
-      case "09d":
-      case "09n":
-        return <FaTint />;
-      case "10d":
-      case "10n":
-        return <FaTint />;
-      case "11d":
-      case "11n":
-        return <FaWind />;
-      case "13d":
-      case "13n":
-        return <FaTemperatureLow />;
-      case "50d":
-      case "50n":
-        return <FaTint />;
-      default:
-        return <FaCloudSun />;
-    }
-  };
-
   return (
     <div>
       <section className="weather" key={i18n.language}>
