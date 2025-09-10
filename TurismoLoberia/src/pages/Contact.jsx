@@ -4,7 +4,8 @@ import { FaAsterisk } from "react-icons/fa";
 import ButtonSubmit from "../components/common/ButtonSubmit";
 import "../styles/contact.css";
 import { useTranslation } from "react-i18next";
-import { trackEvent } from "../analytics"; // 👈 Importar función GA4
+import { trackEvent } from "../analytics";
+import { Global } from "../helpers/Global";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +21,6 @@ export const Contact = () => {
 
   const interactionTracked = useRef(false);
 
-  // 📌 Evento: Vista de la página
   useEffect(() => {
     trackEvent({
       category: "Formulario",
@@ -37,7 +37,6 @@ export const Contact = () => {
       [name]: value,
     }));
 
-    // ✅ Evento: interacción con formulario (solo la primera vez)
     if (!interactionTracked.current) {
       trackEvent({
         category: "Formulario",
@@ -47,7 +46,6 @@ export const Contact = () => {
       interactionTracked.current = true;
     }
 
-    // ✅ Evento: usuario limpia un error
     if (status === "error") {
       trackEvent({
         category: "Formulario",
@@ -65,7 +63,7 @@ export const Contact = () => {
     setErrorMessage("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/send-email", {
+      const response = await fetch(`${Global.url}send-email`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,7 +75,6 @@ export const Contact = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // ✅ Evento: envío exitoso
         trackEvent({
           category: "Formulario",
           action: "Envío exitoso",
@@ -87,7 +84,6 @@ export const Contact = () => {
         setFormData({ name: "", email: "", subject: "", message: "" });
         interactionTracked.current = false;
       } else {
-        // ❌ Evento: error de validación o backend
         trackEvent({
           category: "Formulario",
           action: "Error en envío",
@@ -99,7 +95,6 @@ export const Contact = () => {
     } catch (error) {
       console.error("Error en enviado:", error);
 
-      // ❌ Evento: error de conexión
       trackEvent({
         category: "Formulario",
         action: "Error técnico",

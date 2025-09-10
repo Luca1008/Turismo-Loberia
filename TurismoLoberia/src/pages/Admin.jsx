@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
+import { Global } from "../helpers/Global"
 
 const Admin = () => {
   const { setAuth } = useAuth();
@@ -14,6 +15,8 @@ const Admin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
 
   const validateForm = () => {
     const newErrors = {};
@@ -30,9 +33,6 @@ const Admin = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
-
   const loginUser = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -43,7 +43,7 @@ const Admin = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/user/login", {
+      const response = await fetch(`${Global.url}user/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -117,7 +117,9 @@ const Admin = () => {
         </Form.Group>
 
         <div style={{ marginTop: "1rem" }}>
-          <a href="/recuperar-password"><strong>{t("forgot_password")}</strong></a>
+          <a href="/recuperar-password">
+            <strong>{t("forgot_password")}</strong>
+          </a>
         </div>
 
         <ButtonSubmit

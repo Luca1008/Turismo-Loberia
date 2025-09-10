@@ -4,21 +4,19 @@ import "../styles/city.css";
 import { FaCar, FaBus, FaBicycle } from "react-icons/fa";
 import { useTranslation, Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { trackEvent } from "../analytics"; // 👈 Importamos función GA4
+import { trackEvent } from "../analytics";
 
 export const SanManuel = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // ✅ Vista de página
     trackEvent({
       category: "Páginas",
       action: "Vista página",
       label: "San Manuel",
     });
 
-    // ✅ Vista por sección
     const sections = [
       "informacion_general",
       "como_llegar",
@@ -38,7 +36,6 @@ export const SanManuel = () => {
       });
     });
 
-    // ✅ Simulación de lectura completa
     trackEvent({
       category: "Scroll",
       action: "Página completa",
@@ -64,7 +61,7 @@ export const SanManuel = () => {
         <p>
           <strong className="primary">
             <FaCar />
-           { t("en_auto")}
+            {t("en_auto")}
           </strong>
         </p>
         <Trans
@@ -82,7 +79,7 @@ export const SanManuel = () => {
       </section>
 
       <section className="accommodation" id="alojamientos">
-        <Trans components={{ h2: <h2 />}} i18nKey="alojamientos_san_manuel" />
+        <Trans components={{ h2: <h2 /> }} i18nKey="alojamientos_san_manuel" />
         <div className="photo-alojamiento-san-manuel"></div>
         <p>{t("alojamientos_san_manuel_descripcion")}</p>
         <ButtonSuccess
@@ -126,7 +123,16 @@ export const SanManuel = () => {
       <section className="agenda" id="agenda">
         <h2>{t("agenda")}</h2>
         <div className="photo-agenda-san-manuel"></div>
-        <Trans components={{ p: <p />, h2: <h2 />, h3: <h3 />, ul: <ul />, li: <li /> }} i18nKey="agenda_san_manuel" />
+        <Trans
+          components={{
+            p: <p />,
+            h2: <h2 />,
+            h3: <h3 />,
+            ul: <ul />,
+            li: <li />,
+          }}
+          i18nKey="agenda_san_manuel"
+        />
         <ButtonSuccess
           onClick={() => {
             trackEvent({
@@ -144,15 +150,14 @@ export const SanManuel = () => {
       <section className="event" id="que_hacer">
         <h2>{t("que_hacer_san_manuel")}</h2>
         <div className="photo-que-hacer-san-manuel"></div>
-        <Trans components={{ p: <p />, h3: <h3 />, ul: <ul />, li: <li /> }} i18nKey="que_hacer_san_manuel_descripcion" />
+        <Trans
+          components={{ p: <p />, h3: <h3 />, ul: <ul />, li: <li /> }}
+          i18nKey="que_hacer_san_manuel_descripcion"
+        />
       </section>
 
       <section className="download" id="descargas">
         <h2>{t("descargas")}</h2>
-        <p>
-          Puedes descargar material útil para tu visita como: Mapa turístico,
-          listado actualizado de alojamientos y guía gastronómica local.
-        </p>
       </section>
     </div>
   );

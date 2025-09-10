@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { useTranslation } from "react-i18next";
 import { FaAsterisk } from "react-icons/fa";
-import { trackEvent } from "../analytics"; // GA4
+import { trackEvent } from "../analytics";
 import ButtonSubmit from "../components/common/ButtonSubmit";
 import { Global } from "../helpers/Global";
 import { toast, ToastContainer } from "react-toastify";
@@ -21,7 +21,7 @@ export const Suscribe = () => {
     source: [],
     accept: false,
   });
-  const [status, setStatus] = useState(""); // 'enviando', 'exitoso', 'error'
+  const [status, setStatus] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const { t, i18n } = useTranslation();
 
@@ -40,13 +40,19 @@ export const Suscribe = () => {
         ? [...formData.companions, value]
         : formData.companions.filter((v) => v !== value);
       setFormData((prev) => ({ ...prev, companions: updated }));
-      trackEvent("checkbox_marcado", { category: "Formulario", label: `Compañía: ${value}` });
+      trackEvent("checkbox_marcado", {
+        category: "Formulario",
+        label: `Compañía: ${value}`,
+      });
       return;
     }
 
     if (type === "checkbox" && name === "accept") {
       setFormData((prev) => ({ ...prev, accept: checked }));
-      trackEvent("checkbox_marcado", { category: "Formulario", label: "Acepta políticas" });
+      trackEvent("checkbox_marcado", {
+        category: "Formulario",
+        label: "Acepta políticas",
+      });
       return;
     }
 
@@ -55,7 +61,10 @@ export const Suscribe = () => {
         ? [...formData.source, value]
         : formData.source.filter((v) => v !== value);
       setFormData((prev) => ({ ...prev, source: updated }));
-      trackEvent("checkbox_marcado", { category: "Formulario", label: `Origen: ${value}` });
+      trackEvent("checkbox_marcado", {
+        category: "Formulario",
+        label: `Origen: ${value}`,
+      });
       return;
     }
 
@@ -64,7 +73,10 @@ export const Suscribe = () => {
         ? [...formData.transport, value]
         : formData.transport.filter((v) => v !== value);
       setFormData((prev) => ({ ...prev, transport: updated }));
-      trackEvent("checkbox_marcado", { category: "Formulario", label: `Transporte: ${value}` });
+      trackEvent("checkbox_marcado", {
+        category: "Formulario",
+        label: `Transporte: ${value}`,
+      });
       return;
     }
 
@@ -92,7 +104,7 @@ export const Suscribe = () => {
         toast.error(data.message || "Error en la suscripción");
       } else {
         setStatus("exitoso");
-        setErrorMessage(data.message); // mensaje dinámico del backend
+        setErrorMessage(data.message);
         toast.success(data.message);
 
         setFormData({
@@ -229,7 +241,7 @@ export const Suscribe = () => {
                   label={t(item)}
                   type="checkbox"
                   name="transport"
-                  value={t(item)}
+                  value={item}
                   checked={formData.transport.includes(item)}
                   onChange={handleChange}
                   className="mb-1"
@@ -318,9 +330,13 @@ export const Suscribe = () => {
 
           {/* Mensajes */}
           {status === "exitoso" && (
-            <p className="success-message">{errorMessage || t("mensaje_enviado")}</p>
+            <p className="success-message">
+              {errorMessage || t("mensaje_enviado")}
+            </p>
           )}
-          {status === "error" && <p className="error-message">{errorMessage}</p>}
+          {status === "error" && (
+            <p className="error-message">{errorMessage}</p>
+          )}
         </Form>
 
         {/* Toast container */}

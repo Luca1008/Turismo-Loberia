@@ -1,5 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useState, useCallback, useRef, useMemo } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  useMemo,
+} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Pagination from "react-bootstrap/Pagination";
@@ -15,8 +21,6 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
   const location = useLocation();
   const { t, i18n } = useTranslation();
   const [searchParams] = useSearchParams();
-
-  // Estados
   const [cards, setCards] = useState([]);
   const [search, setSearch] = useState("");
   const [city, setCity] = useState(location.state?.city || "");
@@ -25,14 +29,11 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
   const [totalPages, setTotalPages] = useState(1);
   const [suggestions, setSuggestions] = useState([]);
   const limit = 6;
-
-  // Usar useRef para valores que no deben trigger re-renders
   const searchRef = useRef(search);
   const cityRef = useRef(city);
   const categoryRef = useRef(category);
   const pageRef = useRef(page);
 
-  // Actualizar refs cuando los estados cambien
   useEffect(() => {
     searchRef.current = search;
     cityRef.current = city;
@@ -40,19 +41,20 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     pageRef.current = page;
   }, [search, city, category, page]);
 
-  // Categorías disponibles (para sugerencias locales)
-  const categoriasDisponibles = useMemo(() => [
-    "Alojamiento",
-    "Gastronomia",
-    "Cultura",
-    "Evento",
-    "Interes",
-    "Artesanos",
-    "ServPublicos",
-    "InfoUtil",
-  ], []);
+  const categoriasDisponibles = useMemo(
+    () => [
+      "Alojamiento",
+      "Gastronomia",
+      "Cultura",
+      "Evento",
+      "Interes",
+      "Artesanos",
+      "ServPublicos",
+      "InfoUtil",
+    ],
+    []
+  );
 
-  // Función para convertir buffer a base64
   const bufferToBase64 = useCallback((buffer) => {
     if (!buffer?.data) return null;
     const binary = buffer.data.reduce(
@@ -62,7 +64,6 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     return `data:image/jpeg;base64,${window.btoa(binary)}`;
   }, []);
 
-  // fetchCards estable con useCallback y dependencias mínimas
   const fetchCards = useCallback(async () => {
     try {
       const params = {
@@ -95,9 +96,8 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
       console.error("Error al obtener las cards:", error);
       setCards([]);
     }
-  }, [limit, bufferToBase64]); // Solo dependencias estables
+  }, [limit, bufferToBase64]);
 
-  // 🔹 Obtener sugerencias (mezcla títulos + categorías)
   const fetchSuggestions = useCallback(
     async (texto) => {
       try {
@@ -125,7 +125,6 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     [categoriasDisponibles]
   );
 
-  // 🔹 Efecto para manejar parámetros iniciales de URL
   useEffect(() => {
     const titleFromUrl = searchParams.get("title");
     if (titleFromUrl) {
@@ -138,7 +137,6 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     });
   }, [searchParams]);
 
-  // 🔹 Efecto principal con debounce para cards - CORREGIDO
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchCards();
@@ -150,9 +148,8 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [fetchCards, page, search, city, category]); // Mantener estas dependencias
+  }, [fetchCards, page, search, city, category]);
 
-  // 🔹 Efecto para sugerencias
   useEffect(() => {
     if (search.length < 2) {
       setSuggestions([]);
@@ -164,14 +161,13 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
     return () => clearTimeout(timer);
   }, [search, fetchSuggestions]);
 
-  // 🔹 Click en sugerencia
   const handleSuggestionClick = (s) => {
     if (s.type === "title") {
       setSearch(s.value);
       setPage(1);
     } else if (s.type === "category") {
       setCategory(s.value);
-      setSearch(""); // Limpiar búsqueda cuando se selecciona categoría
+      setSearch("");
       setPage(1);
     }
     setSuggestions([]);
@@ -208,7 +204,6 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
       <main className="search-main">
         <h1 className="search-title">{t("busqueda_contenido")}</h1>
 
-        {/* 🔍 Buscador con sugerencias */}
         <div className="search-bar">
           <div className="search-input-group">
             <input
@@ -229,8 +224,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
               <FaSearch />
             </button>
           </div>
-          
-          {/* 📌 Dropdown de sugerencias*/}
+
           {suggestions.length > 0 && (
             <ul className="suggestions-dropdown">
               {suggestions.map((s, i) => (
@@ -249,7 +243,6 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
           )}
         </div>
 
-        {/* 🎯 Filtros */}
         <div className="search-filters">
           <Form.Select
             value={city}
@@ -301,7 +294,6 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
           </Button>
         </div>
 
-        {/* Mostrar filtros activos */}
         {(search || city || category) && (
           <div className="active-filters">
             <strong>{t("filtros_activos")}: </strong>
@@ -323,7 +315,6 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
           </div>
         )}
 
-        {/* 🗂️ Resultados */}
         <div className="results-grid">
           {cards.length > 0 ? (
             cards.map((card) => (
@@ -349,7 +340,6 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
           )}
         </div>
 
-        {/* 📄 Paginación */}
         {totalPages > 1 && (
           <Pagination className="pagination-container">
             <Pagination.First

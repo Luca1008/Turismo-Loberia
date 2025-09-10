@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/cardPage.css";
 import { useTranslation } from "react-i18next";
-import { trackEvent } from "../analytics"; // 👈 GA4
+import { trackEvent } from "../analytics";
+import { Global } from "../helpers/Global";
 
 const CardPage = () => {
   const { id } = useParams();
@@ -14,17 +15,15 @@ const CardPage = () => {
   useEffect(() => {
     const fetchCard = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/cards/${id}`);
+        const res = await axios.get(`${Global.url}cards/${id}`);
         setCard(res.data);
 
-        // ✅ Evento: Card vista
         trackEvent({
           category: "Contenido",
           action: "Vista Card",
           label: res.data.card_title || `ID: ${id}`,
         });
 
-        // ✅ Evento: Si es evento con fecha
         if (res.data.card_category === "Evento" && res.data.card_date) {
           trackEvent({
             category: "Evento",
@@ -33,13 +32,23 @@ const CardPage = () => {
           });
         }
 
-        // ✅ Eventos por secciones
-        trackEvent({ category: "Sección", action: "Vista", label: "Ubicación" });
+        trackEvent({
+          category: "Sección",
+          action: "Vista",
+          label: "Ubicación",
+        });
         trackEvent({ category: "Sección", action: "Vista", label: "Horarios" });
-        trackEvent({ category: "Sección", action: "Vista", label: "Contactos" });
-        trackEvent({ category: "Sección", action: "Vista", label: "Información" });
+        trackEvent({
+          category: "Sección",
+          action: "Vista",
+          label: "Contactos",
+        });
+        trackEvent({
+          category: "Sección",
+          action: "Vista",
+          label: "Información",
+        });
 
-        // ✅ Si tiene mapa
         if (res.data.card_lat && res.data.card_lon) {
           trackEvent({
             category: "Mapa",
@@ -47,7 +56,6 @@ const CardPage = () => {
             label: res.data.card_title || `ID: ${id}`,
           });
         }
-
       } catch (err) {
         console.error("Error al cargar la card", err);
       }
@@ -60,6 +68,7 @@ const CardPage = () => {
 
   return (
     <section className="card-detail" key={i18n.language}>
+      <h1>{card.card_title}</h1>
       {card.card_img_portada && (
         <img
           src={card.card_img_portada}
@@ -68,12 +77,14 @@ const CardPage = () => {
         />
       )}
 
-      <h1>{card.card_title}</h1>
-
       {card.card_category === "Evento" && card.card_date && (
         <div
           className="event-date-detail"
-          style={{ marginBottom: "1rem", fontWeight: "bold", fontSize: "1.2rem" }}
+          style={{
+            marginBottom: "1rem",
+            fontWeight: "bold",
+            fontSize: "1.2rem",
+          }}
         >
           {t("fecha_evento")}:{" "}
           {new Date(card.card_date).toLocaleDateString("es-AR", {
@@ -86,7 +97,6 @@ const CardPage = () => {
 
       <p>{card.card_description}</p>
 
-      {/* Ubicación */}
       <section className="card-section">
         <h2>{t("ubicacion")}</h2>
         <p>{card.card_ubicacion}</p>
@@ -95,7 +105,11 @@ const CardPage = () => {
           <>
             <iframe
               title="Mapa OpenStreetMap"
-              src={`https://www.openstreetmap.org/export/embed.html?bbox=${card.card_lon - 0.01}%2C${card.card_lat - 0.01}%2C${card.card_lon + 0.01}%2C${card.card_lat + 0.01}&layer=mapnik&marker=${card.card_lat}%2C${card.card_lon}`}
+              src={`https://www.openstreetmap.org/export/embed.html?bbox=${
+                card.card_lon - 0.01
+              }%2C${card.card_lat - 0.01}%2C${card.card_lon + 0.01}%2C${
+                card.card_lat + 0.01
+              }&layer=mapnik&marker=${card.card_lat}%2C${card.card_lon}`}
               width="100%"
               height="300"
               style={{ border: 0 }}
@@ -121,19 +135,16 @@ const CardPage = () => {
         )}
       </section>
 
-      {/* Horarios */}
       <section className="card-section">
         <h2>{t("horarios")}</h2>
         <p>{card.card_horario}</p>
       </section>
 
-      {/* Contactos */}
       <section className="card-section">
         <h2>{t("contactos")}</h2>
         <p>{card.card_contacto}</p>
       </section>
 
-      {/* Información */}
       <section className="card-section">
         <h2>{t("informacion")}</h2>
         <p>{card.card_info}</p>

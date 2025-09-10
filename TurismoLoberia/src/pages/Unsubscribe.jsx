@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "../styles/unsubscribe.css";
+import { Global } from "../helpers/Global";
 
 export default function Unsubscribe() {
   const { token } = useParams();
@@ -14,7 +15,7 @@ export default function Unsubscribe() {
     setStatus("Procesando tu desuscripción...");
 
     try {
-      const res = await fetch(`http://localhost:5000/api/send/unsubscribe/${token}`);
+      const res = await fetch(`${Global.url}send/unsubscribe/${token}`);
       const text = await res.text();
 
       if (res.ok) {

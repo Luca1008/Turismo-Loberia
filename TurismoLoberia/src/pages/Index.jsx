@@ -16,7 +16,7 @@ import serv_publicos_icon from "../assets/icons/services/serv_publicos.svg";
 import gastronomia_icon from "../assets/icons/services/gastronomia.svg";
 import alojamientos_icon from "../assets/icons/services/alojamientos.svg";
 import info_util_icon from "../assets/icons/services/info_util.svg";
-import {Banner} from "../components/layout/Banner";
+import { Banner } from "../components/layout/Banner";
 
 export const Index = () => {
   const [interes, setInteres] = useState([]);
@@ -28,7 +28,6 @@ export const Index = () => {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const navigate = useNavigate();
 
-  /*---Spinner facebook----*/
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -40,11 +39,9 @@ export const Index = () => {
   }, []);
 
   useEffect(() => {
-    // Traer solo los 6 primeros interes
     fetch(`${Global.url}cards?category=Interes&limit=6&page=1`)
       .then((res) => res.json())
       .then((data) => {
-        // Si la respuesta es { cards: [...] }
         const cards = data.cards || data;
         setInteres(cards.slice(0, 3));
       })
@@ -53,11 +50,9 @@ export const Index = () => {
         setInteres([]);
       });
 
-    // Traer solo los tres primeros gastrnomia
     fetch(`${Global.url}cards?category=Gastronomia&limit=3&page=1`)
       .then((res) => res.json())
       .then((data) => {
-        // Si la respuesta es { cards: [...] }
         const cards = data.cards || data;
         setGastronomia(cards.slice(0, 3));
       })
@@ -66,11 +61,9 @@ export const Index = () => {
         setGastronomia([]);
       });
 
-    // Traer solo los tres primeros alojamientos
     fetch(`${Global.url}cards?category=Alojamiento&limit=3&page=1`)
       .then((res) => res.json())
       .then((data) => {
-        // Si la respuesta es { cards: [...] }
         const cards = data.cards || data;
         setAlojamientos(cards.slice(0, 3));
       })
@@ -79,7 +72,6 @@ export const Index = () => {
         setAlojamientos([]);
       });
 
-    // Traer solo los tres primeros eventos
     fetch(`${Global.url}cards?category=Evento&limit=3&page=1`)
       .then((res) => res.json())
       .then((data) => {
@@ -196,7 +188,7 @@ export const Index = () => {
           </div>
         </div>
       </section>
-        <Banner />
+      <Banner />
       <section className="places">
         <h1>{t("descubri_loberia")}</h1>
         <p className="text-left">

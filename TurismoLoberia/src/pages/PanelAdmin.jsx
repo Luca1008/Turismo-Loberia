@@ -21,13 +21,14 @@ import Searcher from "./Searcher";
 import AdminDashboard from "../components/layout/panel-admin/AdminDashboard.jsx";
 import SendContent from "../components/layout/panel-admin/SendContent";
 import { IoStatsChartSharp } from "react-icons/io5";
+import { Global } from "../helpers/Global.js";
 
 const PanelAdmin = () => {
   const { auth, logout } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
-    logout(); // Limpia estado y localStorage
-    navigate("/Admin"); // Redirige a /Admin
+    logout();
+    navigate("/Admin");
   };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -53,7 +54,6 @@ const PanelAdmin = () => {
     setSelectedCardId(null);
   };
 
-  // Nueva función para refrescar la lista tras editar
   const handleUpdateCard = () => {
     setShowEditModal(false);
     setSelectedCardId(null);
@@ -75,7 +75,7 @@ const PanelAdmin = () => {
     setLoading(true);
     try {
       if (useDefault) {
-        await fetch(`http://localhost:5000/api/carousel/${selectedCity}`, {
+        await fetch(`${Global.url}carousel/${selectedCity}`, {
           method: "DELETE",
         });
         toast.success("Se usará la imagen default para esta ciudad.");
@@ -88,7 +88,7 @@ const PanelAdmin = () => {
         const formData = new FormData();
         formData.append("city", selectedCity);
         formData.append("image", image);
-        await fetch("http://localhost:5000/api/carousel", {
+        await fetch(`${Global.url}carousel`, {
           method: "POST",
           body: formData,
         });
@@ -181,19 +181,14 @@ const PanelAdmin = () => {
       </div>
       <section className="panel-admin">
         <h2>Bienvenido al Panel de Administración</h2>
-        {/* Buscador en modo admin */}
         <div id="gestionar-contenido"> </div>
-        <Searcher
-          ref={searcherRef}
-          isAdmin={true}
-          onEdit={handleEditCard}
-        />
-        {/* Formulario de creación */}
+
+        <Searcher ref={searcherRef} isAdmin={true} onEdit={handleEditCard} />
+
         <section id="crear-contenido" className="add-card">
           <Create />
         </section>
 
-        {/* Modal de edición */}
         {showEditModal && (
           <div className="modal-overlay" ref={editModalRef}>
             <div className="modal-content">
@@ -241,7 +236,6 @@ const PanelAdmin = () => {
         <ToastContainer position="top-right" autoClose={2500} />
       </section>
 
-      {/*----------------------Ajustes-----------------*/}
       <section className="user-panel">
         <Offcanvas show={show} onHide={handleClose}>
           <Offcanvas.Header closeButton>
@@ -286,7 +280,7 @@ const PanelAdmin = () => {
                   </ul>
                 </aside>
                 <main className="panel-content">
-                  <Outlet /> {/* Aquí se renderiza la subvista */}
+                  <Outlet />
                 </main>
               </div>
             </div>

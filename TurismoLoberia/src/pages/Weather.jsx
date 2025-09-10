@@ -13,9 +13,9 @@ import {
 } from "react-icons/fa";
 import WeatherCard from "../components/cards/WeatherCard";
 import "../styles/weather.css";
-import ButtonSubmit from "../components/common/ButtonSubmit";
 import { useTranslation } from "react-i18next";
 import { trackEvent } from "../analytics";
+import {Global} from "../helpers/Global";
 
 export const Clima = () => {
   const ciudades = [
@@ -28,8 +28,6 @@ export const Clima = () => {
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
   const { i18n } = useTranslation();
-
-  // Estados para pronóstico extendido
   const [forecastLoberia, setForecastLoberia] = useState([]);
   const [forecastSanManuel, setForecastSanManuel] = useState([]);
   const [forecastArenasVerdes, setForecastArenasVerdes] = useState([]);
@@ -42,7 +40,7 @@ export const Clima = () => {
       label: "Clima",
     });
   }, []);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -50,8 +48,8 @@ export const Clima = () => {
         const promesas = ciudades.map(async (c) => {
           let url =
             c.lat && c.lon
-              ? `http://localhost:5000/api/weather?lat=${c.lat}&lon=${c.lon}`
-              : `http://localhost:5000/api/weather?city=${c.ciudad}`;
+              ? `${Global.url}weather?lat=${c.lat}&lon=${c.lon}`
+              : `${Global.url}weather?city=${c.ciudad}`;
           try {
             const res = await axios.get(url);
             trackEvent({
@@ -108,23 +106,38 @@ export const Clima = () => {
           `http://localhost:5000/api/forecast?city=Lobería`
         );
         setForecastLoberia(resLob.data);
-        trackEvent({ category: "Pronóstico", action: "Cargado", label: "Lobería" });
+        trackEvent({
+          category: "Pronóstico",
+          action: "Cargado",
+          label: "Lobería",
+        });
 
         const resSan = await axios.get(
           `http://localhost:5000/api/forecast?city=San Manuel`
         );
         setForecastSanManuel(resSan.data);
-        trackEvent({ category: "Pronóstico", action: "Cargado", label: "San Manuel" });
+        trackEvent({
+          category: "Pronóstico",
+          action: "Cargado",
+          label: "San Manuel",
+        });
 
         const resArenas = await axios.get(
           `http://localhost:5000/api/forecast?lat=-38.8083&lon=-58.6036`
         );
         setForecastArenasVerdes(resArenas.data);
-        trackEvent({ category: "Pronóstico", action: "Cargado", label: "Arenas Verdes" });
-
+        trackEvent({
+          category: "Pronóstico",
+          action: "Cargado",
+          label: "Arenas Verdes",
+        });
       } catch (error) {
         console.error("Error al obtener el pronóstico extendido:", error);
-        trackEvent({ category: "Pronóstico", action: "Error", label: "Alguno de los destinos" });
+        trackEvent({
+          category: "Pronóstico",
+          action: "Error",
+          label: "Alguno de los destinos",
+        });
       } finally {
         setLoadingForecast(false);
       }
@@ -294,7 +307,7 @@ export const Clima = () => {
                     />
                   </th>
                   <th>
-                    {t("estado")} {" "}
+                    {t("estado")}{" "}
                     <FaCloudSun style={{ marginLeft: 4, color: "#ffc107" }} />
                   </th>
                 </tr>

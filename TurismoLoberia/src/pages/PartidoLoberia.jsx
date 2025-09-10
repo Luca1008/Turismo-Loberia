@@ -8,18 +8,15 @@ import { Trans } from "react-i18next";
 import DownloadButton from "../components/ui/DownloadButton";
 
 const PartidoLoberia = () => {
-  // Configuración de i18n y navegación
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    // ✅ Vista de página
     trackEvent({
       category: "Páginas",
       action: "Vista página",
       label: "Partido Lobería",
     });
 
-    // ✅ Eventos por sección
     const sections = [
       "informacion_general",
       "como_llegar",
@@ -39,7 +36,6 @@ const PartidoLoberia = () => {
       });
     });
 
-    // ✅ Scroll completo
     trackEvent({
       category: "Scroll",
       action: "Página completa",
@@ -68,7 +64,7 @@ const PartidoLoberia = () => {
         <br />
         <br />
 
-          <h2 id="historia">{t("historia")}</h2>
+        <h2 id="historia">{t("historia")}</h2>
         <div className="photo-historia-partido-loberia"></div>
         <Trans components={{ h3: <h3 className="h3-city" /> }}>
           {data_intro.cultura.titulo}
@@ -132,8 +128,6 @@ const PartidoLoberia = () => {
         <Trans components={{ p: <p /> }}>{data_intro.paisaje.cierre}</Trans>
         <br />
         <br />
-        
-        
 
         <h2 id="producciones">{t("producciones")}</h2>
         <div className="photo-produccion-partido-loberia"></div>

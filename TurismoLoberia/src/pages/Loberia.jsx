@@ -4,7 +4,7 @@ import "../styles/city.css";
 import { FaCar, FaBus, FaTrain } from "react-icons/fa";
 import { useTranslation, Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { trackEvent } from "../analytics"; // 👈 Importamos GA4
+import { trackEvent } from "../analytics";
 import DownloadButton from "../components/ui/DownloadButton";
 
 const Loberia = () => {
@@ -15,14 +15,12 @@ const Loberia = () => {
   });
 
   useEffect(() => {
-    // ✅ Evento: Vista general de la página
     trackEvent({
       category: "Páginas",
       action: "Vista página",
       label: "Lobería",
     });
 
-    // ✅ Evento por sección renderizada
     const sections = [
       "informacion_general",
       "como_llegar",
@@ -42,7 +40,6 @@ const Loberia = () => {
       });
     });
 
-    // ✅ Simulación de "lectura completa"
     trackEvent({
       category: "Scroll",
       action: "Página completa",
@@ -240,8 +237,17 @@ const Loberia = () => {
         <h2>{t("agenda_loberia")}</h2>
         <div className="photo-agenda-loberia"></div>
         <p>{t("agenda_loberia_descripcion")}</p>
-        <Trans i18nKey="fiestas_loberia_descripcion"
-          components={{ p: <p />, strong: <strong />, h3: <h3 />, h2: <h2 />, ul:<ul/>, li:<li/>}} />
+        <Trans
+          i18nKey="fiestas_loberia_descripcion"
+          components={{
+            p: <p />,
+            strong: <strong />,
+            h3: <h3 />,
+            h2: <h2 />,
+            ul: <ul />,
+            li: <li />,
+          }}
+        />
         <ButtonSuccess
           onClick={() => {
             trackEvent({
@@ -260,7 +266,14 @@ const Loberia = () => {
         <h2>{t("que_hacer_loberia")}</h2>
         <div className="photo-que-hacer-loberia"></div>
         <Trans
-          i18nKey="que_hacer_loberia_descripcion" components={{ p: <p />,h2: <h2 />, h3: <h3 /> , span: <span className="font-semibold" />}} />
+          i18nKey="que_hacer_loberia_descripcion"
+          components={{
+            p: <p />,
+            h2: <h2 />,
+            h3: <h3 />,
+            span: <span className="font-semibold" />,
+          }}
+        />
       </section>
 
       <section className="download" id="descargas">

@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Global } from "../helpers/Global";
 
 const ResetPassword = () => {
-  const { token } = useParams(); // Captura el token desde la URL /recuperar-password/:token
+  const { token } = useParams();
   const navigate = useNavigate();
 
   const [password, setPassword] = useState("");
@@ -27,7 +28,7 @@ const ResetPassword = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/user/reset-password", {
+      const res = await fetch(`${Global.url}user/reset-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token, password }),
@@ -37,7 +38,7 @@ const ResetPassword = () => {
 
       if (data.status === "success") {
         toast.success("Contraseña actualizada correctamente.");
-        localStorage.removeItem("token"); // Borra el token viejo
+        localStorage.removeItem("token");
         setTimeout(() => navigate("/Admin"), 2500);
       } else {
         toast.error(data.message || "Error al actualizar la contraseña.");

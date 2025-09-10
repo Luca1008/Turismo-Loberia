@@ -4,6 +4,7 @@ import ButtonSubmit from "../components/common/ButtonSubmit";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
+import { Global } from "../helpers/Global";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/user/recuperar-password", {
+      const response = await fetch(`${Global.url}user/recuperar-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -31,6 +32,7 @@ const ForgotPassword = () => {
       }
     } catch (error) {
       toast.error("Error de service");
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -41,7 +43,7 @@ const ForgotPassword = () => {
       <h2>Recuperar Contraseña</h2>
       <Form onSubmit={handleSubmit} className="form-forgot">
         <Form.Group controlId="formEmail">
-          <Form.Label>{ t("email")}</Form.Label>
+          <Form.Label>{t("email")}</Form.Label>
           <Form.Control
             type="email"
             placeholder="name@example.com"

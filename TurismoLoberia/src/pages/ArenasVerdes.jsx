@@ -4,7 +4,7 @@ import "../styles/city.css";
 import { FaCar } from "react-icons/fa";
 import { useTranslation, Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { trackEvent } from "../analytics"; // 👈 Importa GA tracking
+import { trackEvent } from "../analytics";
 import DownloadButton from "../components/ui/DownloadButton";
 
 const ArenasVerdes = () => {
@@ -13,7 +13,6 @@ const ArenasVerdes = () => {
   const navigate = useNavigate();
   const data_arenas = t("descripcion_arenas_verdes", { returnObjects: true });
 
-  // 🔥 Evento al montar (solo una vez)
   useEffect(() => {
     trackEvent({
       category: "Páginas",
@@ -21,7 +20,6 @@ const ArenasVerdes = () => {
       label: "Arenas Verdes",
     });
 
-    // Eventos automáticos por sección (puede ajustarse según uso real de scroll)
     const sections = [
       "informacion_general",
       "como_llegar",
@@ -41,7 +39,6 @@ const ArenasVerdes = () => {
       });
     });
 
-    // Al llegar al final del componente, simulamos evento de scroll total
     trackEvent({
       category: "Scroll",
       action: "Página completa",
