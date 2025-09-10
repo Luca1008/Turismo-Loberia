@@ -3,16 +3,16 @@ import Form from "react-bootstrap/Form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Global } from "../../../helpers/Global";
-import '../../../styles/panelAdmin.css'
+import "../../../styles/panelAdmin.css";
 
 const CreateAdmin = () => {
   const [error, setError] = useState(null);
+  console.log(error);
 
   const registerUser = async (e) => {
     e.preventDefault();
     setError(null);
 
-    // Recoger datos del formulario
     let userData = {
       name: e.target.name.value,
       surname: e.target.surname.value,
@@ -20,15 +20,12 @@ const CreateAdmin = () => {
       password: e.target.password.value,
     };
 
-
-    // Validar contraseña
     if (userData.password.length < 8) {
       toast.error("La contraseña debe tener al menos 8 caracteres.");
-      return; // Detiene la ejecución si la validación falla
+      return;
     }
 
     try {
-      // Enviar datos como JSON
       const request = await fetch(Global.url + "user/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -48,8 +45,7 @@ const CreateAdmin = () => {
           toast.error("El usuario ya existe en el sistema");
         } else {
           toast.success("Usuario registrado correctamente");
-          setTimeout(() => {
-          }, 1500); // Espera 1.5 segundos para mostrar el toast
+          setTimeout(() => {}, 1500);
         }
       } else {
         setError(data.message || "Error al registrar usuario");
@@ -58,6 +54,7 @@ const CreateAdmin = () => {
     } catch (error) {
       setError("Error al conectar con el servidor");
       toast.error("Error al conectar con el servidor");
+      console.log(error);
     }
   };
 
@@ -73,22 +70,42 @@ const CreateAdmin = () => {
           >
             <Form.Group className="mb-3" controlId="registerName">
               <Form.Label>Nombre</Form.Label>
-              <Form.Control type="text" name="name" placeholder="Nombre" required />
+              <Form.Control
+                type="text"
+                name="name"
+                placeholder="Nombre"
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="registerSurname">
               <Form.Label>Apellido</Form.Label>
-              <Form.Control type="text" name="surname" placeholder="Apellido" required />
+              <Form.Control
+                type="text"
+                name="surname"
+                placeholder="Apellido"
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="registerEmail">
               <Form.Label>Correo electrónico</Form.Label>
-              <Form.Control type="email" name="email" placeholder="Correo electrónico" required />
+              <Form.Control
+                type="email"
+                name="email"
+                placeholder="Correo electrónico"
+                required
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="registerPassword">
               <Form.Label>Contraseña</Form.Label>
-              <Form.Control type="password" name="password" placeholder="Contraseña" required />
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder="Contraseña"
+                required
+              />
             </Form.Group>
             <button type="submit" className="btn btn-success">
               Crear
@@ -99,6 +116,6 @@ const CreateAdmin = () => {
       </section>
     </>
   );
-}
+};
 
-export default CreateAdmin
+export default CreateAdmin;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import ButtonSubmit from "../common/ButtonSubmit";
 import NominatimAutocomplete from "../common/NominatimAutocomplete";
-import {Global} from "../../helpers/Global";
+import { Global } from "../../helpers/Global";
 
 const Create = () => {
   const [formData, setFormData] = useState({
@@ -10,8 +10,8 @@ const Create = () => {
     descripcion: "",
     ubicacion: "",
     linkUbicacion: "",
-    lat: "", // Agregado para latitud
-    lon: "", // Agregado para longitud
+    lat: "",
+    lon: "",
     horario: "",
     contacto: "",
     informacion: "",
@@ -42,13 +42,12 @@ const Create = () => {
     try {
       const data = new FormData();
 
-      // Mapear los campos del frontend a los nombres que espera el backend
       data.append("card_title", formData.titulo);
       data.append("card_description", formData.descripcion);
       data.append("card_ubicacion", formData.ubicacion);
       data.append("card_link_ubicacion", formData.linkUbicacion);
-      data.append("card_lat", formData.lat); // Enviamos latitud
-      data.append("card_lon", formData.lon); // Enviamos longitud
+      data.append("card_lat", formData.lat);
+      data.append("card_lon", formData.lon);
       data.append("card_horario", formData.horario);
       data.append("card_contacto", formData.contacto);
       data.append("card_info", formData.informacion);
@@ -86,7 +85,7 @@ const Create = () => {
         setImagen(null);
         setTimeout(() => {
           window.location.reload();
-        }, 1200); // Espera 1.2 segundos para mostrar el mensaje
+        }, 1200);
       } else {
         const errorData = await response.json();
         setError(errorData.error || "Error al crear la card.");
@@ -134,7 +133,6 @@ const Create = () => {
           <NominatimAutocomplete
             onSelect={(place) => {
               const ubicacion = place.display_name;
-              // Cambié linkUbicacion para que use OpenStreetMap
               const linkUbicacion = `https://www.openstreetmap.org/?mlat=${place.lat}&mlon=${place.lon}#map=18/${place.lat}/${place.lon}`;
               setFormData((prev) => ({
                 ...prev,

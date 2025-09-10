@@ -1,172 +1,228 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import { IoAccessibility } from "react-icons/io5";
-import '../../styles/stickyButton.css';
+import "../../styles/stickyButton.css";
 
 const AccessibilityButton = () => {
-    const [fontSize, setFontSize] = useState(1); // 1 = 1rem = 16px
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [reading, setReading] = useState(false);
-    const [isHighContrast, setIsHighContrast] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(false);
-    const [isUnderlineLinks, setIsUnderlineLinks] = useState(false);
-    const [isDyslexiaFont, setIsDyslexiaFont] = useState(false);
+  const [fontSize, setFontSize] = useState(1);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [reading, setReading] = useState(false);
+  const [isHighContrast, setIsHighContrast] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isUnderlineLinks, setIsUnderlineLinks] = useState(false);
+  const [isDyslexiaFont, setIsDyslexiaFont] = useState(false);
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
 
-    // Referencias para el menú y el botón
-    const menuRef = useRef(null);
-    const buttonRef = useRef(null);
-
-    // Efecto para detectar clics fuera del menú
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            // Si el menú está abierto y el clic fue fuera del menú y del botón
-            if (menuOpen && 
-                menuRef.current && 
-                !menuRef.current.contains(event.target) && 
-                buttonRef.current && 
-                !buttonRef.current.contains(event.target)) {
-                setMenuOpen(false);
-            }
-        };
-
-        // Agregar el event listener cuando el componente se monta
-        document.addEventListener('mousedown', handleClickOutside);
-        
-        // Limpiar el event listener cuando el componente se desmonta
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [menuOpen]); // Solo se ejecuta cuando menuOpen cambia
-
-    // Cambia el tamaño de fuente usando rem
-    const changeFontSize = (size) => {
-        const mainContent = document.getElementById('main-content');
-        // Limitar entre 0.8rem y 1.5rem
-        const newSize = Math.max(0.8, Math.min(size, 1.5));
-        if (mainContent) {
-            mainContent.style.fontSize = `${newSize}rem`;
-            setFontSize(newSize);
-        }
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        menuOpen &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target)
+      ) {
+        setMenuOpen(false);
+      }
     };
 
-    // Contraste alto
-    const toggleContrast = () => {
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            mainContent.classList.toggle('high-contrast');
-            setIsHighContrast(!isHighContrast);
-        }
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, [menuOpen]);
 
-    // Modo oscuro
-    const toggleDarkMode = () => {
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            mainContent.classList.toggle('dark-mode');
-            setIsDarkMode(!isDarkMode);
-        }
-    };
+  const changeFontSize = (size) => {
+    const mainContent = document.getElementById("main-content");
+    const newSize = Math.max(0.8, Math.min(size, 1.5));
+    if (mainContent) {
+      mainContent.style.fontSize = `${newSize}rem`;
+      setFontSize(newSize);
+    }
+  };
 
-    // Subrayado de enlaces
-    const toggleUnderlineLinks = () => {
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            mainContent.classList.toggle('underline-links');
-            setIsUnderlineLinks(!isUnderlineLinks);
-        }
-    };
+  const toggleContrast = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.classList.toggle("high-contrast");
+      setIsHighContrast(!isHighContrast);
+    }
+  };
 
-    // Fuente dislexia
-    const toggleDyslexiaFont = () => {
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            mainContent.classList.toggle('dyslexia-font');
-            setIsDyslexiaFont(!isDyslexiaFont);
-        }
-    };
+  const toggleDarkMode = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.classList.toggle("dark-mode");
+      setIsDarkMode(!isDarkMode);
+    }
+  };
 
-    // Leer texto principal
-    const readText = () => {
-        const mainContent = document.getElementById('main-content');
-        if (mainContent && mainContent.innerText.trim()) {
-            window.speechSynthesis.cancel();
-            const speech = new window.SpeechSynthesisUtterance();
-            speech.text = mainContent.innerText;
-            speech.lang = "es-ES";
-            setReading(true);
-            speech.onend = () => setReading(false);
-            window.speechSynthesis.speak(speech);
-        } else {
-            alert("No se encontró contenido para leer.");
-        }
-    };
+  const toggleUnderlineLinks = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.classList.toggle("underline-links");
+      setIsUnderlineLinks(!isUnderlineLinks);
+    }
+  };
 
-    // Pausar/continuar lectura
-    const pauseOrResume = () => {
-        if (window.speechSynthesis.speaking) {
-            if (window.speechSynthesis.paused) {
-                window.speechSynthesis.resume();
-            } else {
-                window.speechSynthesis.pause();
-            }
-        }
-    };
+  const toggleDyslexiaFont = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.classList.toggle("dyslexia-font");
+      setIsDyslexiaFont(!isDyslexiaFont);
+    }
+  };
 
-    // Detener lectura
-    const stopReading = () => {
-        window.speechSynthesis.cancel();
-        setReading(false);
-    };
+  const readText = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent && mainContent.innerText.trim()) {
+      window.speechSynthesis.cancel();
+      const speech = new window.SpeechSynthesisUtterance();
+      speech.text = mainContent.innerText;
+      speech.lang = "es-ES";
+      setReading(true);
+      speech.onend = () => setReading(false);
+      window.speechSynthesis.speak(speech);
+    } else {
+      alert("No se encontró contenido para leer.");
+    }
+  };
 
-    // Restablecer todo
-    const resetAccessibility = () => {
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            mainContent.style.fontSize = '1rem';
-            setFontSize(1);
-            mainContent.classList.remove('high-contrast', 'dark-mode', 'underline-links', 'dyslexia-font');
-            stopReading();
-            setIsHighContrast(false);
-            setIsDarkMode(false);
-            setIsUnderlineLinks(false);
-            setIsDyslexiaFont(false);
-        }
-    };
+  const pauseOrResume = () => {
+    if (window.speechSynthesis.speaking) {
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      } else {
+        window.speechSynthesis.pause();
+      }
+    }
+  };
 
-    return (
-        <div className="accessibility-wrapper" role="region" aria-label="Menú de accesibilidad">
-            <button
-                ref={buttonRef}
-                className="accessibility-trigger"
-                aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-                aria-expanded={menuOpen}
-                aria-controls="accessibility-menu"
-                onClick={() => setMenuOpen(!menuOpen)}
-            >
-                <IoAccessibility />
-            </button>
+  const stopReading = () => {
+    window.speechSynthesis.cancel();
+    setReading(false);
+  };
 
-            {menuOpen && (
-                <div
-                    ref={menuRef}
-                    className="accessibility-menu"
-                    id="accessibility-menu"
-                    role="menu"
-                    tabIndex={-1}
-                >
-                    <button onClick={() => changeFontSize(fontSize + 0.1)} aria-label="Aumentar texto" role="menuitem">A+</button>
-                    <button onClick={() => changeFontSize(fontSize - 0.1)} aria-label="Disminuir texto" role="menuitem">A-</button>
-                    <button onClick={toggleContrast} aria-label="Alto contraste" role="menuitem">Alto contraste</button>
-                    <button onClick={toggleDarkMode} aria-label="Modo oscuro" role="menuitem">Modo oscuro</button>
-                    <button onClick={toggleUnderlineLinks} aria-label="Subrayar enlaces" role="menuitem">Subrayar enlaces</button>
-                    <button onClick={toggleDyslexiaFont} aria-label="Fuente dislexia" role="menuitem">Fuente dislexia</button>
-                    <button onClick={readText} aria-label="Leer contenido" role="menuitem" disabled={reading}>Leer contenido</button>
-                    <button onClick={pauseOrResume} aria-label="Pausar/Continuar" role="menuitem">Pausar/Continuar</button>
-                    <button onClick={stopReading} aria-label="Detener lectura" role="menuitem">Detener lectura</button>
-                    <button onClick={resetAccessibility} aria-label="Restablecer" role="menuitem">Restablecer</button>
-                </div>
-            )}
+  const resetAccessibility = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.style.fontSize = "1rem";
+      setFontSize(1);
+      mainContent.classList.remove(
+        "high-contrast",
+        "dark-mode",
+        "underline-links",
+        "dyslexia-font"
+      );
+      stopReading();
+      setIsHighContrast(false);
+      setIsDarkMode(false);
+      setIsUnderlineLinks(false);
+      setIsDyslexiaFont(false);
+    }
+  };
+
+  return (
+    <div
+      className="accessibility-wrapper"
+      role="region"
+      aria-label="Menú de accesibilidad"
+    >
+      <button
+        ref={buttonRef}
+        className="accessibility-trigger"
+        aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+        aria-expanded={menuOpen}
+        aria-controls="accessibility-menu"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <IoAccessibility />
+      </button>
+
+      {menuOpen && (
+        <div
+          ref={menuRef}
+          className="accessibility-menu"
+          id="accessibility-menu"
+          role="menu"
+          tabIndex={-1}
+        >
+          <button
+            onClick={() => changeFontSize(fontSize + 0.1)}
+            aria-label="Aumentar texto"
+            role="menuitem"
+          >
+            A+
+          </button>
+          <button
+            onClick={() => changeFontSize(fontSize - 0.1)}
+            aria-label="Disminuir texto"
+            role="menuitem"
+          >
+            A-
+          </button>
+          <button
+            onClick={toggleContrast}
+            aria-label="Alto contraste"
+            role="menuitem"
+          >
+            Alto contraste
+          </button>
+          <button
+            onClick={toggleDarkMode}
+            aria-label="Modo oscuro"
+            role="menuitem"
+          >
+            Modo oscuro
+          </button>
+          <button
+            onClick={toggleUnderlineLinks}
+            aria-label="Subrayar enlaces"
+            role="menuitem"
+          >
+            Subrayar enlaces
+          </button>
+          <button
+            onClick={toggleDyslexiaFont}
+            aria-label="Fuente dislexia"
+            role="menuitem"
+          >
+            Fuente dislexia
+          </button>
+          <button
+            onClick={readText}
+            aria-label="Leer contenido"
+            role="menuitem"
+            disabled={reading}
+          >
+            Leer contenido
+          </button>
+          <button
+            onClick={pauseOrResume}
+            aria-label="Pausar/Continuar"
+            role="menuitem"
+          >
+            Pausar/Continuar
+          </button>
+          <button
+            onClick={stopReading}
+            aria-label="Detener lectura"
+            role="menuitem"
+          >
+            Detener lectura
+          </button>
+          <button
+            onClick={resetAccessibility}
+            aria-label="Restablecer"
+            role="menuitem"
+          >
+            Restablecer
+          </button>
         </div>
-    );
-}
+      )}
+    </div>
+  );
+};
 
 export default AccessibilityButton;

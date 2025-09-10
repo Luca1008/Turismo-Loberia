@@ -25,8 +25,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
-
-  // Cargar datos de la card al montar el componente
+  
   useEffect(() => {
     if (cardId) {
       fetchCardData();

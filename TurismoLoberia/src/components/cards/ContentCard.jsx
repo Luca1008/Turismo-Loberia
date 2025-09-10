@@ -22,7 +22,6 @@ const ContentCard = ({
   let dateMonth = "";
   let dateDay = "";
   if (isEvent && card_date) {
-    // card_date puede venir como YYYY-MM-DD o ISO
     const dateObj = new Date(card_date);
     dateMonth = dateObj.toLocaleString("es-ES", { month: "short" });
     dateDay = dateObj.getDate();
@@ -36,9 +35,7 @@ const ContentCard = ({
           <Card.Text className="text-left">{description}</Card.Text>
           <Card.Text className="card-city-ellipsis">
             <strong className="location-icon">
-              <FaLocationDot />
-            {" "}
-            {city}
+              <FaLocationDot /> {city}
             </strong>
           </Card.Text>
         </div>

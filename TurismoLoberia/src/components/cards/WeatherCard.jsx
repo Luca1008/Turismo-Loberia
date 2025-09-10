@@ -10,9 +10,9 @@ import {
   FaSun,
 } from "react-icons/fa";
 import "../../styles/weather.css";
+import { Global } from "../../helpers/Global";
 
 const diasSemana = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-
 const iconosOWMtoFa = {
   "01d": FaSun,
   "01n": FaMoon,
@@ -98,18 +98,16 @@ const WeatherCard = ({ ciudad = "Tandil", lat, lon }) => {
   useEffect(() => {
     let urlActual, urlPronostico;
     if (lat !== undefined && lon !== undefined) {
-      urlActual = `http://localhost:5000/api/weather?lat=${lat}&lon=${lon}`;
-      urlPronostico = `http://localhost:5000/api/forecast?lat=${lat}&lon=${lon}`;
+      urlActual = `${Global.url}weather?lat=${lat}&lon=${lon}`;
+      urlPronostico = `${Global.url}forecast?lat=${lat}&lon=${lon}`;
     } else {
-      urlActual = `http://localhost:5000/api/weather?city=${ciudad}`;
-      urlPronostico = `http://localhost:5000/api/forecast?city=${ciudad}`;
+      urlActual = `${Global.url}weather?city=${ciudad}`;
+      urlPronostico = `${Global.url}forecast?city=${ciudad}`;
     }
     axios
       .get(urlActual)
       .then((res) => setClimaActual(res.data))
-      .catch(() => {
-        // Si hay error, no seteamos nada y el spinner queda visible
-      });
+      .catch(() => {});
 
     axios
       .get(urlPronostico)
@@ -173,16 +171,15 @@ const WeatherCard = ({ ciudad = "Tandil", lat, lon }) => {
         }
         setPronostico(datos);
       })
-      .catch(() => {
-        // Si hay error, no seteamos nada y el spinner queda visible
-      });
-  }, [ciudad, lat, lon]); // <-- Agregado ciudad como dependencia
+      .catch(() => {});
+  }, [ciudad, lat, lon]);
 
-  if (!climaActual) return (
-    <div className="weather-spinner-container">
-      <div className="weather-spinner"></div>
-    </div>
-  );
+  if (!climaActual)
+    return (
+      <div className="weather-spinner-container">
+        <div className="weather-spinner"></div>
+      </div>
+    );
 
   const IconoClima = iconosOWMtoFa[climaActual.icon] || FaCloud;
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { FaWhatsapp } from "react-icons/fa";
-import '../../styles/stickyButton.css';
+import "../../styles/stickyButton.css";
 
 const Whatsapp = () => {
   const openWhatsApp = () => {

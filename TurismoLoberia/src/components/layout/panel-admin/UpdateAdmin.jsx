@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Global } from "../../../helpers/Global";
 import { useAuth } from "../../../hooks/useAuth";
 import "../../../styles/panelAdmin.css";
-import Button from 'react-bootstrap/Button';
+import Button from "react-bootstrap/Button";
 
 const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
   const { auth, setAuth } = useAuth();
@@ -13,27 +13,25 @@ const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
     name: "",
     surname: "",
     email: "",
-    password: ""
+    password: "",
   });
   const [error, setError] = useState(null);
+  console.log(error);
 
-  // Cargar datos del admin seleccionado o del usuario logueado
   useEffect(() => {
     if (isAdminEdit && admin) {
-      // Cargar datos del admin seleccionado para edición
       setFormData({
         name: admin.name || "",
         surname: admin.surname || "",
         email: admin.email || "",
-        password: ""
+        password: "",
       });
     } else if (auth) {
-      // Cargar datos del usuario logueado (para edición de perfil propio)
       setFormData({
         name: auth.name || "",
         surname: auth.surname || "",
         email: auth.email || "",
-        password: ""
+        password: "",
       });
     }
   }, [admin, auth, isAdminEdit]);
@@ -61,9 +59,9 @@ const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
 
     try {
       const token = localStorage.getItem("token");
-      const url = isAdminEdit 
-        ? Global.url + `user/${admin.id}` // Edición de admin
-        : Global.url + `user/${auth.id}`; // Edición de perfil propio
+      const url = isAdminEdit
+        ? Global.url + `user/${admin.id}`
+        : Global.url + `user/${auth.id}`;
 
       const response = await fetch(url, {
         method: "PUT",
@@ -78,11 +76,10 @@ const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
 
       if (data.status === "success") {
         toast.success("Datos actualizados correctamente");
-        
+
         if (isAdminEdit) {
-          onSuccess(); // Para edición de admin desde el listado
+          onSuccess();
         } else {
-          // Manejo para edición de perfil propio
           if (formData.password) {
             setTimeout(() => {
               localStorage.removeItem("token");
@@ -156,10 +153,7 @@ const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
             </Form.Group>
 
             <div className="buttons-container">
-              <Button variant="secondary" 
-                type="button"
-                onClick={onCancel}
-              >
+              <Button variant="secondary" type="button" onClick={onCancel}>
                 Cancelar
               </Button>
               <Button variant="success" type="submit">

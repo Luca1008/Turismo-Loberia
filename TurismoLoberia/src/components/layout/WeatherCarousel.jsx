@@ -25,7 +25,6 @@ const WeatherCarousel = ({ locations = defaultLocations, interval = 5000 }) => {
   }, [locations.length, interval, isPaused]);
 
   useEffect(() => {
-    // Obtener datos del clima para cada ciudad solo una vez al montar
     locations.forEach((loc, idx) => {
       let url;
       if (loc.lat !== undefined && loc.lon !== undefined) {
@@ -60,7 +59,6 @@ const WeatherCarousel = ({ locations = defaultLocations, interval = 5000 }) => {
           });
         });
     });
-    // eslint-disable-next-line
   }, []);
 
   const handleMouseEnter = () => setIsPaused(true);

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
-import UpdateAdmin from './UpdateAdmin';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Table from 'react-bootstrap/Table';
+import UpdateAdmin from "./UpdateAdmin";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Table from "react-bootstrap/Table";
 import { Global } from "../../../helpers/Global";
 
 const ListAdmins = () => {
@@ -13,64 +13,60 @@ const ListAdmins = () => {
   const [selectedAdmin, setSelectedAdmin] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
 
-  //-------------------Listar admins------------------
   useEffect(() => {
     fetchAdmins();
   }, []);
 
   const fetchAdmins = () => {
     fetch(`${Global.url}user/admins`)
-      .then(res => {
-        if (!res.ok) throw new Error('Error al cargar admins');
+      .then((res) => {
+        if (!res.ok) throw new Error("Error al cargar admins");
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         setAdmins(data.admins || []);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err.message);
         setLoading(false);
       });
   };
 
-  //-------------------Eliminar admins---------------
   const handleDelete = async (id) => {
-    const confirmar = window.confirm("¿Estás seguro de eliminar este administrador?");
+    const confirmar = window.confirm(
+      "¿Estás seguro de eliminar este administrador?"
+    );
     if (!confirmar) return;
-    
+
     try {
       const res = await fetch(`${Global.url}user/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.message || 'Error al eliminar');
+      if (!res.ok) throw new Error(data.message || "Error al eliminar");
 
-      setAdmins(admins.filter(admin => admin.id !== id));
+      setAdmins(admins.filter((admin) => admin.id !== id));
       toast.success("Administrador eliminado correctamente");
-      setTimeout(() => {
-      }, 1500);
+      setTimeout(() => {}, 1500);
     } catch (err) {
       console.error("Error completo:", err);
       toast.error("Hubo un error: " + err.message);
-      setTimeout(() => {
-      }, 1500);
+      setTimeout(() => {}, 1500);
     }
   };
 
-  //-------------------Editar admins-----------------
   const handleEditClick = (admin) => {
-    // Creamos un objeto con solo los datos necesarios para editar
     const adminToEdit = {
       id: admin.id,
       name: admin.name,
       surname: admin.surname,
       email: admin.email,
-      password: admin
+      password: admin,
     };
     setSelectedAdmin(adminToEdit);
     setShowEditForm(true);
@@ -78,10 +74,9 @@ const ListAdmins = () => {
 
   const handleUpdateSuccess = () => {
     setShowEditForm(false);
-    fetchAdmins(); // Recargar la lista después de editar
+    fetchAdmins();
     toast.success("Administrador actualizado correctamente");
-    setTimeout(() => {
-    }, 1500);
+    setTimeout(() => {}, 1500);
   };
 
   const cancelEdit = () => {
@@ -95,9 +90,14 @@ const ListAdmins = () => {
   return (
     <div className="admin-panel-container">
       <h3>Administradores:</h3>
-      
-      {/* Tabla de administradores */}
-      <Table striped bordered hover className="admin-table" border="1" cellPadding="8">
+      <Table
+        striped
+        bordered
+        hover
+        className="admin-table"
+        border="1"
+        cellPadding="8"
+      >
         <thead>
           <tr>
             <th>Nombre</th>
@@ -111,7 +111,7 @@ const ListAdmins = () => {
               <td colSpan="4">No se encontraron administradores.</td>
             </tr>
           ) : (
-            admins.map(admin => (
+            admins.map((admin) => (
               <tr key={admin.id}>
                 <td>{admin.name}</td>
                 <td>{admin.surname}</td>
@@ -121,14 +121,14 @@ const ListAdmins = () => {
                     onClick={() => handleEditClick(admin)}
                     disabled={showEditForm}
                   >
-                    <MdModeEdit style={{ verticalAlign: 'middle' }} />
+                    <MdModeEdit style={{ verticalAlign: "middle" }} />
                   </button>
                   <button
                     className="btn btn-sm btn-danger"
                     onClick={() => handleDelete(admin.id)}
                     disabled={showEditForm}
                   >
-                    <MdDeleteForever style={{ verticalAlign: 'middle' }} />
+                    <MdDeleteForever style={{ verticalAlign: "middle" }} />
                   </button>
                 </td>
               </tr>
@@ -137,19 +137,20 @@ const ListAdmins = () => {
         </tbody>
       </Table>
 
-      {/* Formulario de edición */}
       {showEditForm && selectedAdmin && (
         <div className="edit-form-container mt-4 p-4 border rounded">
-          <h4>Editando administrador: {selectedAdmin.name} {selectedAdmin.surname}</h4>
-          <UpdateAdmin 
-            admin={selectedAdmin} 
+          <h4>
+            Editando administrador: {selectedAdmin.name} {selectedAdmin.surname}
+          </h4>
+          <UpdateAdmin
+            admin={selectedAdmin}
             onSuccess={handleUpdateSuccess}
             onCancel={cancelEdit}
             isAdminEdit={true}
           />
         </div>
       )}
-        <ToastContainer />
+      <ToastContainer />
     </div>
   );
 };

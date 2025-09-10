@@ -1,4 +1,3 @@
-// components/NominatimAutocomplete.js
 import React, { useState, useEffect } from "react";
 
 const NominatimAutocomplete = ({ onSelect }) => {
@@ -10,11 +9,13 @@ const NominatimAutocomplete = ({ onSelect }) => {
 
     const timeoutId = setTimeout(async () => {
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          query
+        )}`
       );
       const data = await res.json();
       setResults(data);
-    }, 400); // debounce
+    }, 400);
 
     return () => clearTimeout(timeoutId);
   }, [query]);

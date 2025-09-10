@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // ← siempre con Bearer
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -54,8 +54,8 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-   // Función logout
-   const logout = () => {
+  // Función logout
+  const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setAuth({});

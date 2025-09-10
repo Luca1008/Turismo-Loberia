@@ -27,7 +27,6 @@ import Typewriter from "typewriter-effect";
 import axios from "axios";
 import { Global } from "../../helpers/Global";
 
-// Custom hook para detectar clics fuera de un elemento
 const useClickOutside = (ref, callback) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -45,8 +44,6 @@ const useClickOutside = (ref, callback) => {
 
 export const Header = () => {
   const { t, i18n } = useTranslation();
-
-  // 🧠 Estados
   const [showMenu, setShowMenu] = useState(false);
   const [openItem, setOpenItem] = useState(null);
   const [showLanguage, setShowLanguage] = useState(false);
@@ -80,7 +77,6 @@ export const Header = () => {
       : location.pathname === route
   );
 
-  // Categorías disponibles (para sugerencias locales)
   const categoriasDisponibles = useMemo(
     () => [
       "Alojamiento",
@@ -95,17 +91,14 @@ export const Header = () => {
     []
   );
 
-  // Usar el custom hook para detectar clics fuera del menú principal
   useClickOutside(navRef, () => {
     setOpenItem(null);
   });
 
-  // Usar el custom hook para detectar clics fuera del selector de idioma
   useClickOutside(languageRef, () => {
     setShowLanguage(false);
   });
 
-  // Usar el custom hook para detectar clics fuera de la búsqueda
   useClickOutside(searchRef, () => {
     setShowSearch(false);
     setSuggestions([]);
@@ -119,7 +112,6 @@ export const Header = () => {
     });
   }, []);
 
-  // 🔹 Obtener sugerencias (mezcla títulos + categorías)
   const fetchSuggestions = useCallback(
     async (texto) => {
       try {
@@ -147,7 +139,6 @@ export const Header = () => {
     [categoriasDisponibles]
   );
 
-  // 🔹 Efecto para sugerencias - CORREGIDO
   useEffect(() => {
     if (searchQuery.length < 2) {
       setSuggestions([]);
@@ -157,13 +148,12 @@ export const Header = () => {
       fetchSuggestions(searchQuery);
     }, 300);
     return () => clearTimeout(timer);
-  }, [searchQuery]); // Eliminada fetchSuggestions de las dependencias
+  }, [searchQuery]);
 
   // 🔹 Click en sugerencia
   const handleSuggestionClick = (s) => {
     if (s.type === "title") {
       setSearchQuery(s.value);
-      // Disparar el evento de envío después de un pequeño delay
       setTimeout(() => {
         const form = document.querySelector(".search-desktop-form");
         if (form) {
@@ -173,14 +163,12 @@ export const Header = () => {
         }
       }, 100);
     } else if (s.type === "category") {
-      // Navegar directamente al buscador con la categoría seleccionada
       navigate(`/buscador?category=${encodeURIComponent(s.value)}`);
       setShowSearch(false);
       setSuggestions([]);
     }
   };
 
-  // 🌍 Cambio de idioma
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
     setShowLanguage(false);
@@ -191,7 +179,6 @@ export const Header = () => {
     });
   };
 
-  // 🔍 Enviar búsqueda
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     const query = searchQuery.trim();
@@ -210,14 +197,12 @@ export const Header = () => {
     });
   };
 
-  // 🎯 Scroll transparente
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 🔍 Autofocus en búsqueda
   useEffect(() => {
     if (showSearch) {
       const input = document.querySelector(".desktop-search-bar input");
@@ -225,7 +210,6 @@ export const Header = () => {
     }
   }, [showSearch]);
 
-  // 🗂️ Menú de navegación traducido
   const menuData = useMemo(
     () => [
       {
@@ -282,7 +266,6 @@ export const Header = () => {
     [i18n.language]
   );
 
-  // 🧩 Generar ruta con hash
   const toHash = (text) =>
     text
       .toLowerCase()
@@ -306,7 +289,6 @@ export const Header = () => {
     }
   };
 
-  // 🎛️ UI
   const toggleItem = (item, e) => {
     e?.stopPropagation();
     setOpenItem(openItem === item ? null : item);
@@ -332,14 +314,11 @@ export const Header = () => {
     });
   };
 
-  // 🔍 Alternar búsqueda
   const handleSearchToggle = () => {
-    // Si la barra de búsqueda está visible, ocultarla
     if (showSearch) {
       setShowSearch(false);
       setSuggestions([]);
     } else {
-      // Si no está visible, mostrarla y cerrar otros elementos
       setShowSearch(true);
       setOpenItem(null);
       setShowLanguage(false);
@@ -350,9 +329,7 @@ export const Header = () => {
     });
   };
 
-  // 🔹 Función para manejar clic en el logo
   const handleLogoClick = () => {
-    // Cerrar todos los menús y estados abiertos
     setShowMenu(false);
     setOpenItem(null);
     setShowLanguage(false);
@@ -470,8 +447,6 @@ export const Header = () => {
               </strong>
             </Link>
 
-            {/* Menu de idioma */}
-            {/* 🌍 Language Switcher */}
             <div
               ref={languageRef}
               className="position-relative"
@@ -516,7 +491,6 @@ export const Header = () => {
               )}
             </div>
 
-            {/* 🔍 Icono de búsqueda - Cambia el icono según el estado */}
             {showSearch ? (
               <FaTimes
                 className="text-inherit"
@@ -532,7 +506,6 @@ export const Header = () => {
             )}
           </div>
 
-          {/* 🔧 MOBILE ICONOS */}
           <div className="d-flex align-items-center gap-2 d-md-none mobile-icon">
             <strong className="border-item-nav d-flex align-items-center gap-1">
               <Link
@@ -594,7 +567,6 @@ export const Header = () => {
             <div className="vertical-divider"></div>
           </div>
 
-          {/* 🍔 HAMBURGUESA */}
           <button
             className="btn p-0 d-md-none primary"
             onClick={() => setShowMenu(!showMenu)}
@@ -608,7 +580,6 @@ export const Header = () => {
         </div>
       </nav>
 
-      {/* 🔍 BARRA DE BÚSQUEDA DESKTOP CON SUGERENCIAS */}
       {showSearch && (
         <div
           ref={searchRef}
@@ -631,7 +602,6 @@ export const Header = () => {
             </button>
           </form>
 
-          {/* 📌 Dropdown de sugerencias - FUERA del formulario */}
           {suggestions.length > 0 && (
             <ul className="suggestions-dropdown-index">
               {suggestions.map((s, i) => (
@@ -652,7 +622,6 @@ export const Header = () => {
         </div>
       )}
 
-      {/* 📱 PANEL MOBILE */}
       {showMenu && (
         <div className="mobile-menu d-flex flex-column p-3 pt-5 menu-padding">
           <div className="search-container mb-4 position-relative">
@@ -684,7 +653,6 @@ export const Header = () => {
               </button>
             </form>
 
-            {/* 📌 Dropdown de sugerencias para móvil */}
             {suggestions.length > 0 && (
               <ul className="suggestions-dropdown-mobile position-absolute start-0 end-0 bg-white shadow rounded mt-1">
                 {suggestions.map((s, i) => (

@@ -4,7 +4,7 @@ import logoLoberiaFooter from "../../assets/icons/logoLoberia.jpg";
 import "../../styles/footer.css";
 import handleExternalLink from "../common/handleExternalLink";
 import { useTranslation } from "react-i18next";
-import { trackEvent } from "../../analytics"; // ✅ GA4
+import { trackEvent } from "../../analytics";
 
 import {
   FaBell,
@@ -29,7 +29,6 @@ export const Footer = () => {
     handleExternalLink(e, url);
   };
 
-  // Nueva función para trackear divs que se puedan clicar
   const handleTrackDivClick = (label) => () => {
     trackEvent({
       category: "Footer",
@@ -41,7 +40,6 @@ export const Footer = () => {
   return (
     <footer className="footer" key={i18n.language}>
       <div className="footer__container">
-        {/* Logo institucional */}
         <Link
           to="/"
           className="text-decoration-none"
@@ -53,23 +51,41 @@ export const Footer = () => {
             })
           }
         >
-          <div className="footer__logo" onClick={handleTrackDivClick("Logo footer div")}>
+          <div
+            className="footer__logo"
+            onClick={handleTrackDivClick("Logo footer div")}
+          >
             <img src={logoLoberiaFooter} alt="Lobería Patrimnio Vivo" />
             <div className="footer__logo__text">
-            <strong className="primary loberia-footer">Lobería</strong>
-            <span className="patrimonio" >Patrimonio<strong className="vivo" style={{ fontFamily: 'MADE Tommy Bold, sans-serif', letterSpacing: '0.5px', fontSize: '24px', marginRight: '5px', marginBottom: '3px'}}>Vivo</strong></span>
-          </div>
+              <strong className="primary loberia-footer">Lobería</strong>
+              <span className="patrimonio">
+                Patrimonio
+                <strong
+                  className="vivo"
+                  style={{
+                    fontFamily: "MADE Tommy Bold, sans-serif",
+                    letterSpacing: "0.5px",
+                    fontSize: "24px",
+                    marginRight: "5px",
+                    marginBottom: "3px",
+                  }}
+                >
+                  Vivo
+                </strong>
+              </span>
+            </div>
           </div>
         </Link>
 
-        {/* Contacto y Dirección */}
         <div className="footer__info">
           <div
             className="footer__item"
             onClick={handleTrackDivClick("Contacto div")}
             role="button"
             tabIndex={0}
-            onKeyPress={(e) => { if (e.key === 'Enter') handleTrackDivClick("Contacto div")(); }}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") handleTrackDivClick("Contacto div")();
+            }}
           >
             <FaEnvelope />
             <a href="/Contacto">
@@ -82,7 +98,9 @@ export const Footer = () => {
             onClick={handleTrackDivClick("Dirección div")}
             role="button"
             tabIndex={0}
-            onKeyPress={(e) => { if (e.key === 'Enter') handleTrackDivClick("Dirección div")(); }}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") handleTrackDivClick("Dirección div")();
+            }}
           >
             <FaMapMarkerAlt />
             <a
@@ -97,19 +115,18 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter + Redes sociales */}
         <div className="footer__extra">
           <div
             className="footer__item"
             onClick={handleTrackDivClick("Newsletter div")}
             role="button"
             tabIndex={0}
-            onKeyPress={(e) => { if (e.key === 'Enter') handleTrackDivClick("Newsletter div")(); }}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") handleTrackDivClick("Newsletter div")();
+            }}
           >
             <FaBell />
-            <a
-              href="/Suscribirse"
-            >
+            <a href="/Suscribirse">
               <p>{t("footer_newsletter")}</p>
             </a>
           </div>

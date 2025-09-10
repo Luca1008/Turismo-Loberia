@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import '../../../styles/panelAdmin.css';
+import "../../../styles/panelAdmin.css";
 import { Global } from "../../../helpers/Global";
 
 export default function SendContent() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [file, setFile] = useState(null);
-  const [sending, setSending] = useState(false); // Estado de envío
+  const [sending, setSending] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSending(true); // Inicio de envío
+    setSending(true);
     try {
       const formData = new FormData();
       formData.append("subject", subject);
@@ -38,7 +38,7 @@ export default function SendContent() {
       console.error(err);
       toast.error("Error enviando contenido");
     } finally {
-      setSending(false); // Fin de envío
+      setSending(false);
     }
   };
 
@@ -69,7 +69,6 @@ export default function SendContent() {
         </button>
       </form>
 
-      {/* Contenedor de los toasts */}
       <ToastContainer
         position="top-right"
         autoClose={3000}
