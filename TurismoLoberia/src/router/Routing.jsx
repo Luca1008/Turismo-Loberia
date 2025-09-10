@@ -20,9 +20,30 @@ import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import Unsubscribe from "../pages/Unsubscribe";
 
+/**
+ * Componente `Routing`
+ *
+ * Define todas las rutas de la aplicación usando React Router v6.
+ * Incluye rutas públicas, rutas para páginas de administración y rutas con parámetros dinámicos.
+ *
+ * @component
+ * @returns {JSX.Element} Elemento JSX que representa las rutas de la aplicación.
+ *
+ * @example
+ * // Uso básico en App.js
+ * import { Routing } from './routes/Routing';
+ * function App() {
+ *   return (
+ *     <BrowserRouter>
+ *       <Routing />
+ *     </BrowserRouter>
+ *   );
+ * }
+ */
 export const Routing = () => {  
   return (
     <Routes>
+      {/* Rutas públicas */}
       <Route path="/" element={<Index />} />
       <Route path="/PartidoLoberia" element={<PartidoLoberia />} />
       <Route path="/Loberia" element={<Loberia />} />
@@ -39,7 +60,7 @@ export const Routing = () => {
       <Route path="/cards/:id" element={<CardPage />} />
       <Route path="/unsubscribe/:token" element={<Unsubscribe />} />
 
-      {/*Rutas panel Admin renderizadas en el mismo componente*/}
+      {/* Rutas del panel de administración */}
       <Route path="/PanelAdmin" element={<PanelAdmin />}>
         <Route path="modificar-datos" element={<UpdateUser />} />
         <Route path="crear-admin" element={<CreateAdmin />} />
