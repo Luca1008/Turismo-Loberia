@@ -12,6 +12,26 @@ import {
 import "../../styles/weather.css";
 import { Global } from "../../helpers/Global";
 
+/**
+ * Componente `WeatherCard`
+ *
+ * Muestra la información del clima actual y pronóstico de 5 días para una ciudad
+ * o coordenadas geográficas específicas. Utiliza la API configurada en `Global.url`.
+ *
+ * @param {Object} props - Propiedades del componente.
+ * @param {string} [props.ciudad="Tandil"] - Nombre de la ciudad para obtener el clima.
+ * @param {number} [props.lat] - Latitud geográfica (opcional, requiere `lon` si se usa).
+ * @param {number} [props.lon] - Longitud geográfica (opcional, requiere `lat` si se usa).
+ *
+ * @returns {JSX.Element} Componente que muestra el clima actual y pronóstico.
+ *
+ * @example
+ * <WeatherCard ciudad="Lobería" />
+ *
+ * @example
+ * <WeatherCard lat={-38.52} lon={-59.25} />
+ */
+
 const diasSemana = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
 const iconosOWMtoFa = {
   "01d": FaSun,

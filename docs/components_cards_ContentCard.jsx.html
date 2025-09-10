@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>router/Routing.jsx - Documentation</title>
+    <title>components/cards/ContentCard.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">router/Routing.jsx</h1>
+    <h1 class="page-title">components/cards/ContentCard.jsx</h1>
     
 
     
@@ -40,76 +40,136 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
-import { Route, Routes } from "react-router-dom";
-import ArenasVerdes from "../pages/ArenasVerdes";
-import { Contact } from "../pages/Contact";
-import { Index } from "../pages/Index";
-import Loberia from "../pages/Loberia";
-import PartidoLoberia from "../pages/PartidoLoberia";
-import { SanManuel } from "../pages/SanManuel";
-import Searcher from "../pages/Searcher";
-import { Suscribe } from "../pages/Subscribe";
-import { Clima } from "../pages/Weather";
-import Admin from "../pages/Admin";
-import PanelAdmin from "../pages/PanelAdmin";
-import UpdateUser from "../components/layout/panel-admin/UpdateAdmin";
-import CreateAdmin from "../components/layout/panel-admin/CreateAdmin";
-import ListAdmins from "../components/layout/panel-admin/ListAdmins";
-import CardPage from "../pages/CardPage";
-import { Register } from "../pages/Register";
-import ForgotPassword from "../pages/ForgotPassword";
-import ResetPassword from "../pages/ResetPassword";
-import Unsubscribe from "../pages/Unsubscribe";
+import { Button, Card } from "react-bootstrap";
+import { FaLocationDot } from "react-icons/fa6";
+import { MdDeleteForever, MdModeEdit } from "react-icons/md";
+import { Link } from "react-router-dom";
+import defaultImg from "../../assets/images/default-photo.jpg";
+import "../../styles/card.css";
 
 /**
- * Componente `Routing`
+ * Componente `ContentCard`
  *
- * Define todas las rutas de la aplicación usando React Router v6.
- * Incluye rutas públicas, rutas para páginas de administración y rutas con parámetros dinámicos.
+ * Representa una tarjeta de contenido que puede mostrar información de un lugar o evento,
+ * incluyendo título, descripción, ciudad, imagen y fecha (para eventos). 
+ * También permite mostrar botones de edición y eliminación si se proporcionan las funciones correspondientes.
  *
- * @component
- * @returns {JSX.Element} Elemento JSX que representa las rutas de la aplicación.
+ * @param {Object} props - Propiedades del componente.
+ * @param {string} [props.title="Título del lugar"] - Título del contenido.
+ * @param {string} [props.description="Descripción breve del lugar."] - Descripción breve.
+ * @param {string} [props.city="Ciudad no especificada"] - Nombre de la ciudad.
+ * @param {string} [props.img] - URL de la imagen del contenido. Usa imagen por defecto si no se proporciona.
+ * @param {string|number} [props.id=null] - Identificador del contenido.
+ * @param {string} [props.category=""] - Categoría del contenido. Si es "Evento", se mostrará la fecha.
+ * @param {string} [props.card_date=""] - Fecha del evento (formato ISO o reconocible por `Date`).
+ * @param {function} [props.onEdit] - Función llamada al hacer clic en el botón de editar, recibe `id` como argumento.
+ * @param {function} [props.onDelete] - Función llamada al hacer clic en el botón de eliminar, recibe `id` como argumento.
+ *
+ * @returns {JSX.Element} Tarjeta de contenido renderizada.
  *
  * @example
- * // Uso básico en App.js
- * import { Routing } from './routes/Routing';
- * function App() {
- *   return (
- *     &lt;BrowserRouter>
- *       &lt;Routing />
- *     &lt;/BrowserRouter>
- *   );
- * }
+ * &lt;ContentCard
+ *   title="Playa de Lobería"
+ *   description="Una hermosa playa para disfrutar del verano."
+ *   city="Lobería"
+ *   img="https://example.com/imagen.jpg"
+ *   id={1}
+ *   category="Evento"
+ *   card_date="2025-09-15"
+ *   onEdit={(id) => console.log("Editar", id)}
+ *   onDelete={(id) => console.log("Eliminar", id)}
+ * />
  */
-export const Routing = () => {  
-  return (
-    &lt;Routes>
-      {/* Rutas públicas */}
-      &lt;Route path="/" element={&lt;Index />} />
-      &lt;Route path="/PartidoLoberia" element={&lt;PartidoLoberia />} />
-      &lt;Route path="/Loberia" element={&lt;Loberia />} />
-      &lt;Route path="/ArenasVerdes" element={&lt;ArenasVerdes />} />
-      &lt;Route path="/SanManuel" element={&lt;SanManuel />} />
-      &lt;Route path="/Clima" element={&lt;Clima />} />
-      &lt;Route path="/Contacto" element={&lt;Contact />} />
-      &lt;Route path="/Buscador" element={&lt;Searcher />} />
-      &lt;Route path="/Suscribirse" element={&lt;Suscribe />} />
-      &lt;Route path="/Admin" element={&lt;Admin />} />
-      &lt;Route path="/recuperar-password" element={&lt;ForgotPassword />} />
-      &lt;Route path="/reset-password/:token" element={&lt;ResetPassword />} />
-      &lt;Route path="/Register" element={&lt;Register />} />
-      &lt;Route path="/cards/:id" element={&lt;CardPage />} />
-      &lt;Route path="/unsubscribe/:token" element={&lt;Unsubscribe />} />
+const ContentCard = ({
+  title = "Título del lugar",
+  description = "Descripción breve del lugar.",
+  city = "Ciudad no especificada",
+  img,
+  id = null,
+  category = "",
+  card_date = "",
+  onEdit,
+  onDelete,
+}) => {
+  const imageSrc = img || defaultImg;
+  const isEvent = category === "Evento";
+  let dateMonth = "";
+  let dateDay = "";
+  if (isEvent &amp;&amp; card_date) {
+    const dateObj = new Date(card_date);
+    dateMonth = dateObj.toLocaleString("es-ES", { month: "short" });
+    dateDay = dateObj.getDate();
+  }
 
-      {/* Rutas del panel de administración */}
-      &lt;Route path="/PanelAdmin" element={&lt;PanelAdmin />}>
-        &lt;Route path="modificar-datos" element={&lt;UpdateUser />} />
-        &lt;Route path="crear-admin" element={&lt;CreateAdmin />} />
-        &lt;Route path="listar-admins" element={&lt;ListAdmins />} />
-      &lt;/Route>
-    &lt;/Routes>
+  return (
+    &lt;Card className="card">
+      &lt;Card.Img className="card-img" src={imageSrc} variant="top" alt={title} />
+      &lt;Card.Body className="card-body">
+        &lt;div className="content-card">
+          &lt;Card.Title className="card-title-ellipsis">{title}&lt;/Card.Title>
+          &lt;Card.Text className="text-left">{description}&lt;/Card.Text>
+          &lt;Card.Text className="card-city-ellipsis">
+            &lt;strong className="location-icon">
+              &lt;FaLocationDot /> {city}
+            &lt;/strong>
+          &lt;/Card.Text>
+        &lt;/div>
+        &lt;Button
+          variant="link"
+          className="btn-link"
+          as={Link}
+          to={`/cards/${id}`}
+        >
+          Ver Más
+        &lt;/Button>
+        {(onEdit || onDelete) &amp;&amp; (
+          &lt;div className="card-buttons-wrapper">
+            &lt;div className="card-buttons">
+              {onEdit &amp;&amp; (
+                &lt;Button
+                  variant="primary"
+                  size="sm"
+                  className="btn-edit"
+                  onClick={() => onEdit(id)}
+                >
+                  &lt;strong>
+                    &lt;MdModeEdit
+                      style={{ marginRight: 4, verticalAlign: "middle" }}
+                    />
+                    Editar
+                  &lt;/strong>
+                &lt;/Button>
+              )}
+              {onDelete &amp;&amp; (
+                &lt;Button
+                  variant="danger"
+                  size="sm"
+                  className="btn-delete"
+                  onClick={() => onDelete(id)}
+                >
+                  &lt;strong>
+                    &lt;MdDeleteForever
+                      style={{ marginRight: 4, verticalAlign: "middle" }}
+                    />
+                    Eliminar
+                  &lt;/strong>
+                &lt;/Button>
+              )}
+            &lt;/div>
+          &lt;/div>
+        )}
+        {isEvent &amp;&amp; (
+          &lt;div className="event-card__date blurred">
+            &lt;p className="event-card__month">{dateMonth}.&lt;/p>
+            &lt;p className="event-card__day">{dateDay}&lt;/p>
+          &lt;/div>
+        )}
+      &lt;/Card.Body>
+    &lt;/Card>
   );
 };
+
+export default ContentCard;
 </code></pre>
         </article>
     </section>

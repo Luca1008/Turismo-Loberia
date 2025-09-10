@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>pages/SanManuel.jsx - Documentation</title>
+    <title>context/AuthProvider.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">pages/SanManuel.jsx</h1>
+    <h1 class="page-title">context/AuthProvider.jsx</h1>
     
 
     
@@ -39,183 +39,112 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { useEffect } from "react";
-import ButtonSuccess from "../components/common/ButtonSuccess";
-import "../styles/city.css";
-import { FaCar, FaBus, FaBicycle } from "react-icons/fa";
-import { useTranslation, Trans } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { trackEvent } from "../analytics";
+            <pre class="prettyprint source linenums"><code>import { createContext, useEffect, useState } from "react";
+import { Global } from "../helpers/Global";
 
 /**
- * Componente `SanManuel`.
- *
- * Página informativa sobre la localidad de San Manuel.
- * Muestra secciones de información general, cómo llegar, alojamientos, gastronomía,
- * transporte, agenda de eventos, actividades y descargas.
- * Realiza tracking de la vista de la página, secciones y clics en botones.
- *
- * @component
- * @example
- * &lt;SanManuel />
- *
- * @returns {JSX.Element} Contenido de la página de San Manuel
- *
- * @author
- * Felicitas Aguerralde
- * Luca Guidi
+ * Contexto de autenticación.
+ * 
+ * Permite compartir información del usuario autenticado y funciones relacionadas
+ * con la autenticación a lo largo de la aplicación.
+ * 
+ * @type {React.Context&lt;Object>}
  */
-export const SanManuel = () => {
-  const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
+export const AuthContext = createContext();
 
-  /**
-   * Ejecuta tracking al cargar la página.
-   * Registra vistas de la página, de secciones y scroll completo.
-   */
+/**
+ * Componente proveedor de autenticación (`AuthProvider`).
+ *
+ * Envuelve a los componentes hijos y les proporciona:
+ * - `auth`: Objeto con información del usuario autenticado.
+ * - `setAuth`: Función para actualizar manualmente el estado de autenticación.
+ * - `loading`: Booleano que indica si se está verificando el estado de autenticación.
+ * - `logout`: Función para cerrar sesión y limpiar el estado de autenticación.
+ *
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Componentes hijos que recibirán el contexto.
+ *
+ * @example
+ * import { AuthProvider } from '../context/AuthProvider';
+ *
+ * function App() {
+ *   return (
+ *     &lt;AuthProvider>
+ *       &lt;YourComponents />
+ *     &lt;/AuthProvider>
+ *   );
+ * }
+ */
+export const AuthProvider = ({ children }) => {
+  const [auth, setAuth] = useState({});
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    // Tracking de vista de página
-    trackEvent({
-      category: "Páginas",
-      action: "Vista página",
-      label: "San Manuel",
-    });
-
-    // Tracking de vistas de secciones
-    const sections = [
-      "informacion_general",
-      "como_llegar",
-      "alojamientos",
-      "gastronomia",
-      "transporte",
-      "agenda",
-      "que_hacer",
-      "descargas",
-    ];
-
-    sections.forEach((sectionId) => {
-      trackEvent({
-        category: "Sección",
-        action: "Vista sección",
-        label: sectionId,
-      });
-    });
-
-    // Tracking de scroll completo
-    trackEvent({
-      category: "Scroll",
-      action: "Página completa",
-      label: "San Manuel",
-    });
+    authUser();
   }, []);
 
   /**
-   * Navega a la página de búsqueda filtrando por categoría
-   * y realiza tracking del clic en el botón.
-   *
-   * @param {string} category Categoría de búsqueda ("Alojamiento", "Gastronomía", "Evento", etc.)
+   * Verifica si hay un usuario autenticado en localStorage
+   * y valida su token con la API.
    */
-  const handleButtonClick = (category) => {
-    trackEvent({
-      category: "Botón",
-      action: `Clic ${category.toLowerCase()}`,
-      label: "San Manuel",
-    });
-    navigate("/Buscador", { state: { category } });
+  const authUser = async () => {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+
+    if (!token || !user) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const userObj = JSON.parse(user);
+      const userId = userObj.id;
+
+      if (!userId) {
+        console.warn("El usuario no tiene ID válido.");
+        setLoading(false);
+        return;
+      }
+
+      const request = await fetch(Global.url + "user/" + userId, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const response = await request.json();
+
+      if (response.status === "success") {
+        setAuth(response.user);
+      } else {
+        console.warn("No se pudo autenticar al usuario.");
+        setAuth({});
+      }
+    } catch (err) {
+      console.error("Error al autenticar:", err);
+      setAuth({});
+    } finally {
+      setLoading(false);
+    }
   };
 
   /**
-   * Renderiza la página de San Manuel con todas sus secciones.
+   * Cierra la sesión del usuario eliminando el token y la información del usuario del localStorage.
    */
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setAuth({});
+  };
+
   return (
-    &lt;div className="city" key={i18n.language}>
-      {/* Sección principal */}
-      &lt;div id="informacion_general" className="portada-san-manuel">&lt;/div>
-      &lt;h1>{t("san_manuel")}&lt;/h1>
-      &lt;section className="information">
-        &lt;Trans components={{ p: &lt;p /> }} i18nKey="descripcion_san_manuel" />
-      &lt;/section>
-
-      {/* Cómo llegar */}
-      &lt;section className="go-to" id="como_llegar">
-        &lt;h2>{t("como_llegar")}&lt;/h2>
-        &lt;div className="photo-como-llegar-san-manuel">&lt;/div>
-        &lt;Trans
-          components={{ p: &lt;p /> }}
-          i18nKey="como_llegar_san_manuel.titulo"
-        />
-        &lt;p>
-          &lt;strong className="primary">
-            &lt;FaCar /> {t("en_auto")}
-          &lt;/strong>
-        &lt;/p>
-        &lt;Trans
-          components={{ p: &lt;p /> }}
-          i18nKey="como_llegar_san_manuel.desde_loberia"
-        />
-        &lt;Trans
-          components={{ p: &lt;p /> }}
-          i18nKey="como_llegar_san_manuel.desde_tandil"
-        />
-        &lt;Trans
-          components={{ p: &lt;p /> }}
-          i18nKey="como_llegar_san_manuel.desde_necochea"
-        />
-      &lt;/section>
-
-      {/* Alojamiento */}
-      &lt;section className="accommodation" id="alojamientos">
-        &lt;Trans components={{ h2: &lt;h2 /> }} i18nKey="alojamientos_san_manuel" />
-        &lt;div className="photo-alojamiento-san-manuel">&lt;/div>
-        &lt;p>{t("alojamientos_san_manuel_descripcion")}&lt;/p>
-        &lt;ButtonSuccess onClick={() => handleButtonClick("Alojamiento")} />
-      &lt;/section>
-
-      {/* Gastronomía */}
-      &lt;section className="gastronomy" id="gastronomia">
-        &lt;h2>{t("gastronomia")}&lt;/h2>
-        &lt;div className="photo-gastronomia-san-manuel">&lt;/div>
-        &lt;p>San Manuel ofrece una propuesta gastronómica sencilla...&lt;/p>
-        &lt;ButtonSuccess onClick={() => handleButtonClick("Gastronomía")} />
-      &lt;/section>
-
-      {/* Transporte */}
-      &lt;section className="transport" id="transporte">
-        &lt;h2>{t("transporte")}&lt;/h2>
-        &lt;div className="photo-transporte-san-manuel">&lt;/div>
-        &lt;p>San Manuel ofrece opciones limitadas de transporte público...&lt;/p>
-      &lt;/section>
-
-      {/* Agenda de eventos */}
-      &lt;section className="agenda" id="agenda">
-        &lt;h2>{t("agenda")}&lt;/h2>
-        &lt;div className="photo-agenda-san-manuel">&lt;/div>
-        &lt;Trans
-          components={{ p: &lt;p />, h2: &lt;h2 />, h3: &lt;h3 />, ul: &lt;ul />, li: &lt;li /> }}
-          i18nKey="agenda_san_manuel"
-        />
-        &lt;ButtonSuccess onClick={() => handleButtonClick("Evento")} />
-      &lt;/section>
-
-      {/* Qué hacer */}
-      &lt;section className="event" id="que_hacer">
-        &lt;h2>{t("que_hacer_san_manuel")}&lt;/h2>
-        &lt;div className="photo-que-hacer-san-manuel">&lt;/div>
-        &lt;Trans
-          components={{ p: &lt;p />, h3: &lt;h3 />, ul: &lt;ul />, li: &lt;li /> }}
-          i18nKey="que_hacer_san_manuel_descripcion"
-        />
-      &lt;/section>
-
-      {/* Descargas */}
-      &lt;section className="download" id="descargas">
-        &lt;h2>{t("descargas")}&lt;/h2>
-      &lt;/section>
-    &lt;/div>
+    &lt;AuthContext.Provider value={{ auth, setAuth, loading, logout }}>
+      {children}
+    &lt;/AuthContext.Provider>
   );
 };
-
-export default SanManuel;
 </code></pre>
         </article>
     </section>

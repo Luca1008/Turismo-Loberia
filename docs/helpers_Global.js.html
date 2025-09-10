@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>router/Routing.jsx - Documentation</title>
+    <title>helpers/Global.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">router/Routing.jsx</h1>
+    <h1 class="page-title">helpers/Global.js</h1>
     
 
     
@@ -39,76 +39,26 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import { Route, Routes } from "react-router-dom";
-import ArenasVerdes from "../pages/ArenasVerdes";
-import { Contact } from "../pages/Contact";
-import { Index } from "../pages/Index";
-import Loberia from "../pages/Loberia";
-import PartidoLoberia from "../pages/PartidoLoberia";
-import { SanManuel } from "../pages/SanManuel";
-import Searcher from "../pages/Searcher";
-import { Suscribe } from "../pages/Subscribe";
-import { Clima } from "../pages/Weather";
-import Admin from "../pages/Admin";
-import PanelAdmin from "../pages/PanelAdmin";
-import UpdateUser from "../components/layout/panel-admin/UpdateAdmin";
-import CreateAdmin from "../components/layout/panel-admin/CreateAdmin";
-import ListAdmins from "../components/layout/panel-admin/ListAdmins";
-import CardPage from "../pages/CardPage";
-import { Register } from "../pages/Register";
-import ForgotPassword from "../pages/ForgotPassword";
-import ResetPassword from "../pages/ResetPassword";
-import Unsubscribe from "../pages/Unsubscribe";
-
-/**
- * Componente `Routing`
+            <pre class="prettyprint source linenums"><code>/**
+ * Objeto `Global`
  *
- * Define todas las rutas de la aplicación usando React Router v6.
- * Incluye rutas públicas, rutas para páginas de administración y rutas con parámetros dinámicos.
+ * Contiene URLs base utilizadas en la aplicación para realizar peticiones HTTP.
  *
- * @component
- * @returns {JSX.Element} Elemento JSX que representa las rutas de la aplicación.
+ * @type {Object}
+ * @property {string} url - URL base para las rutas de la API (ej: endpoints REST).
+ * @property {string} baseUrl - URL base del servidor (puede ser utilizada para recursos estáticos o redirecciones).
  *
  * @example
- * // Uso básico en App.js
- * import { Routing } from './routes/Routing';
- * function App() {
- *   return (
- *     &lt;BrowserRouter>
- *       &lt;Routing />
- *     &lt;/BrowserRouter>
- *   );
- * }
+ * import { Global } from '../helpers/Global';
+ * 
+ * // Ejemplo de uso con fetch
+ * fetch(`${Global.url}usuarios`)
+ *   .then(response => response.json())
+ *   .then(data => console.log(data));
  */
-export const Routing = () => {  
-  return (
-    &lt;Routes>
-      {/* Rutas públicas */}
-      &lt;Route path="/" element={&lt;Index />} />
-      &lt;Route path="/PartidoLoberia" element={&lt;PartidoLoberia />} />
-      &lt;Route path="/Loberia" element={&lt;Loberia />} />
-      &lt;Route path="/ArenasVerdes" element={&lt;ArenasVerdes />} />
-      &lt;Route path="/SanManuel" element={&lt;SanManuel />} />
-      &lt;Route path="/Clima" element={&lt;Clima />} />
-      &lt;Route path="/Contacto" element={&lt;Contact />} />
-      &lt;Route path="/Buscador" element={&lt;Searcher />} />
-      &lt;Route path="/Suscribirse" element={&lt;Suscribe />} />
-      &lt;Route path="/Admin" element={&lt;Admin />} />
-      &lt;Route path="/recuperar-password" element={&lt;ForgotPassword />} />
-      &lt;Route path="/reset-password/:token" element={&lt;ResetPassword />} />
-      &lt;Route path="/Register" element={&lt;Register />} />
-      &lt;Route path="/cards/:id" element={&lt;CardPage />} />
-      &lt;Route path="/unsubscribe/:token" element={&lt;Unsubscribe />} />
-
-      {/* Rutas del panel de administración */}
-      &lt;Route path="/PanelAdmin" element={&lt;PanelAdmin />}>
-        &lt;Route path="modificar-datos" element={&lt;UpdateUser />} />
-        &lt;Route path="crear-admin" element={&lt;CreateAdmin />} />
-        &lt;Route path="listar-admins" element={&lt;ListAdmins />} />
-      &lt;/Route>
-    &lt;/Routes>
-  );
+export const Global = {
+  url: "http://localhost:5000/api/",
+  baseUrl: "http://localhost:5000/"
 };
 </code></pre>
         </article>

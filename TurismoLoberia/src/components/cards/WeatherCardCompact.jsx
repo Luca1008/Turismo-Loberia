@@ -9,6 +9,10 @@ import {
   FaSun,
 } from "react-icons/fa";
 
+/**
+ * Mapeo de códigos de iconos de OpenWeatherMap a iconos de react-icons.
+ * @type {Object.<string, React.ComponentType>}
+ */
 const iconosOWMtoFa = {
   "01d": FaSun,
   "01n": FaMoon,
@@ -30,6 +34,12 @@ const iconosOWMtoFa = {
   "50n": FaSmog,
 };
 
+/**
+ * Devuelve la clase CSS correspondiente a un código de icono de OpenWeatherMap.
+ *
+ * @param {string} codigoIcono - Código del icono (ej: "01d", "10n").
+ * @returns {string} Clase CSS asociada al icono.
+ */
 const obtenerClaseIcono = (codigoIcono) => {
   const clases = {
     "01d": "icono-sol",
@@ -54,9 +64,32 @@ const obtenerClaseIcono = (codigoIcono) => {
   return clases[codigoIcono] || "icono-nube";
 };
 
+/**
+ * Componente `WeatherCardCompact`
+ *
+ * Muestra de manera compacta la información del clima de una ciudad,
+ * incluyendo ciudad, temperatura, icono y descripción breve.
+ *
+ * @param {Object} props - Propiedades del componente.
+ * @param {string} props.ciudad - Nombre de la ciudad.
+ * @param {number} [props.temp] - Temperatura actual en grados Celsius.
+ * @param {string} [props.icon] - Código de icono de OpenWeatherMap (ej: "01d").
+ * @param {string} [props.descripcion] - Descripción breve del clima (ej: "Soleado").
+ *
+ * @returns {JSX.Element} Componente visual del clima compacto.
+ *
+ * @example
+ * <WeatherCardCompact
+ *   ciudad="Lobería"
+ *   temp={22}
+ *   icon="01d"
+ *   descripcion="Soleado"
+ * />
+ */
 const WeatherCardCompact = ({ ciudad, temp, icon, descripcion }) => {
   const Icono = iconosOWMtoFa[icon] || FaCloud;
   const claseIcono = `${obtenerClaseIcono(icon)} compact-icon`;
+
   return (
     <div className="weather-card-compact">
       <div className="compact-city">{ciudad}</div>

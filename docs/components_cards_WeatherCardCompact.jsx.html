@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>router/Routing.jsx - Documentation</title>
+    <title>components/cards/WeatherCardCompact.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">router/Routing.jsx</h1>
+    <h1 class="page-title">components/cards/WeatherCardCompact.jsx</h1>
     
 
     
@@ -40,76 +40,110 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from "react";
-import { Route, Routes } from "react-router-dom";
-import ArenasVerdes from "../pages/ArenasVerdes";
-import { Contact } from "../pages/Contact";
-import { Index } from "../pages/Index";
-import Loberia from "../pages/Loberia";
-import PartidoLoberia from "../pages/PartidoLoberia";
-import { SanManuel } from "../pages/SanManuel";
-import Searcher from "../pages/Searcher";
-import { Suscribe } from "../pages/Subscribe";
-import { Clima } from "../pages/Weather";
-import Admin from "../pages/Admin";
-import PanelAdmin from "../pages/PanelAdmin";
-import UpdateUser from "../components/layout/panel-admin/UpdateAdmin";
-import CreateAdmin from "../components/layout/panel-admin/CreateAdmin";
-import ListAdmins from "../components/layout/panel-admin/ListAdmins";
-import CardPage from "../pages/CardPage";
-import { Register } from "../pages/Register";
-import ForgotPassword from "../pages/ForgotPassword";
-import ResetPassword from "../pages/ResetPassword";
-import Unsubscribe from "../pages/Unsubscribe";
+import {
+  FaBolt,
+  FaCloud,
+  FaCloudRain,
+  FaMoon,
+  FaSmog,
+  FaSnowflake,
+  FaSun,
+} from "react-icons/fa";
 
 /**
- * Componente `Routing`
+ * Mapeo de códigos de iconos de OpenWeatherMap a iconos de react-icons.
+ * @type {Object.&lt;string, React.ComponentType>}
+ */
+const iconosOWMtoFa = {
+  "01d": FaSun,
+  "01n": FaMoon,
+  "02d": FaCloud,
+  "02n": FaCloud,
+  "03d": FaCloud,
+  "03n": FaCloud,
+  "04d": FaCloud,
+  "04n": FaCloud,
+  "09d": FaCloudRain,
+  "09n": FaCloudRain,
+  "10d": FaCloudRain,
+  "10n": FaCloudRain,
+  "11d": FaBolt,
+  "11n": FaBolt,
+  "13d": FaSnowflake,
+  "13n": FaSnowflake,
+  "50d": FaSmog,
+  "50n": FaSmog,
+};
+
+/**
+ * Devuelve la clase CSS correspondiente a un código de icono de OpenWeatherMap.
  *
- * Define todas las rutas de la aplicación usando React Router v6.
- * Incluye rutas públicas, rutas para páginas de administración y rutas con parámetros dinámicos.
+ * @param {string} codigoIcono - Código del icono (ej: "01d", "10n").
+ * @returns {string} Clase CSS asociada al icono.
+ */
+const obtenerClaseIcono = (codigoIcono) => {
+  const clases = {
+    "01d": "icono-sol",
+    "01n": "icono-luna",
+    "02d": "icono-nube",
+    "02n": "icono-nube-noche",
+    "03d": "icono-nube",
+    "03n": "icono-nube-noche",
+    "04d": "icono-nube",
+    "04n": "icono-nube-noche",
+    "09d": "icono-lluvia",
+    "09n": "icono-lluvia-noche",
+    "10d": "icono-lluvia",
+    "10n": "icono-lluvia-noche",
+    "11d": "icono-tormenta",
+    "11n": "icono-tormenta-noche",
+    "13d": "icono-nieve",
+    "13n": "icono-nieve-noche",
+    "50d": "icono-niebla",
+    "50n": "icono-niebla-noche",
+  };
+  return clases[codigoIcono] || "icono-nube";
+};
+
+/**
+ * Componente `WeatherCardCompact`
  *
- * @component
- * @returns {JSX.Element} Elemento JSX que representa las rutas de la aplicación.
+ * Muestra de manera compacta la información del clima de una ciudad,
+ * incluyendo ciudad, temperatura, icono y descripción breve.
+ *
+ * @param {Object} props - Propiedades del componente.
+ * @param {string} props.ciudad - Nombre de la ciudad.
+ * @param {number} [props.temp] - Temperatura actual en grados Celsius.
+ * @param {string} [props.icon] - Código de icono de OpenWeatherMap (ej: "01d").
+ * @param {string} [props.descripcion] - Descripción breve del clima (ej: "Soleado").
+ *
+ * @returns {JSX.Element} Componente visual del clima compacto.
  *
  * @example
- * // Uso básico en App.js
- * import { Routing } from './routes/Routing';
- * function App() {
- *   return (
- *     &lt;BrowserRouter>
- *       &lt;Routing />
- *     &lt;/BrowserRouter>
- *   );
- * }
+ * &lt;WeatherCardCompact
+ *   ciudad="Lobería"
+ *   temp={22}
+ *   icon="01d"
+ *   descripcion="Soleado"
+ * />
  */
-export const Routing = () => {  
-  return (
-    &lt;Routes>
-      {/* Rutas públicas */}
-      &lt;Route path="/" element={&lt;Index />} />
-      &lt;Route path="/PartidoLoberia" element={&lt;PartidoLoberia />} />
-      &lt;Route path="/Loberia" element={&lt;Loberia />} />
-      &lt;Route path="/ArenasVerdes" element={&lt;ArenasVerdes />} />
-      &lt;Route path="/SanManuel" element={&lt;SanManuel />} />
-      &lt;Route path="/Clima" element={&lt;Clima />} />
-      &lt;Route path="/Contacto" element={&lt;Contact />} />
-      &lt;Route path="/Buscador" element={&lt;Searcher />} />
-      &lt;Route path="/Suscribirse" element={&lt;Suscribe />} />
-      &lt;Route path="/Admin" element={&lt;Admin />} />
-      &lt;Route path="/recuperar-password" element={&lt;ForgotPassword />} />
-      &lt;Route path="/reset-password/:token" element={&lt;ResetPassword />} />
-      &lt;Route path="/Register" element={&lt;Register />} />
-      &lt;Route path="/cards/:id" element={&lt;CardPage />} />
-      &lt;Route path="/unsubscribe/:token" element={&lt;Unsubscribe />} />
+const WeatherCardCompact = ({ ciudad, temp, icon, descripcion }) => {
+  const Icono = iconosOWMtoFa[icon] || FaCloud;
+  const claseIcono = `${obtenerClaseIcono(icon)} compact-icon`;
 
-      {/* Rutas del panel de administración */}
-      &lt;Route path="/PanelAdmin" element={&lt;PanelAdmin />}>
-        &lt;Route path="modificar-datos" element={&lt;UpdateUser />} />
-        &lt;Route path="crear-admin" element={&lt;CreateAdmin />} />
-        &lt;Route path="listar-admins" element={&lt;ListAdmins />} />
-      &lt;/Route>
-    &lt;/Routes>
+  return (
+    &lt;div className="weather-card-compact">
+      &lt;div className="compact-city">{ciudad}&lt;/div>
+      &lt;Icono size={32} className={claseIcono} />
+      &lt;div className="compact-temp">
+        {temp !== undefined ? Math.round(temp) + "°" : "-"}
+      &lt;/div>
+      {descripcion &amp;&amp; &lt;div className="compact-desc">{descripcion}&lt;/div>}
+    &lt;/div>
   );
 };
+
+export default WeatherCardCompact;
 </code></pre>
         </article>
     </section>
