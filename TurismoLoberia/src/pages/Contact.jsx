@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
-import { FaAsterisk } from "react-icons/fa";
-import ButtonSubmit from "../components/common/ButtonSubmit";
 import "../styles/contact.css";
 import { useTranslation } from "react-i18next";
 import { trackEvent } from "../analytics";
 import { Global } from "../helpers/Global";
+import ButtonSubmit from "../components/common/ButtonSubmit";
 
+/**
+ * Componente `Contact`
+ *
+ * Renderiza un formulario de contacto con tracking de interacciones
+ * y estados de envío.
+ *
+ * @component
+ */
 export const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -16,8 +23,7 @@ export const Contact = () => {
   });
   const [status, setStatus] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const interactionTracked = useRef(false);
 
@@ -32,10 +38,7 @@ export const Contact = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (!interactionTracked.current) {
       trackEvent({
@@ -94,7 +97,6 @@ export const Contact = () => {
       }
     } catch (error) {
       console.error("Error en enviado:", error);
-
       trackEvent({
         category: "Formulario",
         action: "Error técnico",
@@ -108,88 +110,72 @@ export const Contact = () => {
   };
 
   return (
-    <div>
-      <section className="contact" key={i18n.language}>
-        <h2>{t("contactanos")}</h2>
-        <Form onSubmit={handleSubmit} className="form-contact">
-          <Form.Group className="mb-3" controlId="formName">
-            <Form.Label>
-              {t("nombre_apellido")} <FaAsterisk className="requerided" />
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              placeholder={t("placeholder_nombre")}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formEmail">
-            <Form.Label>
-              {t("email2")} <FaAsterisk className="requerided" />
-            </Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              placeholder={t("placeholder_email")}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formSubject">
-            <Form.Label>
-              {t("asunto")} <FaAsterisk className="requerided" />
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="subject"
-              value={formData.subject}
-              onChange={handleChange}
-              required
-              placeholder={t("placeholder_asunto")}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formMessage">
-            <Form.Label>
-              {t("mensaje")} <FaAsterisk className="requerided" />
-            </Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={4}
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              placeholder={t("placeholder_mensaje")}
-            />
-          </Form.Group>
-
-          <p className="required-info">
-            {t("campos_obligatorios")}
-            <FaAsterisk className="requerided" />
-            {t("son_obligatorios")}
-          </p>
-
-          <ButtonSubmit
-            text={status === "enviando" ? t("enviando") : t("enviar")}
-            disabled={status === "enviando"}
-            className={`.btn-success${status === "enviando" ? " sending" : ""}`}
+    <section className="contact" key={i18n.language}>
+      <h2>{t("contactanos")}</h2>
+      <Form onSubmit={handleSubmit} className="form-contact">
+        <Form.Group className="mb-3" controlId="formName">
+          <Form.Label>{t("nombre_apellido")}</Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            placeholder={t("placeholder_nombre")}
           />
+        </Form.Group>
 
-          {status === "exitoso" && (
-            <p className="success-message">{t("mensaje_exitoso")}</p>
-          )}
-          {status === "error" && (
-            <p className="error-message">{errorMessage}</p>
-          )}
-        </Form>
-      </section>
-    </div>
+        <Form.Group className="mb-3" controlId="formEmail">
+          <Form.Label>{t("email2")}</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            placeholder={t("placeholder_email")}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formSubject">
+          <Form.Label>{t("asunto")}</Form.Label>
+          <Form.Control
+            type="text"
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            required
+            placeholder={t("placeholder_asunto")}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formMessage">
+          <Form.Label>{t("mensaje")}</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={4}
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            required
+            placeholder={t("placeholder_mensaje")}
+          />
+        </Form.Group>
+
+        <ButtonSubmit
+          type="submit"
+          text={status === "enviando" ? t("enviando") : t("enviar")}
+          disabled={status === "enviando"}
+        />
+
+        {status === "exitoso" && (
+          <p className="success-message">{t("mensaje_exitoso")}</p>
+        )}
+        {status === "error" && (
+          <p className="error-message">{errorMessage}</p>
+        )}
+      </Form>
+    </section>
   );
 };
 

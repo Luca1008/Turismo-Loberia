@@ -15,24 +15,42 @@ import WeatherCard from "../components/cards/WeatherCard";
 import "../styles/weather.css";
 import { useTranslation } from "react-i18next";
 import { trackEvent } from "../analytics";
-import {Global} from "../helpers/Global";
+import { Global } from "../helpers/Global";
 
+/**
+ * Componente `Clima`.
+ *
+ * Muestra el clima actual y pronósticos extendidos de Lobería, San Manuel y Arenas Verdes.
+ * Incluye tablas con temperatura, humedad, viento, presión y estado del tiempo.
+ *
+ * @component
+ * @example
+ * <Clima />
+ *
+ * @returns {JSX.Element} Sección completa con clima y pronósticos.
+ */
 export const Clima = () => {
+  /** Ciudades a mostrar */
   const ciudades = [
     { ciudad: "Lobería" },
     { ciudad: "San Manuel" },
     { ciudad: "Arenas Verdes", lat: -38.8083, lon: -58.6036 },
   ];
 
+  /** Estado con detalles del clima actual */
   const [detalles, setDetalles] = useState([]);
+  /** Estado de carga del clima actual */
   const [loading, setLoading] = useState(true);
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  /** Traducciones */
+  const { t, i18n } = useTranslation();
+  /** Pronósticos extendidos por ciudad */
   const [forecastLoberia, setForecastLoberia] = useState([]);
   const [forecastSanManuel, setForecastSanManuel] = useState([]);
   const [forecastArenasVerdes, setForecastArenasVerdes] = useState([]);
+  /** Estado de carga del pronóstico extendido */
   const [loadingForecast, setLoadingForecast] = useState(true);
 
+  // Registrar vista de página
   useEffect(() => {
     trackEvent({
       category: "Páginas",
@@ -41,6 +59,7 @@ export const Clima = () => {
     });
   }, []);
 
+  // Obtener clima actual de todas las ciudades
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -102,9 +121,8 @@ export const Clima = () => {
     const fetchForecasts = async () => {
       setLoadingForecast(true);
       try {
-        const resLob = await axios.get(
-          `http://localhost:5000/api/forecast?city=Lobería`
-        );
+        const resLob = await axios.get(`${Global.url}forecast?city=Lobería`);
+
         setForecastLoberia(resLob.data);
         trackEvent({
           category: "Pronóstico",
@@ -112,9 +130,7 @@ export const Clima = () => {
           label: "Lobería",
         });
 
-        const resSan = await axios.get(
-          `http://localhost:5000/api/forecast?city=San Manuel`
-        );
+        const resSan = await axios.get(`${Global.url}forecast?city=San Manuel`);
         setForecastSanManuel(resSan.data);
         trackEvent({
           category: "Pronóstico",
@@ -123,7 +139,7 @@ export const Clima = () => {
         });
 
         const resArenas = await axios.get(
-          `http://localhost:5000/api/forecast?lat=-38.8083&lon=-58.6036`
+          `${Global.url}forecast?lat=-38.8083&lon=-58.6036`
         );
         setForecastArenasVerdes(resArenas.data);
         trackEvent({
@@ -146,7 +162,7 @@ export const Clima = () => {
     fetchForecasts();
   }, []);
 
-  // Obtener fecha actual en formato largo
+  /** Días y meses para formateo de fecha */
   const diasLargos = [
     "Domingo",
     "Lunes",
@@ -170,12 +186,19 @@ export const Clima = () => {
     "Noviembre",
     "Diciembre",
   ];
+
+  /** Fecha actual formateada */
   const hoy = new Date();
+  /**
+   * Formatea un timestamp Unix a una fecha legible
+   * @param {number} dt - Timestamp en segundos
+   * @returns {string} Fecha formateada
+   */
   const fechaCompleta = `${diasLargos[hoy.getDay()]} ${hoy.getDate()} de ${
     meses[hoy.getMonth()]
   } de ${hoy.getFullYear()}`;
 
-  // Determinar degradado según el estado del clima de la primera ciudad
+  /** Determina el fondo de la tabla según el estado del clima */
   let bgGradient = "linear-gradient(to bottom, #ffffff, #ffffff)";
   const estado = detalles[0]?.estado?.toLowerCase() || "";
   if (estado.includes("lluvia")) {
@@ -198,7 +221,6 @@ export const Clima = () => {
     }`;
   };
 
-  // Cabecera de tabla con íconos
   const TableHeader = () => (
     <thead>
       <tr>
@@ -227,7 +249,7 @@ export const Clima = () => {
           <WeatherCard ciudad="San Manuel" />
           <WeatherCard ciudad="Arenas Verdes" lat={-38.8083} lon={-58.6036} />
         </div>
-        {/* Tabla de detalles */}
+        {/* Tabla clima actual */}
         <div className="table-weather" style={{ background: bgGradient }}>
           <h3>
             {t("detalle_hoy")}{" "}

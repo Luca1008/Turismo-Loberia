@@ -2,14 +2,41 @@ import React, { useEffect } from "react";
 import ButtonSuccess from "../components/common/ButtonSuccess";
 import "../styles/city.css";
 import { FaCar, FaBus, FaTrain } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import { trackEvent } from "../analytics";
-import { Trans } from "react-i18next";
 import DownloadButton from "../components/ui/DownloadButton";
 
+/**
+ * Componente `PartidoLoberia`
+ *
+ * Representa la página del Partido de Lobería.
+ * Muestra información sobre:
+ * - Introducción general y características
+ * - Historia y cultura
+ * - Naturaleza y paisajes
+ * - Producciones y economía local
+ * - Cómo llegar (auto, bus)
+ * - Descargas de documentos relacionados
+ *
+ * También realiza el tracking de:
+ * - Vista de la página
+ * - Vistas de secciones
+ * - Scroll completo de la página
+ *
+ * Hooks utilizados:
+ * - `useTranslation` para internacionalización
+ * - `useEffect` para tracking al montar el componente
+ *
+ * Componentes internos:
+ * - `DownloadButton` para permitir descargas de PDF
+ *
+ * @component
+ * @returns {JSX.Element} Página completa del Partido de Lobería
+ */
 const PartidoLoberia = () => {
   const { t, i18n } = useTranslation();
 
+  // Tracking de página y secciones al montar el componente
   useEffect(() => {
     trackEvent({
       category: "Páginas",
@@ -43,16 +70,20 @@ const PartidoLoberia = () => {
     });
   }, []);
 
+  // Datos de introducción obtenidos desde i18n
   const data_intro = t("intro_partido_loberia", { returnObjects: true });
 
   return (
     <div className="city" key={i18n.language}>
+      {/* Sección de información general */}
       <div id="informacion_general" className="portada-city"></div>
       <h1>{t("partido_loberia")}</h1>
       <section className="information">
+        {/* Introducción */}
         <Trans components={{ p: <p /> }}>{data_intro.presentacion}</Trans>
         <br />
         <br />
+        {/* Características principales */}
         <Trans
           components={{
             p: <p />,
@@ -64,6 +95,7 @@ const PartidoLoberia = () => {
         <br />
         <br />
 
+        {/* Historia y cultura */}
         <h2 id="historia">{t("historia")}</h2>
         <div className="photo-historia-partido-loberia"></div>
         <Trans components={{ h3: <h3 className="h3-city" /> }}>
@@ -95,6 +127,7 @@ const PartidoLoberia = () => {
         </Trans>
         <br />
 
+        {/* Naturaleza y paisajes */}
         <h2 id="naturaleza">{t("naturaleza")}</h2>
         <div className="photo-naturaleza-partido-loberia"></div>
         <Trans components={{ h3: <h3 className="h3-city" /> }}>
@@ -129,6 +162,7 @@ const PartidoLoberia = () => {
         <br />
         <br />
 
+        {/* Producciones y economía */}
         <h2 id="producciones">{t("producciones")}</h2>
         <div className="photo-produccion-partido-loberia"></div>
         <Trans components={{ p: <p /> }}>{data_intro.economia.intro}</Trans>
@@ -159,9 +193,12 @@ const PartidoLoberia = () => {
         </Trans>
       </section>
 
+      {/* Sección Cómo llegar */}
       <section className="go-to" id="como_llegar">
         <h2 id="como_llegar">{t("como_llegar")}</h2>
         <div className="photo-como-llegar-partido-loberia"></div>
+
+        {/* Llegar en auto */}
         <div className="car">
           <p>
             <strong>
@@ -189,11 +226,11 @@ const PartidoLoberia = () => {
           </div>
           <Trans
             i18nKey="intro_2_como_llegar_partido_loberia"
-            components={{
-              br: <br />,
-            }}
+            components={{ br: <br /> }}
           />
         </div>
+
+        {/* Llegar en micro */}
         <div className="bus">
           <p>
             <strong>
@@ -201,34 +238,20 @@ const PartidoLoberia = () => {
               {t("en_micro")}
             </strong>{" "}
           </p>
-          <Trans
-            i18nKey="descripcion_en_micro"
-            components={{
-              br: <br />,
-            }}
-          />
+          <Trans i18nKey="descripcion_en_micro" components={{ br: <br /> }} />
           <ul>
             <li>
-              <Trans
-                i18nKey="opcion_desde_buenos_aires"
-                components={{
-                  br: <br />,
-                }}
-              />
+              <Trans i18nKey="opcion_desde_buenos_aires" components={{ br: <br /> }} />
             </li>
             <li>
-              <Trans
-                i18nKey="opcion_desde_mar_del_plata"
-                components={{
-                  br: <br />,
-                }}
-              />
+              <Trans i18nKey="opcion_desde_mar_del_plata" components={{ br: <br /> }} />
             </li>
           </ul>
         </div>
         <p>{t("cierre_como_llegar_partido_loberia")}</p>
       </section>
 
+      {/* Sección de descargas */}
       <section className="download" id="descargas">
         <h2>{t("descargas")}</h2>
         <DownloadButton

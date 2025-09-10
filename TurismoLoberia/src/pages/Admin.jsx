@@ -9,6 +9,31 @@ import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import { Global } from "../helpers/Global"
 
+/**
+ * Componente `Admin`
+ *
+ * Este componente renderiza el formulario de login para el panel de administración.
+ * Permite al usuario ingresar su correo electrónico y contraseña, valida los datos,
+ * realiza la solicitud de login al servidor y maneja la autenticación.
+ *
+ * Hooks usados:
+ * - useState: Para manejar estado del formulario, errores y loading.
+ * - useAuth: Para actualizar el estado global de autenticación.
+ * - useNavigate: Para redirigir al panel de administración tras login exitoso.
+ * - useTranslation: Para internacionalización de textos.
+ *
+ * Funciones principales:
+ * - validateForm(): Valida que el email sea correcto y que la contraseña tenga al menos 8 caracteres.
+ * - loginUser(e): Maneja el envío del formulario, realiza la petición POST al servidor y actualiza el estado global de auth.
+ *
+ * Contiene:
+ * - Validación de formulario y manejo de errores.
+ * - Notificaciones de éxito o error usando `react-toastify`.
+ * - Redirección al Panel de Administración tras login exitoso.
+ *
+ * @component
+ * @returns {JSX.Element} Formulario de login para administración
+ */
 const Admin = () => {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
@@ -18,6 +43,11 @@ const Admin = () => {
   const { t } = useTranslation();
   const { i18n } = useTranslation();
 
+  /**
+   * Valida los campos del formulario
+   *
+   * @returns {boolean} true si el formulario es válido, false si hay errores
+   */
   const validateForm = () => {
     const newErrors = {};
 
@@ -33,6 +63,12 @@ const Admin = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  /**
+   * Maneja el envío del formulario de login
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e Evento del formulario
+   * @returns {Promise<void>}
+   */
   const loginUser = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -69,6 +105,7 @@ const Admin = () => {
 
   return (
     <section className="login" key={i18n.language}>
+      {/* ToastContainer para notificaciones */}
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -82,6 +119,7 @@ const Admin = () => {
       />
       <h2>Panel de Administración</h2>
       <Form onSubmit={loginUser} className="form-login" noValidate>
+        {/* Campo Email */}
         <Form.Group className="mb-3" controlId="formEmail">
           <Form.Label>{t("email")}</Form.Label>
           <Form.Control
@@ -99,6 +137,7 @@ const Admin = () => {
           </Form.Control.Feedback>
         </Form.Group>
 
+        {/* Campo Password */}
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
           <Form.Label>{t("password")}</Form.Label>
           <Form.Control
@@ -116,12 +155,14 @@ const Admin = () => {
           </Form.Control.Feedback>
         </Form.Group>
 
+        {/* Link de recuperación de contraseña */}
         <div style={{ marginTop: "1rem" }}>
           <a href="/recuperar-password">
             <strong>{t("forgot_password")}</strong>
           </a>
         </div>
 
+        {/* Botón de submit */}
         <ButtonSubmit
           type="submit"
           text={loading ? t("loading") : t("login")}

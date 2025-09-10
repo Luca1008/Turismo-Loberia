@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ArenasVerdes.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">ArenasVerdes.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect } from "react";
+import ButtonSuccess from "../components/common/ButtonSuccess";
+import "../styles/city.css";
+import { FaCar } from "react-icons/fa";
+import { useTranslation, Trans } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { trackEvent } from "../analytics";
+import DownloadButton from "../components/ui/DownloadButton";
+
+/**
+ * Componente `ArenasVerdes`
+ *
+ * Este componente renderiza la página de información turística de Arenas Verdes.
+ * Incluye secciones de:
+ * - Información general
+ * - Cómo llegar
+ * - Alojamientos
+ * - Gastronomía
+ * - Transporte
+ * - Agenda
+ * - Qué hacer
+ * - Descargas
+ *
+ * Utiliza:
+ * - `react-i18next` para traducción de textos
+ * - `react-router-dom` para navegación
+ * - `trackEvent` para analítica de visitas y clics
+ *
+ * Hooks usados:
+ * - `useEffect`: Para trackear eventos de vista de página y secciones
+ * - `useTranslation`: Para traducción de textos
+ * - `useNavigate`: Para navegar a buscador según categoría
+ *
+ * Componentes internos usados:
+ * - `ButtonSuccess`: Botón estilizado con acciones de navegación y tracking
+ * - `DownloadButton`: Botón para descargar PDFs
+ *
+ * @component
+ * @returns {JSX.Element} Página de Arenas Verdes con información turística completa
+ */
+const ArenasVerdes = () => {
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+
+  /**
+   * Contenido textual de la página extraído de traducciones
+   * @type {Object}
+   */
+  const data_arenas = t("descripcion_arenas_verdes", { returnObjects: true });
+
+  /**
+   * Efecto principal para trackear visitas y vistas de secciones
+   */
+  useEffect(() => {
+    // Track de vista de página
+    trackEvent({
+      category: "Páginas",
+      action: "Vista página",
+      label: "Arenas Verdes",
+    });
+
+    // Track de cada sección
+    const sections = [
+      "informacion_general",
+      "como_llegar",
+      "alojamientos",
+      "gastronomia",
+      "transporte",
+      "agenda",
+      "que_hacer",
+      "descargas",
+    ];
+
+    sections.forEach((sectionId) => {
+      trackEvent({
+        category: "Sección",
+        action: "Vista sección",
+        label: sectionId,
+      });
+    });
+
+    // Track de scroll a la página completa
+    trackEvent({
+      category: "Scroll",
+      action: "Página completa",
+      label: "Arenas Verdes",
+    });
+  }, []);
+
+  return (
+    &lt;div className="city" key={i18n.language}>
+      {/* Secciones del componente */}
+      {/* Información general */}
+      &lt;div id="informacion_general" className="portada-arenas-verdes">&lt;/div>
+      &lt;h1>{t("arenas_verdes")}&lt;/h1>
+      &lt;section className="information">
+        &lt;Trans components={{ p: &lt;p /> }}>{data_arenas.descripcion_1}&lt;/Trans>
+        &lt;Trans components={{ p: &lt;p /> }}>{data_arenas.descripcion_2}&lt;/Trans>
+      &lt;/section>
+
+      {/* Cómo llegar */}
+      &lt;section className="go-to" id="como_llegar">
+        &lt;h2>{t("como_llegar")}&lt;/h2>
+        &lt;div className="photo-como-llegar-arenas-verdes">&lt;/div>
+        &lt;p>
+          &lt;strong className="primary">
+            &lt;FaCar />
+            {t("en_auto")}
+          &lt;/strong>
+        &lt;/p>
+        &lt;Trans components={{ p: &lt;p /> }}>{data_arenas.como_llegar_intro}&lt;/Trans>
+        &lt;Trans components={{ p: &lt;p />, strong: &lt;strong /> }}>
+          {data_arenas.desde_loberia}
+        &lt;/Trans>
+        &lt;Trans components={{ p: &lt;p />, strong: &lt;strong /> }}>
+          {data_arenas.desde_necochea}
+        &lt;/Trans>
+        &lt;Trans components={{ p: &lt;p />, strong: &lt;strong /> }}>
+          {data_arenas.desde_mar_del_plata}
+        &lt;/Trans>
+      &lt;/section>
+
+      {/* Alojamientos */}
+      &lt;section className="accommodation" id="alojamientos">
+        &lt;h2>{t("alojamientos_arenas_verdes")}&lt;/h2>
+        &lt;div className="photo-alojamiento-arenas-verdes">&lt;/div>
+        &lt;Trans components={{ p: &lt;p />, strong: &lt;strong /> }}>
+          {data_arenas.alojamiento}
+        &lt;/Trans>
+        &lt;Trans
+          i18nKey="alojamientos_arenas_verdes_descripcion"
+          components={{
+            p: &lt;p />,
+            h2: &lt;h2 />,
+            h3: &lt;h3 />,
+            ul: &lt;ul />,
+            li: &lt;li />,
+            br: &lt;br />,
+            strong: &lt;strong />,
+          }}
+        />
+        &lt;ButtonSuccess
+          onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Clic alojamiento",
+              label: "Arenas Verdes",
+            });
+            navigate("/Buscador", { state: { category: "Alojamiento" } });
+          }}
+        />
+      &lt;/section>
+
+      {/* Gastronomía */}
+      &lt;section className="gastronomy" id="gastronomia">
+        &lt;h2>{t("gastronomia_arenas_verdes")}&lt;/h2>
+        &lt;div className="photo-gastronomia-arenas-verdes">&lt;/div>
+        &lt;Trans components={{ p: &lt;p />, strong: &lt;strong /> }}>
+          {data_arenas.gastronomia}
+        &lt;/Trans>
+        &lt;ButtonSuccess
+          onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Clic gastronomía",
+              label: "Arenas Verdes",
+            });
+            navigate("/Buscador", { state: { category: "Gastronomía" } });
+          }}
+        />
+      &lt;/section>
+
+      {/* Transporte */}
+      &lt;section className="transport" id="transporte">
+        &lt;h2>{t("transporte")}&lt;/h2>
+        &lt;p>{t("transporte_arenas_verdes")}&lt;/p>
+      &lt;/section>
+
+      {/* Agenda */}
+      &lt;section className="agenda" id="agenda">
+        &lt;h2>{t("agenda")}&lt;/h2>
+        &lt;div className="photo-agenda-arenas-verdes">&lt;/div>
+        &lt;p>Durante el verano se realizan actividades...&lt;/p>
+        &lt;ButtonSuccess
+          onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Clic eventos",
+              label: "Arenas Verdes",
+            });
+            navigate("/Buscador", { state: { category: "Evento" } });
+          }}
+        />
+      &lt;/section>
+
+      {/* Qué hacer */}
+      &lt;section className="event" id="que_hacer">
+        &lt;h2>{t("que_hacer_arenas_verdes")}&lt;/h2>
+        &lt;div className="photo-que-hacer-arenas-verdes">&lt;/div>
+        &lt;Trans components={{ p: &lt;p /> }}>{data_arenas.actividades_intro}&lt;/Trans>
+        &lt;h2>{t("actividades_arenas_verdes")}&lt;/h2>
+        &lt;Trans components={{ p: &lt;p />, strong: &lt;strong />, h3: &lt;h3 /> }}>
+          {data_arenas.mar}
+        &lt;/Trans>
+        &lt;Trans components={{ p: &lt;p />, strong: &lt;strong /> }}>{data_arenas.entorno}&lt;/Trans>
+        &lt;Trans components={{ p: &lt;p />, strong: &lt;strong />, h3: &lt;h3 /> }}>{data_arenas.aire_libre}&lt;/Trans>
+        &lt;Trans components={{ p: &lt;p />, strong: &lt;strong />, h3: &lt;h3 /> }}>{data_arenas.magico}&lt;/Trans>
+        &lt;Trans components={{ p: &lt;p />, strong: &lt;strong />, h3: &lt;h3 /> }}>{data_arenas.experiencia}&lt;/Trans>
+      &lt;/section>
+
+      {/* Descargas */}
+      &lt;section className="download" id="descargas">
+        &lt;h2>{t("descargas")}&lt;/h2>
+        &lt;DownloadButton
+          filePath="/downloads/arenas_verdes/info_aves_arenas_verdes.pdf"
+          fileName="Info Arenas Verdes"
+          label="Descargar PDF - Info Arenas Verdes"
+          className="button"
+        />
+        &lt;DownloadButton
+          filePath="/downloads/arenas_verdes/alojamientos_arenas_verdes.pdf"
+          fileName="Alojamientos Arenas Verdes"
+          label="Descargar PDF - Alojamientos Arenas Verdes"
+          className="button"
+        />
+        &lt;DownloadButton
+          filePath="/downloads/arenas_verdes/aves_arenas_verdes.pdf"
+          fileName="Aves Arenas Verdes"
+          label="Descargar PDF - Aves Arenas Verdes"
+          className="button"
+        />
+      &lt;/section>
+    &lt;/div>
+  );
+};
+
+export default ArenasVerdes;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 13:18:33 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

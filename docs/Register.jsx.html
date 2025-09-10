@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Register.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Register.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Global } from "../helpers/Global";
+import { useTranslation } from "react-i18next";
+
+/**
+ * Componente `Register`
+ *
+ * Formulario de registro de usuario.
+ * Permite crear una nueva cuenta enviando:
+ * - Nombre
+ * - Apellido
+ * - Email
+ * - Contraseña
+ *
+ * Reglas:
+ * - La contraseña debe tener al menos 8 caracteres.
+ * - Se muestra feedback mediante Toasts y mensajes de error.
+ *
+ * @component
+ * @returns {JSX.Element} Formulario de registro completo
+ */
+export const Register = () => {
+  const [error, setError] = useState(null); // Estado para errores de validación o servidor
+  const { t } = useTranslation(); // Traducción de textos
+  const { i18n } = useTranslation(); // Para detectar idioma actual
+
+  /**
+   * Función `registerUser`
+   * Se ejecuta al enviar el formulario.
+   * Valida la contraseña, hace POST a la API y maneja errores.
+   *
+   * @param {React.FormEvent&lt;HTMLFormElement>} e Evento de submit
+   */
+  const registerUser = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    // Construcción del objeto usuario desde los inputs
+    let userData = {
+      name: e.target.name.value,
+      surname: e.target.surname.value,
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+
+    // Validación mínima de contraseña
+    if (userData.password.length &lt; 8) {
+      toast.error(t("error_contrasena_minima"));
+      return;
+    }
+
+    try {
+      // Llamada a la API
+      const request = await fetch(Global.url + "user/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+
+      if (!request.ok) {
+        throw new Error(`Error del servidor: ${request.status}`);
+      }
+
+      const data = await request.json();
+      console.log("Respuesta del servidor:", data);
+
+      // Manejo de respuesta exitosa
+      if (data.status === "success") {
+        if (data.message &amp;&amp; data.message.includes("ya existe")) {
+          setError(t("error_usuario_existente"));
+          toast.error(t("error_usuario_existente"));
+        } else {
+          toast.success(t("usuario_registrado"));
+          setTimeout(() => {
+            window.location.href = "/Admin"; // Redirección tras registro exitoso
+          }, 1500);
+        }
+      } else {
+        // Error devuelto por API
+        setError(data.message || "Error al registrar usuario");
+        toast.error(data.message || "Error al registrar usuario");
+      }
+    } catch (error) {
+      console.error("Error en Registrar:", error);
+      setError(t("error_conexion2"));
+      toast.error(t("error_conexion2"));
+    }
+  };
+
+  return (
+    &lt;>
+      &lt;section className="register" key={i18n.language}>
+        &lt;h2 className="content__title">{t("registro")}&lt;/h2>
+        &lt;div className="content__posts">
+          &lt;Form
+            className="register-form"
+            onSubmit={registerUser}
+            encType="multipart/form-data"
+          >
+            {/* Nombre */}
+            &lt;Form.Group className="mb-3" controlId="registerName">
+              &lt;Form.Label>{t("nombre")}&lt;/Form.Label>
+              &lt;Form.Control
+                type="text"
+                name="name"
+                placeholder={t("nombre")}
+                required
+              />
+            &lt;/Form.Group>
+
+            {/* Apellido */}
+            &lt;Form.Group className="mb-3" controlId="registerSurname">
+              &lt;Form.Label>{t("apellido")}&lt;/Form.Label>
+              &lt;Form.Control
+                type="text"
+                name="surname"
+                placeholder={t("apellido")}
+                required
+              />
+            &lt;/Form.Group>
+
+            {/* Email */}
+            &lt;Form.Group className="mb-3" controlId="registerEmail">
+              &lt;Form.Label>{t("correo_electronico")}&lt;/Form.Label>
+              &lt;Form.Control
+                type="email"
+                name="email"
+                placeholder={t("correo_electronico")}
+                required
+              />
+            &lt;/Form.Group>
+
+            {/* Contraseña */}
+            &lt;Form.Group className="mb-3" controlId="registerPassword">
+              &lt;Form.Label>{t("contrasena")}&lt;/Form.Label>
+              &lt;Form.Control
+                type="password"
+                name="password"
+                placeholder={t("contrasena")}
+                required
+              />
+            &lt;/Form.Group>
+
+            {/* Botón de registro */}
+            &lt;button type="submit" className="btn btn-success">
+              {t("registrarse")}
+            &lt;/button>
+          &lt;/Form>
+
+          {/* Mensaje de error */}
+          {error &amp;&amp; &lt;p className="text-danger mt-3">{error}&lt;/p>}
+        &lt;/div>
+
+        {/* Toasts para feedback */}
+        &lt;ToastContainer />
+      &lt;/section>
+    &lt;/>
+  );
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 13:18:34 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

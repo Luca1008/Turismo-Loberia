@@ -1,0 +1,14 @@
+{
+  "plugins": ["plugins/markdown"],
+  "recurseDepth": 10,
+  "source": {
+    "include": ["TurismoLoberia/src", "README.md"],
+    "includePattern": ".+\\.(js|jsx)$",
+    "excludePattern": "(^|\\/|\\\\)node_modules(\\/|\\\\)"
+  },
+"opts": {
+  "destination": "./docs",
+  "recurse": true,
+  "template": "node_modules/minami"
+}
+}

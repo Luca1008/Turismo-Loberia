@@ -7,19 +7,59 @@ import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics";
 import DownloadButton from "../components/ui/DownloadButton";
 
+/**
+ * Componente `ArenasVerdes`
+ *
+ * Este componente renderiza la página de información turística de Arenas Verdes.
+ * Incluye secciones de:
+ * - Información general
+ * - Cómo llegar
+ * - Alojamientos
+ * - Gastronomía
+ * - Transporte
+ * - Agenda
+ * - Qué hacer
+ * - Descargas
+ *
+ * Utiliza:
+ * - `react-i18next` para traducción de textos
+ * - `react-router-dom` para navegación
+ * - `trackEvent` para analítica de visitas y clics
+ *
+ * Hooks usados:
+ * - `useEffect`: Para trackear eventos de vista de página y secciones
+ * - `useTranslation`: Para traducción de textos
+ * - `useNavigate`: Para navegar a buscador según categoría
+ *
+ * Componentes internos usados:
+ * - `ButtonSuccess`: Botón estilizado con acciones de navegación y tracking
+ * - `DownloadButton`: Botón para descargar PDFs
+ *
+ * @component
+ * @returns {JSX.Element} Página de Arenas Verdes con información turística completa
+ */
 const ArenasVerdes = () => {
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+
+  /**
+   * Contenido textual de la página extraído de traducciones
+   * @type {Object}
+   */
   const data_arenas = t("descripcion_arenas_verdes", { returnObjects: true });
 
+  /**
+   * Efecto principal para trackear visitas y vistas de secciones
+   */
   useEffect(() => {
+    // Track de vista de página
     trackEvent({
       category: "Páginas",
       action: "Vista página",
       label: "Arenas Verdes",
     });
 
+    // Track de cada sección
     const sections = [
       "informacion_general",
       "como_llegar",
@@ -39,6 +79,7 @@ const ArenasVerdes = () => {
       });
     });
 
+    // Track de scroll a la página completa
     trackEvent({
       category: "Scroll",
       action: "Página completa",
@@ -48,6 +89,8 @@ const ArenasVerdes = () => {
 
   return (
     <div className="city" key={i18n.language}>
+      {/* Secciones del componente */}
+      {/* Información general */}
       <div id="informacion_general" className="portada-arenas-verdes"></div>
       <h1>{t("arenas_verdes")}</h1>
       <section className="information">
@@ -55,6 +98,7 @@ const ArenasVerdes = () => {
         <Trans components={{ p: <p /> }}>{data_arenas.descripcion_2}</Trans>
       </section>
 
+      {/* Cómo llegar */}
       <section className="go-to" id="como_llegar">
         <h2>{t("como_llegar")}</h2>
         <div className="photo-como-llegar-arenas-verdes"></div>
@@ -76,6 +120,7 @@ const ArenasVerdes = () => {
         </Trans>
       </section>
 
+      {/* Alojamientos */}
       <section className="accommodation" id="alojamientos">
         <h2>{t("alojamientos_arenas_verdes")}</h2>
         <div className="photo-alojamiento-arenas-verdes"></div>
@@ -101,13 +146,12 @@ const ArenasVerdes = () => {
               action: "Clic alojamiento",
               label: "Arenas Verdes",
             });
-            navigate("/Buscador", {
-              state: { category: "Alojamiento" },
-            });
+            navigate("/Buscador", { state: { category: "Alojamiento" } });
           }}
         />
       </section>
 
+      {/* Gastronomía */}
       <section className="gastronomy" id="gastronomia">
         <h2>{t("gastronomia_arenas_verdes")}</h2>
         <div className="photo-gastronomia-arenas-verdes"></div>
@@ -121,18 +165,18 @@ const ArenasVerdes = () => {
               action: "Clic gastronomía",
               label: "Arenas Verdes",
             });
-            navigate("/Buscador", {
-              state: { category: "Gastronomía" },
-            });
+            navigate("/Buscador", { state: { category: "Gastronomía" } });
           }}
         />
       </section>
 
+      {/* Transporte */}
       <section className="transport" id="transporte">
         <h2>{t("transporte")}</h2>
         <p>{t("transporte_arenas_verdes")}</p>
       </section>
 
+      {/* Agenda */}
       <section className="agenda" id="agenda">
         <h2>{t("agenda")}</h2>
         <div className="photo-agenda-arenas-verdes"></div>
@@ -144,13 +188,12 @@ const ArenasVerdes = () => {
               action: "Clic eventos",
               label: "Arenas Verdes",
             });
-            navigate("/Buscador", {
-              state: { category: "Evento" },
-            });
+            navigate("/Buscador", { state: { category: "Evento" } });
           }}
         />
       </section>
 
+      {/* Qué hacer */}
       <section className="event" id="que_hacer">
         <h2>{t("que_hacer_arenas_verdes")}</h2>
         <div className="photo-que-hacer-arenas-verdes"></div>
@@ -159,20 +202,13 @@ const ArenasVerdes = () => {
         <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>
           {data_arenas.mar}
         </Trans>
-        <Trans components={{ p: <p />, strong: <strong /> }}>
-          {data_arenas.entorno}
-        </Trans>
-        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>
-          {data_arenas.aire_libre}
-        </Trans>
-        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>
-          {data_arenas.magico}
-        </Trans>
-        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>
-          {data_arenas.experiencia}
-        </Trans>
+        <Trans components={{ p: <p />, strong: <strong /> }}>{data_arenas.entorno}</Trans>
+        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>{data_arenas.aire_libre}</Trans>
+        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>{data_arenas.magico}</Trans>
+        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>{data_arenas.experiencia}</Trans>
       </section>
 
+      {/* Descargas */}
       <section className="download" id="descargas">
         <h2>{t("descargas")}</h2>
         <DownloadButton

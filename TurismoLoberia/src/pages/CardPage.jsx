@@ -6,12 +6,38 @@ import { useTranslation } from "react-i18next";
 import { trackEvent } from "../analytics";
 import { Global } from "../helpers/Global";
 
+/**
+ * Componente `CardPage`
+ *
+ * Este componente muestra el detalle de una "card" (contenido turístico o evento)
+ * según el ID pasado por la URL. Incluye:
+ * - Título, imagen de portada y descripción
+ * - Información de ubicación con mapa OpenStreetMap
+ * - Horarios, contactos y detalles adicionales
+ * - Fecha del evento (si aplica)
+ *
+ * Hooks usados:
+ * - `useParams` para obtener el ID de la card desde la URL
+ * - `useState` para almacenar los datos de la card
+ * - `useEffect` para hacer la petición a la API y trackear eventos
+ * - `useTranslation` para traducción de textos
+ *
+ * Funcionalidades:
+ * - Fetch de la card desde la API (`axios.get`)
+ * - Trackeo de eventos de analítica para vistas de página, secciones y mapa
+ * - Renderizado condicional según categoría de card (Evento o general)
+ *
+ * @component
+ * @returns {JSX.Element} Página de detalle de una card
+ */
 const CardPage = () => {
   const { id } = useParams();
   const [card, setCard] = useState(null);
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
+  /**
+   * Efecto para cargar la card desde la API y trackear eventos
+   */
   useEffect(() => {
     const fetchCard = async () => {
       try {
@@ -32,23 +58,12 @@ const CardPage = () => {
           });
         }
 
-        trackEvent({
-          category: "Sección",
-          action: "Vista",
-          label: "Ubicación",
-        });
-        trackEvent({ category: "Sección", action: "Vista", label: "Horarios" });
-        trackEvent({
-          category: "Sección",
-          action: "Vista",
-          label: "Contactos",
-        });
-        trackEvent({
-          category: "Sección",
-          action: "Vista",
-          label: "Información",
+        // Trackeo de secciones
+        ["Ubicación", "Horarios", "Contactos", "Información"].forEach((section) => {
+          trackEvent({ category: "Sección", action: "Vista", label: section });
         });
 
+        // Trackeo de mapa
         if (res.data.card_lat && res.data.card_lon) {
           trackEvent({
             category: "Mapa",
@@ -78,14 +93,7 @@ const CardPage = () => {
       )}
 
       {card.card_category === "Evento" && card.card_date && (
-        <div
-          className="event-date-detail"
-          style={{
-            marginBottom: "1rem",
-            fontWeight: "bold",
-            fontSize: "1.2rem",
-          }}
-        >
+        <div className="event-date-detail" style={{ marginBottom: "1rem", fontWeight: "bold", fontSize: "1.2rem" }}>
           {t("fecha_evento")}:{" "}
           {new Date(card.card_date).toLocaleDateString("es-AR", {
             year: "numeric",
@@ -97,6 +105,7 @@ const CardPage = () => {
 
       <p>{card.card_description}</p>
 
+      {/* Sección Ubicación */}
       <section className="card-section">
         <h2>{t("ubicacion")}</h2>
         <p>{card.card_ubicacion}</p>
@@ -135,16 +144,19 @@ const CardPage = () => {
         )}
       </section>
 
+      {/* Sección Horarios */}
       <section className="card-section">
         <h2>{t("horarios")}</h2>
         <p>{card.card_horario}</p>
       </section>
 
+      {/* Sección Contactos */}
       <section className="card-section">
         <h2>{t("contactos")}</h2>
         <p>{card.card_contacto}</p>
       </section>
 
+      {/* Sección Información */}
       <section className="card-section">
         <h2>{t("informacion")}</h2>
         <p>{card.card_info}</p>

@@ -17,19 +17,87 @@ import gastronomia_icon from "../assets/icons/services/gastronomia.svg";
 import alojamientos_icon from "../assets/icons/services/alojamientos.svg";
 import info_util_icon from "../assets/icons/services/info_util.svg";
 import { Banner } from "../components/layout/Banner";
+/**
+ * Componente `Index`
+ *
+ * Página principal de la aplicación.
+ * Renderiza:
+ * - Carrusel principal (`ControlledCarousel`)
+ * - Sección de servicios con navegación a categorías
+ * - Banner promocional
+ * - Sección de lugares de interés, gastronomía y alojamientos
+ * - Próximos eventos
+ * - Información adicional con `WeatherCarousel` y plugin de Facebook
+ *
+ * Funcionalidades:
+ * - Carga de datos desde API (`/cards`) para cada categoría
+ * - Navegación a buscador con estado de categoría usando `useNavigate`
+ * - Tracking de interacciones mediante `trackEvent`
+ * - Animación de carga del iframe de Facebook
+ *
+ * Hooks usados:
+ * - `useState` para manejar estados locales (`interes`, `gastronomia`, `alojamientos`, `eventos`, `iframeLoaded`, `isVisible`)
+ * - `useEffect` para:
+ *    - Alternar visibilidad del spinner del iframe
+ *    - Cargar los datos de las distintas categorías al montar el componente
+ * - `useTranslation` para traducciones de textos
+ *
+ * Componentes usados:
+ * - `ContentCard` para mostrar tarjetas de información
+ * - `ControlledCarousel` para el carrusel principal
+ * - `ButtonSuccess` para botones de ver más
+ * - `WeatherCarousel` para mostrar información meteorológica
+ * - `Banner` para mostrar contenido promocional
+ *
+ * @component
+ * @returns {JSX.Element} Página principal con carrusel, servicios, lugares de interés, eventos y más información
+ */
 
 export const Index = () => {
+  /** Estado para almacenar los lugares de interés */
   const [interes, setInteres] = useState([]);
+  /** Estado para almacenar los lugares de gastronomía */
   const [gastronomia, setGastronomia] = useState([]);
+   /** Estado para almacenar los alojamientos */
   const [alojamientos, setAlojamientos] = useState([]);
+  /** Estado para almacenar los próximos eventos */
   const [eventos, setEventos] = useState([]);
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  /** Estado para controlar si el iframe de Facebook se cargó */
   const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  /**
+ * Hook `useNavigate` de React Router
+ *
+ * Permite programáticamente navegar a otras rutas de la aplicación.
+ * Se usa para redirigir al usuario al buscador según la categoría seleccionada.
+ *
+ * Ejemplo de uso:
+ * navigate("/Buscador", { state: { category: "Alojamiento" } });
+ *
+ * @constant {function} navigate - Función para cambiar de ruta programáticamente
+ */
+
   const navigate = useNavigate();
+ /** Estado para alternar visibilidad del spinner del iframe */
 
   const [isVisible, setIsVisible] = useState(true);
+  /**
+ * Hook `useTranslation` de react-i18next
+ *
+ * Proporciona funciones para internacionalización (i18n):
+ * - `t(key)` → Traduce la clave proporcionada según el idioma activo
+ * - `i18n` → Objeto que permite manipular la configuración de idioma
+ *
+ * Ejemplo de uso:
+ * t("guia_servicios") // Devuelve el texto traducido
+ * i18n.language // Devuelve el idioma activo, ej. "es" o "en"
+ *
+ * @constant {function} t - Función para traducir textos según el idioma activo
+ * @constant {object} i18n - Objeto de configuración de i18n (idioma actual, cambio de idioma, etc.)
+ */
+  const { t, i18n } = useTranslation();
 
+/** Alterna la visibilidad del spinner de Facebook cada 800ms */
   useEffect(() => {
     const interval = setInterval(() => {
       setIsVisible((prev) => !prev);
@@ -38,6 +106,7 @@ export const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
+  /** Carga los datos de las distintas categorías al montar el componente */
   useEffect(() => {
     fetch(`${Global.url}cards?category=Interes&limit=6&page=1`)
       .then((res) => res.json())
@@ -86,6 +155,7 @@ export const Index = () => {
 
   return (
     <div className="index" key={i18n.language}>
+      {/* Carrusel principal */}
       <ControlledCarousel
         renderCaption={(caption, link) => (
           <h1 className="text-shadow">
@@ -93,9 +163,11 @@ export const Index = () => {
           </h1>
         )}
       />
+      {/* Sección de servicios */}
       <section className="services">
         <h2>{t("guia_servicios")}</h2>
         <div className="item-services-container">
+          {/* Cada servicio redirige al buscador y registra evento */}
           <div
             className="item-services"
             onClick={() => {
@@ -188,7 +260,11 @@ export const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Sección de banner */}
       <Banner />
+
+      {/* Sección de lugares */}
       <section className="places">
         <h1>{t("descubri_loberia")}</h1>
         <p className="text-left">
@@ -278,6 +354,8 @@ export const Index = () => {
           }}
         />
       </section>
+
+      {/* Próximos eventos */}
       <section className="upcoming-events">
         <h2>{t("proximos_eventos")}</h2>
         <p>{t("eventos_intro")}</p>
@@ -308,10 +386,14 @@ export const Index = () => {
           }}
         />
       </section>
+
+      {/* Más información */}
       <section className="more-info">
         <h2>{t("actualidad")}</h2>
         <div className="container-info">
+          {/* Carrusel del clima */}
           <WeatherCarousel />
+          {/* Plugin de Facebook con spinner mientras carga */}
           <div className="facebook-container">
             {!iframeLoaded && (
               <div className="fb-logo-spinner-container">

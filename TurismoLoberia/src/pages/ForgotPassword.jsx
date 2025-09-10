@@ -6,12 +6,37 @@ import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 import { Global } from "../helpers/Global";
 
+/**
+ * Componente `ForgotPassword`
+ *
+ * Este componente renderiza un formulario para recuperar la contraseña de un usuario.
+ * Funcionalidades:
+ * - Permite ingresar el email registrado
+ * - Envía una solicitud POST a la API (`/user/recuperar-password`)
+ * - Muestra notificaciones de éxito o error usando `react-toastify`
+ * - Maneja estado de carga (`loading`)
+ *
+ * Hooks usados:
+ * - `useState` para manejar el email y el estado de carga
+ * - `useTranslation` para traducción de textos
+ *
+ * Componentes usados:
+ * - `Form` y `Form.Group` de React-Bootstrap
+ * - `ButtonSubmit` para el botón de envío
+ * - `ToastContainer` de `react-toastify` para notificaciones
+ *
+ * @component
+ * @returns {JSX.Element} Formulario de recuperación de contraseña
+ */
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
+  /**
+   * Envía la solicitud de recuperación de contraseña al backend
+   * @param {React.FormEvent<HTMLFormElement>} e - Evento de submit
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

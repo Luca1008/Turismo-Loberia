@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CardPage.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">CardPage.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import "../styles/cardPage.css";
+import { useTranslation } from "react-i18next";
+import { trackEvent } from "../analytics";
+import { Global } from "../helpers/Global";
+
+/**
+ * Componente `CardPage`
+ *
+ * Este componente muestra el detalle de una "card" (contenido turístico o evento)
+ * según el ID pasado por la URL. Incluye:
+ * - Título, imagen de portada y descripción
+ * - Información de ubicación con mapa OpenStreetMap
+ * - Horarios, contactos y detalles adicionales
+ * - Fecha del evento (si aplica)
+ *
+ * Hooks usados:
+ * - `useParams` para obtener el ID de la card desde la URL
+ * - `useState` para almacenar los datos de la card
+ * - `useEffect` para hacer la petición a la API y trackear eventos
+ * - `useTranslation` para traducción de textos
+ *
+ * Funcionalidades:
+ * - Fetch de la card desde la API (`axios.get`)
+ * - Trackeo de eventos de analítica para vistas de página, secciones y mapa
+ * - Renderizado condicional según categoría de card (Evento o general)
+ *
+ * @component
+ * @returns {JSX.Element} Página de detalle de una card
+ */
+const CardPage = () => {
+  const { id } = useParams();
+  const [card, setCard] = useState(null);
+  const { t, i18n } = useTranslation();
+
+  /**
+   * Efecto para cargar la card desde la API y trackear eventos
+   */
+  useEffect(() => {
+    const fetchCard = async () => {
+      try {
+        const res = await axios.get(`${Global.url}cards/${id}`);
+        setCard(res.data);
+
+        trackEvent({
+          category: "Contenido",
+          action: "Vista Card",
+          label: res.data.card_title || `ID: ${id}`,
+        });
+
+        if (res.data.card_category === "Evento" &amp;&amp; res.data.card_date) {
+          trackEvent({
+            category: "Evento",
+            action: "Vista evento con fecha",
+            label: res.data.card_title || `ID: ${id}`,
+          });
+        }
+
+        // Trackeo de secciones
+        ["Ubicación", "Horarios", "Contactos", "Información"].forEach((section) => {
+          trackEvent({ category: "Sección", action: "Vista", label: section });
+        });
+
+        // Trackeo de mapa
+        if (res.data.card_lat &amp;&amp; res.data.card_lon) {
+          trackEvent({
+            category: "Mapa",
+            action: "Renderizado",
+            label: res.data.card_title || `ID: ${id}`,
+          });
+        }
+      } catch (err) {
+        console.error("Error al cargar la card", err);
+      }
+    };
+
+    fetchCard();
+  }, [id]);
+
+  if (!card) return &lt;p>{t("cargando")}&lt;/p>;
+
+  return (
+    &lt;section className="card-detail" key={i18n.language}>
+      &lt;h1>{card.card_title}&lt;/h1>
+      {card.card_img_portada &amp;&amp; (
+        &lt;img
+          src={card.card_img_portada}
+          alt={card.card_title}
+          className="card-img-portada"
+        />
+      )}
+
+      {card.card_category === "Evento" &amp;&amp; card.card_date &amp;&amp; (
+        &lt;div className="event-date-detail" style={{ marginBottom: "1rem", fontWeight: "bold", fontSize: "1.2rem" }}>
+          {t("fecha_evento")}:{" "}
+          {new Date(card.card_date).toLocaleDateString("es-AR", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        &lt;/div>
+      )}
+
+      &lt;p>{card.card_description}&lt;/p>
+
+      {/* Sección Ubicación */}
+      &lt;section className="card-section">
+        &lt;h2>{t("ubicacion")}&lt;/h2>
+        &lt;p>{card.card_ubicacion}&lt;/p>
+
+        {card.card_lat &amp;&amp; card.card_lon &amp;&amp; (
+          &lt;>
+            &lt;iframe
+              title="Mapa OpenStreetMap"
+              src={`https://www.openstreetmap.org/export/embed.html?bbox=${
+                card.card_lon - 0.01
+              }%2C${card.card_lat - 0.01}%2C${card.card_lon + 0.01}%2C${
+                card.card_lat + 0.01
+              }&amp;layer=mapnik&amp;marker=${card.card_lat}%2C${card.card_lon}`}
+              width="100%"
+              height="300"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+            />
+            &lt;br />
+            &lt;a
+              href={`https://www.openstreetmap.org/?mlat=${card.card_lat}&amp;mlon=${card.card_lon}#map=18/${card.card_lat}/${card.card_lon}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                trackEvent({
+                  category: "Mapa",
+                  action: "Click ver en OpenStreetMap",
+                  label: card.card_title || `ID: ${id}`,
+                })
+              }
+            >
+              {t("ver_en_openstreetmap")}
+            &lt;/a>
+          &lt;/>
+        )}
+      &lt;/section>
+
+      {/* Sección Horarios */}
+      &lt;section className="card-section">
+        &lt;h2>{t("horarios")}&lt;/h2>
+        &lt;p>{card.card_horario}&lt;/p>
+      &lt;/section>
+
+      {/* Sección Contactos */}
+      &lt;section className="card-section">
+        &lt;h2>{t("contactos")}&lt;/h2>
+        &lt;p>{card.card_contacto}&lt;/p>
+      &lt;/section>
+
+      {/* Sección Información */}
+      &lt;section className="card-section">
+        &lt;h2>{t("informacion")}&lt;/h2>
+        &lt;p>{card.card_info}&lt;/p>
+      &lt;/section>
+    &lt;/section>
+  );
+};
+
+export default CardPage;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 13:18:33 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Weather.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Weather.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+import React, { useEffect, useState } from "react";
+import Table from "react-bootstrap/Table";
+import {
+  FaCity,
+  FaCloudSun,
+  FaSun,
+  FaTachometerAlt,
+  FaTemperatureHigh,
+  FaTemperatureLow,
+  FaTint,
+  FaWind,
+} from "react-icons/fa";
+import WeatherCard from "../components/cards/WeatherCard";
+import "../styles/weather.css";
+import { useTranslation } from "react-i18next";
+import { trackEvent } from "../analytics";
+import { Global } from "../helpers/Global";
+
+/**
+ * Componente `Clima`.
+ *
+ * Muestra el clima actual y pronósticos extendidos de Lobería, San Manuel y Arenas Verdes.
+ * Incluye tablas con temperatura, humedad, viento, presión y estado del tiempo.
+ *
+ * @component
+ * @example
+ * &lt;Clima />
+ *
+ * @returns {JSX.Element} Sección completa con clima y pronósticos.
+ */
+export const Clima = () => {
+  /** Ciudades a mostrar */
+  const ciudades = [
+    { ciudad: "Lobería" },
+    { ciudad: "San Manuel" },
+    { ciudad: "Arenas Verdes", lat: -38.8083, lon: -58.6036 },
+  ];
+
+  /** Estado con detalles del clima actual */
+  const [detalles, setDetalles] = useState([]);
+  /** Estado de carga del clima actual */
+  const [loading, setLoading] = useState(true);
+  /** Traducciones */
+  const { t, i18n } = useTranslation();
+  /** Pronósticos extendidos por ciudad */
+  const [forecastLoberia, setForecastLoberia] = useState([]);
+  const [forecastSanManuel, setForecastSanManuel] = useState([]);
+  const [forecastArenasVerdes, setForecastArenasVerdes] = useState([]);
+  /** Estado de carga del pronóstico extendido */
+  const [loadingForecast, setLoadingForecast] = useState(true);
+
+  // Registrar vista de página
+  useEffect(() => {
+    trackEvent({
+      category: "Páginas",
+      action: "Vista página",
+      label: "Clima",
+    });
+  }, []);
+
+  // Obtener clima actual de todas las ciudades
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const promesas = ciudades.map(async (c) => {
+          let url =
+            c.lat &amp;&amp; c.lon
+              ? `${Global.url}weather?lat=${c.lat}&amp;lon=${c.lon}`
+              : `${Global.url}weather?city=${c.ciudad}`;
+          try {
+            const res = await axios.get(url);
+            trackEvent({
+              category: "Clima",
+              action: "Clima cargado",
+              label: c.ciudad,
+            });
+            return {
+              ciudad: res.data.ciudad,
+              temp: res.data.temp,
+              sensacion: res.data.temp,
+              humedad: res.data.humedad || 80,
+              viento: res.data.viento !== undefined ? res.data.viento : "-",
+              presion: res.data.presion || 1012,
+              estado: res.data.descripcion,
+            };
+          } catch (error) {
+            console.error(`Error al obtener clima de ${c.ciudad}:`, error);
+            trackEvent({
+              category: "Clima",
+              action: "Error clima",
+              label: c.ciudad,
+            });
+            return {
+              ciudad: c.ciudad,
+              temp: "-",
+              sensacion: "-",
+              humedad: "-",
+              viento: "-",
+              presion: "-",
+              estado: "Sin datos",
+            };
+          }
+        });
+
+        const resultados = await Promise.all(promesas);
+        setDetalles(resultados);
+      } catch (error) {
+        console.error("Error general al obtener datos de clima:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Obtener pronóstico extendido para cada ciudad
+  useEffect(() => {
+    const fetchForecasts = async () => {
+      setLoadingForecast(true);
+      try {
+        const resLob = await axios.get(`${Global.url}forecast?city=Lobería`);
+
+        setForecastLoberia(resLob.data);
+        trackEvent({
+          category: "Pronóstico",
+          action: "Cargado",
+          label: "Lobería",
+        });
+
+        const resSan = await axios.get(`${Global.url}forecast?city=San Manuel`);
+        setForecastSanManuel(resSan.data);
+        trackEvent({
+          category: "Pronóstico",
+          action: "Cargado",
+          label: "San Manuel",
+        });
+
+        const resArenas = await axios.get(
+          `${Global.url}forecast?lat=-38.8083&amp;lon=-58.6036`
+        );
+        setForecastArenasVerdes(resArenas.data);
+        trackEvent({
+          category: "Pronóstico",
+          action: "Cargado",
+          label: "Arenas Verdes",
+        });
+      } catch (error) {
+        console.error("Error al obtener el pronóstico extendido:", error);
+        trackEvent({
+          category: "Pronóstico",
+          action: "Error",
+          label: "Alguno de los destinos",
+        });
+      } finally {
+        setLoadingForecast(false);
+      }
+    };
+
+    fetchForecasts();
+  }, []);
+
+  /** Días y meses para formateo de fecha */
+  const diasLargos = [
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+  ];
+  const meses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
+  /** Fecha actual formateada */
+  const hoy = new Date();
+  /**
+   * Formatea un timestamp Unix a una fecha legible
+   * @param {number} dt - Timestamp en segundos
+   * @returns {string} Fecha formateada
+   */
+  const fechaCompleta = `${diasLargos[hoy.getDay()]} ${hoy.getDate()} de ${
+    meses[hoy.getMonth()]
+  } de ${hoy.getFullYear()}`;
+
+  /** Determina el fondo de la tabla según el estado del clima */
+  let bgGradient = "linear-gradient(to bottom, #ffffff, #ffffff)";
+  const estado = detalles[0]?.estado?.toLowerCase() || "";
+  if (estado.includes("lluvia")) {
+    bgGradient = "linear-gradient(to bottom, #a3c9e2, #ffffff)";
+  } else if (estado.includes("nube")) {
+    bgGradient = "linear-gradient(to bottom, #d6dbe0, #ffffff)";
+  } else if (estado.includes("sol") || estado.includes("despejado")) {
+    bgGradient = "linear-gradient(to bottom, #fff5cc, #ffffff)";
+  } else if (estado.includes("tormenta")) {
+    bgGradient = "linear-gradient(to bottom, #b0bec5, #ffffff)";
+  } else if (estado.includes("niebla")) {
+    bgGradient = "linear-gradient(to bottom, #e0f7fa, #ffffff)";
+  }
+
+  // Función para formatear fecha desde timestamp
+  const formatFecha = (dt) => {
+    const fecha = new Date(dt * 1000);
+    return `${diasLargos[fecha.getDay()]} ${fecha.getDate()} de ${
+      meses[fecha.getMonth()]
+    }`;
+  };
+
+  const TableHeader = () => (
+    &lt;thead>
+      &lt;tr>
+        &lt;th>Fecha&lt;/th>
+        &lt;th>
+          Temp. Máx{" "}
+          &lt;FaTemperatureHigh style={{ marginLeft: 4, color: "#ff9800" }} />
+        &lt;/th>
+        &lt;th>
+          Temp. Mín{" "}
+          &lt;FaTemperatureLow style={{ marginLeft: 4, color: "#2196f3" }} />
+        &lt;/th>
+        &lt;th>
+          Estado &lt;FaCloudSun style={{ marginLeft: 4, color: "#ffc107" }} />
+        &lt;/th>
+      &lt;/tr>
+    &lt;/thead>
+  );
+
+  return (
+    &lt;div>
+      &lt;section className="weather" key={i18n.language}>
+        &lt;h1>{t("consultar_clima")}&lt;/h1>
+        &lt;div className="section-weather">
+          &lt;WeatherCard ciudad="Lobería" />
+          &lt;WeatherCard ciudad="San Manuel" />
+          &lt;WeatherCard ciudad="Arenas Verdes" lat={-38.8083} lon={-58.6036} />
+        &lt;/div>
+        {/* Tabla clima actual */}
+        &lt;div className="table-weather" style={{ background: bgGradient }}>
+          &lt;h3>
+            {t("detalle_hoy")}{" "}
+            &lt;span style={{ fontWeight: 400 }}>{fechaCompleta}&lt;/span>
+          &lt;/h3>
+          {loading ? (
+            &lt;div className="weather-spinner-container">
+              &lt;div className="weather-spinner">&lt;/div>
+            &lt;/div>
+          ) : (
+            &lt;Table striped bordered hover>
+              &lt;thead>
+                &lt;tr>
+                  &lt;th>
+                    {t("ciudad")}{" "}
+                    &lt;FaCity style={{ marginLeft: 4, color: "#4caf50" }} />
+                  &lt;/th>
+                  &lt;th>
+                    {t("temp_actual")}{" "}
+                    &lt;FaTemperatureHigh
+                      style={{ marginLeft: 4, color: "#ff9800" }}
+                    />
+                  &lt;/th>
+                  &lt;th>
+                    {t("sensacion")}{" "}
+                    &lt;FaTemperatureLow
+                      style={{ marginLeft: 4, color: "#2196f3" }}
+                    />
+                  &lt;/th>
+                  &lt;th>
+                    {t("humedad")}{" "}
+                    &lt;FaTint style={{ marginLeft: 4, color: "#00bcd4" }} />
+                  &lt;/th>
+                  &lt;th>
+                    {t("viento")}{" "}
+                    &lt;FaWind style={{ marginLeft: 4, color: "#90a4ae" }} />
+                  &lt;/th>
+                  &lt;th>
+                    {t("presion")}{" "}
+                    &lt;FaTachometerAlt
+                      style={{ marginLeft: 4, color: "#9c27b0" }}
+                    />
+                  &lt;/th>
+                  &lt;th>
+                    {t("estado")}{" "}
+                    &lt;FaCloudSun style={{ marginLeft: 4, color: "#ffc107" }} />
+                  &lt;/th>
+                &lt;/tr>
+              &lt;/thead>
+              &lt;tbody>
+                {detalles.map((d, i) => (
+                  &lt;tr key={i}>
+                    &lt;td>{d.ciudad}&lt;/td>
+                    &lt;td>{d.temp !== "-" ? Math.round(d.temp) + "°" : "-"}&lt;/td>
+                    &lt;td>
+                      {d.sensacion !== "-"
+                        ? Math.round(d.sensacion) + "°"
+                        : "-"}
+                    &lt;/td>
+                    &lt;td>{d.humedad}%&lt;/td>
+                    &lt;td>{d.viento}&lt;/td>
+                    &lt;td>{d.presion} hPa&lt;/td>
+                    &lt;td>{d.estado}&lt;/td>
+                  &lt;/tr>
+                ))}
+              &lt;/tbody>
+            &lt;/Table>
+          )}
+        &lt;/div>
+        {/* Tablas de pronóstico extendido: una por ciudad, cada una con los cinco días como filas */}
+        &lt;h2 className="h2-weather">{t("pronostico_extendido")}&lt;/h2>
+        &lt;div
+          className="section-weather"
+          style={{ flexDirection: "column", gap: "2rem", marginTop: "2rem" }}
+        >
+          {loadingForecast ? (
+            &lt;div className="weather-spinner-container">
+              &lt;div className="weather-spinner">&lt;/div>
+            &lt;/div>
+          ) : (
+            &lt;>
+              {/* Lobería */}
+              &lt;div className="table-weather">
+                &lt;h3>{t("ciudad_loberia")}&lt;/h3>
+                &lt;Table striped bordered hover>
+                  &lt;thead>
+                    &lt;tr>
+                      &lt;th>{t("fecha")}&lt;/th>
+                      &lt;th>
+                        {t("temp_max")}{" "}
+                        &lt;FaTemperatureHigh
+                          style={{ marginLeft: 4, color: "#ff9800" }}
+                        />
+                      &lt;/th>
+                      &lt;th>
+                        {t("temp_min")}{" "}
+                        &lt;FaTemperatureLow
+                          style={{ marginLeft: 4, color: "#2196f3" }}
+                        />
+                      &lt;/th>
+                      &lt;th>
+                        {t("estado")}{" "}
+                        &lt;FaCloudSun
+                          style={{ marginLeft: 4, color: "#ffc107" }}
+                        />
+                      &lt;/th>
+                      &lt;th>
+                        {t("humedad")}{" "}
+                        &lt;FaTint style={{ marginLeft: 4, color: "#00bcd4" }} />
+                      &lt;/th>
+                      &lt;th>
+                        {t("viento")}{" "}
+                        &lt;FaWind style={{ marginLeft: 4, color: "#90a4ae" }} />
+                      &lt;/th>
+                      &lt;th>
+                        {t("presion")}{" "}
+                        &lt;FaTachometerAlt
+                          style={{ marginLeft: 4, color: "#9c27b0" }}
+                        />
+                      &lt;/th>
+                    &lt;/tr>
+                  &lt;/thead>
+                  &lt;tbody>
+                    {forecastLoberia.map((d, i) => (
+                      &lt;tr key={i}>
+                        &lt;td>{formatFecha(d.dt)}&lt;/td>
+                        &lt;td>{Math.round(d.tempMax)}°&lt;/td>
+                        &lt;td>{Math.round(d.tempMin)}°&lt;/td>
+                        &lt;td style={{ textTransform: "capitalize" }}>
+                          {d.descripcion}
+                        &lt;/td>
+                        &lt;td>{d.humedad ? d.humedad + "%" : "-"}&lt;/td>
+                        &lt;td>{d.viento ? d.viento + " km/h" : "-"}&lt;/td>
+                        &lt;td>{d.presion ? d.presion + " hPa" : "-"}&lt;/td>
+                      &lt;/tr>
+                    ))}
+                  &lt;/tbody>
+                &lt;/Table>
+              &lt;/div>
+              {/* San Manuel */}
+              &lt;div className="table-weather">
+                &lt;h3>San Manuel&lt;/h3>
+                &lt;Table striped bordered hover>
+                  &lt;thead>
+                    &lt;tr>
+                      &lt;th>Fecha&lt;/th>
+                      &lt;th>
+                        Temp. Máx{" "}
+                        &lt;FaTemperatureHigh
+                          style={{ marginLeft: 4, color: "#ff9800" }}
+                        />
+                      &lt;/th>
+                      &lt;th>
+                        Temp. Mín{" "}
+                        &lt;FaTemperatureLow
+                          style={{ marginLeft: 4, color: "#2196f3" }}
+                        />
+                      &lt;/th>
+                      &lt;th>
+                        Estado{" "}
+                        &lt;FaCloudSun
+                          style={{ marginLeft: 4, color: "#ffc107" }}
+                        />
+                      &lt;/th>
+                      &lt;th>
+                        Humedad{" "}
+                        &lt;FaTint style={{ marginLeft: 4, color: "#00bcd4" }} />
+                      &lt;/th>
+                      &lt;th>
+                        Viento{" "}
+                        &lt;FaWind style={{ marginLeft: 4, color: "#90a4ae" }} />
+                      &lt;/th>
+                      &lt;th>
+                        Presión{" "}
+                        &lt;FaTachometerAlt
+                          style={{ marginLeft: 4, color: "#9c27b0" }}
+                        />
+                      &lt;/th>
+                    &lt;/tr>
+                  &lt;/thead>
+                  &lt;tbody>
+                    {forecastSanManuel.map((d, i) => (
+                      &lt;tr key={i}>
+                        &lt;td>{formatFecha(d.dt)}&lt;/td>
+                        &lt;td>{Math.round(d.tempMax)}°&lt;/td>
+                        &lt;td>{Math.round(d.tempMin)}°&lt;/td>
+                        &lt;td style={{ textTransform: "capitalize" }}>
+                          {d.descripcion}
+                        &lt;/td>
+                        &lt;td>{d.humedad ? d.humedad + "%" : "-"}&lt;/td>
+                        &lt;td>{d.viento ? d.viento + " km/h" : "-"}&lt;/td>
+                        &lt;td>{d.presion ? d.presion + " hPa" : "-"}&lt;/td>
+                      &lt;/tr>
+                    ))}
+                  &lt;/tbody>
+                &lt;/Table>
+              &lt;/div>
+              {/* Arenas Verdes */}
+              &lt;div className="table-weather">
+                &lt;h3>Arenas Verdes&lt;/h3>
+                &lt;Table striped bordered hover>
+                  &lt;thead>
+                    &lt;tr>
+                      &lt;th>Fecha&lt;/th>
+                      &lt;th>
+                        Temp. Máx{" "}
+                        &lt;FaTemperatureHigh
+                          style={{ marginLeft: 4, color: "#ff9800" }}
+                        />
+                      &lt;/th>
+                      &lt;th>
+                        Temp. Mín{" "}
+                        &lt;FaTemperatureLow
+                          style={{ marginLeft: 4, color: "#2196f3" }}
+                        />
+                      &lt;/th>
+                      &lt;th>
+                        Estado{" "}
+                        &lt;FaCloudSun
+                          style={{ marginLeft: 4, color: "#ffc107" }}
+                        />
+                      &lt;/th>
+                      &lt;th>
+                        Humedad{" "}
+                        &lt;FaTint style={{ marginLeft: 4, color: "#00bcd4" }} />
+                      &lt;/th>
+                      &lt;th>
+                        Viento{" "}
+                        &lt;FaWind style={{ marginLeft: 4, color: "#90a4ae" }} />
+                      &lt;/th>
+                      &lt;th>
+                        Presión{" "}
+                        &lt;FaTachometerAlt
+                          style={{ marginLeft: 4, color: "#9c27b0" }}
+                        />
+                      &lt;/th>
+                    &lt;/tr>
+                  &lt;/thead>
+                  &lt;tbody>
+                    {forecastArenasVerdes.map((d, i) => (
+                      &lt;tr key={i}>
+                        &lt;td>{formatFecha(d.dt)}&lt;/td>
+                        &lt;td>{Math.round(d.tempMax)}°&lt;/td>
+                        &lt;td>{Math.round(d.tempMin)}°&lt;/td>
+                        &lt;td style={{ textTransform: "capitalize" }}>
+                          {d.descripcion}
+                        &lt;/td>
+                        &lt;td>{d.humedad ? d.humedad + "%" : "-"}&lt;/td>
+                        &lt;td>{d.viento ? d.viento + " km/h" : "-"}&lt;/td>
+                        &lt;td>{d.presion ? d.presion + " hPa" : "-"}&lt;/td>
+                      &lt;/tr>
+                    ))}
+                  &lt;/tbody>
+                &lt;/Table>
+              &lt;/div>
+            &lt;/>
+          )}
+        &lt;/div>
+      &lt;/section>
+    &lt;/div>
+  );
+};
+
+export default Clima;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 13:18:33 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

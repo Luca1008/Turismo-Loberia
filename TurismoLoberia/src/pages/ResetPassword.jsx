@@ -4,22 +4,58 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Global } from "../helpers/Global";
 
+/**
+ * Componente `ResetPassword`.
+ *
+ * Permite al usuario restablecer su contraseña usando un token recibido por email.
+ * Valida que la nueva contraseña tenga al menos 8 caracteres y que coincidan los campos.
+ * Muestra notificaciones con `react-toastify` y redirige al login al actualizar correctamente.
+ *
+ * @component
+ * @example
+ * <ResetPassword />
+ *
+ * @returns {JSX.Element} Formulario de restablecimiento de contraseña
+ */
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
 
+  /**
+   * Estado de la contraseña ingresada.
+   * @type {string}
+   */
   const [password, setPassword] = useState("");
+
+  /**
+   * Estado de confirmación de la contraseña.
+   * @type {string}
+   */
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  /**
+   * Estado de carga durante el envío del formulario.
+   * @type {boolean}
+   */
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Maneja el envío del formulario para restablecer la contraseña.
+   * Valida longitud y coincidencia de las contraseñas y realiza la llamada al backend.
+   *
+   * @async
+   * @param {React.FormEvent<HTMLFormElement>} e Evento de envío del formulario
+   */
   const handleReset = async (e) => {
     e.preventDefault();
 
+    // Validación de longitud mínima
     if (!password || password.length < 8) {
       toast.error("La contraseña debe tener al menos 8 caracteres.");
       return;
     }
 
+    // Validación de coincidencia
     if (password !== confirmPassword) {
       toast.error("Las contraseñas no coinciden.");
       return;
@@ -51,14 +87,18 @@ const ResetPassword = () => {
     }
   };
 
+  /**
+   * Renderiza el formulario de restablecimiento de contraseña.
+   */
   return (
     <section className="reset-password">
       <ToastContainer />
       <h2>Restablecer Contraseña</h2>
       <form onSubmit={handleReset} className="form-reset">
         <div className="mb-3">
-          <label>Nueva contraseña</label>
+          <label htmlFor="password">Nueva contraseña</label>
           <input
+            id="password"
             type="password"
             className="form-control"
             value={password}
@@ -69,8 +109,9 @@ const ResetPassword = () => {
         </div>
 
         <div className="mb-3">
-          <label>Confirmar nueva contraseña</label>
+          <label htmlFor="confirmPassword">Confirmar nueva contraseña</label>
           <input
+            id="confirmPassword"
             type="password"
             className="form-control"
             value={confirmPassword}

@@ -8,7 +8,22 @@ import { Global } from "../helpers/Global";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+/**
+ * Componente `Suscribe`.
+ *
+ * Formulario de suscripción para visitantes de Lobería.
+ * Permite ingresar datos personales, preferencias de visita,
+ * cómo se enteró del destino, transporte, compañía, y aceptación de políticas.
+ * Realiza tracking de interacciones y envía los datos al backend.
+ *
+ * @component
+ * @example
+ * <Suscribe />
+ *
+ * @returns {JSX.Element} Formulario de suscripción con validación, mensajes de éxito/error y tracking de eventos.
+ */
 export const Suscribe = () => {
+  /** Estado con los datos del formulario */
   const [formData, setFormData] = useState({
     direction: "",
     think: "",
@@ -21,10 +36,16 @@ export const Suscribe = () => {
     source: [],
     accept: false,
   });
+
+  /** Estado del envío del formulario: "enviando" | "exitoso" | "error" */
   const [status, setStatus] = useState("");
+
+  /** Estado para mostrar mensajes de error o éxito */
   const [errorMessage, setErrorMessage] = useState("");
+
   const { t, i18n } = useTranslation();
 
+  /** Tracking de vista de página */
   useEffect(() => {
     trackEvent("page_view", {
       category: "Páginas",
@@ -32,6 +53,12 @@ export const Suscribe = () => {
     });
   }, []);
 
+  /**
+   * Actualiza los estados del formulario según el input.
+   * Maneja inputs de texto y checkboxes múltiples o simples.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Evento de cambio en el input.
+   */
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -84,6 +111,11 @@ export const Suscribe = () => {
     trackEvent("campo_completado", { category: "Formulario", label: name });
   };
 
+  /**
+   * Envía los datos del formulario al backend y maneja mensajes de éxito/error.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - Evento de submit del formulario.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("enviando");
@@ -132,6 +164,10 @@ export const Suscribe = () => {
     <div>
       <section className="suscribe" key={i18n.language}>
         <h2>{t("suscribete_titulo")}</h2>
+        {/* Formulario de suscripción: dirección, cómo se enteró, pensamientos, proyectos */}
+        {/* Compañía y transporte */}
+        {/* Datos personales: nombre, email, teléfono */}
+        {/* Aceptación de políticas */}
         <Form className="form-direction" onSubmit={handleSubmit}>
           <Form.Group controlId="direction" className="mb-3">
             <Form.Label>

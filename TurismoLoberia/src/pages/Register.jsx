@@ -5,15 +5,40 @@ import "react-toastify/dist/ReactToastify.css";
 import { Global } from "../helpers/Global";
 import { useTranslation } from "react-i18next";
 
+/**
+ * Componente `Register`
+ *
+ * Formulario de registro de usuario.
+ * Permite crear una nueva cuenta enviando:
+ * - Nombre
+ * - Apellido
+ * - Email
+ * - Contraseña
+ *
+ * Reglas:
+ * - La contraseña debe tener al menos 8 caracteres.
+ * - Se muestra feedback mediante Toasts y mensajes de error.
+ *
+ * @component
+ * @returns {JSX.Element} Formulario de registro completo
+ */
 export const Register = () => {
-  const [error, setError] = useState(null);
-  const { t } = useTranslation();
-  const { i18n } = useTranslation();
+  const [error, setError] = useState(null); // Estado para errores de validación o servidor
+  const { t } = useTranslation(); // Traducción de textos
+  const { i18n } = useTranslation(); // Para detectar idioma actual
 
+  /**
+   * Función `registerUser`
+   * Se ejecuta al enviar el formulario.
+   * Valida la contraseña, hace POST a la API y maneja errores.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e Evento de submit
+   */
   const registerUser = async (e) => {
     e.preventDefault();
     setError(null);
 
+    // Construcción del objeto usuario desde los inputs
     let userData = {
       name: e.target.name.value,
       surname: e.target.surname.value,
@@ -21,12 +46,14 @@ export const Register = () => {
       password: e.target.password.value,
     };
 
+    // Validación mínima de contraseña
     if (userData.password.length < 8) {
       toast.error(t("error_contrasena_minima"));
       return;
     }
 
     try {
+      // Llamada a la API
       const request = await fetch(Global.url + "user/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -40,6 +67,7 @@ export const Register = () => {
       const data = await request.json();
       console.log("Respuesta del servidor:", data);
 
+      // Manejo de respuesta exitosa
       if (data.status === "success") {
         if (data.message && data.message.includes("ya existe")) {
           setError(t("error_usuario_existente"));
@@ -47,10 +75,11 @@ export const Register = () => {
         } else {
           toast.success(t("usuario_registrado"));
           setTimeout(() => {
-            window.location.href = "/Admin";
+            window.location.href = "/Admin"; // Redirección tras registro exitoso
           }, 1500);
         }
       } else {
+        // Error devuelto por API
         setError(data.message || "Error al registrar usuario");
         toast.error(data.message || "Error al registrar usuario");
       }
@@ -71,6 +100,7 @@ export const Register = () => {
             onSubmit={registerUser}
             encType="multipart/form-data"
           >
+            {/* Nombre */}
             <Form.Group className="mb-3" controlId="registerName">
               <Form.Label>{t("nombre")}</Form.Label>
               <Form.Control
@@ -81,6 +111,7 @@ export const Register = () => {
               />
             </Form.Group>
 
+            {/* Apellido */}
             <Form.Group className="mb-3" controlId="registerSurname">
               <Form.Label>{t("apellido")}</Form.Label>
               <Form.Control
@@ -91,6 +122,7 @@ export const Register = () => {
               />
             </Form.Group>
 
+            {/* Email */}
             <Form.Group className="mb-3" controlId="registerEmail">
               <Form.Label>{t("correo_electronico")}</Form.Label>
               <Form.Control
@@ -101,6 +133,7 @@ export const Register = () => {
               />
             </Form.Group>
 
+            {/* Contraseña */}
             <Form.Group className="mb-3" controlId="registerPassword">
               <Form.Label>{t("contrasena")}</Form.Label>
               <Form.Control
@@ -110,12 +143,18 @@ export const Register = () => {
                 required
               />
             </Form.Group>
+
+            {/* Botón de registro */}
             <button type="submit" className="btn btn-success">
               {t("registrarse")}
             </button>
           </Form>
+
+          {/* Mensaje de error */}
           {error && <p className="text-danger mt-3">{error}</p>}
         </div>
+
+        {/* Toasts para feedback */}
         <ToastContainer />
       </section>
     </>
