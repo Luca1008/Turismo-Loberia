@@ -1,3 +1,7 @@
+/* =====================================================
+   Sección principal de desuscripción
+   Contenedor y botón de unsubscribe
+===================================================== */
 .unsubscribe button{
     display: flex;
     flex-direction: column;
@@ -31,6 +35,10 @@
     justify-content: center;
     align-items: center;
 }
+
+/* =====================================================
+   Media Queries: Desktop / Tablet
+===================================================== */
 
 @media (min-width: 768px) {
     .unsubscribe{

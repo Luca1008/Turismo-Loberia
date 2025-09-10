@@ -1,4 +1,12 @@
-/*----------------------Card General---------------------*/
+/* =====================================================
+   Estilos de Cards Generales y Especiales
+   =====================================================
+   Estilos aplicados a los componentes tipo card en la aplicación.
+   Incluye: cards generales, cards de eventos y cards editables.
+===================================================== */
+
+/* ------------------ Card General ------------------ */
+/* Contenedor principal de la card */
 .card {
   display: flex;
   flex-direction: column;
@@ -11,34 +19,31 @@
   transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 10px 32px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0, 0, 0, 0.18);
   overflow: hidden;
+  position: relative; 
 }
 
+/* Efecto hover/focus: leve zoom */
 .card:hover,
 .card:focus-within {
   transform: scale(1.03);
 }
 
-.card-body {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  justify-content: left;
-  overflow: hidden;
-}
-
+/* Contenedor del cuerpo de la card */
+.card-body,
 .content-card {
-  flex-grow: 1;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   text-align: left !important;
   justify-content: left !important;
+  overflow: hidden;
+  align-items: flex-start !important;
 }
 
+/* Descripción dentro de la card con truncamiento de líneas */
 .card-description {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 3; /* Máximo 3 líneas */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -46,20 +51,29 @@
   text-align: left;
 }
 
+/* Contenedor de botones dentro de la card */
 .card-buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
+  pointer-events: auto;
 }
 
+/* Imagen de la card */
 .card-img {
   height: 200px;
   object-fit: cover;
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 0 0;
   transition: transform 0.4s ease;
 }
 
+/* Efecto zoom en la imagen al pasar el mouse */
+.card:hover .card-img {
+  transform: scale(1.1);
+}
+
+/* Texto adicional en la card */
 .card-text {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -68,13 +82,9 @@
   text-overflow: ellipsis;
   margin-top: auto;
 }
-/* Efecto Zoom */
-.card:hover .card-img {
-  transform: scale(1.1);
-}
 
+/* Título de la card con truncamiento */
 .card-title-ellipsis {
-  display: block;
   font-weight: bolder;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -84,6 +94,7 @@
   margin-bottom: auto;
 }
 
+/* Nombre de la ciudad con truncamiento horizontal */
 .card-city-ellipsis {
   white-space: nowrap;
   overflow: hidden;
@@ -92,13 +103,14 @@
   max-width: 100%;
 }
 
+/* Icono de ubicación */
 .location-icon {
   color: var(--primary-color);
   margin-top: auto;
 }
 
-/*--------------------Event cards---------------*/
-
+/* ------------------ Event Cards ------------------ */
+/* Fecha en la esquina superior izquierda */
 .event-card__date {
   position: absolute;
   top: 12px;
@@ -111,6 +123,7 @@
   min-width: 3.75rem;
 }
 
+/* Mes y día de la fecha */
 .event-card__month {
   display: block;
   line-height: 1;
@@ -124,6 +137,7 @@
   line-height: 1;
 }
 
+/* Contenedor inferior de la card de evento */
 .event-card__bottom-overlay {
   padding: 1rem;
   flex: 1 1 auto;
@@ -132,13 +146,8 @@
   justify-content: flex-end;
 }
 
-.card-body,
-.content-card {
-  text-align: left !important;
-  align-items: flex-start !important;
-}
-
-/*---------------Edit Cards-------------*/
+/* ------------------ Edit Cards ------------------ */
+/* Wrapper de botones editables (overlay) */
 .card-buttons-wrapper {
   background-color: rgba(128, 128, 128, 0.329);
   padding: 5px;
@@ -148,12 +157,5 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  pointer-events: none;
-
-}
-.card-buttons {
-  pointer-events: auto;
-}
-.card {
-  position: relative;
+  pointer-events: none; /* deshabilitado hasta activar los botones */
 }

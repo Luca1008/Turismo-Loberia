@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>pages/Loberia.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Routing">Routing</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">pages/Loberia.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect } from "react";
+import ButtonSuccess from "../components/common/ButtonSuccess";
+import "../styles/city.css";
+import { FaCar, FaBus } from "react-icons/fa";
+import { useTranslation, Trans } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { trackEvent } from "../analytics";
+import DownloadButton from "../components/ui/DownloadButton";
+
+/**
+ * Componente `Loberia`
+ *
+ * Representa la página de la ciudad de Lobería, incluyendo secciones de:
+ * - Información general
+ * - Cómo llegar
+ * - Alojamiento
+ * - Gastronomía
+ * - Transporte
+ * - Agenda y eventos
+ * - Qué hacer
+ * - Descargas de documentos PDF
+ *
+ * Funcionalidades:
+ * - Traducción de contenido mediante `react-i18next` (`t` y `Trans`)
+ * - Seguimiento de eventos con `trackEvent` para:
+ *   - Vista de página
+ *   - Vista de secciones
+ *   - Clics en botones de acción
+ * - Navegación programática a la página de búsqueda (`/Buscador`) según categoría
+ *
+ * Hooks usados:
+ * - `useEffect`: para trackear vistas iniciales de página y secciones
+ * - `useTranslation`: para traducciones
+ * - `useNavigate`: para navegación programática
+ *
+ * Componentes internos usados:
+ * - `ButtonSuccess`: botones para navegar a buscadores de categorías
+ * - `DownloadButton`: botones para descargar archivos PDF
+ * - `Trans`: para contenido traducido con componentes React embebidos
+ *
+ * @component
+ * @returns {JSX.Element} Página completa de la ciudad de Lobería
+ */
+const Loberia = () => {
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+
+  /**
+   * Datos de descripción de la ciudad traducidos
+   * @type {Object}
+   */
+  const data_descripcion = t("descripcion_ciudad_loberia", {
+    returnObjects: true,
+  });
+
+  /**
+   * Efecto para trackear vista de página y secciones
+   */
+  useEffect(() => {
+    trackEvent({
+      category: "Páginas",
+      action: "Vista página",
+      label: "Lobería",
+    });
+
+    const sections = [
+      "informacion_general",
+      "como_llegar",
+      "alojamientos",
+      "gastronomia",
+      "transporte",
+      "agenda",
+      "que_hacer",
+      "descargas",
+    ];
+
+    sections.forEach((sectionId) => {
+      trackEvent({
+        category: "Sección",
+        action: "Vista sección",
+        label: sectionId,
+      });
+    });
+
+    trackEvent({
+      category: "Scroll",
+      action: "Página completa",
+      label: "Lobería",
+    });
+  }, []);
+
+  return (
+    &lt;div id="informacion_general" className="city" key={i18n.language}>
+      {/* Portada de la ciudad */}
+      &lt;div id="informacion-general" className="portada-loberia">&lt;/div>
+      &lt;h1>{t("ciudad_loberia")}&lt;/h1>
+
+      {/* Sección Información General */}
+      &lt;section className="information-city-loberia">
+        &lt;Trans components={{ p: &lt;p />, span: &lt;span className="font-semibold" /> }}>
+          {data_descripcion.introduccion}
+        &lt;/Trans>
+        &lt;br />
+        &lt;Trans components={{ p: &lt;p />, span: &lt;span className="font-semibold" /> }}>
+          {data_descripcion.calles}
+        &lt;/Trans>
+        &lt;br />
+        &lt;Trans components={{ p: &lt;p />, span: &lt;span className="font-semibold" /> }}>
+          {data_descripcion.parque}
+        &lt;/Trans>
+        &lt;br />
+        &lt;Trans components={{ p: &lt;p />, span: &lt;span className="font-semibold" /> }}>
+          {data_descripcion.camino_sirga}
+        &lt;/Trans>
+        &lt;br />
+        &lt;Trans components={{ p: &lt;p />, span: &lt;span className="font-semibold" /> }}>
+          {data_descripcion.vida_cultural_intro}
+        &lt;/Trans>
+        &lt;br />
+        &lt;Trans components={{ p: &lt;p />, span: &lt;span className="font-semibold" /> }}>
+          {data_descripcion.museo_historia_natural}
+        &lt;/Trans>
+        &lt;br />
+        &lt;Trans components={{ p: &lt;p />, span: &lt;span className="font-semibold" /> }}>
+          {data_descripcion.museo_historico}
+        &lt;/Trans>
+        &lt;br />
+        &lt;Trans components={{ p: &lt;p />, span: &lt;span className="font-semibold" /> }}>
+          {data_descripcion.fiestas_populares}
+        &lt;/Trans>
+        &lt;br />
+        &lt;Trans components={{ p: &lt;p />, span: &lt;span className="font-semibold" /> }}>
+          {data_descripcion.automovilismo}
+        &lt;/Trans>
+        &lt;br />
+        &lt;Trans components={{ p: &lt;p />, span: &lt;span className="font-semibold" /> }}>
+          {data_descripcion.cierre}
+        &lt;/Trans>
+      &lt;/section>
+
+      {/* Sección Cómo Llegar */}
+      &lt;section className="go-to" id="como_llegar">
+        &lt;h2>{t("como_llegar")}&lt;/h2>
+        &lt;div className="photo-como-llegar-loberia">&lt;/div>
+        {/* Transporte en auto */}
+        &lt;div className="car">
+          &lt;p>
+            &lt;strong className="primary">
+              &lt;FaCar />
+              {t("en_auto")}
+            &lt;/strong>{" "}
+          &lt;/p>
+          &lt;div>
+            {Object.values(
+              t("como_llegar_partido_loberia", { returnObjects: true })
+            ).map((item, index) => (
+              &lt;div key={index} className="mb-4">
+                &lt;p>
+                  &lt;strong>{item.descripcion}:&lt;/strong>
+                &lt;/p>
+                {Array.isArray(item.rutas) &amp;&amp; (
+                  &lt;ul className="list-disc pl-5">
+                    {item.rutas.map((ruta, i) => (
+                      &lt;li key={i}>{ruta}&lt;/li>
+                    ))}
+                  &lt;/ul>
+                )}
+              &lt;/div>
+            ))}
+          &lt;/div>
+          &lt;Trans i18nKey="intro_2_como_llegar_partido_loberia" components={{ br: &lt;br /> }} />
+        &lt;/div>
+
+        {/* Transporte en micro */}
+        &lt;div className="bus">
+          &lt;p>
+            &lt;strong className="primary">
+              &lt;FaBus />
+              {t("en_micro")}
+            &lt;/strong>{" "}
+          &lt;/p>
+          &lt;Trans i18nKey="descripcion_en_micro" components={{ br: &lt;br /> }} />
+          &lt;ul>
+            &lt;li>
+              &lt;Trans i18nKey="opcion_desde_buenos_aires" components={{ br: &lt;br /> }} />
+            &lt;/li>
+            &lt;li>
+              &lt;Trans i18nKey="opcion_desde_mar_del_plata" components={{ br: &lt;br /> }} />
+            &lt;/li>
+          &lt;/ul>
+        &lt;/div>
+        &lt;p>{t("cierre_como_llegar_partido_loberia")}&lt;/p>
+      &lt;/section>
+
+      {/* Sección Alojamiento */}
+      &lt;section className="accommodation" id="alojamientos">
+        &lt;h2>{t("alojamientos")}&lt;/h2>
+        &lt;div className="photo-alojamiento-loberia">&lt;/div>
+        &lt;p>{t("alojamientos_loberia_descripcion")}&lt;/p>
+        &lt;ButtonSuccess
+          onClick={() => {
+            trackEvent({ category: "Botón", action: "Clic alojamiento", label: "Lobería" });
+            navigate("/Buscador", { state: { category: "Alojamiento" } });
+          }}
+        />
+      &lt;/section>
+
+      {/* Sección Gastronomía */}
+      &lt;section className="gastronomy" id="gastronomia">
+        &lt;h2>{t("gastronomia")}&lt;/h2>
+        &lt;div className="photo-gastronomia-loberia">&lt;/div>
+        &lt;Trans i18nKey="gastronomia_loberia_descripcion" components={{ p: &lt;p />, span: &lt;span className="font-semibold" /> }} />
+        &lt;ButtonSuccess
+          onClick={() => {
+            trackEvent({ category: "Botón", action: "Clic gastronomía", label: "Lobería" });
+            navigate("/Buscador", { state: { category: "Gastronomía" } });
+          }}
+        />
+      &lt;/section>
+
+      {/* Sección Transporte */}
+      &lt;section className="transport" id="transporte">
+        &lt;h2>{t("transporte")}&lt;/h2>
+        &lt;div className="photo-transporte-partido-loberia">&lt;/div>
+        &lt;Trans i18nKey="transporte_loberia_descripcion" components={{ p: &lt;p />, strong: &lt;strong /> }} />
+      &lt;/section>
+
+      {/* Sección Agenda */}
+      &lt;section className="agenda" id="agenda">
+        &lt;h2>{t("agenda_loberia")}&lt;/h2>
+        &lt;div className="photo-agenda-loberia">&lt;/div>
+        &lt;p>{t("agenda_loberia_descripcion")}&lt;/p>
+        &lt;Trans i18nKey="fiestas_loberia_descripcion" components={{ p: &lt;p />, strong: &lt;strong />, h3: &lt;h3 />, h2: &lt;h2 />, ul: &lt;ul />, li: &lt;li /> }} />
+        &lt;ButtonSuccess
+          onClick={() => {
+            trackEvent({ category: "Botón", action: "Clic eventos", label: "Lobería" });
+            navigate("/Buscador", { state: { category: "Evento" } });
+          }}
+        />
+      &lt;/section>
+
+      {/* Sección Qué Hacer */}
+      &lt;section className="event" id="que_hacer">
+        &lt;h2>{t("que_hacer_loberia")}&lt;/h2>
+        &lt;div className="photo-que-hacer-loberia">&lt;/div>
+        &lt;Trans i18nKey="que_hacer_loberia_descripcion" components={{ p: &lt;p />, h2: &lt;h2 />, h3: &lt;h3 />, span: &lt;span className="font-semibold" /> }} />
+      &lt;/section>
+
+      {/* Sección Descargas */}
+      &lt;section className="download" id="descargas">
+        &lt;h2>{t("descargas")}&lt;/h2>
+        &lt;DownloadButton
+          filePath="/downloads/loberia/camino_de_sirga.pdf"
+          fileName="Camino de Sirga"
+          label="Descargar PDF - Camino de Sirga"
+          className="button"
+        />
+        &lt;DownloadButton
+          filePath="/downloads/loberia/corredor_biologico_camino_de_los_curros.pdf"
+          fileName="Corredor Biológico Camino de los Curros"
+          label="Descargar PDF - Corredor Biológico Camino de los Curros"
+          className="button"
+        />
+      &lt;/section>
+    &lt;/div>
+  );
+};
+
+export default Loberia;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 13:58:13 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

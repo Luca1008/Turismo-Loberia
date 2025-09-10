@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>pages/Admin.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Routing">Routing</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">pages/Admin.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import ButtonSubmit from "../components/common/ButtonSubmit";
+import "../styles/admin.css";
+import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
+import { Global } from "../helpers/Global"
+
+/**
+ * Componente `Admin`
+ *
+ * Este componente renderiza el formulario de login para el panel de administración.
+ * Permite al usuario ingresar su correo electrónico y contraseña, valida los datos,
+ * realiza la solicitud de login al servidor y maneja la autenticación.
+ *
+ * Hooks usados:
+ * - useState: Para manejar estado del formulario, errores y loading.
+ * - useAuth: Para actualizar el estado global de autenticación.
+ * - useNavigate: Para redirigir al panel de administración tras login exitoso.
+ * - useTranslation: Para internacionalización de textos.
+ *
+ * Funciones principales:
+ * - validateForm(): Valida que el email sea correcto y que la contraseña tenga al menos 8 caracteres.
+ * - loginUser(e): Maneja el envío del formulario, realiza la petición POST al servidor y actualiza el estado global de auth.
+ *
+ * Contiene:
+ * - Validación de formulario y manejo de errores.
+ * - Notificaciones de éxito o error usando `react-toastify`.
+ * - Redirección al Panel de Administración tras login exitoso.
+ *
+ * @component
+ * @returns {JSX.Element} Formulario de login para administración
+ */
+const Admin = () => {
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
+
+  /**
+   * Valida los campos del formulario
+   *
+   * @returns {boolean} true si el formulario es válido, false si hay errores
+   */
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Por favor ingrese un email válido";
+    }
+
+    if (!formData.password || formData.password.length &lt; 8) {
+      newErrors.password = "La contraseña debe tener al menos 8 caracteres";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  /**
+   * Maneja el envío del formulario de login
+   *
+   * @param {React.FormEvent&lt;HTMLFormElement>} e Evento del formulario
+   * @returns {Promise&lt;void>}
+   */
+  const loginUser = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (!validateForm()) {
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${Global.url}user/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+
+      if (data.status === "success") {
+        toast.success("Inicio de sesión exitoso");
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setAuth(data.user);
+        setTimeout(() => navigate("/PanelAdmin"), 1500);
+      } else {
+        toast.error(data.message || "Credenciales incorrectas");
+      }
+    } catch (error) {
+      console.error("Error en login:", error);
+      toast.error("Error de conexión con el servidor");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    &lt;section className="login" key={i18n.language}>
+      {/* ToastContainer para notificaciones */}
+      &lt;ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      &lt;h2>Panel de Administración&lt;/h2>
+      &lt;Form onSubmit={loginUser} className="form-login" noValidate>
+        {/* Campo Email */}
+        &lt;Form.Group className="mb-3" controlId="formEmail">
+          &lt;Form.Label>{t("email")}&lt;/Form.Label>
+          &lt;Form.Control
+            type="email"
+            placeholder="name@example.com"
+            required
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+            isInvalid={!!errors.email}
+          />
+          &lt;Form.Control.Feedback type="invalid">
+            {errors.email}
+          &lt;/Form.Control.Feedback>
+        &lt;/Form.Group>
+
+        {/* Campo Password */}
+        &lt;Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+          &lt;Form.Label>{t("password")}&lt;/Form.Label>
+          &lt;Form.Control
+            type="password"
+            placeholder={t("placeholder_password")}
+            required
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            isInvalid={!!errors.password}
+          />
+          &lt;Form.Control.Feedback type="invalid">
+            {errors.password}
+          &lt;/Form.Control.Feedback>
+        &lt;/Form.Group>
+
+        {/* Link de recuperación de contraseña */}
+        &lt;div style={{ marginTop: "1rem" }}>
+          &lt;a href="/recuperar-password">
+            &lt;strong>{t("forgot_password")}&lt;/strong>
+          &lt;/a>
+        &lt;/div>
+
+        {/* Botón de submit */}
+        &lt;ButtonSubmit
+          type="submit"
+          text={loading ? t("loading") : t("login")}
+          className={`btn btn-success ${loading ? "loading" : ""}`}
+          disabled={loading}
+        />
+      &lt;/Form>
+    &lt;/section>
+  );
+};
+
+export default Admin;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 13:58:13 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

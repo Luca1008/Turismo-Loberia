@@ -1,7 +1,24 @@
+/* =====================================================
+   Panel de Administración / Dashboard / Formularios
+   =====================================================
+   Estilos para:
+   - Panel admin
+   - Login y formularios
+   - Side menu / herramientas flotantes
+   - Botones y modales
+   - Formulario de Carousel
+   - Dashboard y tarjetas
+   - Gráficos
+   - Envío de contenido
+   - Responsividad
+===================================================== */
+
+/* ------------------ Panel admin ------------------ */
 .panel-admin {
   text-align: center;
 }
 
+/* ------------------ Login ------------------ */
 section.login h2 {
   margin-top: 5rem;
   margin-bottom: 2rem;
@@ -11,8 +28,9 @@ section.login h2 {
   color: var(--primary-color);
 }
 
+/* ------------------ Navbar usuario ------------------ */
 .nav-user {
-  background-color: rgba(0, 0, 0, 0.058);
+  background-color: rgba(0,0,0,0.058);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -24,6 +42,8 @@ section.login h2 {
 .nav-user li {
   padding-left: 1rem;
 }
+
+/* ------------------ Side Tools Flotantes ------------------ */
 .container-tools {
   display: flex;
   flex-direction: column;
@@ -40,11 +60,7 @@ section.login h2 {
   box-sizing: border-box;
   right: -250px;
   left: auto;
-}
-
-.container-tools,
-.menu-toggle.right {
-  background-color: rgba(128, 128, 128, 0.637);
+  background-color: rgba(128,128,128,0.637);
   backdrop-filter: blur(5px);
 }
 
@@ -86,8 +102,9 @@ section.login h2 {
   right: 0;
 }
 
-/* Botón en el lado derecho */
+/* ------------------ Botón toggle lateral derecho ------------------ */
 .menu-toggle.right {
+  background-color: rgba(128,128,128,0.637);
   position: fixed;
   right: 15px;
   top: 35%;
@@ -102,19 +119,15 @@ section.login h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 5px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.15);
 }
 
 .menu-toggle.right.open {
   right: 219px;
-  box-shadow: 0 8px 5px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 5px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.15);
 }
 
-.side-menu h3,
-.side-menu h4 {
-  color: #ecf0f1;
-  margin-top: 20px;
-}
+/* ------------------ Sidebar admin ------------------ */
 aside.sidebar-admin {
   display: flex;
   flex-direction: column;
@@ -136,12 +149,12 @@ aside.sidebar-admin li svg {
   color: var(--primary-color);
 }
 
+/* ------------------ Formularios ------------------ */
 .register-form {
   width: 100%;
   text-align: left;
-  padding: 10px;
-  border-radius: 0%;
   padding: 20px;
+  border-radius: 0%;
 }
 
 .btn-admin {
@@ -159,14 +172,9 @@ aside.sidebar-admin li svg {
 .buttons-container button {
   font-weight: bold;
   font-size: 1rem;
-  font-family: var(--size-h3-mobile);
   border: none;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25),
-    0 1.5px 4px rgba(60, 180, 60, 0.18);
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25), 0 1.5px 4px rgba(60,180,60,0.18);
+  padding: 0.5rem 1rem;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -176,20 +184,12 @@ aside.sidebar-admin li svg {
   margin-right: 8px;
 }
 
+/* ------------------ Modal ------------------ */
 .modal-header {
   width: 650px;
   display: flex;
   flex-direction: row;
   margin: auto;
-}
-
-.form-edit-card,
-.form-create-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: auto;
-  text-align: left;
 }
 
 .modal-footer {
@@ -203,11 +203,10 @@ aside.sidebar-admin li svg {
 .modal-footer button {
   font-weight: bold;
   border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25),
-    0 1.5px 4px rgba(60, 180, 60, 0.18);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25), 0 1.5px 4px rgba(60,180,60,0.18);
 }
 
-/*-------Form Carousel------*/
+/* ------------------ Form Carousel ------------------ */
 .form-carousel {
   display: flex;
   flex-direction: column;
@@ -227,16 +226,17 @@ aside.sidebar-admin li svg {
   display: flex;
   flex-direction: row;
 }
+
 .form-carousel input[type="checkbox"] {
   margin-right: 0.5rem;
 }
 
-/*----------------------------Dashboard----------------*/
+/* ------------------ Dashboard ------------------ */
 .dashboard-container {
   font-family: var(--font-base);
-  background: rgba(128, 152, 133, 0.159); /* fondo semi-transparente */
-  backdrop-filter: blur(60px); /* desenfoque */
-  -webkit-backdrop-filter: blur(10px); /* para Safari */
+  background: rgba(128,152,133,0.159);
+  backdrop-filter: blur(60px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 20px;
 }
@@ -246,7 +246,7 @@ aside.sidebar-admin li svg {
   margin-bottom: 40px;
 }
 
-/* Tarjetas de resumen */
+/* Resumen tarjetas */
 .summary-cards {
   display: flex;
   gap: 20px;
@@ -259,7 +259,7 @@ aside.sidebar-admin li svg {
   padding: 20px;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   max-height: max-content;
 }
 
@@ -271,7 +271,7 @@ aside.sidebar-admin li svg {
   background: linear-gradient(135deg, #ffd93d, #c78bff);
 }
 
-/* Sección transporte y fuente */
+/* Sección transporte / fuente */
 .section {
   margin-top: 40px;
 }
@@ -281,7 +281,6 @@ aside.sidebar-admin li svg {
   margin-bottom: 20px;
 }
 
-/* Tarjetas individuales de transporte/fuente */
 .option-cards {
   display: flex;
   gap: 15px;
@@ -295,7 +294,7 @@ aside.sidebar-admin li svg {
   padding: 15px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
 .option-card.transport {
@@ -306,20 +305,11 @@ aside.sidebar-admin li svg {
   background: linear-gradient(135deg, #3dff98, #c78bff);
 }
 
-.option-card h4 {
-  margin: 0 0 5px 0;
-}
+.option-card h4 { margin-bottom: 5px; }
+.option-card p { font-size: 1.5rem; margin: 0; }
+.option-card small { display: block; margin-top: 3px; }
 
-.option-card p {
-  font-size: 1.5rem;
-  margin: 0;
-}
-
-.option-card small {
-  display: block;
-  margin-top: 3px;
-}
-
+/* ------------------ Gráficos ------------------ */
 .pie-chart {
   width: 200px !important;
   height: 200px !important;
@@ -330,7 +320,17 @@ aside.sidebar-admin li svg {
   margin: auto !important;
 }
 
-/*--------------Send Content--------------*/
+.bar-chart-transport,
+.bar-chart-source {
+  width: 500px !important;
+  height: 250px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: auto !important;
+}
+
+/* ------------------ Send Content ------------------ */
 .send-content-container {
   display: flex;
   flex-direction: column;
@@ -375,27 +375,8 @@ aside.sidebar-admin li svg {
   opacity: 0.9;
 }
 
-.section div.option-cards {
-  display: flex;
-  flex-direction: column;
-}
-
+/* ------------------ Media Queries ------------------ */
 @media (min-width: 768px) {
-  .form-carousel {
-    max-width: 600px;
-  }
-  .section div.option-cards {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .bar-chart-transport,
-  .bar-chart-source {
-    width: 500px !important;
-    height: 250px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: auto !important;
-  }
+  .form-carousel { max-width: 600px; }
+  .section div.option-cards { flex-direction: row; }
 }

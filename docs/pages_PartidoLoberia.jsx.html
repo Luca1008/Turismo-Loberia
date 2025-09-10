@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>pages/PartidoLoberia.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Routing">Routing</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">pages/PartidoLoberia.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect } from "react";
+import ButtonSuccess from "../components/common/ButtonSuccess";
+import "../styles/city.css";
+import { FaCar, FaBus, FaTrain } from "react-icons/fa";
+import { useTranslation, Trans } from "react-i18next";
+import { trackEvent } from "../analytics";
+import DownloadButton from "../components/ui/DownloadButton";
+
+/**
+ * Componente `PartidoLoberia`
+ *
+ * Representa la página del Partido de Lobería.
+ * Muestra información sobre:
+ * - Introducción general y características
+ * - Historia y cultura
+ * - Naturaleza y paisajes
+ * - Producciones y economía local
+ * - Cómo llegar (auto, bus)
+ * - Descargas de documentos relacionados
+ *
+ * También realiza el tracking de:
+ * - Vista de la página
+ * - Vistas de secciones
+ * - Scroll completo de la página
+ *
+ * Hooks utilizados:
+ * - `useTranslation` para internacionalización
+ * - `useEffect` para tracking al montar el componente
+ *
+ * Componentes internos:
+ * - `DownloadButton` para permitir descargas de PDF
+ *
+ * @component
+ * @returns {JSX.Element} Página completa del Partido de Lobería
+ */
+const PartidoLoberia = () => {
+  const { t, i18n } = useTranslation();
+
+  // Tracking de página y secciones al montar el componente
+  useEffect(() => {
+    trackEvent({
+      category: "Páginas",
+      action: "Vista página",
+      label: "Partido Lobería",
+    });
+
+    const sections = [
+      "informacion_general",
+      "como_llegar",
+      "alojamientos",
+      "gastronomia",
+      "transporte",
+      "agenda",
+      "que_hacer",
+      "descargas",
+    ];
+
+    sections.forEach((sectionId) => {
+      trackEvent({
+        category: "Sección",
+        action: "Vista sección",
+        label: sectionId,
+      });
+    });
+
+    trackEvent({
+      category: "Scroll",
+      action: "Página completa",
+      label: "Partido Lobería",
+    });
+  }, []);
+
+  // Datos de introducción obtenidos desde i18n
+  const data_intro = t("intro_partido_loberia", { returnObjects: true });
+
+  return (
+    &lt;div className="city" key={i18n.language}>
+      {/* Sección de información general */}
+      &lt;div id="informacion_general" className="portada-city">&lt;/div>
+      &lt;h1>{t("partido_loberia")}&lt;/h1>
+      &lt;section className="information">
+        {/* Introducción */}
+        &lt;Trans components={{ p: &lt;p /> }}>{data_intro.presentacion}&lt;/Trans>
+        &lt;br />
+        &lt;br />
+        {/* Características principales */}
+        &lt;Trans
+          components={{
+            p: &lt;p />,
+            strong: &lt;strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.caracteristicas}
+        &lt;/Trans>
+        &lt;br />
+        &lt;br />
+
+        {/* Historia y cultura */}
+        &lt;h2 id="historia">{t("historia")}&lt;/h2>
+        &lt;div className="photo-historia-partido-loberia">&lt;/div>
+        &lt;Trans components={{ h3: &lt;h3 className="h3-city" /> }}>
+          {data_intro.cultura.titulo}
+        &lt;/Trans>
+        &lt;Trans
+          components={{
+            p: &lt;p />,
+            strong: &lt;strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.cultura.identidad}
+        &lt;/Trans>
+        &lt;Trans
+          components={{
+            p: &lt;p />,
+            strong: &lt;strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.cultura.historia}
+        &lt;/Trans>
+        &lt;Trans
+          components={{
+            p: &lt;p />,
+            strong: &lt;strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.cultura.talento}
+        &lt;/Trans>
+        &lt;br />
+
+        {/* Naturaleza y paisajes */}
+        &lt;h2 id="naturaleza">{t("naturaleza")}&lt;/h2>
+        &lt;div className="photo-naturaleza-partido-loberia">&lt;/div>
+        &lt;Trans components={{ h3: &lt;h3 className="h3-city" /> }}>
+          {data_intro.paisaje.titulo}
+        &lt;/Trans>
+        &lt;br />
+        &lt;Trans
+          components={{
+            p: &lt;p />,
+            strong: &lt;strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.paisaje.mar}
+        &lt;/Trans>
+        &lt;Trans
+          components={{
+            p: &lt;p />,
+            strong: &lt;strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.paisaje.sierras}
+        &lt;/Trans>
+        &lt;Trans
+          components={{
+            p: &lt;p />,
+            strong: &lt;strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.paisaje.campo}
+        &lt;/Trans>
+        &lt;Trans components={{ p: &lt;p /> }}>{data_intro.paisaje.cierre}&lt;/Trans>
+        &lt;br />
+        &lt;br />
+
+        {/* Producciones y economía */}
+        &lt;h2 id="producciones">{t("producciones")}&lt;/h2>
+        &lt;div className="photo-produccion-partido-loberia">&lt;/div>
+        &lt;Trans components={{ p: &lt;p /> }}>{data_intro.economia.intro}&lt;/Trans>
+        &lt;Trans
+          components={{
+            p: &lt;p />,
+            strong: &lt;strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.economia.produccion}
+        &lt;/Trans>
+        &lt;Trans
+          components={{
+            p: &lt;p />,
+            strong: &lt;strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.economia.productos}
+        &lt;/Trans>
+        &lt;br />
+        &lt;Trans
+          components={{
+            p: &lt;p />,
+            strong: &lt;strong className="font-semibold mt-2" />,
+          }}
+        >
+          {data_intro.cierre}
+        &lt;/Trans>
+      &lt;/section>
+
+      {/* Sección Cómo llegar */}
+      &lt;section className="go-to" id="como_llegar">
+        &lt;h2 id="como_llegar">{t("como_llegar")}&lt;/h2>
+        &lt;div className="photo-como-llegar-partido-loberia">&lt;/div>
+
+        {/* Llegar en auto */}
+        &lt;div className="car">
+          &lt;p>
+            &lt;strong>
+              &lt;FaCar />
+              {t("en_auto")}
+            &lt;/strong>{" "}
+          &lt;/p>
+          &lt;div>
+            {Object.values(
+              t("como_llegar_partido_loberia", { returnObjects: true })
+            ).map((item, index) => (
+              &lt;div key={index} className="mb-4">
+                &lt;p>
+                  &lt;strong>{item.descripcion}:&lt;/strong>
+                &lt;/p>
+                {Array.isArray(item.rutas) &amp;&amp; (
+                  &lt;ul className="list-disc pl-5">
+                    {item.rutas.map((ruta, i) => (
+                      &lt;li key={i}>{ruta}&lt;/li>
+                    ))}
+                  &lt;/ul>
+                )}
+              &lt;/div>
+            ))}
+          &lt;/div>
+          &lt;Trans
+            i18nKey="intro_2_como_llegar_partido_loberia"
+            components={{ br: &lt;br /> }}
+          />
+        &lt;/div>
+
+        {/* Llegar en micro */}
+        &lt;div className="bus">
+          &lt;p>
+            &lt;strong>
+              &lt;FaBus />
+              {t("en_micro")}
+            &lt;/strong>{" "}
+          &lt;/p>
+          &lt;Trans i18nKey="descripcion_en_micro" components={{ br: &lt;br /> }} />
+          &lt;ul>
+            &lt;li>
+              &lt;Trans i18nKey="opcion_desde_buenos_aires" components={{ br: &lt;br /> }} />
+            &lt;/li>
+            &lt;li>
+              &lt;Trans i18nKey="opcion_desde_mar_del_plata" components={{ br: &lt;br /> }} />
+            &lt;/li>
+          &lt;/ul>
+        &lt;/div>
+        &lt;p>{t("cierre_como_llegar_partido_loberia")}&lt;/p>
+      &lt;/section>
+
+      {/* Sección de descargas */}
+      &lt;section className="download" id="descargas">
+        &lt;h2>{t("descargas")}&lt;/h2>
+        &lt;DownloadButton
+          filePath="/downloads/partido_loberia/camino_de_sirga.pdf"
+          fileName="Camino de Sirga"
+          label="Descargar PDF Camino de Sirga"
+          className="button"
+        />
+      &lt;/section>
+    &lt;/div>
+  );
+};
+
+export default PartidoLoberia;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 13:58:13 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

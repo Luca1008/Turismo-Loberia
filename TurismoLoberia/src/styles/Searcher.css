@@ -1,7 +1,20 @@
-/* Main container */
+/* =====================================================
+   Página de Búsqueda / Search Page
+   =====================================================
+   Estilos para:
+   - Contenedor principal
+   - Título
+   - Barra de búsqueda y botón
+   - Sugerencias dropdown
+   - Filtros de búsqueda
+   - Grid de resultados
+   - Paginación
+   - Responsividad
+===================================================== */
+
+/* ------------------ Contenedor principal ------------------ */
 .search-main {
-  padding: 2rem 1rem;
-  padding-top: 7rem;
+  padding: 7rem 1rem 2rem 1rem; /* top + otros */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,14 +22,14 @@
   min-height: 80vh;
 }
 
-/* Título */
+/* ------------------ Título ------------------ */
 .search-title {
   font-size: 2rem;
   font-weight: 700;
   text-align: center;
 }
 
-/* Barra de búsqueda destacada */
+/* ------------------ Barra de búsqueda ------------------ */
 .search-input-group {
   position: relative;
   display: flex;
@@ -27,11 +40,10 @@
   border-radius: 12px;
   overflow: hidden;
   background-color: white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .search-input-group input {
-  position: relative;
   flex: 1;
   padding: 0.75rem 1rem;
   border: none;
@@ -49,6 +61,11 @@
   transition: background-color 0.2s ease;
 }
 
+.search-input-group button:hover {
+  background-color: var(--primary-white-2);
+}
+
+/* ------------------ Sugerencias ------------------ */
 .suggestions-dropdown {
   display: flex;
   flex-direction: column;
@@ -61,7 +78,7 @@
   background-color: rgb(209, 228, 208);
   border: 1px solid var(--white2);
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   border-top: none;
   max-height: 200px;
   overflow-y: auto;
@@ -83,26 +100,22 @@
   cursor: pointer;
 }
 
-.search-bar{
+/* ------------------ Contenedor búsqueda ------------------ */
+.search-bar {
   width: 100%;
   align-items: center;
   display: flex;
   flex-direction: column;
 }
 
-button.btn-reset{
+button.btn-reset {
   display: flex;
   flex-direction: row;
   font-size: 0.8rem;
   font-weight: bold;
-
 }
 
-.search-input-group button:hover {
-  background-color: var(--primary-white-2);
-}
-
-/* Filtros: vertical en mobile, horizontal en desktop */
+/* ------------------ Filtros ------------------ */
 .search-filters {
   display: flex;
   flex-direction: column;
@@ -118,49 +131,6 @@ button.btn-reset{
   border: 1px solid var(--white2);
 }
 
-/* Grid de resultados centrado */
-.results-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  justify-items: center;
-  width: 100%;
-  max-width: 1200px;
-}
-
-/* Paginación centrada */
-.pagination-container {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-}
-
-/* Contenedor del pagination */
-.pagination-container {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  overflow-x: auto; /* Evita desbordamiento */
-}
-
-.pagination {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  color: var(--primary-color);
-}
-
-.pagination .page-link, .pagination .page-item {
-  color: var(--primary-color) !important;
-}
-
-.pagination .page-item.active .page-link {
-  background-color: var(--primary-color) !important;
-  color: var(--white) !important;
-  border-color: var(--primary-color) !important;
-}
-
 .select-label-primary {
   color: var(--primary-color);
   font-weight: bold;
@@ -171,7 +141,44 @@ button.btn-reset{
   font-weight: bold;
 }
 
+/* ------------------ Grid de resultados ------------------ */
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  justify-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
 
+/* ------------------ Paginación ------------------ */
+.pagination-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow-x: auto; /* evita desbordamiento */
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  color: var(--primary-color);
+}
+
+.pagination .page-link,
+.pagination .page-item {
+  color: var(--primary-color) !important;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--primary-color) !important;
+  color: var(--white) !important;
+  border-color: var(--primary-color) !important;
+}
+
+/* ------------------ Media Queries ------------------ */
 @media (min-width: 768px) {
   .search-filters {
     flex-direction: row;
@@ -181,17 +188,17 @@ button.btn-reset{
   .results-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
   .pagination .page-link {
     padding: 0.3rem 0.6rem;
     font-size: 0.8rem;
   }
 
   .pagination .page-item {
-    flex-shrink: 0; /* Evita que se aplasten demasiado */
+    flex-shrink: 0;
   }
 
   .pagination-container {
     padding: 0 1rem;
   }
-
 }

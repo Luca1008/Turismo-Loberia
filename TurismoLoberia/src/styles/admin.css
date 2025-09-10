@@ -1,34 +1,55 @@
+/* =====================================================
+   Admin Login & Register Styles
+   =====================================================
+   Estilos aplicados a las secciones de login, register,
+   forgot-password y reset-password del panel de administración.
+   Incluye contenedores, formularios y botones.
+===================================================== */
 
-/*----------------------Admin Login, Register------------------*/
-
-section.login, section.login h2, section.forgot-password, section.form-forgot h2, section.reset-password, .reset-password h2{
+/* ------------------ Márgenes y títulos ------------------ */
+/* Se asegura que los títulos de login, register y reset
+   no tengan margen superior */
+section.login,
+section.login h2,
+section.forgot-password,
+section.form-forgot h2,
+section.reset-password,
+.reset-password h2 {
     margin-top: 0%;
 }
 
-
-.form-login, .register-form{
+/* ------------------ Formularios ------------------ */
+/* Formularios de login y registro: centrados, columna */
+.form-login,
+.register-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-section.login, section.register{
+/* Secciones de login y register: centrado completo */
+section.login,
+section.register {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.form-login{
+/* Ancho específico del formulario de login */
+.form-login {
     width: 360px;
 }
 
-.form-label{
+/* Etiquetas de formulario */
+.form-label {
     width: 280px;
 }
 
-.form-forgot, .form-reset{
+/* Formularios de recuperación y reset password: centrado y ancho fijo */
+.form-forgot,
+.form-reset {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -37,7 +58,9 @@ section.login, section.register{
     width: 360px;
 }
 
-.form-forgot .btn-primary:hover{
+/* ------------------ Botones ------------------ */
+/* Hover del botón principal en formulario de recuperación */
+.form-forgot .btn-primary:hover {
     background-color: var(--primary-color-dark-1);
     border: 1px solid var(--primary-color-dark-1);
     box-shadow: none;

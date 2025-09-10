@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>pages/Index.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Routing">Routing</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">pages/Index.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
+import ContentCard from "../components/cards/ContentCard";
+import { ControlledCarousel } from "../components/layout/ControlledCarousel";
+import { Global } from "../helpers/Global";
+import { useNavigate } from "react-router-dom";
+import ButtonSuccess from "../components/common/ButtonSuccess";
+import WeatherCarousel from "../components/layout/WeatherCarousel";
+import { useTranslation } from "react-i18next";
+import "../styles/button.css";
+import { trackEvent } from "../analytics";
+import { Trans } from "react-i18next";
+import "../styles/index.css";
+import artesanos_icon from "../assets/icons/services/artesanos.svg";
+import lugares_interes_icon from "../assets/icons/services/interes.svg";
+import serv_publicos_icon from "../assets/icons/services/serv_publicos.svg";
+import gastronomia_icon from "../assets/icons/services/gastronomia.svg";
+import alojamientos_icon from "../assets/icons/services/alojamientos.svg";
+import info_util_icon from "../assets/icons/services/info_util.svg";
+import { Banner } from "../components/layout/Banner";
+/**
+ * Componente `Index`
+ *
+ * Página principal de la aplicación.
+ * Renderiza:
+ * - Carrusel principal (`ControlledCarousel`)
+ * - Sección de servicios con navegación a categorías
+ * - Banner promocional
+ * - Sección de lugares de interés, gastronomía y alojamientos
+ * - Próximos eventos
+ * - Información adicional con `WeatherCarousel` y plugin de Facebook
+ *
+ * Funcionalidades:
+ * - Carga de datos desde API (`/cards`) para cada categoría
+ * - Navegación a buscador con estado de categoría usando `useNavigate`
+ * - Tracking de interacciones mediante `trackEvent`
+ * - Animación de carga del iframe de Facebook
+ *
+ * Hooks usados:
+ * - `useState` para manejar estados locales (`interes`, `gastronomia`, `alojamientos`, `eventos`, `iframeLoaded`, `isVisible`)
+ * - `useEffect` para:
+ *    - Alternar visibilidad del spinner del iframe
+ *    - Cargar los datos de las distintas categorías al montar el componente
+ * - `useTranslation` para traducciones de textos
+ *
+ * Componentes usados:
+ * - `ContentCard` para mostrar tarjetas de información
+ * - `ControlledCarousel` para el carrusel principal
+ * - `ButtonSuccess` para botones de ver más
+ * - `WeatherCarousel` para mostrar información meteorológica
+ * - `Banner` para mostrar contenido promocional
+ *
+ * @component
+ * @returns {JSX.Element} Página principal con carrusel, servicios, lugares de interés, eventos y más información
+ */
+
+export const Index = () => {
+  /** Estado para almacenar los lugares de interés */
+  const [interes, setInteres] = useState([]);
+  /** Estado para almacenar los lugares de gastronomía */
+  const [gastronomia, setGastronomia] = useState([]);
+   /** Estado para almacenar los alojamientos */
+  const [alojamientos, setAlojamientos] = useState([]);
+  /** Estado para almacenar los próximos eventos */
+  const [eventos, setEventos] = useState([]);
+  /** Estado para controlar si el iframe de Facebook se cargó */
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  /**
+ * Hook `useNavigate` de React Router
+ *
+ * Permite programáticamente navegar a otras rutas de la aplicación.
+ * Se usa para redirigir al usuario al buscador según la categoría seleccionada.
+ *
+ * Ejemplo de uso:
+ * navigate("/Buscador", { state: { category: "Alojamiento" } });
+ *
+ * @constant {function} navigate - Función para cambiar de ruta programáticamente
+ */
+
+  const navigate = useNavigate();
+ /** Estado para alternar visibilidad del spinner del iframe */
+
+  const [isVisible, setIsVisible] = useState(true);
+  /**
+ * Hook `useTranslation` de react-i18next
+ *
+ * Proporciona funciones para internacionalización (i18n):
+ * - `t(key)` → Traduce la clave proporcionada según el idioma activo
+ * - `i18n` → Objeto que permite manipular la configuración de idioma
+ *
+ * Ejemplo de uso:
+ * t("guia_servicios") // Devuelve el texto traducido
+ * i18n.language // Devuelve el idioma activo, ej. "es" o "en"
+ *
+ * @constant {function} t - Función para traducir textos según el idioma activo
+ * @constant {object} i18n - Objeto de configuración de i18n (idioma actual, cambio de idioma, etc.)
+ */
+  const { t, i18n } = useTranslation();
+
+/** Alterna la visibilidad del spinner de Facebook cada 800ms */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsVisible((prev) => !prev);
+    }, 800);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  /** Carga los datos de las distintas categorías al montar el componente */
+  useEffect(() => {
+    fetch(`${Global.url}cards?category=Interes&amp;limit=6&amp;page=1`)
+      .then((res) => res.json())
+      .then((data) => {
+        const cards = data.cards || data;
+        setInteres(cards.slice(0, 3));
+      })
+      .catch((err) => {
+        console.error("Error al cargar lugares de interés:", err);
+        setInteres([]);
+      });
+
+    fetch(`${Global.url}cards?category=Gastronomia&amp;limit=3&amp;page=1`)
+      .then((res) => res.json())
+      .then((data) => {
+        const cards = data.cards || data;
+        setGastronomia(cards.slice(0, 3));
+      })
+      .catch((err) => {
+        console.error("Error al cargar Gastronmía:", err);
+        setGastronomia([]);
+      });
+
+    fetch(`${Global.url}cards?category=Alojamiento&amp;limit=3&amp;page=1`)
+      .then((res) => res.json())
+      .then((data) => {
+        const cards = data.cards || data;
+        setAlojamientos(cards.slice(0, 3));
+      })
+      .catch((err) => {
+        console.error("Error al cargar alojamientos:", err);
+        setAlojamientos([]);
+      });
+
+    fetch(`${Global.url}cards?category=Evento&amp;limit=3&amp;page=1`)
+      .then((res) => res.json())
+      .then((data) => {
+        const cards = data.cards || data;
+        setEventos(cards.slice(0, 3));
+      })
+      .catch((err) => {
+        console.error("Error al cargar eventos:", err);
+        setEventos([]);
+      });
+  }, []);
+
+  return (
+    &lt;div className="index" key={i18n.language}>
+      {/* Carrusel principal */}
+      &lt;ControlledCarousel
+        renderCaption={(caption, link) => (
+          &lt;h1 className="text-shadow">
+            &lt;a href={link}>{caption}&lt;/a>
+          &lt;/h1>
+        )}
+      />
+      {/* Sección de servicios */}
+      &lt;section className="services">
+        &lt;h2>{t("guia_servicios")}&lt;/h2>
+        &lt;div className="item-services-container">
+          {/* Cada servicio redirige al buscador y registra evento */}
+          &lt;div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Alojamiento",
+              });
+              navigate("/Buscador", { state: { category: "Alojamiento" } });
+            }}
+          >
+            &lt;img src={alojamientos_icon} alt="alojamientos" />
+            &lt;p>{t("alojamientos")}&lt;/p>
+          &lt;/div>
+          &lt;div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Gastronomía",
+              });
+              navigate("/Buscador", { state: { category: "Gastronomia" } });
+            }}
+          >
+            &lt;img src={gastronomia_icon} alt="gastronomia" />
+            &lt;p>{t("gastronomia")}&lt;/p>
+          &lt;/div>
+          &lt;div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Lugares de Interés",
+              });
+              navigate("/Buscador", {
+                state: { category: "Interes" },
+              });
+            }}
+          >
+            &lt;img src={lugares_interes_icon} alt="lugares de interes" />
+            &lt;p>{t("lugares_interes")}&lt;/p>
+          &lt;/div>
+          &lt;div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Artesanos",
+              });
+              navigate("/Buscador", { state: { category: "Artesanos" } });
+            }}
+          >
+            &lt;img src={artesanos_icon} alt="artesanos" />
+            &lt;p>{t("artesanos")}&lt;/p>
+          &lt;/div>
+          &lt;div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Servicios Públicos",
+              });
+              navigate("/Buscador", {
+                state: { category: "ServPublicos" },
+              });
+            }}
+          >
+            &lt;img src={serv_publicos_icon} alt="servicios publicos" />
+            &lt;p>{t("servicios_publicos")}&lt;/p>
+          &lt;/div>
+          &lt;div
+            className="item-services"
+            onClick={() => {
+              trackEvent({
+                category: "Servicios",
+                action: "Clic en servicio",
+                label: "Información Útil",
+              });
+              navigate("/Buscador", {
+                state: { category: "InfoUtil" },
+              });
+            }}
+          >
+            &lt;img src={info_util_icon} alt="info util" />
+            &lt;p>{t("info_util")}&lt;/p>
+          &lt;/div>
+        &lt;/div>
+      &lt;/section>
+
+      {/* Sección de banner */}
+      &lt;Banner />
+
+      {/* Sección de lugares */}
+      &lt;section className="places">
+        &lt;h1>{t("descubri_loberia")}&lt;/h1>
+        &lt;p className="text-left">
+          &lt;Trans
+            i18nKey="intro_loberia_index"
+            components={{
+              strong: &lt;strong />,
+              br: &lt;br />,
+            }}
+          />
+        &lt;/p>
+        &lt;div className="places-items">
+          {interes.map((card) => (
+            &lt;ContentCard
+              key={card.id}
+              id={card.id}
+              title={card.card_title}
+              description={card.card_description}
+              city={card.card_city}
+              img={card.card_img_portada}
+              category={card.card_category}
+            />
+          ))}
+        &lt;/div>
+        &lt;ButtonSuccess
+          onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Ver más",
+              label: "Interes",
+            });
+            navigate("/Buscador", {
+              state: { category: "Interes" },
+            });
+          }}
+        />
+        &lt;h2>{t("gastronomia")}&lt;/h2>
+        &lt;div className="places-items">
+          {gastronomia.map((card) => (
+            &lt;ContentCard
+              key={card.id}
+              id={card.id}
+              title={card.card_title}
+              description={card.card_description}
+              city={card.card_city}
+              img={card.card_img_portada}
+              category={card.card_category}
+            />
+          ))}
+        &lt;/div>
+        &lt;ButtonSuccess
+          onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Ver más",
+              label: "Gastronomia",
+            });
+            navigate("/Buscador", {
+              state: { category: "Gastronomia" },
+            });
+          }}
+        />
+        &lt;h2>{t("alojamientos")}&lt;/h2>
+        &lt;div className="places-items">
+          {alojamientos.map((card) => (
+            &lt;ContentCard
+              key={card.id}
+              id={card.id}
+              title={card.card_title}
+              description={card.card_description}
+              city={card.card_city}
+              img={card.card_img_portada}
+              category={card.card_category}
+            />
+          ))}
+        &lt;/div>
+        &lt;ButtonSuccess
+          onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Ver más",
+              label: " Alojamiento",
+            });
+            navigate("/Buscador", {
+              state: { category: "Alojamiento" },
+            });
+          }}
+        />
+      &lt;/section>
+
+      {/* Próximos eventos */}
+      &lt;section className="upcoming-events">
+        &lt;h2>{t("proximos_eventos")}&lt;/h2>
+        &lt;p>{t("eventos_intro")}&lt;/p>
+        &lt;div className="events">
+          {eventos.map((card) => (
+            &lt;ContentCard
+              key={card.id}
+              id={card.id}
+              title={card.card_title}
+              description={card.card_description}
+              city={card.card_city}
+              img={card.card_img_portada}
+              category={card.card_category}
+              card_date={card.card_date}
+            />
+          ))}
+        &lt;/div>
+        &lt;ButtonSuccess
+          onClick={() => {
+            trackEvent({
+              category: "Botón",
+              action: "Ver más",
+              label: "Eventos",
+            });
+            navigate("/Buscador", {
+              state: { category: "Evento" },
+            });
+          }}
+        />
+      &lt;/section>
+
+      {/* Más información */}
+      &lt;section className="more-info">
+        &lt;h2>{t("actualidad")}&lt;/h2>
+        &lt;div className="container-info">
+          {/* Carrusel del clima */}
+          &lt;WeatherCarousel />
+          {/* Plugin de Facebook con spinner mientras carga */}
+          &lt;div className="facebook-container">
+            {!iframeLoaded &amp;&amp; (
+              &lt;div className="fb-logo-spinner-container">
+                &lt;div
+                  className={`fb-logo-spinner ${
+                    isVisible ? "visible" : "hidden"
+                  }`}
+                >
+                  &lt;svg
+                    viewBox="0 0 36 36"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    &lt;path
+                      d="M34 18c0-8.837-7.163-16-16-16S2 9.163 2 18c0 7.99 5.847 14.604 13.5 15.804V23.5h-4V18h4v-3.5c0-4.142 3.358-7.5 7.5-7.5h3v5h-3c-1.381 0-2.5 1.119-2.5 2.5V18h4.5l-1 5.5H22v10.804C29.153 32.604 34 25.99 34 18z"
+                      fill="#1877F2"
+                    />
+                    &lt;path
+                      d="M24.5 23.5L25.5 18H22v-3.5c0-1.381 1.119-2.5 2.5-2.5h3v-5h-3c-4.142 0-7.5 3.358-7.5 7.5V18h-4v5.5h4v10.804a16.096 16.096 0 005 0V23.5h3.5z"
+                      fill="#FFFFFF"
+                    />
+                  &lt;/svg>
+                &lt;/div>
+                &lt;p className="fb-loading-text">
+                  &lt;strong>Cargando contenido...&lt;/strong>
+                &lt;/p>
+              &lt;/div>
+            )}
+            &lt;iframe
+              className="facebook-iframe"
+              title="Plugin de página de Facebook de Turismo Lobería"
+              src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Floberiaturismo&amp;tabs=timeline&amp;width=500&amp;height=600&amp;small_header=false&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=true&amp;appId"
+              width="500"
+              height="600"
+              scrolling="no"
+              frameBorder="0"
+              allowFullScreen={true}
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              style={{
+                border: "none",
+                overflow: "hidden",
+                width: "100%",
+                height: "600px",
+                display: iframeLoaded ? "block" : "none",
+              }}
+              onLoad={() => {
+                setIframeLoaded(true);
+                trackEvent({
+                  category: "Facebook",
+                  action: "Carga de iframe",
+                  label: "Plugin FB",
+                });
+              }}
+            />
+          &lt;/div>
+        &lt;/div>
+      &lt;/section>
+    &lt;/div>
+  );
+};
+
+export default Index;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 13:58:13 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

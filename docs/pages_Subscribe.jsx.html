@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>pages/Subscribe.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Routing">Routing</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">pages/Subscribe.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useState } from "react";
+import Form from "react-bootstrap/Form";
+import { useTranslation } from "react-i18next";
+import { FaAsterisk } from "react-icons/fa";
+import { trackEvent } from "../analytics";
+import ButtonSubmit from "../components/common/ButtonSubmit";
+import { Global } from "../helpers/Global";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+/**
+ * Componente `Suscribe`.
+ *
+ * Formulario de suscripción para visitantes de Lobería.
+ * Permite ingresar datos personales, preferencias de visita,
+ * cómo se enteró del destino, transporte, compañía, y aceptación de políticas.
+ * Realiza tracking de interacciones y envía los datos al backend.
+ *
+ * @component
+ * @example
+ * &lt;Suscribe />
+ *
+ * @returns {JSX.Element} Formulario de suscripción con validación, mensajes de éxito/error y tracking de eventos.
+ */
+export const Suscribe = () => {
+  /** Estado con los datos del formulario */
+  const [formData, setFormData] = useState({
+    direction: "",
+    think: "",
+    project: "",
+    name: "",
+    email: "",
+    phone: "",
+    companions: [],
+    transport: [],
+    source: [],
+    accept: false,
+  });
+
+  /** Estado del envío del formulario: "enviando" | "exitoso" | "error" */
+  const [status, setStatus] = useState("");
+
+  /** Estado para mostrar mensajes de error o éxito */
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const { t, i18n } = useTranslation();
+
+  /** Tracking de vista de página */
+  useEffect(() => {
+    trackEvent("page_view", {
+      category: "Páginas",
+      label: "Formulario Suscripción",
+    });
+  }, []);
+
+  /**
+   * Actualiza los estados del formulario según el input.
+   * Maneja inputs de texto y checkboxes múltiples o simples.
+   *
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e - Evento de cambio en el input.
+   */
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox" &amp;&amp; name === "companions") {
+      const updated = checked
+        ? [...formData.companions, value]
+        : formData.companions.filter((v) => v !== value);
+      setFormData((prev) => ({ ...prev, companions: updated }));
+      trackEvent("checkbox_marcado", {
+        category: "Formulario",
+        label: `Compañía: ${value}`,
+      });
+      return;
+    }
+
+    if (type === "checkbox" &amp;&amp; name === "accept") {
+      setFormData((prev) => ({ ...prev, accept: checked }));
+      trackEvent("checkbox_marcado", {
+        category: "Formulario",
+        label: "Acepta políticas",
+      });
+      return;
+    }
+
+    if (name === "source") {
+      const updated = checked
+        ? [...formData.source, value]
+        : formData.source.filter((v) => v !== value);
+      setFormData((prev) => ({ ...prev, source: updated }));
+      trackEvent("checkbox_marcado", {
+        category: "Formulario",
+        label: `Origen: ${value}`,
+      });
+      return;
+    }
+
+    if (name === "transport") {
+      const updated = checked
+        ? [...formData.transport, value]
+        : formData.transport.filter((v) => v !== value);
+      setFormData((prev) => ({ ...prev, transport: updated }));
+      trackEvent("checkbox_marcado", {
+        category: "Formulario",
+        label: `Transporte: ${value}`,
+      });
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    trackEvent("campo_completado", { category: "Formulario", label: name });
+  };
+
+  /**
+   * Envía los datos del formulario al backend y maneja mensajes de éxito/error.
+   *
+   * @param {React.FormEvent&lt;HTMLFormElement>} e - Evento de submit del formulario.
+   */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("enviando");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch(Global.url + "subscriptions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setStatus("error");
+        setErrorMessage(data.message || "Error en la suscripción");
+        toast.error(data.message || "Error en la suscripción");
+      } else {
+        setStatus("exitoso");
+        setErrorMessage(data.message);
+        toast.success(data.message);
+
+        setFormData({
+          direction: "",
+          think: "",
+          project: "",
+          name: "",
+          email: "",
+          phone: "",
+          companions: [],
+          transport: [],
+          source: [],
+          accept: false,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+      setErrorMessage("Error al conectarse con el servidor");
+      toast.error("Error al conectarse con el servidor");
+    }
+  };
+
+  return (
+    &lt;div>
+      &lt;section className="suscribe" key={i18n.language}>
+        &lt;h2>{t("suscribete_titulo")}&lt;/h2>
+        {/* Formulario de suscripción: dirección, cómo se enteró, pensamientos, proyectos */}
+        {/* Compañía y transporte */}
+        {/* Datos personales: nombre, email, teléfono */}
+        {/* Aceptación de políticas */}
+        &lt;Form className="form-direction" onSubmit={handleSubmit}>
+          &lt;Form.Group controlId="direction" className="mb-3">
+            &lt;Form.Label>
+              {t("vivo_en")}
+              &lt;FaAsterisk className="requerided" />
+            &lt;/Form.Label>
+            &lt;Form.Control
+              type="text"
+              placeholder={t("ciudad_provincia_pais")}
+              name="direction"
+              value={formData.direction}
+              onChange={handleChange}
+              required
+            />
+          &lt;/Form.Group>
+
+          &lt;Form.Group controlId="source" className="mb-3">
+            &lt;Form.Label>
+              {t("me_entere")}
+              &lt;FaAsterisk className="requerided" />
+            &lt;/Form.Label>
+            &lt;div>
+              {[
+                "Conocidos",
+                "Radio",
+                "Televisión",
+                "Redes Sociales",
+                "Nunca escuché",
+              ].map((item) => (
+                &lt;Form.Check
+                  key={item}
+                  label={item}
+                  type="checkbox"
+                  name="source"
+                  value={item}
+                  checked={formData.source.includes(item)}
+                  onChange={handleChange}
+                  className="mb-1"
+                />
+              ))}
+            &lt;/div>
+          &lt;/Form.Group>
+
+          &lt;Form.Group controlId="think" className="mb-3">
+            &lt;Form.Label>{t("pienso_en_loberia")}&lt;/Form.Label>
+            &lt;Form.Control
+              type="text"
+              placeholder={t("placeholder_palabra")}
+              name="think"
+              value={formData.think}
+              onChange={handleChange}
+            />
+          &lt;/Form.Group>
+
+          &lt;Form.Group controlId="project" className="mb-3">
+            &lt;Form.Label>{t("Cuando_vaya_a_Lobería_quiero")}&lt;/Form.Label>
+            &lt;Form.Control
+              type="text"
+              placeholder={t("placeholder_palabra")}
+              name="project"
+              value={formData.project}
+              onChange={handleChange}
+            />
+          &lt;/Form.Group>
+
+          &lt;Form.Group controlId="companions" className="mb-3">
+            &lt;Form.Label>
+              {t("Me_gustaría_ir")}
+              &lt;FaAsterisk className="requerided" />
+            &lt;/Form.Label>
+            &lt;div>
+              {[
+                "Sólo/a",
+                "En pareja",
+                "Con familia",
+                "Con amigos",
+                "Con mis mascotas",
+              ].map((item) => (
+                &lt;Form.Check
+                  key={item}
+                  label={t(item)}
+                  type="checkbox"
+                  name="companions"
+                  value={t(item)}
+                  checked={formData.companions.includes(item)}
+                  onChange={handleChange}
+                  className="mb-1"
+                  required={formData.companions.length === 0}
+                />
+              ))}
+            &lt;/div>
+          &lt;/Form.Group>
+
+          &lt;Form.Group controlId="transport" className="mb-3">
+            &lt;Form.Label>{t("iria_en")}&lt;/Form.Label>
+            &lt;div>
+              {[
+                "Micro_de_larga_distancia",
+                "Vehículo_propio",
+                "Viajes_compartidos",
+                "Motorhome",
+                "Tour_de_Agencia_de_viajes",
+                "Otros",
+              ].map((item) => (
+                &lt;Form.Check
+                  key={item}
+                  label={t(item)}
+                  type="checkbox"
+                  name="transport"
+                  value={item}
+                  checked={formData.transport.includes(item)}
+                  onChange={handleChange}
+                  className="mb-1"
+                />
+              ))}
+            &lt;/div>
+          &lt;/Form.Group>
+
+          &lt;Form.Group controlId="name" className="mb-3">
+            &lt;Form.Label>
+              {t("nombre_apellido2")} &lt;FaAsterisk className="requerided" />
+            &lt;/Form.Label>
+            &lt;Form.Control
+              type="text"
+              placeholder="Juan Pérez"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          &lt;/Form.Group>
+
+          &lt;Form.Group controlId="email" className="mb-3">
+            &lt;Form.Label>
+              {t("Mi_correo_electrónico_es")}
+              &lt;FaAsterisk className="requerided" />
+            &lt;/Form.Label>
+            &lt;Form.Control
+              type="email"
+              placeholder="nombre@dominio.com"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          &lt;/Form.Group>
+
+          &lt;Form.Group controlId="phone" className="mb-3">
+            &lt;Form.Label>
+              {t("Mi_teléfono_WhatsApp_es")}
+              &lt;FaAsterisk className="requerided" />
+            &lt;/Form.Label>
+            &lt;Form.Control
+              type="tel"
+              placeholder="+54 9 1234 5678"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+          &lt;/Form.Group>
+
+          &lt;Form.Group controlId="accept" className="mb-3">
+            &lt;Form.Check
+              type="checkbox"
+              label={
+                &lt;>
+                  {t("Acepto_politicas")}{" "}
+                  &lt;a
+                    href="/politicas"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t("")}
+                  &lt;/a>
+                  .
+                &lt;/>
+              }
+              name="accept"
+              checked={formData.accept}
+              onChange={handleChange}
+              required
+            />
+          &lt;/Form.Group>
+
+          &lt;p className="required-info">
+            {t("campos_obligatorios")}
+            &lt;FaAsterisk className="requerided" />
+            {t("son_obligatorios")}
+          &lt;/p>
+          &lt;ButtonSubmit
+            text={status === "enviando" ? t("enviando") : t("enviar")}
+            disabled={status === "enviando"}
+            className={`btn-success${status === "enviando" ? " sending" : ""}`}
+          />
+
+          {/* Mensajes */}
+          {status === "exitoso" &amp;&amp; (
+            &lt;p className="success-message">
+              {errorMessage || t("mensaje_enviado")}
+            &lt;/p>
+          )}
+          {status === "error" &amp;&amp; (
+            &lt;p className="error-message">{errorMessage}&lt;/p>
+          )}
+        &lt;/Form>
+
+        {/* Toast container */}
+        &lt;ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      &lt;/section>
+    &lt;/div>
+  );
+};
+
+export default Suscribe;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 13:58:13 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

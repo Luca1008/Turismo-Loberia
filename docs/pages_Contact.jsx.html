@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>pages/Contact.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Routing">Routing</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">pages/Contact.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect, useRef } from "react";
+import Form from "react-bootstrap/Form";
+import "../styles/contact.css";
+import { useTranslation } from "react-i18next";
+import { trackEvent } from "../analytics";
+import { Global } from "../helpers/Global";
+import ButtonSubmit from "../components/common/ButtonSubmit";
+
+/**
+ * Componente `Contact`
+ *
+ * Renderiza un formulario de contacto con tracking de interacciones
+ * y estados de envío.
+ *
+ * @component
+ */
+export const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [status, setStatus] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const { t, i18n } = useTranslation();
+
+  const interactionTracked = useRef(false);
+
+  useEffect(() => {
+    trackEvent({
+      category: "Formulario",
+      action: "Vista página contacto",
+      label: "Página Contacto",
+    });
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (!interactionTracked.current) {
+      trackEvent({
+        category: "Formulario",
+        action: "Inicio interacción",
+        label: "Contacto",
+      });
+      interactionTracked.current = true;
+    }
+
+    if (status === "error") {
+      trackEvent({
+        category: "Formulario",
+        action: "Corrige error",
+        label: `Campo: ${name}`,
+      });
+      setStatus("");
+      setErrorMessage("");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("enviando");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch(`${Global.url}send-email`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        trackEvent({
+          category: "Formulario",
+          action: "Envío exitoso",
+          label: "Formulario de contacto",
+        });
+        setStatus("exitoso");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        interactionTracked.current = false;
+      } else {
+        trackEvent({
+          category: "Formulario",
+          action: "Error en envío",
+          label: data.error || "Error desconocido",
+        });
+        setStatus("error");
+        setErrorMessage(data.error || "Error al enviar el mensaje");
+      }
+    } catch (error) {
+      console.error("Error en enviado:", error);
+      trackEvent({
+        category: "Formulario",
+        action: "Error técnico",
+        label: "Fallo conexión backend",
+      });
+      setStatus("error");
+      setErrorMessage(
+        "No se pudo conectar con el servidor. Por favor, verifica que el servidor esté corriendo en http://localhost:5000"
+      );
+    }
+  };
+
+  return (
+    &lt;section className="contact" key={i18n.language}>
+      &lt;h2>{t("contactanos")}&lt;/h2>
+      &lt;Form onSubmit={handleSubmit} className="form-contact">
+        &lt;Form.Group className="mb-3" controlId="formName">
+          &lt;Form.Label>{t("nombre_apellido")}&lt;/Form.Label>
+          &lt;Form.Control
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            placeholder={t("placeholder_nombre")}
+          />
+        &lt;/Form.Group>
+
+        &lt;Form.Group className="mb-3" controlId="formEmail">
+          &lt;Form.Label>{t("email2")}&lt;/Form.Label>
+          &lt;Form.Control
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            placeholder={t("placeholder_email")}
+          />
+        &lt;/Form.Group>
+
+        &lt;Form.Group className="mb-3" controlId="formSubject">
+          &lt;Form.Label>{t("asunto")}&lt;/Form.Label>
+          &lt;Form.Control
+            type="text"
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            required
+            placeholder={t("placeholder_asunto")}
+          />
+        &lt;/Form.Group>
+
+        &lt;Form.Group className="mb-3" controlId="formMessage">
+          &lt;Form.Label>{t("mensaje")}&lt;/Form.Label>
+          &lt;Form.Control
+            as="textarea"
+            rows={4}
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            required
+            placeholder={t("placeholder_mensaje")}
+          />
+        &lt;/Form.Group>
+
+        &lt;ButtonSubmit
+          type="submit"
+          text={status === "enviando" ? t("enviando") : t("enviar")}
+          disabled={status === "enviando"}
+        />
+
+        {status === "exitoso" &amp;&amp; (
+          &lt;p className="success-message">{t("mensaje_exitoso")}&lt;/p>
+        )}
+        {status === "error" &amp;&amp; (
+          &lt;p className="error-message">{errorMessage}&lt;/p>
+        )}
+      &lt;/Form>
+    &lt;/section>
+  );
+};
+
+export default Contact;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 13:58:13 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -1,4 +1,14 @@
-/* styles/banner.css */
+/* =====================================================
+   Banner Lobería
+   =====================================================
+   Estilos para el banner principal de la página de Lobería.
+   Incluye: contenedor del banner, imagen, texto, enlaces,
+   animación del cursor, botón expandir/colapsar y adaptaciones
+   responsive para escritorio, tablet y móvil.
+===================================================== */
+
+/* ------------------ Contenedor principal ------------------ */
+/* Banner con fondo degradado, centrado, bordes redondeados y sombra */
 .banner-loberia {
   position: relative;
   background: linear-gradient(135deg, #8e44ad, #3498db);
@@ -12,6 +22,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
+/* Contenedor interno del contenido del banner */
 .banner-content {
   display: flex;
   flex-wrap: wrap;
@@ -22,6 +33,7 @@
   z-index: 2;
 }
 
+/* Imagen dentro del banner */
 .banner-image {
   flex: 1;
   max-width: 400px;
@@ -29,12 +41,14 @@
   width: 100%;
 }
 
+/* Contenedor del texto */
 .banner-text-container {
   flex: 2;
   min-width: 300px;
   position: relative;
 }
 
+/* Texto del banner */
 .banner-text {
   text-align: left;
   font-size: 1.1rem;
@@ -43,10 +57,12 @@
   overflow: hidden;
 }
 
+/* Párrafos dentro del texto */
 .banner-text p {
   margin-bottom: 15px;
 }
 
+/* Enlaces del banner */
 .banner-link {
   color: #f3dd12;
   text-decoration: none;
@@ -63,7 +79,8 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Estilos para el cursor animado */
+/* ------------------ Animación del cursor ------------------ */
+/* Mano animada para indicar interacción */
 .animated-hand {
   position: absolute;
   font-size: 36px;
@@ -83,7 +100,7 @@
   }
 }
 
-/* Botón de expandir/colapsar para móviles */
+/* ------------------ Botón expandir/colapsar (móvil) ------------------ */
 .expand-button {
   display: none;
   background: rgba(255, 255, 255, 0.15);
@@ -103,80 +120,85 @@
   background: rgba(255, 255, 255, 0.25);
 }
 
-/* ESTILOS PARA DESKTOP (mayor a 768px) */
+/* =====================================================
+   ESTILOS RESPONSIVE
+   ===================================================== */
+
+/* ---------- Escritorio (≥768px) ---------- */
 @media (min-width: 768px) {
   .banner-content {
-    flex-direction: row; /* Imagen y texto en fila */
-    align-items: flex-start; /* Alinear al inicio */
+    flex-direction: row;
+    align-items: flex-start;
     text-align: left;
   }
-  
+
   .banner-image {
     max-width: 400px;
     margin-right: 40px;
   }
-  
+
   .banner-text-container {
     flex: 1;
     text-align: left;
   }
-  
+
   .banner-text {
     text-align: left;
     max-height: none !important;
     opacity: 1 !important;
   }
-  
+
   .banner-text::after {
     display: none !important;
   }
 }
 
-/* ESTILOS PARA MÓVIL (menor a 768px) */
+/* ---------- Móvil (<768px) ---------- */
 @media (max-width: 767px) {
   .animated-hand {
     display: none !important;
   }
-  
+
   .banner-loberia {
     padding: 30px 15px;
     margin: 10px;
   }
-  
+
   .banner-content {
     flex-direction: column;
     gap: 25px;
   }
-  
+
   .banner-image {
     max-width: 280px;
     margin: 0 auto;
   }
-  
+
   .banner-text-container {
     width: 100%;
   }
-  
+
   .banner-text {
     text-align: center;
     max-width: 100%;
     margin: 0 auto;
   }
-  
-  /* Estado colapsado */
+
+  /* Estado colapsado del texto */
   .banner-text.collapsed {
     max-height: 90px;
     overflow: hidden;
     opacity: 0.9;
     position: relative;
   }
-  
-  /* Estado expandido */
+
+  /* Estado expandido del texto */
   .banner-text.expanded {
     max-height: 1000px;
     opacity: 1;
   }
-  
+
+  /* Gradiente para indicar que hay más texto */
   .banner-text.collapsed::after {
     content: '';
     position: absolute;
@@ -187,21 +209,21 @@
     background: linear-gradient(to bottom, transparent, #8e44ad);
     pointer-events: none;
   }
-  
+
   .expand-button {
     display: flex;
     justify-content: center;
   }
 }
 
-/* ESTILOS INTERMEDIOS (tablets y notebooks chicas: 768px–991px) */
+/* ---------- Intermedio (768px–991px, tablets) ---------- */
 @media (min-width: 768px) and (max-width: 991px) {
   .banner-loberia {
     padding: 40px 20px;
   }
 
   .banner-content {
-    flex-direction: row; /* apilar para no apretar demasiado */
+    flex-direction: row;
     align-items: center;
     text-align: center;
     gap: 30px;

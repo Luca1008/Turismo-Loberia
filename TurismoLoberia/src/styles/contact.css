@@ -1,14 +1,27 @@
+/* =====================================================
+   Contact Section Styles
+   =====================================================
+   Estilos para la sección de contacto del sitio.
+   Incluye: contenedor principal, títulos, formulario, labels,
+   campos requeridos, botones y diseño responsivo.
+===================================================== */
+
+/* ------------------ Contenedor principal ------------------ */
+/* Sección de contacto centrada vertical y horizontalmente */
 .contact {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* Título de la sección centrado con márgenes superiores e inferiores */
 .contact h2 {
   margin-top: 6rem;
   margin-bottom: 2rem;
 }
 
+/* ------------------ Formulario ------------------ */
+/* Estilo general del formulario */
 form {
   font-family: var(--font-base);
   width: 18.75rem; /* 300px */
@@ -18,10 +31,13 @@ form {
   padding: 2rem;
 }
 
+/* ------------------ Labels y campos requeridos ------------------ */
+/* Etiquetas de los campos en negrita */
 label {
   font-weight: bold;
 }
 
+/* Indicador de campos requeridos */
 .requerided {
   color: var(--red);
   width: 8px;
@@ -30,14 +46,19 @@ label {
   margin-bottom: 2px;
 }
 
+/* ------------------ Botones ------------------ */
+/* Centrado de los botones dentro del formulario */
 .contact button {
   align-items: center;
 }
 
+/* ------------------ Sección de contacto ------------------ */
+/* Margen inferior de toda la sección */
 section.contact {
   margin-bottom: 3rem;
 }
 
+/* ------------------ Media Queries (tablets y desktop) ------------------ */
 @media (min-width: 768px) {
   form {
     width: 37.5rem; /* 600px */

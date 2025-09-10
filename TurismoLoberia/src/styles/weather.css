@@ -1,3 +1,10 @@
+/* =====================================================
+   Sección Clima / Weather Section
+   Contiene tarjetas de clima, iconos animados, versión compacta
+   y tabla de clima con responsividad
+===================================================== */
+
+/* Contenedor principal de la sección de clima */
 .section-weather{
   display: flex;
   justify-content: center;
@@ -7,12 +14,14 @@
   padding-top: 2rem;
 }
 
+/* Título principal de la sección clima */
 section.weather h1{
   text-align: center;
   margin-top: 7rem;
   margin-bottom: 1rem;
 }
 
+/* Tarjeta de clima principal */
 .card-weather {
   background: var(--white-1-background);
   border-radius: 20px;
@@ -28,6 +37,7 @@ section.weather h1{
   transform: scale(1.03);
 }
 
+/* Texto y contenedores internos de la tarjeta */
 .h2-weather {
   font-weight: bold;
   text-align: center;
@@ -61,6 +71,7 @@ section.weather h1{
   color: var(--black-2);
 }
 
+/* Pronóstico de 5 días */
 .five-day-weather {
   display: flex;
   justify-content: space-between;
@@ -83,89 +94,38 @@ section.weather h1{
   color: var(--black-2);
 }
 
+/* Iconos animados del clima */
 .icon-weather {
   font-size: 1.875rem;
   color: var(--primary-color);
 }
 
-
+/* Animaciones de iconos */
 .icono-sol {
-  color: #ffc107; /* Amarillo suave */
+  color: #ffc107;
   animation: rotarSol 3.5s linear infinite;
 }
-
 @keyframes rotarSol {
   0% { transform: rotate(-10deg); }
   50% { transform: rotate(10deg); }
   100% { transform: rotate(-10deg); }
 }
 
-.icono-luna {
-  color: #aab7b8; /* Gris claro frío */
-  animation: flotar 4s ease-in-out infinite;
-}
-
-.icono-nube {
-  color: #90caf9; /* Azul pastel */
-  animation: mover 3.2s ease-in-out infinite alternate;
-}
-
-
-.icono-nube-noche {
-  color: #5c6bc0; /* Azul noche suave */
-  animation: mover 3.2s ease-in-out infinite alternate;
-}
-
-.icono-lluvia {
-  color: #64b5f6; /* Azul intermedio */
-  animation: mover 3.2s ease-in-out infinite alternate;
-}
-
-.icono-lluvia-noche {
-  color: #3f51b5; /* Azul profundo pero no oscuro */
-  animation: mover 3.2s ease-in-out infinite alternate;
-}
-
-.icono-tormenta {
-  color: #ffa726; /* Naranja cálido */
-  animation: flotar 4s ease-in-out infinite;
-}
-
-.icono-tormenta-noche {
-  color: #fb8c00; /* Naranja más oscuro pero armónico */
-  animation: flotar 4s ease-in-out infinite;
-}
-
-.icono-nieve {
-  color: #b3e5fc; /* Celeste muy claro */
-  animation: flotar 4s ease-in-out infinite;
-}
-
-.icono-nieve-noche {
-  color: #81d4fa; /* Celeste intermedio */
-  animation: mover 3.2s ease-in-out infinite alternate;
-
-}
-
-.icono-niebla {
-  color: #b0bec5; /* Gris azulado suave */
-  animation: mover 3.2s ease-in-out infinite alternate;
-
-}
-
-.icono-niebla-noche {
-  color: #78909c; /* Gris más profundo */
-  animation: mover 3.2s ease-in-out infinite alternate;
-
-}
+.icono-luna { color: #aab7b8; animation: flotar 4s ease-in-out infinite; }
+.icono-nube { color: #90caf9; animation: mover 3.2s ease-in-out infinite alternate; }
+.icono-nube-noche { color: #5c6bc0; animation: mover 3.2s ease-in-out infinite alternate; }
+.icono-lluvia { color: #64b5f6; animation: mover 3.2s ease-in-out infinite alternate; }
+.icono-lluvia-noche { color: #3f51b5; animation: mover 3.2s ease-in-out infinite alternate; }
+.icono-tormenta { color: #ffa726; animation: flotar 4s ease-in-out infinite; }
+.icono-tormenta-noche { color: #fb8c00; animation: flotar 4s ease-in-out infinite; }
+.icono-nieve { color: #b3e5fc; animation: flotar 4s ease-in-out infinite; }
+.icono-nieve-noche { color: #81d4fa; animation: mover 3.2s ease-in-out infinite alternate; }
+.icono-niebla { color: #b0bec5; animation: mover 3.2s ease-in-out infinite alternate; }
+.icono-niebla-noche { color: #78909c; animation: mover 3.2s ease-in-out infinite alternate; }
 
 @keyframes flotar {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 @keyframes mover {
@@ -174,13 +134,14 @@ section.weather h1{
   100% { transform: translateX(-2px); }
 }
 
-/*---------------Version compacta------------------*/
-
+/* -----------------
+   Version compacta del clima
+------------------- */
 .weather-card-compact {
-  width: 12rem;         /* Ancho fijo */
-  min-height: 10rem;    /* Alto mínimo */
-  max-width: 12rem;     /* Opcional, igual al width para evitar crecimiento */
-  height: 16rem;        /* Alto fijo si quieres que nunca cambie */
+  width: 12rem;
+  min-height: 10rem;
+  max-width: 12rem;
+  height: 16rem;
   padding: 1.125rem 0.875rem 0.875rem 0.875rem;
   display: flex;
   flex-direction: column;
@@ -198,21 +159,15 @@ section.weather h1{
 }
 
 @keyframes float-card {
-  0% {
-    transform: translateY(0px) scale(1);
-    box-shadow: 0 8px 32px rgba(30, 60, 90, 0.18), 0 1.5px 6px rgba(30, 60, 90, 0.10);
-  }
-  100% {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 16px 40px rgba(30, 60, 90, 0.22), 0 2px 8px rgba(30, 60, 90, 0.13);
-  }
+  0% { transform: translateY(0px) scale(1); }
+  100% { transform: translateY(-10px) scale(1.03); }
 }
 
 .weather-card-compact:hover {
   transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 16px 40px rgba(30, 60, 90, 0.22), 0 2px 8px rgba(30, 60, 90, 0.13);
 }
 
+/* Texto e iconos compactos */
 .compact-city {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -235,7 +190,6 @@ section.weather h1{
   font-weight: bold;
   color: var(--primary-color-dark);
   margin: 0.125rem 0 0.25rem 0;
-  text-shadow: 0 1px 0 #fff, 0 0.5px 1.5px #b2b2b2;
 }
 
 .compact-desc {
@@ -244,10 +198,10 @@ section.weather h1{
   margin-top: 0.375rem;
   font-weight: 500;
   letter-spacing: 0.1px;
-  text-shadow: 0 1px 0 #fff;
   text-transform: capitalize;
 }
 
+/* Contenedor tipo carrusel */
 .weather-carousel{
   display: flex;
   flex-direction: column;
@@ -256,11 +210,11 @@ section.weather h1{
   padding: 2rem;
 }
 
-
 .section-weather {
   margin-top: 0 !important;
 }
 
+/* Tabla de clima */
 .table-weather{
   margin-top: 4rem;
   overflow-x: auto;
@@ -269,9 +223,8 @@ section.weather h1{
   width: 100%;
 }
 
-/* Forzar scroll horizontal y hacer la tabla más compacta en mobile */
+/* Adaptación mobile */
 @media (max-width: 600px) {
-
   .main-content section.weather {
     margin-top: 0% !important;
     padding-top: 0% !important;
@@ -288,6 +241,7 @@ section.weather h1{
   }
 }
 
+/* Spinner de carga de clima */
 .weather-spinner-container {
   display: flex;
   justify-content: center;
@@ -305,10 +259,6 @@ section.weather h1{
 }
 
 @keyframes dropBounce {
-  0%, 100% {
-    transform: translateY(0) scaleY(1);
-  }
-  50% {
-    transform: translateY(-15px) scaleY(1.2);
-  }
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  50% { transform: translateY(-15px) scaleY(1.2); }
 }

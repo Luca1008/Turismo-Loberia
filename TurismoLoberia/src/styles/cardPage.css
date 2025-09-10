@@ -1,4 +1,14 @@
-section.card-detail{
+/* =====================================================
+   Card Detail Section
+   =====================================================
+   Estilos para la sección de detalle de una card individual.
+   Incluye contenedor principal, títulos, imágenes y secciones
+   de contenido adicional.
+===================================================== */
+
+/* ------------------ Contenedor principal ------------------ */
+/* Centrado vertical y horizontal de la sección de detalle */
+section.card-detail {
   margin-top: 4rem;
   display: flex;
   flex-direction: column;
@@ -8,28 +18,36 @@ section.card-detail{
   margin-right: auto;
 }
 
-.card-detail h1{
+/* ------------------ Títulos ------------------ */
+/* Título principal centrado */
+.card-detail h1 {
   margin-top: 4rem;
   align-items: center;
   text-align: center;
 }
 
+/* ------------------ Imágenes ------------------ */
+/* Imagen principal de portada de la card */
 .card-img-portada {
   width: 100%;
   border-radius: 8px;
   margin-bottom: 20px;
 }
 
+/* Imágenes adicionales dentro de la card */
 .card-img-extra {
   width: 100%;
   border-radius: 10px;
   margin-top: 10px;
 }
 
-.card-section{
+/* ------------------ Secciones de contenido ------------------ */
+/* Contenedor de secciones de texto dentro de la card */
+.card-section {
   width: 100%;
 }
 
-.card-section p{
+/* Texto dentro de las secciones, centrado */
+.card-section p {
   text-align: center;
 }

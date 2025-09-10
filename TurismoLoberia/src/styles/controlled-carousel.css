@@ -1,19 +1,35 @@
+/* =====================================================
+   Carousel Index Styles
+   =====================================================
+   Estilos para el carrusel principal de la página de inicio.
+   Incluye: contenedor, items, imágenes, títulos, animación y
+   ajustes responsivos.
+===================================================== */
+
+/* ------------------ Contenedor principal ------------------ */
+/* Altura completa, margen superior negativo y posicionamiento relativo */
 .carousel-index {
   height: 100vh;
   margin-top: -90px;
   box-sizing: border-box;
   position: relative;
-  height: 600px;
+  height: 600px; /* altura fija para desktop */
 }
+
+/* Estilo de enlaces dentro del carrusel */
 .carousel-index a {
   color: var(--white) !important;
 }
 
+/* ------------------ Carrusel interno e items ------------------ */
+/* Altura completa para inner y items */
 .carousel-index .carousel-inner,
 .carousel-index .carousel-item {
   height: 100%;
 }
 
+/* ------------------ Imágenes del carrusel ------------------ */
+/* Imagen absoluta, cubriendo todo el contenedor con object-fit cover */
 .carousel-index .carousel-item img {
   position: absolute;
   top: 0;
@@ -21,14 +37,18 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: scale(1.1);
 }
 
+/* Imagen dentro de cualquier img del carrusel */
 .carousel-index img {
   width: 100%;
   height: 18.75rem;
   object-fit: cover;
 }
 
+/* ------------------ Título dentro del carrusel ------------------ */
+/* Posicionado al fondo, centrado horizontalmente */
 .carousel-index h1 {
   font-size: 1.5rem;
   position: absolute;
@@ -40,22 +60,8 @@
   text-align: center;
 }
 
-.carousel-index .carousel-inner,
-.carousel-index .carousel-item {
-  height: 100%;
-}
-
-.carousel-index .carousel-item img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-
-  transform: scale(1.1);
-}
-
+/* ------------------ Animación de zoom ------------------ */
+/* Zoom Out gradual de la imagen activa */
 .carousel-index .carousel-item.active img {
   animation: zoomOut 5s ease forwards;
 }
@@ -68,17 +74,22 @@
     transform: scale(1);
   }
 }
+
+/* ------------------ Media Queries (tablets y desktop) ------------------ */
 @media (min-width: 768px) {
+  /* Altura de imagen en viewport height y ajuste object-fit */
   .carousel-index img {
     width: 100%;
     height: 70vh;
     object-fit: hidden;
   }
 
+  /* Título más grande en desktop */
   .carousel-index h1 {
     font-size: 4rem;
   }
 
+  /* Tamaño de iconos de control del carrusel */
   .carousel-control-next-icon,
   .carousel-control-prev-icon {
     width: 3.75rem;

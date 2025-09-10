@@ -1,4 +1,8 @@
-/*---------------------------Nav----------------------*/
+/* =====================================================
+   Navbar / Header / Menú principal
+===================================================== */
+
+/* ------------------ Contenedor Header ------------------ */
 .header {
   position: fixed !important;
   width: 100%;
@@ -6,6 +10,7 @@
   z-index: 1020;
 }
 
+/* ------------------ Logos ------------------ */
 .logoLoberia {
   width: 3rem;
 }
@@ -14,34 +19,6 @@
   align-items: center;
   width: 7.5rem;
   background-color: transparent;
-}
-
-.typewriter-react {
-  display: none;
-}
-
-.text-light {
-  color: var(--black) !important;
-}
-
-.navBar,
-.menu-padding {
-  padding-left: 15px;
-  padding-right: 15px;
-  background-color: transparent;
-  height: 90px;
-}
-
-.navBar button.primary,
-.navBar button.primary:hover,
-.navBar button.primary:active,
-.navBar svg.primary.logoNav,
-.navBar .border-item-nav {
-  color: var(--white);
-}
-
-.nav-transparent-desktop-scroll div.vertical-divider {
-  background-color: var(--primary-color);
 }
 
 .logoNav {
@@ -56,10 +33,43 @@
   overflow: visible;
 }
 
-li {
-  list-style: none;
+/* Texto tipo máquina de escribir (oculto por defecto) */
+.typewriter-react {
+  display: none;
 }
 
+/* Colores de texto */
+.text-light {
+  color: var(--black) !important;
+}
+
+/* ------------------ Navbar principal ------------------ */
+.navBar,
+.menu-padding {
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: transparent;
+  height: 90px;
+}
+
+/* Colores y estilos de botones y logos en el nav */
+.navBar button.primary,
+.navBar button.primary:hover,
+.navBar button.primary:active,
+.navBar svg.primary.logoNav,
+.navBar .border-item-nav {
+  color: var(--white);
+}
+
+.nav-transparent-desktop-scroll div.vertical-divider {
+  background-color: var(--primary-color);
+}
+
+.navbar.fixed-top {
+  z-index: 1050;
+}
+
+/* Divisor vertical dentro del nav */
 .vertical-divider {
   width: 2px;
   height: 24px;
@@ -68,10 +78,9 @@ li {
   padding: 0%;
 }
 
-.navbar.fixed-top {
-  z-index: 1050;
-}
 
+
+/* ------------------ Menú mobile ------------------ */
 .mobile-menu {
   position: fixed;
   top: 90px;
@@ -84,14 +93,19 @@ li {
   overflow-y: auto;
 }
 
+li {
+  list-style: none;
+}
+
 .menu-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+/* Items del menú */
 .menu-item {
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 1rem;
   color: var(--primary-color) !important;
@@ -110,14 +124,16 @@ a {
   color: inherit !important;
 }
 
+/* Flechas de submenu con transición */
 .menu-item .arrow {
   transition: transform 0.3s ease;
 }
-
 .menu-item .rotate {
   transform: rotate(180deg);
 }
 
+
+/* ------------------ Submenus ------------------ */
 .submenu-desktop {
   background-color: var(--primary-color-light-1);
   padding: 0.5rem 1rem;
@@ -125,6 +141,7 @@ a {
   margin-top: 0.5rem;
   box-shadow: 0 6px 24px 0 rgba(87, 175, 49, 0.15);
 }
+
 .submenu {
   padding: 0.5rem 0.5rem;
   border-radius: 5px;
@@ -151,7 +168,7 @@ a {
   text-decoration: underline;
 }
 
-/* Estilos personalizados para el input de búsqueda con lupa en mobile */
+/* ------------------ Búsqueda en mobile ------------------ */
 .search-bar-custom {
   border-radius: 2rem;
   overflow: hidden;
@@ -214,6 +231,7 @@ form.input-group.search-bar-custom {
   border: solid 3px var(--primary-color);
 }
 
+/* ------------------ Dropdown de sugerencias ------------------ */
 .suggestions-dropdown-index {
   position: absolute;
   left: 4%;
@@ -243,6 +261,7 @@ form.input-group.search-bar-custom {
   cursor: pointer;
 }
 
+/* ------------------ Desktop search bar ------------------ */
 .desktop-search-bar .search-desktop-form {
   position: relative;
   width: 100%;
@@ -258,11 +277,13 @@ form.input-group.search-bar-custom {
   box-shadow: none !important;
 }
 
+/* Botón transparente */
 button.btn.btn-white {
   background-color: transparent !important;
   box-shadow: none;
 }
 
+/* ------------------ Animaciones / iconos ------------------ */
 .transition-arrow {
   transition: transform 0.2s;
 }
@@ -277,8 +298,9 @@ button.btn.btn-white {
   border-radius: 8px;
 }
 
+/* ------------------ Carousel ------------------ */
 .carousel-index {
-  height: 18.75rem; /* 300px */
+  height: 18.75rem;
   max-width: 100%;
   overflow: hidden;
 }
@@ -289,32 +311,9 @@ button.btn.btn-white {
   display: block;
 }
 
-.nav-transparent {
-  background-color: var(--blurred) !important;
-  color: var(--primary-color) !important;
-  transition: background-color 0.3s;
-  backdrop-filter: blur(4px);
-}
 
-.nav-other {
-  background-color: var(--white) !important;
-  color: var(--primary-color) !important;
-  top: 0;
-  border-top: solid 10px var(--primary-color) !important;
-  border-bottom: solid 10px var(--primary-color) !important;
-}
 
-.nav-other ~ .main-content {
-  padding-top: 90px !important; /* igual a la altura del nav */
-}
-
-.header.nav-transparent:hover {
-  background-color: #fff !important;
-  transition: background-color 0.2s;
-}
-
-/* Efecto de animación para la campana */
-/* Animación constante para la campana */
+/* Animación para campana */
 .bell-icon {
   animation: ring 2s infinite ease-in-out;
   transform-origin: top center;
@@ -356,6 +355,31 @@ button.btn.btn-white {
   }
 }
 
+/* ------------------ Otros ajustes nav ------------------ */
+.nav-transparent {
+  background-color: var(--blurred) !important;
+  color: var(--primary-color) !important;
+  transition: background-color 0.3s;
+  backdrop-filter: blur(4px);
+}
+
+.nav-other {
+  background-color: var(--white) !important;
+  color: var(--primary-color) !important;
+  top: 0;
+  border-top: solid 10px var(--primary-color) !important;
+  border-bottom: solid 10px var(--primary-color) !important;
+}
+
+.nav-other ~ .main-content {
+  padding-top: 90px !important; /* igual a la altura del nav */
+}
+
+.header.nav-transparent:hover {
+  background-color: #fff !important;
+  transition: background-color 0.2s;
+}
+
 .navBar.nav-index .logo-text {
   color: var(--primary-color);
 }
@@ -376,6 +400,7 @@ button.btn.btn-white {
 .nav-menu-open .vertical-divider {
   background-color: var(--primary-color);
 }
+
 .loberia {
   display: none;
 }
@@ -400,6 +425,7 @@ button.btn.btn-white {
   background-color: var(--primary-color);
 }
 
+/* ------------------ Media Queries Desktop ------------------ */
 @media (min-width: 768px) {
   .loberia {
     display: flex;
@@ -413,6 +439,7 @@ button.btn.btn-white {
     color: var(--primary-color) !important;
   }
 
+  /* Hover nav items desktop */
   .navBar:hover,
   .navBar:hover .logo-text strong.primary {
     background-color: var(--white) !important;
@@ -446,7 +473,7 @@ button.btn.btn-white {
     top: 0;
     background-color: transparent !important;
     backdrop-filter: blur(5px);
-    height: 90px; /* Altura de tu navbar */
+    height: 90px; /* Altura del navbar */
     width: 100%;
   }
 
@@ -588,15 +615,16 @@ button.btn.btn-white {
     border-radius: 8px;
   }
 
+  /* ------------------ Carousel ------------------ */
   .carousel-index {
-    height: 28.125rem; /* 450px */
+    height: 28.125rem;
   }
   .carousel-index img {
     height: 100%;
   }
 }
 
-/* --------- Rango intermedio: tablet horizontal / notebooks chicas -------- */
+/* ------------------ Tablet / notebook mediano ------------------ */
 @media (min-width: 768px) and (max-width: 991px) {
   .navBar {
     height: 100px;

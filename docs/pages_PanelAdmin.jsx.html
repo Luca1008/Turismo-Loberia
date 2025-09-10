@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>pages/PanelAdmin.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Routing">Routing</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">pages/PanelAdmin.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useRef, useState } from "react";
+import Nav from "react-bootstrap/Nav";
+import Offcanvas from "react-bootstrap/Offcanvas";
+import {
+  FaChevronRight,
+  FaChevronLeft,
+  FaPencilAlt,
+  FaUserCheck,
+  FaUsersCog,
+  FaPlus,
+} from "react-icons/fa";
+import { MdLogout, MdOutlineSettings, MdEmail } from "react-icons/md";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Create from "../components/layout/Create";
+import Edit from "../components/layout/Edit";
+import { useAuth } from "../hooks/useAuth.jsx";
+import "../styles/panelAdmin.css";
+import Searcher from "./Searcher";
+import AdminDashboard from "../components/layout/panel-admin/AdminDashboard.jsx";
+import SendContent from "../components/layout/panel-admin/SendContent";
+import { IoStatsChartSharp } from "react-icons/io5";
+import { Global } from "../helpers/Global.js";
+
+/**
+ * Componente `PanelAdmin`
+ *
+ * Este componente representa el panel de administración de la aplicación.
+ * Permite a los usuarios autenticados con roles adecuados:
+ * - Gestionar contenido existente
+ * - Crear nuevo contenido
+ * - Editar tarjetas de contenido
+ * - Modificar el carrusel de portada por ciudad
+ * - Enviar contenido a suscriptores
+ * - Ver estadísticas
+ * - Configurar sus datos de usuario
+ * - Administrar otros administradores (solo superadmin)
+ *
+ * Funcionalidades principales:
+ * - Uso de `useAuth` para autenticación y logout
+ * - Navegación programática con `useNavigate`
+ * - Estado y gestión de modales (`showEditModal`, `show`)
+ * - Manejo de carrusel de portada con imagen personalizada o default
+ * - Notificaciones con `react-toastify`
+ *
+ * Hooks utilizados:
+ * - `useState` para manejar estado de menús, modales, imagen y carga
+ * - `useRef` para referencias a modales y componentes hijos
+ * - `useEffect` para scroll automático al abrir modal de edición
+ *
+ * Componentes internos usados:
+ * - `Searcher` para búsqueda y gestión de contenido
+ * - `Create` para creación de contenido
+ * - `Edit` para edición de contenido
+ * - `SendContent` para envío a suscriptores
+ * - `AdminDashboard` para mostrar estadísticas
+ *
+ * @component
+ * @returns {JSX.Element} Panel de administración completo
+ */
+const PanelAdmin = () => {
+  const { auth, logout } = useAuth();
+  const navigate = useNavigate();
+
+  /**
+   * Cierra sesión y redirige al login de admin
+   */
+  const handleLogout = () => {
+    logout();
+    navigate("/Admin");
+  };
+
+  /** Estado del menú lateral */
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  /** Estado del Offcanvas de ajustes */
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  /** Estado del modal de edición de tarjeta */
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedCardId, setSelectedCardId] = useState(null);
+
+  /** Estado del carrusel de portada */
+  const [selectedCity, setSelectedCity] = useState("loberia");
+  const [image, setImage] = useState(null);
+  const [useDefault, setUseDefault] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  /** Referencias a componentes */
+  const editModalRef = useRef(null);
+  const searcherRef = useRef(null);
+
+  /**
+   * Abre el modal de edición de tarjeta
+   * @param {string|number} cardId - ID de la tarjeta a editar
+   */
+  const handleEditCard = (cardId) => {
+    setSelectedCardId(cardId);
+    setShowEditModal(true);
+  };
+
+  /** Cierra el modal de edición */
+  const handleCloseEditModal = () => {
+    setShowEditModal(false);
+    setSelectedCardId(null);
+  };
+
+  /** Actualiza la tarjeta y refresca el listado de tarjetas */
+  const handleUpdateCard = () => {
+    setShowEditModal(false);
+    setSelectedCardId(null);
+    if (searcherRef.current) {
+      searcherRef.current.fetchCards();
+    }
+  };
+
+  /** Maneja el cambio de ciudad para el carrusel */
+  const handleCityChange = (e) => {
+    setSelectedCity(e.target.value);
+    setImage(null);
+    setUseDefault(false);
+  };
+
+  /** Maneja el cambio de imagen para el carrusel */
+  const handleImageChange = (e) => setImage(e.target.files[0]);
+
+  /** Activa o desactiva el uso de imagen default */
+  const handleUseDefaultChange = (e) => setUseDefault(e.target.checked);
+
+  /**
+   * Maneja el envío del formulario para actualizar el carrusel
+   * @param {Event} e - Evento del formulario
+   */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      if (useDefault) {
+        await fetch(`${Global.url}carousel/${selectedCity}`, {
+          method: "DELETE",
+        });
+        toast.success("Se usará la imagen default para esta ciudad.");
+      } else {
+        if (!image) {
+          toast.error("Selecciona una imagen o marca 'Usar imagen default'");
+          setLoading(false);
+          return;
+        }
+        const formData = new FormData();
+        formData.append("city", selectedCity);
+        formData.append("image", image);
+        await fetch(`${Global.url}carousel`, {
+          method: "POST",
+          body: formData,
+        });
+        toast.success("Imagen personalizada actualizada.");
+      }
+      setImage(null);
+      setUseDefault(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /** Scroll automático al abrir modal de edición */
+  useEffect(() => {
+    if (showEditModal &amp;&amp; editModalRef.current) {
+      editModalRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [showEditModal]);
+
+  return (
+    &lt;>
+      {/* Navbar superior con información del usuario y logout */}
+      &lt;Nav defaultActiveKey="/Admin" as="ul" className="nav-user">
+        &lt;Nav.Item as="li">
+          &lt;strong>Bienvenido {auth.name}&lt;/strong>
+        &lt;/Nav.Item>
+        &lt;Nav.Item as="li">
+          &lt;button className="btn-admin" onClick={handleShow}>
+            &lt;MdOutlineSettings /> Ajustes
+          &lt;/button>
+        &lt;/Nav.Item>
+        &lt;Nav.Item as="li">
+          &lt;span>
+            &lt;button className="btn-admin" onClick={handleLogout}>
+              &lt;MdLogout /> Cerrar sesión
+            &lt;/button>
+          &lt;/span>
+        &lt;/Nav.Item>
+      &lt;/Nav>
+
+      {/* Menú lateral */}
+      &lt;button
+        className={`menu-toggle right ${isMenuOpen ? "open" : ""}`}
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        {isMenuOpen ? &lt;FaChevronRight /> : &lt;FaChevronLeft />}
+      &lt;/button>
+      &lt;div className={`container-tools ${isMenuOpen ? "open" : ""}`}>
+        &lt;ul>
+          &lt;li>
+            &lt;a href="#gestionar-contenido">
+              &lt;span>
+                &lt;FaPencilAlt />
+                Gestionar contenido
+              &lt;/span>
+            &lt;/a>
+          &lt;/li>
+          &lt;li>
+            &lt;a href="#crear-contenido">
+              &lt;span>
+                &lt;FaPlus />
+                Crear contenido
+              &lt;/span>
+            &lt;/a>
+          &lt;/li>
+          &lt;li>
+            &lt;a href="#modificar-carrusel">
+              &lt;span>
+                &lt;FaPencilAlt />
+                Modificar carrusel
+              &lt;/span>
+            &lt;/a>
+          &lt;/li>
+          &lt;li>
+            &lt;a href="#enviar-suscripciones">
+              &lt;span>
+                &lt;MdEmail />
+                Enviar contenido
+              &lt;/span>
+            &lt;/a>
+          &lt;/li>
+          &lt;li>
+            &lt;a href="#estadisticas">
+              &lt;span>
+                &lt;IoStatsChartSharp />
+                Estadísticas
+              &lt;/span>
+            &lt;/a>
+          &lt;/li>
+        &lt;/ul>
+      &lt;/div>
+
+      {/* Panel principal */}
+      &lt;section className="panel-admin">
+        &lt;h2>Bienvenido al Panel de Administración&lt;/h2>
+        &lt;div id="gestionar-contenido"> &lt;/div>
+
+        {/* Componente para gestión de contenido */}
+        &lt;Searcher ref={searcherRef} isAdmin={true} onEdit={handleEditCard} />
+
+        {/* Crear nuevo contenido */}
+        &lt;section id="crear-contenido" className="add-card">
+          &lt;Create />
+        &lt;/section>
+
+        {/* Modal de edición */}
+        {showEditModal &amp;&amp; (
+          &lt;div className="modal-overlay" ref={editModalRef}>
+            &lt;div className="modal-content">
+              &lt;Edit
+                cardId={selectedCardId}
+                onClose={handleCloseEditModal}
+                onUpdate={handleUpdateCard}
+              />
+            &lt;/div>
+          &lt;/div>
+        )}
+
+        {/* Formulario de actualización del carrusel */}
+        &lt;h2 id="modificar-carrusel">Modificar Carrusel de Portada&lt;/h2>
+        &lt;form onSubmit={handleSubmit} className="form-carousel">
+          &lt;label>
+            Ciudad:
+            &lt;select value={selectedCity} onChange={handleCityChange}>
+              &lt;option value="loberia">Lobería&lt;/option>
+              &lt;option value="arenas_verdes">Arenas Verdes&lt;/option>
+              &lt;option value="san_manuel">San Manuel&lt;/option>
+            &lt;/select>
+          &lt;/label>
+          &lt;label>
+            Imagen personalizada:
+            &lt;input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              disabled={useDefault}
+              key={selectedCity + (useDefault ? "-default" : "-custom")}
+            />
+          &lt;/label>
+          &lt;label className="default-image">
+            &lt;input
+              type="checkbox"
+              checked={useDefault}
+              onChange={handleUseDefaultChange}
+            />
+            Usar imagen default
+          &lt;/label>
+          &lt;button type="submit" disabled={loading}>
+            {loading ? "Actualizando..." : "Actualizar Carrusel"}
+          &lt;/button>
+        &lt;/form>
+        &lt;ToastContainer position="top-right" autoClose={2500} />
+      &lt;/section>
+
+      {/* Offcanvas de ajustes */}
+      &lt;section className="user-panel">
+        &lt;Offcanvas show={show} onHide={handleClose}>
+          &lt;Offcanvas.Header closeButton>
+            &lt;Offcanvas.Title>Panel de ajustes de: {auth.name}&lt;/Offcanvas.Title>
+          &lt;/Offcanvas.Header>
+          &lt;Offcanvas.Body>
+            &lt;div className="user-panel-content">
+              &lt;div className="user-info">
+                &lt;p>
+                  &lt;strong>Email:&lt;/strong> {auth.email}
+                &lt;/p>
+                &lt;p>
+                  &lt;strong>Rol:&lt;/strong> {auth.role}
+                &lt;/p>
+              &lt;/div>
+
+              &lt;div className="panel-admin">
+                &lt;aside className="sidebar-admin">
+                  &lt;ul>
+                    {auth.role === "superadmin" &amp;&amp; (
+                      &lt;>
+                        &lt;li>
+                          &lt;Link to="modificar-datos">
+                            &lt;FaPencilAlt />
+                            Modificar mis datos
+                          &lt;/Link>
+                        &lt;/li>
+                        &lt;li>
+                          &lt;Link to="crear-admin">
+                            &lt;FaUserCheck />
+                            Crear nuevo admin
+                          &lt;/Link>
+                        &lt;/li>
+                        &lt;li>
+                          &lt;Link to="listar-admins">
+                            &lt;FaUsersCog />
+                            Gestionar administradores
+                          &lt;/Link>
+                        &lt;/li>
+                      &lt;/>
+                    )}
+                  &lt;/ul>
+                &lt;/aside>
+                &lt;main className="panel-content">
+                  &lt;Outlet />
+                &lt;/main>
+              &lt;/div>
+            &lt;/div>
+          &lt;/Offcanvas.Body>
+        &lt;/Offcanvas>
+      &lt;/section>
+
+      {/* Sección de envío de contenido a suscriptores */}
+      &lt;section id="enviar-suscripciones" className="send-content">
+        &lt;SendContent />
+      &lt;/section>
+
+      {/* Sección de estadísticas */}
+      &lt;section id="estadisticas" className="stats">
+        &lt;AdminDashboard />
+      &lt;/section>
+    &lt;/>
+  );
+};
+
+export default PanelAdmin;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 13:58:13 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

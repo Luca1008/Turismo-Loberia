@@ -1,29 +1,34 @@
-/*----------------------Buttons------------------------*/
+/* =====================================================
+   Botones de la aplicación
+   =====================================================
+   Estilos aplicados a botones de acción, formularios y enlaces.
+   Incluye: .btn-success, button[type="submit"], .btn-link,
+   mensajes de éxito/error y centrado de botones.
+===================================================== */
 
+/* ------------------ Botón principal / submit ------------------ */
+/* Botón de acción principal, usado en formularios */
 .btn-success,
 button[type="submit"] {
   background-color: var(--primary-color);
   color: white;
   font-weight: bold;
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
   font-family: var(--size-h3-mobile);
   border: none;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25),
-    0 1.5px 4px rgba(60, 180, 60, 0.18);
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+              0 1.5px 4px rgba(60, 180, 60, 0.18);
+  padding: 0.5rem 1rem;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   justify-content: center !important;
-  margin: 1rem auto; /* Cambiado para centrar horizontalmente */
+  text-align: center;
+  margin: 1rem auto;
 }
 
-/* Centrado específico para botones en formularios */
+/* Botones específicos dentro de formularios */
 .form-direction .btn-success,
 .form-contact .btn-success {
   display: block;
@@ -31,6 +36,7 @@ button[type="submit"] {
   width: fit-content;
 }
 
+/* Estado hover / focus */
 .btn-success:hover,
 .btn-success:focus {
   background-color: var(--primary-color-dark-2);
@@ -40,40 +46,48 @@ button[type="submit"] {
   transition: background 0.2s, box-shadow 0.2s;
 }
 
+/* Botón deshabilitado */
 button[type="submit"]:disabled {
   background-color: var(--primary-color-light-2);
   cursor: not-allowed;
 }
 
+/* ------------------ Mensajes de formulario ------------------ */
+/* Mensaje de éxito */
 .success-message {
   color: var(--primary-color-dark-2);
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
   padding: 1rem;
   background-color: var(--primary-color-light-2);
   border-radius: 4px;
   margin-top: 1rem;
 }
 
+/* Mensaje de error */
 .error-message {
   color: var(--red);
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
   padding: 1rem;
   background-color: var(--primary-color-light-2);
   border-radius: 4px;
   margin-top: 1rem;
 }
 
+/* ------------------ Centrados de botones ------------------ */
 .center-btn {
   display: flex;
   justify-content: center;
 }
 
-.contact .form-contact .btn-success{
-    display: flex;
-    justify-content: center;
+/* Botón de contacto centrado */
+.contact .form-contact .btn-success {
+  display: flex;
+  justify-content: center;
 }
 
-.btn-link{
+/* ------------------ Botón tipo link ------------------ */
+/* Botón con apariencia de enlace, borde y fondo blanco */
+.btn-link {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -91,11 +105,12 @@ button[type="submit"]:disabled {
   font-size: 1.1rem;
   letter-spacing: 0.5px;
   cursor: pointer;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 
-.btn-link:hover, .btn-link:focus {
+/* Estado hover / focus del botón link */
+.btn-link:hover,
+.btn-link:focus {
   background-color: var(--primary-color) !important;
   color: var(--white);
   border: 1px solid var(--primary-color-dark-1);

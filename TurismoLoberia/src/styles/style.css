@@ -1,3 +1,8 @@
+/* =====================================================
+   Variables Globales y Tipografía
+===================================================== */
+
+/* ------------------ Variables CSS (Colores, Tipografía, Tamaños) ------------------ */
 :root {
   /* Colores primarios */
   --primary-color: #57af31;
@@ -22,20 +27,23 @@
   /* Tipografía */
   --font-base: "Poppins", sans-serif;
 
-  /* Tamaños */
+  /* Tamaños tipográficos mobile */
   --size-h1-mobile: 2rem; /* 32px */
   --size-h2-mobile: 1.625rem; /* 26px */
   --size-h3-mobile: 1.25rem; /* 20px */
   --size-paragraph-mobile: 0.875rem; /* 14px */
   --size-button-mobile: 1rem; /* 16px */
+
+  /* Tamaños tipográficos desktop */
   --size-h1-desktop: 4rem; /* 64px */
   --size-h2-desktop: 2.5rem; /* 40px */
   --size-h3-desktop: 1.5rem; /* 24px */
   --size-paragraph-desktop: 1rem; /* 16px */
   --size-button-desktop: 1.25rem; /* 20px */
 
-  /* Errores */
+  /* Color de errores */
   --red: #b3261e;
+
   /* Espaciados estándar */
   --spacing-xs: 0.5rem; /* 8px */
   --spacing-sm: 1rem; /* 16px */
@@ -44,45 +52,46 @@
   --spacing-xl: 5rem; /* 80px */
 }
 
-/* Fuentes Institucionales*/
-  @font-face {
-    font-family: "MADE Tommy Soft";
-    src: url("../assets/fonts/MADE Tommy Soft ExtraBold PERSONAL USE.otf")
+/* ------------------ Fuentes Institucionales ------------------ */
+@font-face {
+  font-family: "MADE Tommy Soft";
+  src: url("../assets/fonts/MADE Tommy Soft ExtraBold PERSONAL USE.otf")
       format("opentype");
-    font-weight: 800; /* ExtraBold */
-    font-style: normal;
-  }
+  font-weight: 800; /* ExtraBold */
+  font-style: normal;
+}
 
+/* ------------------ Utilidades ------------------ */
 .blurred {
   background-color: transparent !important;
   backdrop-filter: blur(5px);
 }
 
-/*Tamaño Mobile*/
+/* =====================================================
+   Tipografía y estilos globales
+===================================================== */
 
-h1,
-h2,
-h3 {
+/* ------------------ Encabezados ------------------ */
+h1, h2, h3 {
   font-family: var(--font-base);
   color: var(--grey-dark);
   font-weight: bolder;
+  letter-spacing: 0.02em;
 }
 
 h1 {
   font-size: var(--size-h1-mobile);
-  letter-spacing: 0.02em;
 }
-
 h2 {
   font-size: 2.5rem; /* 40px */
   letter-spacing: 0.01em;
 }
-
 h3 {
   font-size: var(--size-h3-mobile);
   letter-spacing: 0.02em;
 }
 
+/* ------------------ Párrafos ------------------ */
 p {
   font-family: var(--font-base);
   font-size: var(--size-paragraph-mobile);
@@ -90,6 +99,7 @@ p {
   letter-spacing: 0.01em;
 }
 
+/* ------------------ Secciones ------------------ */
 section {
   margin-top: var(--spacing-md); /* 2rem */
   margin-bottom: var(--spacing-lg); /* 3rem */
@@ -105,14 +115,14 @@ section h2 {
   text-align: center;
 }
 
-/* Centrado del formulario de suscripción */
+/* ------------------ Formularios de suscripción ------------------ */
 .suscribe {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.suscribe h2{
+.suscribe h2 {
   text-align: center;
   margin-top: 6rem;
   margin-bottom: 2rem;
@@ -124,14 +134,13 @@ section h2 {
   margin: 0 auto;
 }
 
-/* Recuperar contraseña*/
-section.forgot-password h2{
+/* ------------------ Recuperar contraseña ------------------ */
+section.forgot-password h2 {
   margin-top: 7rem;
   margin-bottom: 2rem;
 }
 
-/* Mobile first */
-/* body */
+/* ------------------ Estilos globales de body ------------------ */
 body {
   margin: 0;
   padding: 0;
@@ -140,27 +149,31 @@ body {
   background-color: var(--white);
 }
 
+/* =====================================================
+   Media Queries: Desktop / Tablet
+===================================================== */
 @media (min-width: 768px) {
-  h1 {
+  /* Encabezados */
+  h1 { 
     font-size: var(--size-h1-desktop);
     letter-spacing: 0.025em;
   }
-
-  h2 {
+  h2 { 
     font-size: var(--size-h2-desktop);
     letter-spacing: 0.035em;
   }
-
-  h3 {
+  h3 { 
     font-size: var(--size-h3-desktop);
     letter-spacing: 0.025em;
   }
 
+  /* Párrafos */
   p {
-    font-family: var(--font-base);
     font-size: var(--size-paragraph-desktop);
     letter-spacing: 0.012em;
   }
+
+  /* Secciones */
   section {
     max-width: 1100px;
     margin-left: auto;

@@ -1,3 +1,15 @@
+/* =====================================================
+   Index, Servicios, Banner, Places, More Info
+   =====================================================
+   Estilos para:
+   - Párrafos e index
+   - Guía de servicios
+   - Banner principal
+   - Sección de lugares y eventos
+   - Sección de información adicional
+===================================================== */
+
+/* ------------------ Index ------------------ */
 .index p {
   text-align: center;
 }
@@ -7,7 +19,7 @@
   margin-top: 1rem;
 }
 
-/*------------------Guía de servicios------------------*/
+/* ------------------ Guía de servicios ------------------ */
 .services h2 {
   margin-top: 0%;
   margin-bottom: 0%;
@@ -15,6 +27,7 @@
   text-align: center;
 }
 
+/* Contenedor de items de servicios */
 .item-services-container {
   display: flex;
   flex-direction: row;
@@ -26,15 +39,13 @@
   justify-content: center;
 }
 
-.item-services p {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
+/* Item individual */
 .item-services {
   max-width: max-content;
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  position: relative;
 }
 
 .item-services img {
@@ -45,9 +56,7 @@
 }
 
 .item-services:hover {
-  transform: translateY(-4px);
-  transform: scale(1.08);
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25));
+  transform: translateY(-4px) scale(1.08);
 }
 
 .item-services:active {
@@ -60,39 +69,27 @@
 }
 
 .item-services p {
-  display: none;
+  display: none; /* Se muestra solo en hover con media query */
 }
 
-.item-services:hover::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
+/* Animación borde */
 @keyframes borderGrow {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 100%;
-  }
+  0% { width: 0; }
+  100% { width: 100%; }
 }
 
 .item-services:hover::before {
   animation: borderGrow 0.4s ease-out;
 }
 
-/*------------------Banner--------------*/
+/* ------------------ Banner ------------------ */
 .Banner {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
+
 .banner {
   width: 100%;
   max-height: 500px;
@@ -102,13 +99,12 @@
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25));
   transition: transform 0.3s ease, filter 0.3s ease;
 }
+
 .banner:hover {
-  transform: translateY(-4px);
-  transform: scale(1.08);
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25));
+  transform: translateY(-4px) scale(1.08);
 }
 
-/*------------------Places--------------*/
+/* ------------------ Places & Upcoming Events ------------------ */
 .places,
 .upcoming-events {
   display: flex;
@@ -116,8 +112,7 @@
   align-items: center;
 }
 
-/*-----------------More info--------------*/
-
+/* ------------------ More Info ------------------ */
 section .container-info {
   display: flex;
   flex-direction: column;
@@ -125,6 +120,7 @@ section .container-info {
   align-items: center;
   padding-top: 2rem;
 }
+
 .facebook-container {
   width: 100%;
   max-width: 500px;
@@ -138,11 +134,11 @@ section .container-info {
   overflow: hidden;
 }
 
+/* ------------------ Media Queries (≥768px) ------------------ */
 @media (min-width: 768px) {
-  /*Item services*/
+
+  /* Servicios */
   .services h2 {
-    margin-top: 0%;
-    margin-bottom: 0%;
     text-align: center;
   }
 
@@ -166,13 +162,14 @@ section .container-info {
     justify-content: center;
   }
 
-  /* Estilos personalizados para el input de búsqueda con lupa en mobile */
+  /* Input de búsqueda mobile */
   .search-bar-custom {
     border-radius: 2rem;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     padding: 0%;
   }
+
   .search-bar-custom .form-control {
     border: none;
     border-radius: 2rem 0 0 2rem;
@@ -180,9 +177,11 @@ section .container-info {
     padding-left: 1.2rem;
     font-size: 1.1rem;
   }
+
   .search-bar-custom .form-control:focus {
     box-shadow: none;
   }
+
   .search-bar-custom .btn {
     background: #f5f5f5;
     border: none;
@@ -192,22 +191,24 @@ section .container-info {
     justify-content: center;
     transition: background 0.2s;
   }
+
   .search-bar-custom .btn:active,
   .search-bar-custom .btn:focus {
     background: #e0e0e0;
     box-shadow: none;
   }
+
   .search-bar-custom .btn svg {
     color: var(--primary-color);
     font-size: 1.2rem;
     transition: color 0.2s;
   }
+
   .search-bar-custom .btn:hover svg {
     color: var(--primary-color-dark-1);
   }
 
-  /*---------------Places-----------------*/
-
+  /* Places & Events */
   .places-items,
   .events {
     display: flex;
@@ -215,15 +216,11 @@ section .container-info {
     justify-content: center;
   }
 
-  /*--------------------More Info------------*/
+  /* More Info Section */
   section {
     max-width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
+    margin: 2.5rem auto;
+    padding: 0 1rem;
     box-sizing: border-box;
   }
 
@@ -231,19 +228,18 @@ section .container-info {
     background: linear-gradient(to bottom, #f9fafb, #dcedc8);
     width: 100%;
     max-width: 100%;
-    margin: 0%;
+    margin: 0;
     padding: 2rem;
   }
 
   section .container-info {
-    display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
     padding-top: 2rem;
   }
 
-  /*--Spinner*/
+  /* Spinner Facebook */
   .fb-logo-spinner-container {
     display: flex;
     flex-direction: column;
@@ -271,21 +267,15 @@ section .container-info {
   .fb-loading-text {
     margin-top: 20px;
     color: #1877f2;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 16px;
     font-weight: 500;
     animation: text-pulse 1.6s infinite alternate;
   }
 
   @keyframes text-pulse {
-    from {
-      opacity: 0.6;
-    }
-    to {
-      opacity: 1;
-      text-shadow: 0 0 5px rgba(24, 119, 242, 0.3);
-    }
+    from { opacity: 0.6; }
+    to { opacity: 1; text-shadow: 0 0 5px rgba(24, 119, 242, 0.3); }
   }
 
   .carousel-index {
