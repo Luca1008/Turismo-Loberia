@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>components/cards/WeatherCardCompact.jsx - Documentation</title>
+    <title>components/layout/panel-admin/AdminDashboard.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">components/cards/WeatherCardCompact.jsx</h1>
+    <h1 class="page-title">components/layout/panel-admin/AdminDashboard.jsx</h1>
     
 
     
@@ -39,111 +39,164 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
+            <pre class="prettyprint source linenums"><code>import { useEffect, useState } from "react";
+import { Bar, Pie } from "react-chartjs-2";
 import {
-  FaBolt,
-  FaCloud,
-  FaCloudRain,
-  FaMoon,
-  FaSmog,
-  FaSnowflake,
-  FaSun,
-} from "react-icons/fa";
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+} from "chart.js";
+import "../../../styles/panelAdmin.css";
+import { Global } from "../../../helpers/Global";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 
 /**
- * Mapeo de códigos de iconos de OpenWeatherMap a iconos de react-icons.
- * @type {Object.&lt;string, React.ComponentType>}
- */
-const iconosOWMtoFa = {
-  "01d": FaSun,
-  "01n": FaMoon,
-  "02d": FaCloud,
-  "02n": FaCloud,
-  "03d": FaCloud,
-  "03n": FaCloud,
-  "04d": FaCloud,
-  "04n": FaCloud,
-  "09d": FaCloudRain,
-  "09n": FaCloudRain,
-  "10d": FaCloudRain,
-  "10n": FaCloudRain,
-  "11d": FaBolt,
-  "11n": FaBolt,
-  "13d": FaSnowflake,
-  "13n": FaSnowflake,
-  "50d": FaSmog,
-  "50n": FaSmog,
-};
-
-/**
- * Devuelve la clase CSS correspondiente a un código de icono de OpenWeatherMap.
+ * Componente `AdminDashboard`
  *
- * @param {string} codigoIcono - Código del icono (ej: "01d", "10n").
- * @returns {string} Clase CSS asociada al icono.
- */
-const obtenerClaseIcono = (codigoIcono) => {
-  const clases = {
-    "01d": "icono-sol",
-    "01n": "icono-luna",
-    "02d": "icono-nube",
-    "02n": "icono-nube-noche",
-    "03d": "icono-nube",
-    "03n": "icono-nube-noche",
-    "04d": "icono-nube",
-    "04n": "icono-nube-noche",
-    "09d": "icono-lluvia",
-    "09n": "icono-lluvia-noche",
-    "10d": "icono-lluvia",
-    "10n": "icono-lluvia-noche",
-    "11d": "icono-tormenta",
-    "11n": "icono-tormenta-noche",
-    "13d": "icono-nieve",
-    "13n": "icono-nieve-noche",
-    "50d": "icono-niebla",
-    "50n": "icono-niebla-noche",
-  };
-  return clases[codigoIcono] || "icono-nube";
-};
-
-/**
- * Componente `WeatherCardCompact`
+ * Dashboard para el panel de administración de suscripciones.
+ * Muestra estadísticas de usuarios:
+ * - Total de suscripciones
+ * - Porcentaje de aceptación
+ * - Transporte elegido por los usuarios
+ * - Fuente de contacto
  *
- * Muestra de manera compacta la información del clima de una ciudad,
- * incluyendo ciudad, temperatura, icono y descripción breve.
+ * Obtiene los datos mediante un fetch a la API en `${Global.url}subscriptions/stats`.
  *
- * @param {Object} props - Propiedades del componente.
- * @param {string} props.ciudad - Nombre de la ciudad.
- * @param {number} [props.temp] - Temperatura actual en grados Celsius.
- * @param {string} [props.icon] - Código de icono de OpenWeatherMap (ej: "01d").
- * @param {string} [props.descripcion] - Descripción breve del clima (ej: "Soleado").
+ * @component
  *
- * @returns {JSX.Element} Componente visual del clima compacto.
+ * @returns {JSX.Element} Componente de dashboard con gráficas y estadísticas.
  *
  * @example
- * &lt;WeatherCardCompact
- *   ciudad="Lobería"
- *   temp={22}
- *   icon="01d"
- *   descripcion="Soleado"
- * />
+ * &lt;AdminDashboard />
  */
-const WeatherCardCompact = ({ ciudad, temp, icon, descripcion }) => {
-  const Icono = iconosOWMtoFa[icon] || FaCloud;
-  const claseIcono = `${obtenerClaseIcono(icon)} compact-icon`;
+export default function AdminDashboard() {
+  const [stats, setStats] = useState(null);
+
+  useEffect(() => {
+    fetch(`${Global.url}subscriptions/stats`)
+      .then((res) => res.json())
+      .then((data) => setStats(data))
+      .catch((err) => {
+        console.error("Error al obtener estadísticas:", err);
+      });
+  }, []);
+
+  if (!stats)
+    return (
+      &lt;p style={{ textAlign: "center", marginTop: "50px" }}>
+        Cargando estadísticas...
+      &lt;/p>
+    );
+
+  const transportData = {
+    labels: stats.transport.map((t) => t.transporte),
+    datasets: [
+      {
+        label: "Usuarios por transporte",
+        data: stats.transport.map((t) => t.count),
+        backgroundColor: "rgba(54, 162, 235, 0.7)",
+      },
+    ],
+  };
+
+  const sourceData = {
+    labels: stats.source.map((s) => s.source_option),
+    datasets: [
+      {
+        label: "Usuarios por fuente",
+        data: stats.source.map((s) => s.count),
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+          "#FF9F40",
+        ],
+      },
+    ],
+  };
+
+  const acceptData = {
+    labels: ["Aceptaron", "No aceptaron"],
+    datasets: [
+      {
+        data: stats.accept.map((a) => a.count),
+        backgroundColor: ["#28a745", "#dc3545"],
+      },
+    ],
+  };
+
+  const getPercentage = (count) => ((count / stats.total) * 100).toFixed(1);
 
   return (
-    &lt;div className="weather-card-compact">
-      &lt;div className="compact-city">{ciudad}&lt;/div>
-      &lt;Icono size={32} className={claseIcono} />
-      &lt;div className="compact-temp">
-        {temp !== undefined ? Math.round(temp) + "°" : "-"}
+    &lt;div className="dashboard-container">
+      &lt;h2>Dashboard de Suscripciones&lt;/h2>
+
+      &lt;div className="summary-cards">
+        &lt;div className="card-dashboard total">
+          &lt;h2>Total Suscripciones&lt;/h2>
+          &lt;h1>{stats.total}&lt;/h1>
+        &lt;/div>
+
+        &lt;div className="card-dashboard accept">
+          &lt;h2>Aceptación&lt;/h2>
+          &lt;Pie className="pie-chart" data={acceptData} />
+        &lt;/div>
       &lt;/div>
-      {descripcion &amp;&amp; &lt;div className="compact-desc">{descripcion}&lt;/div>}
+
+      &lt;div className="section">
+        &lt;h2>Transporte Elegido&lt;/h2>
+        &lt;div className="option-cards">
+          {stats.transport.map((t, idx) => (
+            &lt;div key={idx} className="option-card transport">
+              &lt;h4>{t.transporte}&lt;/h4>
+              &lt;p>{t.count}&lt;/p>
+              &lt;small>{getPercentage(t.count)}%&lt;/small>
+            &lt;/div>
+          ))}
+        &lt;/div>
+        &lt;Bar
+          className="bar-chart-transport"
+          data={transportData}
+          options={{ responsive: true }}
+        />
+      &lt;/div>
+
+      &lt;div className="section">
+        &lt;h2>Fuente de Contacto&lt;/h2>
+        &lt;div className="option-cards">
+          {stats.source.map((s, idx) => (
+            &lt;div key={idx} className="option-card source">
+              &lt;h4>{s.source_option}&lt;/h4>
+              &lt;p>{s.count}&lt;/p>
+              &lt;small>{getPercentage(s.count)}%&lt;/small>
+            &lt;/div>
+          ))}
+        &lt;/div>
+        &lt;Bar
+          className="bar-chart-source"
+          data={sourceData}
+          options={{ responsive: true }}
+        />
+      &lt;/div>
     &lt;/div>
   );
-};
-
-export default WeatherCardCompact;
+}
 </code></pre>
         </article>
     </section>

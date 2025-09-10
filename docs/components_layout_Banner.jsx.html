@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>components/cards/WeatherCardCompact.jsx - Documentation</title>
+    <title>components/layout/Banner.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">components/cards/WeatherCardCompact.jsx</h1>
+    <h1 class="page-title">components/layout/Banner.jsx</h1>
     
 
     
@@ -39,111 +39,166 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {
-  FaBolt,
-  FaCloud,
-  FaCloudRain,
-  FaMoon,
-  FaSmog,
-  FaSnowflake,
-  FaSun,
-} from "react-icons/fa";
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useRef, useState } from "react";
+import "../../styles/banner.css";
+import invitesImg from "../../assets/images/invites-transparent.png";
+import { useTranslation } from "react-i18next";
+import { PiCursorClick, PiCaretDown, PiCaretUp } from "react-icons/pi";
 
 /**
- * Mapeo de códigos de iconos de OpenWeatherMap a iconos de react-icons.
- * @type {Object.&lt;string, React.ComponentType>}
- */
-const iconosOWMtoFa = {
-  "01d": FaSun,
-  "01n": FaMoon,
-  "02d": FaCloud,
-  "02n": FaCloud,
-  "03d": FaCloud,
-  "03n": FaCloud,
-  "04d": FaCloud,
-  "04n": FaCloud,
-  "09d": FaCloudRain,
-  "09n": FaCloudRain,
-  "10d": FaCloudRain,
-  "10n": FaCloudRain,
-  "11d": FaBolt,
-  "11n": FaBolt,
-  "13d": FaSnowflake,
-  "13n": FaSnowflake,
-  "50d": FaSmog,
-  "50n": FaSmog,
-};
-
-/**
- * Devuelve la clase CSS correspondiente a un código de icono de OpenWeatherMap.
+ * Componente `Banner`
  *
- * @param {string} codigoIcono - Código del icono (ej: "01d", "10n").
- * @returns {string} Clase CSS asociada al icono.
- */
-const obtenerClaseIcono = (codigoIcono) => {
-  const clases = {
-    "01d": "icono-sol",
-    "01n": "icono-luna",
-    "02d": "icono-nube",
-    "02n": "icono-nube-noche",
-    "03d": "icono-nube",
-    "03n": "icono-nube-noche",
-    "04d": "icono-nube",
-    "04n": "icono-nube-noche",
-    "09d": "icono-lluvia",
-    "09n": "icono-lluvia-noche",
-    "10d": "icono-lluvia",
-    "10n": "icono-lluvia-noche",
-    "11d": "icono-tormenta",
-    "11n": "icono-tormenta-noche",
-    "13d": "icono-nieve",
-    "13n": "icono-nieve-noche",
-    "50d": "icono-niebla",
-    "50n": "icono-niebla-noche",
-  };
-  return clases[codigoIcono] || "icono-nube";
-};
-
-/**
- * Componente `WeatherCardCompact`
+ * Muestra un banner promocional de Lobería con texto, imagen y un enlace interactivo.
+ * Incluye animación de una mano señalando el enlace y funcionalidad de expandir/colapsar
+ * el texto en dispositivos móviles.
  *
- * Muestra de manera compacta la información del clima de una ciudad,
- * incluyendo ciudad, temperatura, icono y descripción breve.
- *
- * @param {Object} props - Propiedades del componente.
- * @param {string} props.ciudad - Nombre de la ciudad.
- * @param {number} [props.temp] - Temperatura actual en grados Celsius.
- * @param {string} [props.icon] - Código de icono de OpenWeatherMap (ej: "01d").
- * @param {string} [props.descripcion] - Descripción breve del clima (ej: "Soleado").
- *
- * @returns {JSX.Element} Componente visual del clima compacto.
+ * @component
  *
  * @example
- * &lt;WeatherCardCompact
- *   ciudad="Lobería"
- *   temp={22}
- *   icon="01d"
- *   descripcion="Soleado"
- * />
+ * &lt;Banner />
+ *
+ * @returns {JSX.Element} Banner con imagen, texto, enlace y animación interactiva
  */
-const WeatherCardCompact = ({ ciudad, temp, icon, descripcion }) => {
-  const Icono = iconosOWMtoFa[icon] || FaCloud;
-  const claseIcono = `${obtenerClaseIcono(icon)} compact-icon`;
+export const Banner = () => {
+  const { t, i18n } = useTranslation();
+  const handRef = useRef(null);
+  const linkRef = useRef(null);
+  const textRef = useRef(null);
+
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTextExpanded, setIsTextExpanded] = useState(false);
+
+  /**
+   * Verifica si el dispositivo es móvil y ajusta el estado de expansión del texto.
+   * Posiciona y anima la mano interactiva señalando el enlace.
+   */
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth &lt;= 768;
+      setIsMobile(mobile);
+
+      if (mobile) {
+        setIsTextExpanded(false);
+      } else {
+        setIsTextExpanded(true);
+      }
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    const handElement = handRef.current;
+    const linkElement = linkRef.current;
+
+    if (!handElement || !linkElement || isMobile) return;
+
+    const positionAndAnimateHand = () => {
+      const linkRect = linkElement.getBoundingClientRect();
+      const bannerRect = linkElement
+        .closest(".banner-loberia")
+        .getBoundingClientRect();
+
+      handElement.style.left = `${linkRect.left - bannerRect.left - 45}px`;
+      handElement.style.top = `${linkRect.top - bannerRect.top + 5}px`;
+      handElement.style.display = "block";
+
+      handElement.animate(
+        [
+          { transform: "translateY(0) translateX(0) scale(1)" },
+          { transform: "translateY(-5px) translateX(5px) scale(1.1)" },
+          { transform: "translateY(0) translateX(0) scale(1)" },
+        ],
+        {
+          duration: 1000,
+          iterations: Infinity,
+        }
+      );
+    };
+
+    const animationTimer = setTimeout(positionAndAnimateHand, 1000);
+
+    window.addEventListener("resize", positionAndAnimateHand);
+
+    const handleLinkHover = () => {
+      handElement.style.display = "none";
+    };
+
+    const handleLinkLeave = () => {
+      handElement.style.display = "block";
+    };
+
+    linkElement.addEventListener("mouseenter", handleLinkHover);
+    linkElement.addEventListener("mouseleave", handleLinkLeave);
+
+    return () => {
+      clearTimeout(animationTimer);
+      window.removeEventListener("resize", positionAndAnimateHand);
+      linkElement.removeEventListener("mouseenter", handleLinkHover);
+      linkElement.removeEventListener("mouseleave", handleLinkLeave);
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, [isMobile]);
+
+  /**
+   * Alterna la expansión o colapso del texto en móviles.
+   */
+  const toggleText = () => {
+    setIsTextExpanded(!isTextExpanded);
+  };
 
   return (
-    &lt;div className="weather-card-compact">
-      &lt;div className="compact-city">{ciudad}&lt;/div>
-      &lt;Icono size={32} className={claseIcono} />
-      &lt;div className="compact-temp">
-        {temp !== undefined ? Math.round(temp) + "°" : "-"}
+    &lt;section className="banner-loberia" key={i18n.language}>
+      &lt;div ref={handRef} className="animated-hand">
+        &lt;PiCursorClick />
       &lt;/div>
-      {descripcion &amp;&amp; &lt;div className="compact-desc">{descripcion}&lt;/div>}
-    &lt;/div>
+      &lt;div className="banner-content">
+        &lt;img
+          src={invitesImg}
+          alt="Lobería Te Invita"
+          className="banner-image"
+        />
+        &lt;div className="banner-text-container">
+          &lt;div
+            ref={textRef}
+            className={`banner-text ${
+              isTextExpanded ? "expanded" : "collapsed"
+            }`}
+          >
+            &lt;p>{t("p1_invites")}&lt;/p>
+            &lt;p>{t("p2_invites")}&lt;/p>
+            &lt;p>{t("p3_invites")}&lt;/p>
+            &lt;p>
+              {t("link_invites")}
+              &lt;a
+                ref={linkRef}
+                className="banner-link"
+                href="https://forms.gle/kmbozSt448xEVYC57"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t("link_aqui")}
+              &lt;/a>
+            &lt;/p>
+          &lt;/div>
+
+          {isMobile &amp;&amp; (
+            &lt;button className="expand-button" onClick={toggleText}>
+              {isTextExpanded ? (
+                &lt;>
+                  &lt;PiCaretUp /> Ver menos
+                &lt;/>
+              ) : (
+                &lt;>
+                  &lt;PiCaretDown /> Ver más
+                &lt;/>
+              )}
+            &lt;/button>
+          )}
+        &lt;/div>
+      &lt;/div>
+    &lt;/section>
   );
 };
-
-export default WeatherCardCompact;
 </code></pre>
         </article>
     </section>

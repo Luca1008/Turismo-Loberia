@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>components/cards/WeatherCardCompact.jsx - Documentation</title>
+    <title>components/layout/ControlledCarousel.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">components/cards/WeatherCardCompact.jsx</h1>
+    <h1 class="page-title">components/layout/ControlledCarousel.jsx</h1>
     
 
     
@@ -39,111 +39,140 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {
-  FaBolt,
-  FaCloud,
-  FaCloudRain,
-  FaMoon,
-  FaSmog,
-  FaSnowflake,
-  FaSun,
-} from "react-icons/fa";
+            <pre class="prettyprint source linenums"><code>import { useEffect, useState } from "react";
+import Carousel from "react-bootstrap/Carousel";
+import "../../styles/controlled-carousel.css";
+import { Global } from "../../helpers/Global";
+import defaultArenas from "../../assets/images/carousel-index/default-arenas.jpg";
+import defaultLoberia from "../../assets/images/carousel-index/default-loberia.jpg";
+import defaultSanManuel from "../../assets/images/carousel-index/default-sanmanuel.jpg";
+
+const defaultCities = [
+  {
+    key: "loberia",
+    caption: "Lobería",
+    defaultImg: defaultLoberia,
+    link: "/Loberia",
+  },
+  {
+    key: "arenas_verdes",
+    caption: "Arenas Verdes",
+    defaultImg: defaultArenas,
+    link: "/ArenasVerdes",
+  },
+  {
+    key: "san_manuel",
+    caption: "San Manuel",
+    defaultImg: defaultSanManuel,
+    link: "/SanManuel",
+  },
+];
 
 /**
- * Mapeo de códigos de iconos de OpenWeatherMap a iconos de react-icons.
- * @type {Object.&lt;string, React.ComponentType>}
- */
-const iconosOWMtoFa = {
-  "01d": FaSun,
-  "01n": FaMoon,
-  "02d": FaCloud,
-  "02n": FaCloud,
-  "03d": FaCloud,
-  "03n": FaCloud,
-  "04d": FaCloud,
-  "04n": FaCloud,
-  "09d": FaCloudRain,
-  "09n": FaCloudRain,
-  "10d": FaCloudRain,
-  "10n": FaCloudRain,
-  "11d": FaBolt,
-  "11n": FaBolt,
-  "13d": FaSnowflake,
-  "13n": FaSnowflake,
-  "50d": FaSmog,
-  "50n": FaSmog,
-};
-
-/**
- * Devuelve la clase CSS correspondiente a un código de icono de OpenWeatherMap.
+ * Componente `ControlledCarousel`
  *
- * @param {string} codigoIcono - Código del icono (ej: "01d", "10n").
- * @returns {string} Clase CSS asociada al icono.
- */
-const obtenerClaseIcono = (codigoIcono) => {
-  const clases = {
-    "01d": "icono-sol",
-    "01n": "icono-luna",
-    "02d": "icono-nube",
-    "02n": "icono-nube-noche",
-    "03d": "icono-nube",
-    "03n": "icono-nube-noche",
-    "04d": "icono-nube",
-    "04n": "icono-nube-noche",
-    "09d": "icono-lluvia",
-    "09n": "icono-lluvia-noche",
-    "10d": "icono-lluvia",
-    "10n": "icono-lluvia-noche",
-    "11d": "icono-tormenta",
-    "11n": "icono-tormenta-noche",
-    "13d": "icono-nieve",
-    "13n": "icono-nieve-noche",
-    "50d": "icono-niebla",
-    "50n": "icono-niebla-noche",
-  };
-  return clases[codigoIcono] || "icono-nube";
-};
-
-/**
- * Componente `WeatherCardCompact`
+ * Carousel controlado que muestra imágenes de diferentes ciudades con posibilidad
+ * de obtener imágenes desde la API y fallback a imágenes por defecto.
+ * Incluye autoplay cada 5 segundos y soporte para captions personalizados.
  *
- * Muestra de manera compacta la información del clima de una ciudad,
- * incluyendo ciudad, temperatura, icono y descripción breve.
+ * @component
  *
- * @param {Object} props - Propiedades del componente.
- * @param {string} props.ciudad - Nombre de la ciudad.
- * @param {number} [props.temp] - Temperatura actual en grados Celsius.
- * @param {string} [props.icon] - Código de icono de OpenWeatherMap (ej: "01d").
- * @param {string} [props.descripcion] - Descripción breve del clima (ej: "Soleado").
- *
- * @returns {JSX.Element} Componente visual del clima compacto.
+ * @param {Object[]} [cities=defaultCities] - Lista de ciudades a mostrar en el carousel.
+ * @param {string} cities[].key - Identificador único de la ciudad.
+ * @param {string} cities[].caption - Texto a mostrar en el caption.
+ * @param {string} cities[].defaultImg - Imagen por defecto si la API no devuelve imagen.
+ * @param {string} cities[].link - Link de destino al hacer clic en el caption.
+ * @param {Function} [renderCaption=(caption, link) => &lt;h1>&lt;a href={link}>{caption}&lt;/a>&lt;/h1>] 
+ *        - Función para renderizar captions personalizados.
  *
  * @example
- * &lt;WeatherCardCompact
- *   ciudad="Lobería"
- *   temp={22}
- *   icon="01d"
- *   descripcion="Soleado"
+ * &lt;ControlledCarousel
+ *   cities={[
+ *     { key: 'loberia', caption: 'Lobería', defaultImg: defaultLoberia, link: '/Loberia' }
+ *   ]}
  * />
+ *
+ * @returns {JSX.Element} Carousel controlado con autoplay y captions interactivos.
  */
-const WeatherCardCompact = ({ ciudad, temp, icon, descripcion }) => {
-  const Icono = iconosOWMtoFa[icon] || FaCloud;
-  const claseIcono = `${obtenerClaseIcono(icon)} compact-icon`;
+export const ControlledCarousel = ({
+  cities = defaultCities,
+  renderCaption = (caption, link) => (
+    &lt;h1>
+      &lt;a href={link}>{caption}&lt;/a>
+    &lt;/h1>
+  ),
+}) => {
+  const [index, setIndex] = useState(0);
+  const [carouselImages, setCarouselImages] = useState([]);
+
+  /**
+   * Carga las imágenes de cada ciudad desde la API o usa la imagen por defecto.
+   */
+  useEffect(() => {
+    Promise.all(
+      cities.map(async (city) => {
+        try {
+          const res = await fetch(`${Global.apiUrl}carousel/${city.key}`);
+          const data = await res.json();
+
+          return {
+            src: data.images?.[0]?.url
+              ? `${Global.baseUrl}${data.images[0].url.replace(/^\//, "")}`
+              : city.defaultImg,
+            caption: city.caption,
+            link: city.link,
+          };
+        } catch (error) {
+          console.error(`Error loading image for ${city.key}:`, error);
+          return {
+            src: city.defaultImg,
+            caption: city.caption,
+            link: city.link,
+          };
+        }
+      })
+    ).then(setCarouselImages);
+  }, [cities]);
+
+  /**
+   * Actualiza el índice activo al seleccionar un slide.
+   * @param {number} selectedIndex - Índice seleccionado
+   */
+  const handleSelect = (selectedIndex) => {
+    setIndex(selectedIndex);
+  };
+
+  /**
+   * Avanza automáticamente el carousel cada 5 segundos
+   */
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % carouselImages.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [carouselImages]);
 
   return (
-    &lt;div className="weather-card-compact">
-      &lt;div className="compact-city">{ciudad}&lt;/div>
-      &lt;Icono size={32} className={claseIcono} />
-      &lt;div className="compact-temp">
-        {temp !== undefined ? Math.round(temp) + "°" : "-"}
-      &lt;/div>
-      {descripcion &amp;&amp; &lt;div className="compact-desc">{descripcion}&lt;/div>}
-    &lt;/div>
+    &lt;Carousel
+      className="carousel-index"
+      activeIndex={index}
+      onSelect={handleSelect}
+      interval={null}
+      pause={false}
+      fade
+    >
+      {carouselImages.map((img, i) => (
+        &lt;Carousel.Item key={i}>
+          &lt;img src={img.src} alt={img.caption} />
+          &lt;Carousel.Caption>
+            {renderCaption(img.caption, img.link)}
+          &lt;/Carousel.Caption>
+        &lt;/Carousel.Item>
+      ))}
+    &lt;/Carousel>
   );
 };
-
-export default WeatherCardCompact;
 </code></pre>
         </article>
     </section>

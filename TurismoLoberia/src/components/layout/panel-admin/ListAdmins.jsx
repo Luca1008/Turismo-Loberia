@@ -6,6 +6,20 @@ import "react-toastify/dist/ReactToastify.css";
 import Table from "react-bootstrap/Table";
 import { Global } from "../../../helpers/Global";
 
+/**
+ * Componente `ListAdmins`
+ *
+ * Muestra una lista de administradores en una tabla con opciones
+ * para editar o eliminar cada uno. Permite actualizar los datos
+ * de un administrador usando el componente `UpdateAdmin`.
+ *
+ * @component
+ *
+ * @returns {JSX.Element} Tabla de administradores con opciones de gestión.
+ *
+ * @example
+ * <ListAdmins />
+ */
 const ListAdmins = () => {
   const [admins, setAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,10 +27,14 @@ const ListAdmins = () => {
   const [selectedAdmin, setSelectedAdmin] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
 
+  // Cargar admins al montar el componente
   useEffect(() => {
     fetchAdmins();
   }, []);
 
+  /**
+   * Obtiene la lista de administradores desde el backend.
+   */
   const fetchAdmins = () => {
     fetch(`${Global.url}user/admins`)
       .then((res) => {
@@ -33,6 +51,11 @@ const ListAdmins = () => {
       });
   };
 
+  /**
+   * Elimina un administrador por su ID.
+   *
+   * @param {string} id ID del administrador a eliminar.
+   */
   const handleDelete = async (id) => {
     const confirmar = window.confirm(
       "¿Estás seguro de eliminar este administrador?"
@@ -52,14 +75,17 @@ const ListAdmins = () => {
 
       setAdmins(admins.filter((admin) => admin.id !== id));
       toast.success("Administrador eliminado correctamente");
-      setTimeout(() => {}, 1500);
     } catch (err) {
       console.error("Error completo:", err);
       toast.error("Hubo un error: " + err.message);
-      setTimeout(() => {}, 1500);
     }
   };
 
+  /**
+   * Abre el formulario de edición para un administrador.
+   *
+   * @param {Object} admin Objeto administrador a editar.
+   */
   const handleEditClick = (admin) => {
     const adminToEdit = {
       id: admin.id,
@@ -72,13 +98,18 @@ const ListAdmins = () => {
     setShowEditForm(true);
   };
 
+  /**
+   * Callback cuando se actualiza exitosamente un administrador.
+   */
   const handleUpdateSuccess = () => {
     setShowEditForm(false);
     fetchAdmins();
     toast.success("Administrador actualizado correctamente");
-    setTimeout(() => {}, 1500);
   };
 
+  /**
+   * Cancela la edición de un administrador.
+   */
   const cancelEdit = () => {
     setShowEditForm(false);
     setSelectedAdmin(null);

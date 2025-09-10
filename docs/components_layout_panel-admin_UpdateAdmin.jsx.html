@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>components/cards/WeatherCardCompact.jsx - Documentation</title>
+    <title>components/layout/panel-admin/UpdateAdmin.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">components/cards/WeatherCardCompact.jsx</h1>
+    <h1 class="page-title">components/layout/panel-admin/UpdateAdmin.jsx</h1>
     
 
     
@@ -39,111 +39,206 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {
-  FaBolt,
-  FaCloud,
-  FaCloudRain,
-  FaMoon,
-  FaSmog,
-  FaSnowflake,
-  FaSun,
-} from "react-icons/fa";
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from "react";
+import Form from "react-bootstrap/Form";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Global } from "../../../helpers/Global";
+import { useAuth } from "../../../hooks/useAuth";
+import "../../../styles/panelAdmin.css";
+import Button from "react-bootstrap/Button";
 
 /**
- * Mapeo de códigos de iconos de OpenWeatherMap a iconos de react-icons.
- * @type {Object.&lt;string, React.ComponentType>}
- */
-const iconosOWMtoFa = {
-  "01d": FaSun,
-  "01n": FaMoon,
-  "02d": FaCloud,
-  "02n": FaCloud,
-  "03d": FaCloud,
-  "03n": FaCloud,
-  "04d": FaCloud,
-  "04n": FaCloud,
-  "09d": FaCloudRain,
-  "09n": FaCloudRain,
-  "10d": FaCloudRain,
-  "10n": FaCloudRain,
-  "11d": FaBolt,
-  "11n": FaBolt,
-  "13d": FaSnowflake,
-  "13n": FaSnowflake,
-  "50d": FaSmog,
-  "50n": FaSmog,
-};
-
-/**
- * Devuelve la clase CSS correspondiente a un código de icono de OpenWeatherMap.
+ * Componente `UpdateAdmin`
  *
- * @param {string} codigoIcono - Código del icono (ej: "01d", "10n").
- * @returns {string} Clase CSS asociada al icono.
- */
-const obtenerClaseIcono = (codigoIcono) => {
-  const clases = {
-    "01d": "icono-sol",
-    "01n": "icono-luna",
-    "02d": "icono-nube",
-    "02n": "icono-nube-noche",
-    "03d": "icono-nube",
-    "03n": "icono-nube-noche",
-    "04d": "icono-nube",
-    "04n": "icono-nube-noche",
-    "09d": "icono-lluvia",
-    "09n": "icono-lluvia-noche",
-    "10d": "icono-lluvia",
-    "10n": "icono-lluvia-noche",
-    "11d": "icono-tormenta",
-    "11n": "icono-tormenta-noche",
-    "13d": "icono-nieve",
-    "13n": "icono-nieve-noche",
-    "50d": "icono-niebla",
-    "50n": "icono-niebla-noche",
-  };
-  return clases[codigoIcono] || "icono-nube";
-};
-
-/**
- * Componente `WeatherCardCompact`
+ * Permite actualizar los datos de un administrador o del perfil propio.
+ * Incluye campos de nombre, apellido, correo electrónico y contraseña opcional.
+ * Muestra notificaciones de éxito o error usando `react-toastify`.
  *
- * Muestra de manera compacta la información del clima de una ciudad,
- * incluyendo ciudad, temperatura, icono y descripción breve.
+ * @component
  *
- * @param {Object} props - Propiedades del componente.
- * @param {string} props.ciudad - Nombre de la ciudad.
- * @param {number} [props.temp] - Temperatura actual en grados Celsius.
- * @param {string} [props.icon] - Código de icono de OpenWeatherMap (ej: "01d").
- * @param {string} [props.descripcion] - Descripción breve del clima (ej: "Soleado").
- *
- * @returns {JSX.Element} Componente visual del clima compacto.
+ * @param {Object} props
+ * @param {Object} [props.admin] - Administrador a editar (si es edición de otro admin)
+ * @param {Function} [props.onSuccess] - Callback cuando la actualización es exitosa
+ * @param {Function} [props.onCancel] - Callback para cancelar la edición
+ * @param {boolean} [props.isAdminEdit=false] - Indica si se está editando otro administrador
  *
  * @example
- * &lt;WeatherCardCompact
- *   ciudad="Lobería"
- *   temp={22}
- *   icon="01d"
- *   descripcion="Soleado"
- * />
+ * &lt;UpdateAdmin admin={adminData} onSuccess={handleSuccess} onCancel={handleCancel} isAdminEdit={true} />
+ *
+ * @returns {JSX.Element} Formulario de actualización de administrador o perfil
  */
-const WeatherCardCompact = ({ ciudad, temp, icon, descripcion }) => {
-  const Icono = iconosOWMtoFa[icon] || FaCloud;
-  const claseIcono = `${obtenerClaseIcono(icon)} compact-icon`;
+const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
+  const { auth, setAuth } = useAuth();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (isAdminEdit &amp;&amp; admin) {
+      setFormData({
+        name: admin.name || "",
+        surname: admin.surname || "",
+        email: admin.email || "",
+        password: "",
+      });
+    } else if (auth) {
+      setFormData({
+        name: auth.name || "",
+        surname: auth.surname || "",
+        email: auth.email || "",
+        password: "",
+      });
+    }
+  }, [admin, auth, isAdminEdit]);
+
+  /**
+   * Maneja los cambios en los campos del formulario.
+   *
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e Evento de cambio
+   */
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  /**
+   * Actualiza los datos del administrador o del perfil propio.
+   *
+   * @param {React.FormEvent&lt;HTMLFormElement>} e Evento de submit
+   */
+  const updateProfile = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    if (!formData.name || !formData.surname || !formData.email) {
+      toast.error("Todos los campos excepto la contraseña son obligatorios.");
+      return;
+    }
+
+    const updatedData = { ...formData };
+    if (formData.password.trim() === "") {
+      delete updatedData.password;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      const url = isAdminEdit
+        ? Global.url + `user/${admin.id}`
+        : Global.url + `user/${auth.id}`;
+
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        toast.success("Datos actualizados correctamente");
+
+        if (isAdminEdit) {
+          onSuccess();
+        } else {
+          if (formData.password) {
+            setTimeout(() => {
+              localStorage.removeItem("token");
+              localStorage.removeItem("user");
+              setAuth({});
+              window.location.href = "/Admin";
+            }, 3000);
+          } else {
+            localStorage.setItem("user", JSON.stringify(data.user));
+            setAuth(data.user);
+          }
+        }
+      } else {
+        throw new Error(data.message || "Error al actualizar");
+      }
+    } catch (error) {
+      toast.error(error.message || "Error al conectar con el servidor");
+    }
+  };
 
   return (
-    &lt;div className="weather-card-compact">
-      &lt;div className="compact-city">{ciudad}&lt;/div>
-      &lt;Icono size={32} className={claseIcono} />
-      &lt;div className="compact-temp">
-        {temp !== undefined ? Math.round(temp) + "°" : "-"}
+    &lt;section className="register">
+      &lt;h3 className="content__title">
+        {isAdminEdit ? "Editar Administrador" : "Modificar Perfil"}
+      &lt;/h3>
+      &lt;div className="content__posts">
+        &lt;Form className="register-form" onSubmit={updateProfile}>
+          &lt;Form.Group className="mb-3" controlId="updateName">
+            &lt;Form.Label>Nombre&lt;/Form.Label>
+            &lt;Form.Control
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          &lt;/Form.Group>
+
+          &lt;Form.Group className="mb-3" controlId="updateSurname">
+            &lt;Form.Label>Apellido&lt;/Form.Label>
+            &lt;Form.Control
+              type="text"
+              name="surname"
+              value={formData.surname}
+              onChange={handleChange}
+              required
+            />
+          &lt;/Form.Group>
+
+          &lt;Form.Group className="mb-3" controlId="updateEmail">
+            &lt;Form.Label>Correo electrónico&lt;/Form.Label>
+            &lt;Form.Control
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          &lt;/Form.Group>
+
+          &lt;Form.Group className="mb-3" controlId="updatePassword">
+            &lt;Form.Label>Nueva contraseña (opcional)&lt;/Form.Label>
+            &lt;Form.Control
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Dejar en blanco si no querés cambiarla"
+            />
+          &lt;/Form.Group>
+
+          &lt;div className="buttons-container">
+            &lt;Button variant="secondary" type="button" onClick={onCancel}>
+              Cancelar
+            &lt;/Button>
+            &lt;Button variant="success" type="submit">
+              Actualizar
+            &lt;/Button>
+          &lt;/div>
+        &lt;/Form>
       &lt;/div>
-      {descripcion &amp;&amp; &lt;div className="compact-desc">{descripcion}&lt;/div>}
-    &lt;/div>
+      &lt;ToastContainer />
+    &lt;/section>
   );
 };
 
-export default WeatherCardCompact;
+export default UpdateAdmin;
 </code></pre>
         </article>
     </section>

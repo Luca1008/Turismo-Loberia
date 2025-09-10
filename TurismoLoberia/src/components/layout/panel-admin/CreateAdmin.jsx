@@ -5,15 +5,36 @@ import "react-toastify/dist/ReactToastify.css";
 import { Global } from "../../../helpers/Global";
 import "../../../styles/panelAdmin.css";
 
+/**
+ * Componente `CreateAdmin`
+ *
+ * Formulario para crear un nuevo usuario administrador.
+ * Permite ingresar nombre, apellido, correo electrónico y contraseña.
+ * Realiza validación de contraseña mínima (8 caracteres) y muestra
+ * notificaciones con `react-toastify` en caso de éxito o error.
+ *
+ * @component
+ *
+ * @returns {JSX.Element} Formulario de creación de administrador.
+ *
+ * @example
+ * <CreateAdmin />
+ */
 const CreateAdmin = () => {
   const [error, setError] = useState(null);
-  console.log(error);
 
+  /**
+   * Maneja el envío del formulario de registro.
+   * Valida la contraseña y realiza una petición POST al endpoint
+   * `${Global.url}user/register`.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e Evento de envío del formulario.
+   */
   const registerUser = async (e) => {
     e.preventDefault();
     setError(null);
 
-    let userData = {
+    const userData = {
       name: e.target.name.value,
       surname: e.target.surname.value,
       email: e.target.email.value,
@@ -37,7 +58,6 @@ const CreateAdmin = () => {
       }
 
       const data = await request.json();
-      console.log("Respuesta del servidor:", data);
 
       if (data.status === "success") {
         if (data.message && data.message.includes("ya existe")) {
@@ -54,7 +74,7 @@ const CreateAdmin = () => {
     } catch (error) {
       setError("Error al conectar con el servidor");
       toast.error("Error al conectar con el servidor");
-      console.log(error);
+      console.error(error);
     }
   };
 

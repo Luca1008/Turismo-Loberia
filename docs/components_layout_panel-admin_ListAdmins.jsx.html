@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>components/cards/WeatherCardCompact.jsx - Documentation</title>
+    <title>components/layout/panel-admin/ListAdmins.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">components/cards/WeatherCardCompact.jsx</h1>
+    <h1 class="page-title">components/layout/panel-admin/ListAdmins.jsx</h1>
     
 
     
@@ -39,111 +39,195 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {
-  FaBolt,
-  FaCloud,
-  FaCloudRain,
-  FaMoon,
-  FaSmog,
-  FaSnowflake,
-  FaSun,
-} from "react-icons/fa";
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
+import { MdDeleteForever, MdModeEdit } from "react-icons/md";
+import UpdateAdmin from "./UpdateAdmin";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Table from "react-bootstrap/Table";
+import { Global } from "../../../helpers/Global";
 
 /**
- * Mapeo de códigos de iconos de OpenWeatherMap a iconos de react-icons.
- * @type {Object.&lt;string, React.ComponentType>}
- */
-const iconosOWMtoFa = {
-  "01d": FaSun,
-  "01n": FaMoon,
-  "02d": FaCloud,
-  "02n": FaCloud,
-  "03d": FaCloud,
-  "03n": FaCloud,
-  "04d": FaCloud,
-  "04n": FaCloud,
-  "09d": FaCloudRain,
-  "09n": FaCloudRain,
-  "10d": FaCloudRain,
-  "10n": FaCloudRain,
-  "11d": FaBolt,
-  "11n": FaBolt,
-  "13d": FaSnowflake,
-  "13n": FaSnowflake,
-  "50d": FaSmog,
-  "50n": FaSmog,
-};
-
-/**
- * Devuelve la clase CSS correspondiente a un código de icono de OpenWeatherMap.
+ * Componente `ListAdmins`
  *
- * @param {string} codigoIcono - Código del icono (ej: "01d", "10n").
- * @returns {string} Clase CSS asociada al icono.
- */
-const obtenerClaseIcono = (codigoIcono) => {
-  const clases = {
-    "01d": "icono-sol",
-    "01n": "icono-luna",
-    "02d": "icono-nube",
-    "02n": "icono-nube-noche",
-    "03d": "icono-nube",
-    "03n": "icono-nube-noche",
-    "04d": "icono-nube",
-    "04n": "icono-nube-noche",
-    "09d": "icono-lluvia",
-    "09n": "icono-lluvia-noche",
-    "10d": "icono-lluvia",
-    "10n": "icono-lluvia-noche",
-    "11d": "icono-tormenta",
-    "11n": "icono-tormenta-noche",
-    "13d": "icono-nieve",
-    "13n": "icono-nieve-noche",
-    "50d": "icono-niebla",
-    "50n": "icono-niebla-noche",
-  };
-  return clases[codigoIcono] || "icono-nube";
-};
-
-/**
- * Componente `WeatherCardCompact`
+ * Muestra una lista de administradores en una tabla con opciones
+ * para editar o eliminar cada uno. Permite actualizar los datos
+ * de un administrador usando el componente `UpdateAdmin`.
  *
- * Muestra de manera compacta la información del clima de una ciudad,
- * incluyendo ciudad, temperatura, icono y descripción breve.
+ * @component
  *
- * @param {Object} props - Propiedades del componente.
- * @param {string} props.ciudad - Nombre de la ciudad.
- * @param {number} [props.temp] - Temperatura actual en grados Celsius.
- * @param {string} [props.icon] - Código de icono de OpenWeatherMap (ej: "01d").
- * @param {string} [props.descripcion] - Descripción breve del clima (ej: "Soleado").
- *
- * @returns {JSX.Element} Componente visual del clima compacto.
+ * @returns {JSX.Element} Tabla de administradores con opciones de gestión.
  *
  * @example
- * &lt;WeatherCardCompact
- *   ciudad="Lobería"
- *   temp={22}
- *   icon="01d"
- *   descripcion="Soleado"
- * />
+ * &lt;ListAdmins />
  */
-const WeatherCardCompact = ({ ciudad, temp, icon, descripcion }) => {
-  const Icono = iconosOWMtoFa[icon] || FaCloud;
-  const claseIcono = `${obtenerClaseIcono(icon)} compact-icon`;
+const ListAdmins = () => {
+  const [admins, setAdmins] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedAdmin, setSelectedAdmin] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false);
+
+  // Cargar admins al montar el componente
+  useEffect(() => {
+    fetchAdmins();
+  }, []);
+
+  /**
+   * Obtiene la lista de administradores desde el backend.
+   */
+  const fetchAdmins = () => {
+    fetch(`${Global.url}user/admins`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Error al cargar admins");
+        return res.json();
+      })
+      .then((data) => {
+        setAdmins(data.admins || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  };
+
+  /**
+   * Elimina un administrador por su ID.
+   *
+   * @param {string} id ID del administrador a eliminar.
+   */
+  const handleDelete = async (id) => {
+    const confirmar = window.confirm(
+      "¿Estás seguro de eliminar este administrador?"
+    );
+    if (!confirmar) return;
+
+    try {
+      const res = await fetch(`${Global.url}user/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message || "Error al eliminar");
+
+      setAdmins(admins.filter((admin) => admin.id !== id));
+      toast.success("Administrador eliminado correctamente");
+    } catch (err) {
+      console.error("Error completo:", err);
+      toast.error("Hubo un error: " + err.message);
+    }
+  };
+
+  /**
+   * Abre el formulario de edición para un administrador.
+   *
+   * @param {Object} admin Objeto administrador a editar.
+   */
+  const handleEditClick = (admin) => {
+    const adminToEdit = {
+      id: admin.id,
+      name: admin.name,
+      surname: admin.surname,
+      email: admin.email,
+      password: admin,
+    };
+    setSelectedAdmin(adminToEdit);
+    setShowEditForm(true);
+  };
+
+  /**
+   * Callback cuando se actualiza exitosamente un administrador.
+   */
+  const handleUpdateSuccess = () => {
+    setShowEditForm(false);
+    fetchAdmins();
+    toast.success("Administrador actualizado correctamente");
+  };
+
+  /**
+   * Cancela la edición de un administrador.
+   */
+  const cancelEdit = () => {
+    setShowEditForm(false);
+    setSelectedAdmin(null);
+  };
+
+  if (loading) return &lt;p>Cargando administradores...&lt;/p>;
+  if (error) return &lt;p>Error: {error}&lt;/p>;
 
   return (
-    &lt;div className="weather-card-compact">
-      &lt;div className="compact-city">{ciudad}&lt;/div>
-      &lt;Icono size={32} className={claseIcono} />
-      &lt;div className="compact-temp">
-        {temp !== undefined ? Math.round(temp) + "°" : "-"}
-      &lt;/div>
-      {descripcion &amp;&amp; &lt;div className="compact-desc">{descripcion}&lt;/div>}
+    &lt;div className="admin-panel-container">
+      &lt;h3>Administradores:&lt;/h3>
+      &lt;Table
+        striped
+        bordered
+        hover
+        className="admin-table"
+        border="1"
+        cellPadding="8"
+      >
+        &lt;thead>
+          &lt;tr>
+            &lt;th>Nombre&lt;/th>
+            &lt;th>Apellido&lt;/th>
+            &lt;th>Acciones&lt;/th>
+          &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+          {admins.length === 0 ? (
+            &lt;tr>
+              &lt;td colSpan="4">No se encontraron administradores.&lt;/td>
+            &lt;/tr>
+          ) : (
+            admins.map((admin) => (
+              &lt;tr key={admin.id}>
+                &lt;td>{admin.name}&lt;/td>
+                &lt;td>{admin.surname}&lt;/td>
+                &lt;td>
+                  &lt;button
+                    className="btn btn-sm btn-primary me-2"
+                    onClick={() => handleEditClick(admin)}
+                    disabled={showEditForm}
+                  >
+                    &lt;MdModeEdit style={{ verticalAlign: "middle" }} />
+                  &lt;/button>
+                  &lt;button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => handleDelete(admin.id)}
+                    disabled={showEditForm}
+                  >
+                    &lt;MdDeleteForever style={{ verticalAlign: "middle" }} />
+                  &lt;/button>
+                &lt;/td>
+              &lt;/tr>
+            ))
+          )}
+        &lt;/tbody>
+      &lt;/Table>
+
+      {showEditForm &amp;&amp; selectedAdmin &amp;&amp; (
+        &lt;div className="edit-form-container mt-4 p-4 border rounded">
+          &lt;h4>
+            Editando administrador: {selectedAdmin.name} {selectedAdmin.surname}
+          &lt;/h4>
+          &lt;UpdateAdmin
+            admin={selectedAdmin}
+            onSuccess={handleUpdateSuccess}
+            onCancel={cancelEdit}
+            isAdminEdit={true}
+          />
+        &lt;/div>
+      )}
+      &lt;ToastContainer />
     &lt;/div>
   );
 };
 
-export default WeatherCardCompact;
+export default ListAdmins;
 </code></pre>
         </article>
     </section>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>components/cards/WeatherCardCompact.jsx - Documentation</title>
+    <title>components/layout/WeatherCarousel.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">components/cards/WeatherCardCompact.jsx</h1>
+    <h1 class="page-title">components/layout/WeatherCarousel.jsx</h1>
     
 
     
@@ -39,111 +39,138 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {
-  FaBolt,
-  FaCloud,
-  FaCloudRain,
-  FaMoon,
-  FaSmog,
-  FaSnowflake,
-  FaSun,
-} from "react-icons/fa";
+            <pre class="prettyprint source linenums"><code>import axios from "axios";
+import React, { useEffect, useState } from "react";
+import WeatherCardCompact from "../cards/WeatherCardCompact";
+import { Global } from "../../helpers/Global";
 
 /**
- * Mapeo de códigos de iconos de OpenWeatherMap a iconos de react-icons.
- * @type {Object.&lt;string, React.ComponentType>}
+ * Ubicaciones por defecto si no se pasan como prop.
  */
-const iconosOWMtoFa = {
-  "01d": FaSun,
-  "01n": FaMoon,
-  "02d": FaCloud,
-  "02n": FaCloud,
-  "03d": FaCloud,
-  "03n": FaCloud,
-  "04d": FaCloud,
-  "04n": FaCloud,
-  "09d": FaCloudRain,
-  "09n": FaCloudRain,
-  "10d": FaCloudRain,
-  "10n": FaCloudRain,
-  "11d": FaBolt,
-  "11n": FaBolt,
-  "13d": FaSnowflake,
-  "13n": FaSnowflake,
-  "50d": FaSmog,
-  "50n": FaSmog,
-};
+const defaultLocations = [
+  { ciudad: "Arenas Verdes", lat: -38.967, lon: -59.005 },
+  { ciudad: "San Manuel" },
+  { ciudad: "Loberia" },
+];
 
 /**
- * Devuelve la clase CSS correspondiente a un código de icono de OpenWeatherMap.
+ * Componente `WeatherCarousel`
  *
- * @param {string} codigoIcono - Código del icono (ej: "01d", "10n").
- * @returns {string} Clase CSS asociada al icono.
- */
-const obtenerClaseIcono = (codigoIcono) => {
-  const clases = {
-    "01d": "icono-sol",
-    "01n": "icono-luna",
-    "02d": "icono-nube",
-    "02n": "icono-nube-noche",
-    "03d": "icono-nube",
-    "03n": "icono-nube-noche",
-    "04d": "icono-nube",
-    "04n": "icono-nube-noche",
-    "09d": "icono-lluvia",
-    "09n": "icono-lluvia-noche",
-    "10d": "icono-lluvia",
-    "10n": "icono-lluvia-noche",
-    "11d": "icono-tormenta",
-    "11n": "icono-tormenta-noche",
-    "13d": "icono-nieve",
-    "13n": "icono-nieve-noche",
-    "50d": "icono-niebla",
-    "50n": "icono-niebla-noche",
-  };
-  return clases[codigoIcono] || "icono-nube";
-};
-
-/**
- * Componente `WeatherCardCompact`
+ * Muestra un carrusel automático de tarjetas del clima para varias ubicaciones.
+ * Se puede pausar al pasar el mouse y rotar automáticamente cada `interval` milisegundos.
  *
- * Muestra de manera compacta la información del clima de una ciudad,
- * incluyendo ciudad, temperatura, icono y descripción breve.
- *
- * @param {Object} props - Propiedades del componente.
- * @param {string} props.ciudad - Nombre de la ciudad.
- * @param {number} [props.temp] - Temperatura actual en grados Celsius.
- * @param {string} [props.icon] - Código de icono de OpenWeatherMap (ej: "01d").
- * @param {string} [props.descripcion] - Descripción breve del clima (ej: "Soleado").
- *
- * @returns {JSX.Element} Componente visual del clima compacto.
+ * @component
+ * 
+ * @param {Object[]} [locations=defaultLocations] - Lista de ubicaciones a mostrar.
+ * @param {string} locations[].ciudad - Nombre de la ciudad.
+ * @param {number} [locations[].lat] - Latitud de la ciudad (opcional).
+ * @param {number} [locations[].lon] - Longitud de la ciudad (opcional).
+ * @param {number} [interval=5000] - Tiempo en milisegundos entre cada cambio de tarjeta.
  *
  * @example
- * &lt;WeatherCardCompact
- *   ciudad="Lobería"
- *   temp={22}
- *   icon="01d"
- *   descripcion="Soleado"
+ * &lt;WeatherCarousel
+ *   locations={[
+ *     { ciudad: "Loberia" },
+ *     { ciudad: "San Manuel" },
+ *   ]}
+ *   interval={3000}
  * />
  */
-const WeatherCardCompact = ({ ciudad, temp, icon, descripcion }) => {
-  const Icono = iconosOWMtoFa[icon] || FaCloud;
-  const claseIcono = `${obtenerClaseIcono(icon)} compact-icon`;
+const WeatherCarousel = ({ locations = defaultLocations, interval = 5000 }) => {
+  /** Índice de la tarjeta activa en el carrusel */
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  /** Estado para pausar la rotación al pasar el mouse */
+  const [isPaused, setIsPaused] = useState(false);
+
+  /** Datos del clima para cada ubicación */
+  const [weatherData, setWeatherData] = useState(
+    Array(locations.length).fill(null)
+  );
+
+  /**
+   * Efecto para rotar automáticamente las tarjetas cada `interval`.
+   * Se pausa si `isPaused` es true.
+   */
+  useEffect(() => {
+    if (isPaused) return;
+
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % locations.length);
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [locations.length, interval, isPaused]);
+
+  /**
+   * Efecto para cargar los datos del clima desde la API de Global.
+   * Si falla la petición, muestra "Sin datos".
+   */
+  useEffect(() => {
+    locations.forEach((loc, idx) => {
+      let url;
+      if (loc.lat !== undefined &amp;&amp; loc.lon !== undefined) {
+        url = `${Global.url}weather?lat=${loc.lat}&amp;lon=${loc.lon}`;
+      } else {
+        url = `${Global.url}weather?city=${encodeURIComponent(loc.ciudad)}`;
+      }
+
+      axios
+        .get(url)
+        .then((res) => {
+          setWeatherData((prev) => {
+            const nuevo = [...prev];
+            nuevo[idx] = {
+              ciudad: loc.ciudad,
+              temp: res.data.temp,
+              icon: res.data.icon,
+              descripcion: res.data.descripcion,
+            };
+            return nuevo;
+          });
+        })
+        .catch(() => {
+          setWeatherData((prev) => {
+            const nuevo = [...prev];
+            nuevo[idx] = {
+              ciudad: loc.ciudad,
+              temp: null,
+              icon: null,
+              descripcion: "Sin datos",
+            };
+            return nuevo;
+          });
+        });
+    });
+  }, [locations]);
+
+  /** Pausa la rotación al pasar el mouse */
+  const handleMouseEnter = () => setIsPaused(true);
+
+  /** Reanuda la rotación al salir el mouse */
+  const handleMouseLeave = () => setIsPaused(false);
+
+  /** Datos del clima de la tarjeta activa */
+  const currentWeather = weatherData[activeIndex];
 
   return (
-    &lt;div className="weather-card-compact">
-      &lt;div className="compact-city">{ciudad}&lt;/div>
-      &lt;Icono size={32} className={claseIcono} />
-      &lt;div className="compact-temp">
-        {temp !== undefined ? Math.round(temp) + "°" : "-"}
+    &lt;div
+      className="weather-carousel"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      &lt;div className="active-weather-card">
+        {currentWeather ? (
+          &lt;WeatherCardCompact {...currentWeather} />
+        ) : (
+          &lt;div style={{ minWidth: 90, minHeight: 90 }}>&lt;/div>
+        )}
       &lt;/div>
-      {descripcion &amp;&amp; &lt;div className="compact-desc">{descripcion}&lt;/div>}
     &lt;/div>
   );
 };
 
-export default WeatherCardCompact;
+export default WeatherCarousel;
 </code></pre>
         </article>
     </section>

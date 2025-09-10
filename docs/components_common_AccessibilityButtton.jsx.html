@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>components/cards/WeatherCardCompact.jsx - Documentation</title>
+    <title>components/common/AccessibilityButtton.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">components/cards/WeatherCardCompact.jsx</h1>
+    <h1 class="page-title">components/common/AccessibilityButtton.jsx</h1>
     
 
     
@@ -39,111 +39,202 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {
-  FaBolt,
-  FaCloud,
-  FaCloudRain,
-  FaMoon,
-  FaSmog,
-  FaSnowflake,
-  FaSun,
-} from "react-icons/fa";
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect, useRef } from "react";
+import { IoAccessibility } from "react-icons/io5";
+import "../../styles/stickyButton.css";
 
 /**
- * Mapeo de códigos de iconos de OpenWeatherMap a iconos de react-icons.
- * @type {Object.&lt;string, React.ComponentType>}
- */
-const iconosOWMtoFa = {
-  "01d": FaSun,
-  "01n": FaMoon,
-  "02d": FaCloud,
-  "02n": FaCloud,
-  "03d": FaCloud,
-  "03n": FaCloud,
-  "04d": FaCloud,
-  "04n": FaCloud,
-  "09d": FaCloudRain,
-  "09n": FaCloudRain,
-  "10d": FaCloudRain,
-  "10n": FaCloudRain,
-  "11d": FaBolt,
-  "11n": FaBolt,
-  "13d": FaSnowflake,
-  "13n": FaSnowflake,
-  "50d": FaSmog,
-  "50n": FaSmog,
-};
-
-/**
- * Devuelve la clase CSS correspondiente a un código de icono de OpenWeatherMap.
+ * Componente `AccessibilityButton`
  *
- * @param {string} codigoIcono - Código del icono (ej: "01d", "10n").
- * @returns {string} Clase CSS asociada al icono.
- */
-const obtenerClaseIcono = (codigoIcono) => {
-  const clases = {
-    "01d": "icono-sol",
-    "01n": "icono-luna",
-    "02d": "icono-nube",
-    "02n": "icono-nube-noche",
-    "03d": "icono-nube",
-    "03n": "icono-nube-noche",
-    "04d": "icono-nube",
-    "04n": "icono-nube-noche",
-    "09d": "icono-lluvia",
-    "09n": "icono-lluvia-noche",
-    "10d": "icono-lluvia",
-    "10n": "icono-lluvia-noche",
-    "11d": "icono-tormenta",
-    "11n": "icono-tormenta-noche",
-    "13d": "icono-nieve",
-    "13n": "icono-nieve-noche",
-    "50d": "icono-niebla",
-    "50n": "icono-niebla-noche",
-  };
-  return clases[codigoIcono] || "icono-nube";
-};
-
-/**
- * Componente `WeatherCardCompact`
+ * Proporciona un menú de accesibilidad que permite:
+ * - Ajustar el tamaño de fuente.
+ * - Activar alto contraste.
+ * - Activar modo oscuro.
+ * - Subrayar enlaces.
+ * - Activar fuente para dislexia.
+ * - Leer el contenido de la página en voz alta.
+ * - Pausar, continuar o detener la lectura.
+ * - Restablecer todos los ajustes de accesibilidad.
  *
- * Muestra de manera compacta la información del clima de una ciudad,
- * incluyendo ciudad, temperatura, icono y descripción breve.
+ * Está diseñado para aplicarse sobre el elemento con id `main-content`.
  *
- * @param {Object} props - Propiedades del componente.
- * @param {string} props.ciudad - Nombre de la ciudad.
- * @param {number} [props.temp] - Temperatura actual en grados Celsius.
- * @param {string} [props.icon] - Código de icono de OpenWeatherMap (ej: "01d").
- * @param {string} [props.descripcion] - Descripción breve del clima (ej: "Soleado").
- *
- * @returns {JSX.Element} Componente visual del clima compacto.
+ * @component
  *
  * @example
- * &lt;WeatherCardCompact
- *   ciudad="Lobería"
- *   temp={22}
- *   icon="01d"
- *   descripcion="Soleado"
- * />
+ * &lt;AccessibilityButton />
  */
-const WeatherCardCompact = ({ ciudad, temp, icon, descripcion }) => {
-  const Icono = iconosOWMtoFa[icon] || FaCloud;
-  const claseIcono = `${obtenerClaseIcono(icon)} compact-icon`;
+const AccessibilityButton = () => {
+  const [fontSize, setFontSize] = useState(1);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [reading, setReading] = useState(false);
+  const [isHighContrast, setIsHighContrast] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isUnderlineLinks, setIsUnderlineLinks] = useState(false);
+  const [isDyslexiaFont, setIsDyslexiaFont] = useState(false);
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  // Cierra el menú si se hace click fuera del mismo
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        menuOpen &amp;&amp;
+        menuRef.current &amp;&amp;
+        !menuRef.current.contains(event.target) &amp;&amp;
+        buttonRef.current &amp;&amp;
+        !buttonRef.current.contains(event.target)
+      ) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
+
+  /**
+   * Cambia el tamaño de fuente del contenido principal.
+   * @param {number} size - Nuevo tamaño de fuente en rem (0.8 a 1.5).
+   */
+  const changeFontSize = (size) => {
+    const mainContent = document.getElementById("main-content");
+    const newSize = Math.max(0.8, Math.min(size, 1.5));
+    if (mainContent) {
+      mainContent.style.fontSize = `${newSize}rem`;
+      setFontSize(newSize);
+    }
+  };
+
+  /** Alterna el alto contraste */
+  const toggleContrast = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.classList.toggle("high-contrast");
+      setIsHighContrast(!isHighContrast);
+    }
+  };
+
+  /** Alterna el modo oscuro */
+  const toggleDarkMode = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.classList.toggle("dark-mode");
+      setIsDarkMode(!isDarkMode);
+    }
+  };
+
+  /** Alterna el subrayado de enlaces */
+  const toggleUnderlineLinks = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.classList.toggle("underline-links");
+      setIsUnderlineLinks(!isUnderlineLinks);
+    }
+  };
+
+  /** Alterna la fuente para dislexia */
+  const toggleDyslexiaFont = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.classList.toggle("dyslexia-font");
+      setIsDyslexiaFont(!isDyslexiaFont);
+    }
+  };
+
+  /** Lee el contenido principal en voz alta */
+  const readText = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent &amp;&amp; mainContent.innerText.trim()) {
+      window.speechSynthesis.cancel();
+      const speech = new window.SpeechSynthesisUtterance();
+      speech.text = mainContent.innerText;
+      speech.lang = "es-ES";
+      setReading(true);
+      speech.onend = () => setReading(false);
+      window.speechSynthesis.speak(speech);
+    } else {
+      alert("No se encontró contenido para leer.");
+    }
+  };
+
+  /** Pausa o reanuda la lectura en curso */
+  const pauseOrResume = () => {
+    if (window.speechSynthesis.speaking) {
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      } else {
+        window.speechSynthesis.pause();
+      }
+    }
+  };
+
+  /** Detiene la lectura en curso */
+  const stopReading = () => {
+    window.speechSynthesis.cancel();
+    setReading(false);
+  };
+
+  /** Restablece todos los ajustes de accesibilidad */
+  const resetAccessibility = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.style.fontSize = "1rem";
+      setFontSize(1);
+      mainContent.classList.remove(
+        "high-contrast",
+        "dark-mode",
+        "underline-links",
+        "dyslexia-font"
+      );
+      stopReading();
+      setIsHighContrast(false);
+      setIsDarkMode(false);
+      setIsUnderlineLinks(false);
+      setIsDyslexiaFont(false);
+    }
+  };
 
   return (
-    &lt;div className="weather-card-compact">
-      &lt;div className="compact-city">{ciudad}&lt;/div>
-      &lt;Icono size={32} className={claseIcono} />
-      &lt;div className="compact-temp">
-        {temp !== undefined ? Math.round(temp) + "°" : "-"}
-      &lt;/div>
-      {descripcion &amp;&amp; &lt;div className="compact-desc">{descripcion}&lt;/div>}
+    &lt;div
+      className="accessibility-wrapper"
+      role="region"
+      aria-label="Menú de accesibilidad"
+    >
+      &lt;button
+        ref={buttonRef}
+        className="accessibility-trigger"
+        aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+        aria-expanded={menuOpen}
+        aria-controls="accessibility-menu"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        &lt;IoAccessibility />
+      &lt;/button>
+
+      {menuOpen &amp;&amp; (
+        &lt;div
+          ref={menuRef}
+          className="accessibility-menu"
+          id="accessibility-menu"
+          role="menu"
+          tabIndex={-1}
+        >
+          &lt;button onClick={() => changeFontSize(fontSize + 0.1)} aria-label="Aumentar texto" role="menuitem">A+&lt;/button>
+          &lt;button onClick={() => changeFontSize(fontSize - 0.1)} aria-label="Disminuir texto" role="menuitem">A-&lt;/button>
+          &lt;button onClick={toggleContrast} aria-label="Alto contraste" role="menuitem">Alto contraste&lt;/button>
+          &lt;button onClick={toggleDarkMode} aria-label="Modo oscuro" role="menuitem">Modo oscuro&lt;/button>
+          &lt;button onClick={toggleUnderlineLinks} aria-label="Subrayar enlaces" role="menuitem">Subrayar enlaces&lt;/button>
+          &lt;button onClick={toggleDyslexiaFont} aria-label="Fuente dislexia" role="menuitem">Fuente dislexia&lt;/button>
+          &lt;button onClick={readText} aria-label="Leer contenido" role="menuitem" disabled={reading}>Leer contenido&lt;/button>
+          &lt;button onClick={pauseOrResume} aria-label="Pausar/Continuar" role="menuitem">Pausar/Continuar&lt;/button>
+          &lt;button onClick={stopReading} aria-label="Detener lectura" role="menuitem">Detener lectura&lt;/button>
+          &lt;button onClick={resetAccessibility} aria-label="Restablecer" role="menuitem">Restablecer&lt;/button>
+        &lt;/div>
+      )}
     &lt;/div>
   );
 };
 
-export default WeatherCardCompact;
+export default AccessibilityButton;
 </code></pre>
         </article>
     </section>

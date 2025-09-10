@@ -1,4 +1,45 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>components/layout/Header.jsx - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#AccessibilityButton">AccessibilityButton</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Admin">Admin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#AdvancedExample">AdvancedExample</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ArenasVerdes">ArenasVerdes</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#AuthContext">AuthContext</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#AuthProvider">AuthProvider</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Banner">Banner</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ButtonSubmit">ButtonSubmit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ButtonSuccess">ButtonSuccess</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CardPage">CardPage</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Clima">Clima</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Contact">Contact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ContentCard">ContentCard</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#ControlledCarousel">ControlledCarousel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Create">Create</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#CreateAdmin">CreateAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Edit">Edit</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Footer">Footer</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ForgotPassword">ForgotPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Global">Global</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Header">Header</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Index">Index</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ListAdmins">ListAdmins</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Loberia">Loberia</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#NominatimAutocomplete">NominatimAutocomplete</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PanelAdmin">PanelAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#PartidoLoberia">PartidoLoberia</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Register">Register</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ResetPassword">ResetPassword</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Routing">Routing</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#SanManuel">SanManuel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#ScrollToTopButton">ScrollToTopButton</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Searcher">Searcher</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#Suscribe">Suscribe</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#UpdateAdmin">UpdateAdmin</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#WeatherCardCompact">WeatherCardCompact</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#WeatherCarousel">WeatherCarousel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#Whatsapp">Whatsapp</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#defaultLocations">defaultLocations</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#diasSemana">diasSemana</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#i18n">i18n</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#iconosOWMtoFa">iconosOWMtoFa</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#navigate">navigate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#obtenerClaseIcono">obtenerClaseIcono</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#useAuth">useAuth</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#useClickOutside">useClickOutside</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">components/layout/Header.jsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import "bootstrap/dist/css/bootstrap.min.css";
 import React, {
   useEffect,
   useMemo,
@@ -35,7 +76,7 @@ import { Global } from "../../helpers/Global";
 const useClickOutside = (ref, callback) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (ref.current &amp;&amp; !ref.current.contains(event.target)) {
         callback();
       }
     };
@@ -59,7 +100,7 @@ const useClickOutside = (ref, callback) => {
  *
  * @component
  * @example
- * <Header />
+ * &lt;Header />
  *
  * @returns {JSX.Element} Navbar responsive con búsqueda, menú y selección de idioma.
  */
@@ -170,7 +211,7 @@ export const Header = () => {
 
   /** Maneja click en una sugerencia */
   useEffect(() => {
-    if (searchQuery.length < 2) {
+    if (searchQuery.length &lt; 2) {
       setSuggestions([]);
       return;
     }
@@ -384,9 +425,9 @@ export const Header = () => {
 
    // 🔹 Render JSX
 return (
-    <>
+    &lt;>
       {/** ==================== NAVBAR PRINCIPAL ==================== */}
-      <nav
+      &lt;nav
         ref={navRef}
         className={`navbar sticky-top shadow-sm navBar text-nav header border-nav
           ${
@@ -399,21 +440,21 @@ return (
           ${showMenu ? "nav-menu-open" : ""}
         `}
       >
-        <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
+        &lt;div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
           
           {/** Logo */}
-          <div className="logo-container">
-            <Link
+          &lt;div className="logo-container">
+            &lt;Link
               to="/"
               className="navbar-brand d-flex align-items-center gap-2 m-0"
               onClick={handleLogoClick}
             >
               {/** Imagen del logo */}
-              <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
+              &lt;img className="logoLoberia" src={logoLoberia} alt="Lobería" />
               
               {/** Texto del logo con efecto Typewriter */}
-              <div className={`logo-text loberia ${scrolled ? "nav-transparent" : ""}`}>
-                <strong
+              &lt;div className={`logo-text loberia ${scrolled ? "nav-transparent" : ""}`}>
+                &lt;strong
                   className="primary"
                   style={{
                     fontFamily: "MADE Tommy Soft, sans-serif",
@@ -424,9 +465,9 @@ return (
                   }}
                 >
                   Lobería
-                </strong>
-                <span className="typewriter-react">
-                  <Typewriter
+                &lt;/strong>
+                &lt;span className="typewriter-react">
+                  &lt;Typewriter
                     options={{
                       strings: [
                         t("patrimonio"),
@@ -440,34 +481,34 @@ return (
                       deleteSpeed: 50,
                     }}
                   />
-                </span>
-              </div>
-            </Link>
-          </div>
+                &lt;/span>
+              &lt;/div>
+            &lt;/Link>
+          &lt;/div>
 
           {/** ==================== NAV DESKTOP ==================== */}
-          <div className="d-none d-md-flex align-items-center gap-4">
+          &lt;div className="d-none d-md-flex align-items-center gap-4">
             {menuData.map(({ id, subitems }, idx) => (
-              <div
+              &lt;div
                 key={idx}
                 className="desktop-nav-item position-relative"
                 onClick={(e) => toggleItem(id, e)}
               >
                 {/** Nombre del item principal */}
-                <strong>{t(id)}</strong>
+                &lt;strong>{t(id)}&lt;/strong>
                 
                 {/** Icono de flecha desplegable */}
-                <FaChevronDown
+                &lt;FaChevronDown
                   className={`transition-arrow${openItem === id ? " rotate" : ""}`}
                   size={12}
                 />
 
                 {/** Submenu desplegable */}
-                {openItem === id && (
-                  <ul className="submenu-desktop position-absolute shadow p-2 mt-2">
+                {openItem === id &amp;&amp; (
+                  &lt;ul className="submenu-desktop position-absolute shadow p-2 mt-2">
                     {subitems.map((subKey, i) => (
-                      <li key={i} className="py-1 px-2 nav-subitem">
-                        <Link
+                      &lt;li key={i} className="py-1 px-2 nav-subitem">
+                        &lt;Link
                           to={getSubitemRoute(id, subKey)}
                           className="text-decoration-none"
                           onClick={(e) => {
@@ -477,97 +518,97 @@ return (
                           }}
                         >
                           {t(subKey)}
-                        </Link>
-                      </li>
+                        &lt;/Link>
+                      &lt;/li>
                     ))}
-                  </ul>
+                  &lt;/ul>
                 )}
-              </div>
+              &lt;/div>
             ))}
 
             {/** Link a la sección Clima */}
-            <Link to="/Clima" className="text-decoration-none text-inherit">
-              <strong className="ms-3 d-flex align-items-center gap-1">
-                <FaCloudSun className="text-inherit logoNav" />
-                <span className="nav-hover-effect">{t("Clima")}</span>
-              </strong>
-            </Link>
+            &lt;Link to="/Clima" className="text-decoration-none text-inherit">
+              &lt;strong className="ms-3 d-flex align-items-center gap-1">
+                &lt;FaCloudSun className="text-inherit logoNav" />
+                &lt;span className="nav-hover-effect">{t("Clima")}&lt;/span>
+              &lt;/strong>
+            &lt;/Link>
 
             {/** Selector de idioma */}
-            <div
+            &lt;div
               ref={languageRef}
               className="position-relative"
               onClick={toggleLanguage}
               style={{ cursor: "pointer" }}
             >
-              <div className="d-flex align-items-center gap-1">
-                <FaGlobe />
-                <strong className="nav-hover-effect">
+              &lt;div className="d-flex align-items-center gap-1">
+                &lt;FaGlobe />
+                &lt;strong className="nav-hover-effect">
                   {i18n.language === "es" ? t("espanol") : t("ingles")}
-                </strong>
-                <FaChevronDown
+                &lt;/strong>
+                &lt;FaChevronDown
                   className={`transition-arrow${showLanguage ? " rotate" : ""}`}
                   size={12}
                 />
-              </div>
+              &lt;/div>
 
-              {showLanguage && (
-                <ul
+              {showLanguage &amp;&amp; (
+                &lt;ul
                   className="submenu-desktop position-absolute shadow p-2 mt-2 bg-white"
                   style={{ zIndex: 1000 }}
                 >
-                  <li className="px-2 py-1" onClick={() => changeLanguage("es")}>
-                    {i18n.language === "es" && <FaCheck className="me-2 text-success" />}
+                  &lt;li className="px-2 py-1" onClick={() => changeLanguage("es")}>
+                    {i18n.language === "es" &amp;&amp; &lt;FaCheck className="me-2 text-success" />}
                     {t("espanol")}
-                  </li>
-                  <li className="px-2 py-1" onClick={() => changeLanguage("en")}>
-                    {i18n.language === "en" && <FaCheck className="me-2 text-success" />}
+                  &lt;/li>
+                  &lt;li className="px-2 py-1" onClick={() => changeLanguage("en")}>
+                    {i18n.language === "en" &amp;&amp; &lt;FaCheck className="me-2 text-success" />}
                     {t("ingles")}
-                  </li>
-                </ul>
+                  &lt;/li>
+                &lt;/ul>
               )}
-            </div>
+            &lt;/div>
 
             {/** Botón mostrar/ocultar barra de búsqueda */}
             {showSearch ? (
-              <FaTimes
+              &lt;FaTimes
                 className="text-inherit"
                 onClick={handleSearchToggle}
                 style={{ cursor: "pointer" }}
               />
             ) : (
-              <FaSearch
+              &lt;FaSearch
                 className="text-inherit"
                 onClick={handleSearchToggle}
                 style={{ cursor: "pointer" }}
               />
             )}
-          </div>
+          &lt;/div>
 
           {/** ==================== NAV MOBILE ==================== */}
-          <div className="d-flex align-items-center gap-2 d-md-none mobile-icon">
+          &lt;div className="d-flex align-items-center gap-2 d-md-none mobile-icon">
             {/** Clima mobile */}
-            <strong className="border-item-nav d-flex align-items-center gap-1">
-              <Link to="/Clima" className="text-decoration-none border-item-nav">
-                <FaCloudSun className="primary logoNav" />
-              </Link>
-            </strong>
-            <div className="vertical-divider"></div>
+            &lt;strong className="border-item-nav d-flex align-items-center gap-1">
+              &lt;Link to="/Clima" className="text-decoration-none border-item-nav">
+                &lt;FaCloudSun className="primary logoNav" />
+              &lt;/Link>
+            &lt;/strong>
+            &lt;div className="vertical-divider">&lt;/div>
 
             {/** Selector de idioma mobile */}
-            <div className="position-relative">
-              <div className="d-flex align-items-center border-item-nav" onClick={(e) => toggleLanguage(e)}>
-                <FaGlobe className="me-1 primary" />
-                <strong className="primary">
+            &lt;div className="position-relative">
+              &lt;div className="d-flex align-items-center border-item-nav" onClick={(e) => toggleLanguage(e)}>
+                &lt;FaGlobe className="me-1 primary" />
+                &lt;strong className="primary">
                   {i18n.language === "es" ? t("espanol") : t("ingles")}
-                </strong>
-                <FaChevronDown
+                &lt;/strong>
+                &lt;FaChevronDown
                   className={`primary transition-arrow${showLanguage ? " rotate" : ""}`}
                   size={12}
                 />
-              </div>
-              {showLanguage && (
-                <ul
+              &lt;/div>
+              {showLanguage &amp;&amp; (
+                &lt;ul
                   className="submenu-mobile position-absolute shadow p-2 mt-2 bg-white"
                   style={{
                     zIndex: 2000,
@@ -577,73 +618,73 @@ return (
                     textAlign: "right",
                   }}
                 >
-                  <li className="px-2 py-1" onClick={() => changeLanguage("es")}>
-                    {i18n.language === "es" && <FaCheck className="me-2 text-success" />}
+                  &lt;li className="px-2 py-1" onClick={() => changeLanguage("es")}>
+                    {i18n.language === "es" &amp;&amp; &lt;FaCheck className="me-2 text-success" />}
                     {t("espanol")}
-                  </li>
-                  <li className="px-2 py-1" onClick={() => changeLanguage("en")}>
-                    {i18n.language === "en" && <FaCheck className="me-2 text-success" />}
+                  &lt;/li>
+                  &lt;li className="px-2 py-1" onClick={() => changeLanguage("en")}>
+                    {i18n.language === "en" &amp;&amp; &lt;FaCheck className="me-2 text-success" />}
                     {t("ingles")}
-                  </li>
-                </ul>
+                  &lt;/li>
+                &lt;/ul>
               )}
-            </div>
-            <div className="vertical-divider"></div>
-          </div>
+            &lt;/div>
+            &lt;div className="vertical-divider">&lt;/div>
+          &lt;/div>
 
           {/** Botón hamburguesa para abrir/ocultar menú mobile */}
-          <button className="btn p-0 d-md-none primary" onClick={() => setShowMenu(!showMenu)}>
-            {showMenu ? <FaTimes className="primary" size={24} /> : <FaBars size={24} />}
-          </button>
-        </div>
-      </nav>
+          &lt;button className="btn p-0 d-md-none primary" onClick={() => setShowMenu(!showMenu)}>
+            {showMenu ? &lt;FaTimes className="primary" size={24} /> : &lt;FaBars size={24} />}
+          &lt;/button>
+        &lt;/div>
+      &lt;/nav>
 
       {/** ==================== BARRA DE BÚSQUEDA DESKTOP ==================== */}
-      {showSearch && (
-        <div
+      {showSearch &amp;&amp; (
+        &lt;div
           ref={searchRef}
           className="desktop-search-bar p-3 border-nav d-none d-md-block position-sticky"
           style={{ zIndex: 1050 }}
         >
-          <form className="search-desktop-form position-relative" onSubmit={handleSearchSubmit}>
-            <input
+          &lt;form className="search-desktop-form position-relative" onSubmit={handleSearchSubmit}>
+            &lt;input
               type="text"
               className="form-control me-3"
               placeholder={t("Buscar...")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="btn btn-white" type="submit">
-              <FaSearch className="desktop-search-icon" />
-            </button>
-          </form>
+            &lt;button className="btn btn-white" type="submit">
+              &lt;FaSearch className="desktop-search-icon" />
+            &lt;/button>
+          &lt;/form>
 
-          {suggestions.length > 0 && (
-            <ul className="suggestions-dropdown-index">
+          {suggestions.length > 0 &amp;&amp; (
+            &lt;ul className="suggestions-dropdown-index">
               {suggestions.map((s, i) => (
-                <li
+                &lt;li
                   key={i}
                   className="suggestion-item p-2 cursor-pointer d-flex justify-content-between align-items-center"
                   onClick={() => handleSuggestionClick(s)}
                 >
-                  <span>{s.value}</span>
-                  <span className="suggestion-type text-muted small">
-                    <FaArrowRight className="me-1" />
+                  &lt;span>{s.value}&lt;/span>
+                  &lt;span className="suggestion-type text-muted small">
+                    &lt;FaArrowRight className="me-1" />
                     {s.type === "title" ? "Título" : "Categoría"}
-                  </span>
-                </li>
+                  &lt;/span>
+                &lt;/li>
               ))}
-            </ul>
+            &lt;/ul>
           )}
-        </div>
+        &lt;/div>
       )}
 
       {/** ==================== MENÚ MOBILE ==================== */}
-      {showMenu && (
-        <div className="mobile-menu d-flex flex-column p-3 pt-5 menu-padding">
+      {showMenu &amp;&amp; (
+        &lt;div className="mobile-menu d-flex flex-column p-3 pt-5 menu-padding">
           {/** Barra de búsqueda mobile */}
-          <div className="search-container mb-4 position-relative">
-            <form
+          &lt;div className="search-container mb-4 position-relative">
+            &lt;form
               className="input-group search-bar-custom"
               onSubmit={(e) => {
                 e.preventDefault();
@@ -653,7 +694,7 @@ return (
                 setShowMenu(false);
               }}
             >
-              <input
+              &lt;input
                 name="searchMobile"
                 type="text"
                 className="form-control search-input"
@@ -661,53 +702,53 @@ return (
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button className="btn-buscador btn btn-outline-secondary" type="submit">
-                <FaSearch />
-              </button>
-            </form>
+              &lt;button className="btn-buscador btn btn-outline-secondary" type="submit">
+                &lt;FaSearch />
+              &lt;/button>
+            &lt;/form>
 
-            {suggestions.length > 0 && (
-              <ul className="suggestions-dropdown-mobile position-absolute start-0 end-0 bg-white shadow rounded mt-1">
+            {suggestions.length > 0 &amp;&amp; (
+              &lt;ul className="suggestions-dropdown-mobile position-absolute start-0 end-0 bg-white shadow rounded mt-1">
                 {suggestions.map((s, i) => (
-                  <li
+                  &lt;li
                     key={i}
                     className="suggestion-item p-2 cursor-pointer d-flex justify-content-between align-items-center"
                     onClick={() => handleSuggestionClick(s)}
                   >
-                    <span>{s.value}</span>
-                    <span className="suggestion-type text-muted small">
-                      <FaArrowRight className="me-1" />
+                    &lt;span>{s.value}&lt;/span>
+                    &lt;span className="suggestion-type text-muted small">
+                      &lt;FaArrowRight className="me-1" />
                       {s.type === "title" ? "Título" : "Categoría"}
-                    </span>
-                  </li>
+                    &lt;/span>
+                  &lt;/li>
                 ))}
-              </ul>
+              &lt;/ul>
             )}
-          </div>
+          &lt;/div>
 
           {/** Menú principal mobile */}
-          <ul className="menu-list px-0">
-            <li className="menu-item d-flex justify-content-between align-items-center mb-3">
-              <Link
+          &lt;ul className="menu-list px-0">
+            &lt;li className="menu-item d-flex justify-content-between align-items-center mb-3">
+              &lt;Link
                 to="/Suscribirse"
                 className="d-flex justify-content-between align-items-center text-decoration-none"
                 onClick={() => setShowMenu(false)}
               >
-                <strong className="text-white">{t("suscribirme")}</strong>
-                <FaBell className="text-white bell-icon" />
-              </Link>
-            </li>
+                &lt;strong className="text-white">{t("suscribirme")}&lt;/strong>
+                &lt;FaBell className="text-white bell-icon" />
+              &lt;/Link>
+            &lt;/li>
             {menuData.map(({ id, subitems }, idx) => (
-              <li key={idx} className="menu-item">
-                <div className="d-flex justify-content-between align-items-center" onClick={(e) => toggleItem(id, e)}>
-                  <strong>{t(id)}</strong>
-                  <FaChevronDown className={`arrow${openItem === id ? " rotate" : ""}`} />
-                </div>
-                {openItem === id && (
-                  <ul className="submenu mt-2">
+              &lt;li key={idx} className="menu-item">
+                &lt;div className="d-flex justify-content-between align-items-center" onClick={(e) => toggleItem(id, e)}>
+                  &lt;strong>{t(id)}&lt;/strong>
+                  &lt;FaChevronDown className={`arrow${openItem === id ? " rotate" : ""}`} />
+                &lt;/div>
+                {openItem === id &amp;&amp; (
+                  &lt;ul className="submenu mt-2">
                     {subitems.map((sub, i) => (
-                      <li key={i}>
-                        <Link
+                      &lt;li key={i}>
+                        &lt;Link
                           to={getSubitemRoute(id, sub)}
                           onClick={(e) => {
                             e.stopPropagation();
@@ -716,16 +757,34 @@ return (
                           }}
                         >
                           {t(sub)}
-                        </Link>
-                      </li>
+                        &lt;/Link>
+                      &lt;/li>
                     ))}
-                  </ul>
+                  &lt;/ul>
                 )}
-              </li>
+              &lt;/li>
             ))}
-          </ul>
-        </div>
+          &lt;/ul>
+        &lt;/div>
       )}
-    </>
+    &lt;/>
   );
-};
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Wed Sep 10 2025 14:36:16 GMT-0300 (hora estándar de Argentina) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

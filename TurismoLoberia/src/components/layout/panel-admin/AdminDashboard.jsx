@@ -23,6 +23,25 @@ ChartJS.register(
   ArcElement
 );
 
+/**
+ * Componente `AdminDashboard`
+ *
+ * Dashboard para el panel de administración de suscripciones.
+ * Muestra estadísticas de usuarios:
+ * - Total de suscripciones
+ * - Porcentaje de aceptación
+ * - Transporte elegido por los usuarios
+ * - Fuente de contacto
+ *
+ * Obtiene los datos mediante un fetch a la API en `${Global.url}subscriptions/stats`.
+ *
+ * @component
+ *
+ * @returns {JSX.Element} Componente de dashboard con gráficas y estadísticas.
+ *
+ * @example
+ * <AdminDashboard />
+ */
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
 
@@ -34,6 +53,7 @@ export default function AdminDashboard() {
         console.error("Error al obtener estadísticas:", err);
       });
   }, []);
+
   if (!stats)
     return (
       <p style={{ textAlign: "center", marginTop: "50px" }}>

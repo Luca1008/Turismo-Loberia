@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>pages/Contact.jsx - Documentation</title>
+    <title>components/layout/Edit.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">pages/Contact.jsx</h1>
+    <h1 class="page-title">components/layout/Edit.jsx</h1>
     
 
     
@@ -39,189 +39,287 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect, useRef } from "react";
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
-import "../styles/contact.css";
-import { useTranslation } from "react-i18next";
-import { trackEvent } from "../analytics";
-import { Global } from "../helpers/Global";
-import ButtonSubmit from "../components/common/ButtonSubmit";
+import ButtonSubmit from "../common/ButtonSubmit";
+import Button from "react-bootstrap/Button";
+import NominatimAutocomplete from "../common/NominatimAutocomplete";
+import { Global } from "../../helpers/Global";
 
 /**
- * Componente `Contact`
+ * Componente `Edit`
  *
- * Renderiza un formulario de contacto con tracking de interacciones
- * y estados de envío.
+ * Formulario para editar un contenido/card existente. Permite modificar
+ * todos los campos de la card, incluida la imagen de portada.
  *
  * @component
+ * 
+ * @param {Object} props
+ * @param {string} props.cardId - ID de la card que se desea editar.
+ * @param {Function} [props.onClose] - Función opcional para cerrar el modal/formulario.
+ * @param {Function} [props.onUpdate] - Función opcional que se ejecuta tras actualizar correctamente.
+ *
+ * @example
+ * &lt;Edit cardId="123" onClose={() => setShow(false)} onUpdate={fetchCards} />
+ *
+ * @returns {JSX.Element} Formulario de edición de card con manejo de estado y validaciones.
  */
-export const Contact = () => {
+const Edit = ({ cardId, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
+    titulo: "",
+    descripcion: "",
+    ubicacion: "",
+    linkUbicacion: "",
+    lat: "",
+    lon: "",
+    horario: "",
+    contacto: "",
+    informacion: "",
+    ciudad: "",
+    categoria: "",
+    fecha: "",
   });
-  const [status, setStatus] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const { t, i18n } = useTranslation();
 
-  const interactionTracked = useRef(false);
+  const [imagen, setImagen] = useState(null);
+  const [imagenActual, setImagenActual] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
 
+  /**
+   * Carga los datos de la card desde la API al montar el componente o cuando cambia `cardId`.
+   */
   useEffect(() => {
-    trackEvent({
-      category: "Formulario",
-      action: "Vista página contacto",
-      label: "Página Contacto",
-    });
-  }, []);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (!interactionTracked.current) {
-      trackEvent({
-        category: "Formulario",
-        action: "Inicio interacción",
-        label: "Contacto",
-      });
-      interactionTracked.current = true;
+    if (cardId) {
+      fetchCardData();
     }
+  }, [cardId]);
 
-    if (status === "error") {
-      trackEvent({
-        category: "Formulario",
-        action: "Corrige error",
-        label: `Campo: ${name}`,
-      });
-      setStatus("");
-      setErrorMessage("");
+  /**
+   * Obtiene los datos de la card desde el backend y los setea en el estado `formData`.
+   */
+  const fetchCardData = async () => {
+    try {
+      const response = await fetch(`${Global.url}cards/${cardId}`);
+      if (response.ok) {
+        const card = await response.json();
+        setFormData({
+          titulo: card.card_title || "",
+          descripcion: card.card_description || "",
+          ubicacion: card.card_ubicacion || "",
+          linkUbicacion: card.card_link_ubicacion || "",
+          lat: card.card_lat || "",
+          lon: card.card_lon || "",
+          horario: card.card_horario || "",
+          contacto: card.card_contacto || "",
+          informacion: card.card_info || "",
+          ciudad: card.card_city || "",
+          categoria: card.card_category || "",
+          fecha: card.card_date ? card.card_date.substring(0, 10) : "",
+        });
+        setImagenActual(card.card_img_portada || "");
+      } else {
+        setError("Error al cargar los datos de la card.");
+      }
+    } catch (err) {
+      console.error("Error en fetchCardData:", err);
+      setError("Error de conexión al cargar los datos.");
     }
   };
 
+  /**
+   * Actualiza `formData` al cambiar los campos del formulario.
+   * @param {React.ChangeEvent&lt;HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>} e 
+   */
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  /**
+   * Actualiza el estado `imagen` al seleccionar un archivo.
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e 
+   */
+  const handleFileChange = (e) => {
+    setImagen(e.target.files[0]);
+  };
+
+  /**
+   * Envía el formulario para actualizar la card. Usa FormData para enviar datos y archivo.
+   * Muestra mensajes de éxito o error.
+   * @param {React.FormEvent&lt;HTMLFormElement>} e 
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("enviando");
-    setErrorMessage("");
+    setLoading(true);
+    setMensaje("");
+    setError("");
 
     try {
-      const response = await fetch(`${Global.url}send-email`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const data = new FormData();
+      data.append("card_title", formData.titulo);
+      data.append("card_description", formData.descripcion);
+      data.append("card_ubicacion", formData.ubicacion);
+      data.append("card_link_ubicacion", formData.linkUbicacion);
+      data.append("card_lat", formData.lat);
+      data.append("card_lon", formData.lon);
+      data.append("card_horario", formData.horario);
+      data.append("card_contacto", formData.contacto);
+      data.append("card_info", formData.informacion);
+      data.append("card_city", formData.ciudad);
+      data.append("card_category", formData.categoria);
+      if (formData.categoria === "Evento") {
+        data.append("card_date", formData.fecha);
+      }
+      if (imagen) {
+        data.append("card_img_portada", imagen);
+      }
 
-      const data = await response.json();
+      const response = await fetch(`${Global.url}cards/${cardId}`, {
+        method: "PUT",
+        body: data,
+      });
 
       if (response.ok) {
-        trackEvent({
-          category: "Formulario",
-          action: "Envío exitoso",
-          label: "Formulario de contacto",
-        });
-        setStatus("exitoso");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-        interactionTracked.current = false;
+        setMensaje("¡Card actualizada exitosamente!");
+        setTimeout(() => {
+          if (onClose) onClose();
+          if (onUpdate) onUpdate();
+          window.location.reload();
+        }, 1200);
       } else {
-        trackEvent({
-          category: "Formulario",
-          action: "Error en envío",
-          label: data.error || "Error desconocido",
-        });
-        setStatus("error");
-        setErrorMessage(data.error || "Error al enviar el mensaje");
+        const errorData = await response.json();
+        setError(errorData.error || "Error al actualizar la card.");
       }
-    } catch (error) {
-      console.error("Error en enviado:", error);
-      trackEvent({
-        category: "Formulario",
-        action: "Error técnico",
-        label: "Fallo conexión backend",
-      });
-      setStatus("error");
-      setErrorMessage(
-        "No se pudo conectar con el servidor. Por favor, verifica que el servidor esté corriendo en http://localhost:5000"
-      );
+    } catch (err) {
+      console.error("Error en handleSubmit:", err);
+      setError("Error de conexión con el servidor.");
+    } finally {
+      setLoading(false);
     }
+  };
+
+  /**
+   * Cancela la edición y cierra el modal si existe `onClose`.
+   */
+  const handleCancel = () => {
+    if (onClose) onClose();
   };
 
   return (
-    &lt;section className="contact" key={i18n.language}>
-      &lt;h2>{t("contactanos")}&lt;/h2>
-      &lt;Form onSubmit={handleSubmit} className="form-contact">
-        &lt;Form.Group className="mb-3" controlId="formName">
-          &lt;Form.Label>{t("nombre_apellido")}&lt;/Form.Label>
+    &lt;div className="edit-card-modal">
+      &lt;div className="modal-header">
+        &lt;h3>Editar Card&lt;/h3>
+        &lt;button
+          type="button"
+          className="btn-close"
+          onClick={handleCancel}
+          aria-label="Cerrar"
+        >&lt;/button>
+      &lt;/div>
+
+      &lt;Form
+        className="form-edit-card"
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+      >
+        {/* Campos del formulario similares a Create */}
+        &lt;Form.Group className="mb-3" controlId="titulo">
+          &lt;Form.Label>Título del lugar&lt;/Form.Label>
           &lt;Form.Control
             type="text"
-            name="name"
-            value={formData.name}
+            placeholder="Título"
+            name="titulo"
+            value={formData.titulo}
             onChange={handleChange}
             required
-            placeholder={t("placeholder_nombre")}
           />
         &lt;/Form.Group>
 
-        &lt;Form.Group className="mb-3" controlId="formEmail">
-          &lt;Form.Label>{t("email2")}&lt;/Form.Label>
-          &lt;Form.Control
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            placeholder={t("placeholder_email")}
-          />
-        &lt;/Form.Group>
-
-        &lt;Form.Group className="mb-3" controlId="formSubject">
-          &lt;Form.Label>{t("asunto")}&lt;/Form.Label>
-          &lt;Form.Control
-            type="text"
-            name="subject"
-            value={formData.subject}
-            onChange={handleChange}
-            required
-            placeholder={t("placeholder_asunto")}
-          />
-        &lt;/Form.Group>
-
-        &lt;Form.Group className="mb-3" controlId="formMessage">
-          &lt;Form.Label>{t("mensaje")}&lt;/Form.Label>
+        &lt;Form.Group className="mb-3" controlId="descripcion">
+          &lt;Form.Label>Descripción&lt;/Form.Label>
           &lt;Form.Control
             as="textarea"
-            rows={4}
-            name="message"
-            value={formData.message}
+            rows={6}
+            name="descripcion"
+            value={formData.descripcion}
             onChange={handleChange}
             required
-            placeholder={t("placeholder_mensaje")}
           />
         &lt;/Form.Group>
 
-        &lt;ButtonSubmit
-          type="submit"
-          text={status === "enviando" ? t("enviando") : t("enviar")}
-          disabled={status === "enviando"}
-        />
+        &lt;Form.Group className="mb-3" controlId="ubicacion">
+          &lt;Form.Label>Ubicación&lt;/Form.Label>
+          &lt;NominatimAutocomplete
+            onSelect={(place) => {
+              const ubicacion = place.display_name;
+              const linkUbicacion = `https://www.openstreetmap.org/?mlat=${place.lat}&amp;mlon=${place.lon}#map=18/${place.lat}/${place.lon}`;
+              setFormData((prev) => ({
+                ...prev,
+                ubicacion,
+                linkUbicacion,
+                lat: place.lat,
+                lon: place.lon,
+              }));
+            }}
+          />
+        &lt;/Form.Group>
 
-        {status === "exitoso" &amp;&amp; (
-          &lt;p className="success-message">{t("mensaje_exitoso")}&lt;/p>
+        {formData.linkUbicacion &amp;&amp; (
+          &lt;Form.Group className="mb-3" controlId="linkUbicacion">
+            &lt;Form.Label>Vista previa en OpenStreetMap&lt;/Form.Label>
+            &lt;div>
+              &lt;a
+                href={formData.linkUbicacion}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {formData.linkUbicacion}
+              &lt;/a>
+            &lt;/div>
+          &lt;/Form.Group>
         )}
-        {status === "error" &amp;&amp; (
-          &lt;p className="error-message">{errorMessage}&lt;/p>
-        )}
+
+        {/* Resto de campos: horario, contacto, información, ciudad, categoría, fecha y archivo */}
+        {/* Imagen actual */}
+        &lt;Form.Group className="mb-3" controlId="formFile">
+          {imagenActual &amp;&amp; !imagen &amp;&amp; (
+            &lt;div style={{ marginBottom: "1rem" }}>
+              &lt;img
+                src={imagenActual}
+                alt="Imagen actual"
+                style={{ maxWidth: "100%", maxHeight: "180px", borderRadius: "8px" }}
+              />
+              &lt;div style={{ fontSize: "0.9rem", color: "#888" }}>Imagen actual&lt;/div>
+            &lt;/div>
+          )}
+          &lt;Form.Label>Imagen de Portada&lt;/Form.Label>
+          &lt;Form.Control type="file" accept="image/*" onChange={handleFileChange} />
+          &lt;Form.Text className="text-muted">
+            Deja vacío para mantener la imagen actual
+          &lt;/Form.Text>
+        &lt;/Form.Group>
+
+        {mensaje &amp;&amp; &lt;div className="alert alert-success mt-2">{mensaje}&lt;/div>}
+        {error &amp;&amp; &lt;div className="alert alert-danger mt-2">{error}&lt;/div>}
+
+        &lt;div className="modal-footer">
+          &lt;Button variant="secondary" type="button" className="me-2" onClick={handleCancel}>
+            Cancelar
+          &lt;/Button>
+          &lt;ButtonSubmit
+            type="submit"
+            text={loading ? "Actualizando..." : "Actualizar"}
+            className={`btn btn-primary ${loading ? "loading" : ""}`}
+            disabled={loading}
+          />
+        &lt;/div>
       &lt;/Form>
-    &lt;/section>
+    &lt;/div>
   );
 };
 
-export default Contact;
-</code></pre>
+export default Edit;</code></pre>
         </article>
     </section>
 

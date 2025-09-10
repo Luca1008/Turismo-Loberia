@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>components/cards/WeatherCardCompact.jsx - Documentation</title>
+    <title>components/layout/panel-admin/CreateAdmin.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">components/cards/WeatherCardCompact.jsx</h1>
+    <h1 class="page-title">components/layout/panel-admin/CreateAdmin.jsx</h1>
     
 
     
@@ -39,111 +39,147 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React from "react";
-import {
-  FaBolt,
-  FaCloud,
-  FaCloudRain,
-  FaMoon,
-  FaSmog,
-  FaSnowflake,
-  FaSun,
-} from "react-icons/fa";
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Global } from "../../../helpers/Global";
+import "../../../styles/panelAdmin.css";
 
 /**
- * Mapeo de códigos de iconos de OpenWeatherMap a iconos de react-icons.
- * @type {Object.&lt;string, React.ComponentType>}
- */
-const iconosOWMtoFa = {
-  "01d": FaSun,
-  "01n": FaMoon,
-  "02d": FaCloud,
-  "02n": FaCloud,
-  "03d": FaCloud,
-  "03n": FaCloud,
-  "04d": FaCloud,
-  "04n": FaCloud,
-  "09d": FaCloudRain,
-  "09n": FaCloudRain,
-  "10d": FaCloudRain,
-  "10n": FaCloudRain,
-  "11d": FaBolt,
-  "11n": FaBolt,
-  "13d": FaSnowflake,
-  "13n": FaSnowflake,
-  "50d": FaSmog,
-  "50n": FaSmog,
-};
-
-/**
- * Devuelve la clase CSS correspondiente a un código de icono de OpenWeatherMap.
+ * Componente `CreateAdmin`
  *
- * @param {string} codigoIcono - Código del icono (ej: "01d", "10n").
- * @returns {string} Clase CSS asociada al icono.
- */
-const obtenerClaseIcono = (codigoIcono) => {
-  const clases = {
-    "01d": "icono-sol",
-    "01n": "icono-luna",
-    "02d": "icono-nube",
-    "02n": "icono-nube-noche",
-    "03d": "icono-nube",
-    "03n": "icono-nube-noche",
-    "04d": "icono-nube",
-    "04n": "icono-nube-noche",
-    "09d": "icono-lluvia",
-    "09n": "icono-lluvia-noche",
-    "10d": "icono-lluvia",
-    "10n": "icono-lluvia-noche",
-    "11d": "icono-tormenta",
-    "11n": "icono-tormenta-noche",
-    "13d": "icono-nieve",
-    "13n": "icono-nieve-noche",
-    "50d": "icono-niebla",
-    "50n": "icono-niebla-noche",
-  };
-  return clases[codigoIcono] || "icono-nube";
-};
-
-/**
- * Componente `WeatherCardCompact`
+ * Formulario para crear un nuevo usuario administrador.
+ * Permite ingresar nombre, apellido, correo electrónico y contraseña.
+ * Realiza validación de contraseña mínima (8 caracteres) y muestra
+ * notificaciones con `react-toastify` en caso de éxito o error.
  *
- * Muestra de manera compacta la información del clima de una ciudad,
- * incluyendo ciudad, temperatura, icono y descripción breve.
+ * @component
  *
- * @param {Object} props - Propiedades del componente.
- * @param {string} props.ciudad - Nombre de la ciudad.
- * @param {number} [props.temp] - Temperatura actual en grados Celsius.
- * @param {string} [props.icon] - Código de icono de OpenWeatherMap (ej: "01d").
- * @param {string} [props.descripcion] - Descripción breve del clima (ej: "Soleado").
- *
- * @returns {JSX.Element} Componente visual del clima compacto.
+ * @returns {JSX.Element} Formulario de creación de administrador.
  *
  * @example
- * &lt;WeatherCardCompact
- *   ciudad="Lobería"
- *   temp={22}
- *   icon="01d"
- *   descripcion="Soleado"
- * />
+ * &lt;CreateAdmin />
  */
-const WeatherCardCompact = ({ ciudad, temp, icon, descripcion }) => {
-  const Icono = iconosOWMtoFa[icon] || FaCloud;
-  const claseIcono = `${obtenerClaseIcono(icon)} compact-icon`;
+const CreateAdmin = () => {
+  const [error, setError] = useState(null);
+
+  /**
+   * Maneja el envío del formulario de registro.
+   * Valida la contraseña y realiza una petición POST al endpoint
+   * `${Global.url}user/register`.
+   *
+   * @param {React.FormEvent&lt;HTMLFormElement>} e Evento de envío del formulario.
+   */
+  const registerUser = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    const userData = {
+      name: e.target.name.value,
+      surname: e.target.surname.value,
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+
+    if (userData.password.length &lt; 8) {
+      toast.error("La contraseña debe tener al menos 8 caracteres.");
+      return;
+    }
+
+    try {
+      const request = await fetch(Global.url + "user/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      });
+
+      if (!request.ok) {
+        throw new Error(`Error del servidor: ${request.status}`);
+      }
+
+      const data = await request.json();
+
+      if (data.status === "success") {
+        if (data.message &amp;&amp; data.message.includes("ya existe")) {
+          setError("El usuario ya existe en el sistema");
+          toast.error("El usuario ya existe en el sistema");
+        } else {
+          toast.success("Usuario registrado correctamente");
+          setTimeout(() => {}, 1500);
+        }
+      } else {
+        setError(data.message || "Error al registrar usuario");
+        toast.error(data.message || "Error al registrar usuario");
+      }
+    } catch (error) {
+      setError("Error al conectar con el servidor");
+      toast.error("Error al conectar con el servidor");
+      console.error(error);
+    }
+  };
 
   return (
-    &lt;div className="weather-card-compact">
-      &lt;div className="compact-city">{ciudad}&lt;/div>
-      &lt;Icono size={32} className={claseIcono} />
-      &lt;div className="compact-temp">
-        {temp !== undefined ? Math.round(temp) + "°" : "-"}
-      &lt;/div>
-      {descripcion &amp;&amp; &lt;div className="compact-desc">{descripcion}&lt;/div>}
-    &lt;/div>
+    &lt;>
+      &lt;section className="register">
+        &lt;h3 className="content__title">Crear Admin&lt;/h3>
+        &lt;div className="content__posts">
+          &lt;Form
+            className="register-form"
+            onSubmit={registerUser}
+            encType="multipart/form-data"
+          >
+            &lt;Form.Group className="mb-3" controlId="registerName">
+              &lt;Form.Label>Nombre&lt;/Form.Label>
+              &lt;Form.Control
+                type="text"
+                name="name"
+                placeholder="Nombre"
+                required
+              />
+            &lt;/Form.Group>
+
+            &lt;Form.Group className="mb-3" controlId="registerSurname">
+              &lt;Form.Label>Apellido&lt;/Form.Label>
+              &lt;Form.Control
+                type="text"
+                name="surname"
+                placeholder="Apellido"
+                required
+              />
+            &lt;/Form.Group>
+
+            &lt;Form.Group className="mb-3" controlId="registerEmail">
+              &lt;Form.Label>Correo electrónico&lt;/Form.Label>
+              &lt;Form.Control
+                type="email"
+                name="email"
+                placeholder="Correo electrónico"
+                required
+              />
+            &lt;/Form.Group>
+
+            &lt;Form.Group className="mb-3" controlId="registerPassword">
+              &lt;Form.Label>Contraseña&lt;/Form.Label>
+              &lt;Form.Control
+                type="password"
+                name="password"
+                placeholder="Contraseña"
+                required
+              />
+            &lt;/Form.Group>
+            &lt;button type="submit" className="btn btn-success">
+              Crear
+            &lt;/button>
+          &lt;/Form>
+        &lt;/div>
+        &lt;ToastContainer />
+      &lt;/section>
+    &lt;/>
   );
 };
 
-export default WeatherCardCompact;
+export default CreateAdmin;
 </code></pre>
         </article>
     </section>

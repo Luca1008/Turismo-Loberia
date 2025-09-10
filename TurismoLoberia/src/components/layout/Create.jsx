@@ -4,6 +4,20 @@ import ButtonSubmit from "../common/ButtonSubmit";
 import NominatimAutocomplete from "../common/NominatimAutocomplete";
 import { Global } from "../../helpers/Global";
 
+/**
+ * Componente `Create`
+ *
+ * Formulario para crear un nuevo contenido/card, con campos para título,
+ * descripción, ubicación, contacto, categoría, fecha (para eventos), imagen
+ * y otros detalles relevantes.
+ *
+ * @component
+ *
+ * @example
+ * <Create />
+ *
+ * @returns {JSX.Element} Formulario de creación de contenido con validaciones y manejo de envío.
+ */
 const Create = () => {
   const [formData, setFormData] = useState({
     titulo: "",
@@ -19,26 +33,39 @@ const Create = () => {
     categoria: "",
     fecha: "",
   });
+
   const [imagen, setImagen] = useState(null);
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
 
+  /**
+   * Actualiza el estado `formData` con los cambios de los inputs.
+   * @param {React.ChangeEvent<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>} e 
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  /**
+   * Actualiza el estado `imagen` cuando se selecciona un archivo.
+   * @param {React.ChangeEvent<HTMLInputElement>} e 
+   */
   const handleFileChange = (e) => {
     setImagen(e.target.files[0]);
   };
 
+  /**
+   * Maneja el envío del formulario, construye un FormData y hace POST a la API.
+   * Muestra mensajes de éxito o error.
+   * @param {React.FormEvent<HTMLFormElement>} e 
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMensaje("");
     setError("");
-    console.log("Datos enviados:", formData);
     try {
       const data = new FormData();
 
@@ -53,6 +80,7 @@ const Create = () => {
       data.append("card_info", formData.informacion);
       data.append("card_city", formData.ciudad);
       data.append("card_category", formData.categoria);
+
       if (formData.categoria === "Evento") {
         data.append("card_date", formData.fecha);
       }
@@ -83,9 +111,7 @@ const Create = () => {
           fecha: "",
         });
         setImagen(null);
-        setTimeout(() => {
-          window.location.reload();
-        }, 1200);
+        setTimeout(() => window.location.reload(), 1200);
       } else {
         const errorData = await response.json();
         setError(errorData.error || "Error al crear la card.");
@@ -106,6 +132,7 @@ const Create = () => {
         onSubmit={handleSubmit}
         encType="multipart/form-data"
       >
+        {/* Campos de texto, select y textarea */}
         <Form.Group className="mb-3" controlId="titulo">
           <Form.Label>Título del lugar</Form.Label>
           <Form.Control
@@ -117,6 +144,7 @@ const Create = () => {
             required
           />
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="descripcion">
           <Form.Label>Descripción</Form.Label>
           <Form.Control
@@ -128,6 +156,7 @@ const Create = () => {
             required
           />
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="ubicacion">
           <Form.Label>Ubicación</Form.Label>
           <NominatimAutocomplete
@@ -144,6 +173,7 @@ const Create = () => {
             }}
           />
         </Form.Group>
+
         {formData.linkUbicacion && (
           <Form.Group className="mb-3" controlId="linkUbicacion">
             <Form.Label>Vista previa en OpenStreetMap</Form.Label>
@@ -158,6 +188,8 @@ const Create = () => {
             </div>
           </Form.Group>
         )}
+
+        {/* Otros campos: horario, contacto, información, ciudad y categoría */}
         <Form.Group className="mb-3" controlId="horario">
           <Form.Label>Horario</Form.Label>
           <Form.Control
@@ -168,6 +200,7 @@ const Create = () => {
             onChange={handleChange}
           />
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="contacto">
           <Form.Label>Contacto</Form.Label>
           <Form.Control
@@ -178,6 +211,7 @@ const Create = () => {
             onChange={handleChange}
           />
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="informacion">
           <Form.Label>Información</Form.Label>
           <Form.Control
@@ -188,6 +222,7 @@ const Create = () => {
             onChange={handleChange}
           />
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="ciudad">
           <Form.Label>Ciudad</Form.Label>
           <Form.Select
@@ -203,6 +238,7 @@ const Create = () => {
             <option value="San Manuel">San Manuel</option>
           </Form.Select>
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="categoria">
           <Form.Label>Categoría</Form.Label>
           <Form.Select
@@ -223,6 +259,7 @@ const Create = () => {
             <option value="InfoUtil">Información Útil</option>
           </Form.Select>
         </Form.Group>
+
         {formData.categoria === "Evento" && (
           <Form.Group className="mb-3" controlId="fecha">
             <Form.Label>Fecha del evento</Form.Label>
@@ -235,6 +272,7 @@ const Create = () => {
             />
           </Form.Group>
         )}
+
         <Form.Group className="mb-3" controlId="formFile">
           <Form.Label>Imagen de Portada</Form.Label>
           <Form.Control
@@ -243,8 +281,10 @@ const Create = () => {
             onChange={handleFileChange}
           />
         </Form.Group>
+
         {mensaje && <div className="alert alert-success mt-2">{mensaje}</div>}
         {error && <div className="alert alert-danger mt-2">{error}</div>}
+
         <ButtonSubmit
           type="submit"
           text={loading ? "Cargando..." : "Crear"}

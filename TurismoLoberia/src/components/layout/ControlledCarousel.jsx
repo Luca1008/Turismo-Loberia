@@ -27,6 +27,32 @@ const defaultCities = [
   },
 ];
 
+/**
+ * Componente `ControlledCarousel`
+ *
+ * Carousel controlado que muestra imágenes de diferentes ciudades con posibilidad
+ * de obtener imágenes desde la API y fallback a imágenes por defecto.
+ * Incluye autoplay cada 5 segundos y soporte para captions personalizados.
+ *
+ * @component
+ *
+ * @param {Object[]} [cities=defaultCities] - Lista de ciudades a mostrar en el carousel.
+ * @param {string} cities[].key - Identificador único de la ciudad.
+ * @param {string} cities[].caption - Texto a mostrar en el caption.
+ * @param {string} cities[].defaultImg - Imagen por defecto si la API no devuelve imagen.
+ * @param {string} cities[].link - Link de destino al hacer clic en el caption.
+ * @param {Function} [renderCaption=(caption, link) => <h1><a href={link}>{caption}</a></h1>] 
+ *        - Función para renderizar captions personalizados.
+ *
+ * @example
+ * <ControlledCarousel
+ *   cities={[
+ *     { key: 'loberia', caption: 'Lobería', defaultImg: defaultLoberia, link: '/Loberia' }
+ *   ]}
+ * />
+ *
+ * @returns {JSX.Element} Carousel controlado con autoplay y captions interactivos.
+ */
 export const ControlledCarousel = ({
   cities = defaultCities,
   renderCaption = (caption, link) => (
@@ -38,6 +64,9 @@ export const ControlledCarousel = ({
   const [index, setIndex] = useState(0);
   const [carouselImages, setCarouselImages] = useState([]);
 
+  /**
+   * Carga las imágenes de cada ciudad desde la API o usa la imagen por defecto.
+   */
   useEffect(() => {
     Promise.all(
       cities.map(async (city) => {
@@ -64,10 +93,17 @@ export const ControlledCarousel = ({
     ).then(setCarouselImages);
   }, [cities]);
 
+  /**
+   * Actualiza el índice activo al seleccionar un slide.
+   * @param {number} selectedIndex - Índice seleccionado
+   */
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
 
+  /**
+   * Avanza automáticamente el carousel cada 5 segundos
+   */
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % carouselImages.length);
@@ -75,6 +111,7 @@ export const ControlledCarousel = ({
 
     return () => clearInterval(timer);
   }, [carouselImages]);
+
   return (
     <Carousel
       className="carousel-index"

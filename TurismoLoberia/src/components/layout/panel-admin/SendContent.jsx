@@ -4,12 +4,31 @@ import "react-toastify/dist/ReactToastify.css";
 import "../../../styles/panelAdmin.css";
 import { Global } from "../../../helpers/Global";
 
+/**
+ * Componente `SendContent`
+ *
+ * Permite enviar contenido (asunto, mensaje y archivo opcional)
+ * a los suscriptores del sistema mediante un formulario.
+ * Muestra notificaciones de éxito o error usando `react-toastify`.
+ *
+ * @component
+ *
+ * @example
+ * <SendContent />
+ *
+ * @returns {JSX.Element} Formulario de envío de contenido.
+ */
 export default function SendContent() {
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
-  const [file, setFile] = useState(null);
-  const [sending, setSending] = useState(false);
+  const [subject, setSubject] = useState(""); // Asunto del mensaje
+  const [message, setMessage] = useState(""); // Contenido del mensaje
+  const [file, setFile] = useState(null); // Archivo opcional
+  const [sending, setSending] = useState(false); // Estado de envío
 
+  /**
+   * Envía el contenido al backend.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e Evento de submit del formulario
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);

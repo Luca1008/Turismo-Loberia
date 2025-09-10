@@ -7,16 +7,37 @@ import { useAuth } from "../../../hooks/useAuth";
 import "../../../styles/panelAdmin.css";
 import Button from "react-bootstrap/Button";
 
+/**
+ * Componente `UpdateAdmin`
+ *
+ * Permite actualizar los datos de un administrador o del perfil propio.
+ * Incluye campos de nombre, apellido, correo electrónico y contraseña opcional.
+ * Muestra notificaciones de éxito o error usando `react-toastify`.
+ *
+ * @component
+ *
+ * @param {Object} props
+ * @param {Object} [props.admin] - Administrador a editar (si es edición de otro admin)
+ * @param {Function} [props.onSuccess] - Callback cuando la actualización es exitosa
+ * @param {Function} [props.onCancel] - Callback para cancelar la edición
+ * @param {boolean} [props.isAdminEdit=false] - Indica si se está editando otro administrador
+ *
+ * @example
+ * <UpdateAdmin admin={adminData} onSuccess={handleSuccess} onCancel={handleCancel} isAdminEdit={true} />
+ *
+ * @returns {JSX.Element} Formulario de actualización de administrador o perfil
+ */
 const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
   const { auth, setAuth } = useAuth();
+
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
     email: "",
     password: "",
   });
+
   const [error, setError] = useState(null);
-  console.log(error);
 
   useEffect(() => {
     if (isAdminEdit && admin) {
@@ -36,6 +57,11 @@ const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
     }
   }, [admin, auth, isAdminEdit]);
 
+  /**
+   * Maneja los cambios en los campos del formulario.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e Evento de cambio
+   */
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -43,6 +69,11 @@ const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
     });
   };
 
+  /**
+   * Actualiza los datos del administrador o del perfil propio.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e Evento de submit
+   */
   const updateProfile = async (e) => {
     e.preventDefault();
     setError(null);
@@ -101,70 +132,68 @@ const UpdateAdmin = ({ admin, onSuccess, onCancel, isAdminEdit = false }) => {
   };
 
   return (
-    <>
-      <section className="register">
-        <h3 className="content__title">
-          {isAdminEdit ? "Editar Administrador" : "Modificar Perfil"}
-        </h3>
-        <div className="content__posts">
-          <Form className="register-form" onSubmit={updateProfile}>
-            <Form.Group className="mb-3" controlId="updateName">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
+    <section className="register">
+      <h3 className="content__title">
+        {isAdminEdit ? "Editar Administrador" : "Modificar Perfil"}
+      </h3>
+      <div className="content__posts">
+        <Form className="register-form" onSubmit={updateProfile}>
+          <Form.Group className="mb-3" controlId="updateName">
+            <Form.Label>Nombre</Form.Label>
+            <Form.Control
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-            <Form.Group className="mb-3" controlId="updateSurname">
-              <Form.Label>Apellido</Form.Label>
-              <Form.Control
-                type="text"
-                name="surname"
-                value={formData.surname}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
+          <Form.Group className="mb-3" controlId="updateSurname">
+            <Form.Label>Apellido</Form.Label>
+            <Form.Control
+              type="text"
+              name="surname"
+              value={formData.surname}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-            <Form.Group className="mb-3" controlId="updateEmail">
-              <Form.Label>Correo electrónico</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
+          <Form.Group className="mb-3" controlId="updateEmail">
+            <Form.Label>Correo electrónico</Form.Label>
+            <Form.Control
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-            <Form.Group className="mb-3" controlId="updatePassword">
-              <Form.Label>Nueva contraseña (opcional)</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Dejar en blanco si no querés cambiarla"
-              />
-            </Form.Group>
+          <Form.Group className="mb-3" controlId="updatePassword">
+            <Form.Label>Nueva contraseña (opcional)</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Dejar en blanco si no querés cambiarla"
+            />
+          </Form.Group>
 
-            <div className="buttons-container">
-              <Button variant="secondary" type="button" onClick={onCancel}>
-                Cancelar
-              </Button>
-              <Button variant="success" type="submit">
-                Actualizar
-              </Button>
-            </div>
-          </Form>
-        </div>
-        <ToastContainer />
-      </section>
-    </>
+          <div className="buttons-container">
+            <Button variant="secondary" type="button" onClick={onCancel}>
+              Cancelar
+            </Button>
+            <Button variant="success" type="submit">
+              Actualizar
+            </Button>
+          </div>
+        </Form>
+      </div>
+      <ToastContainer />
+    </section>
   );
 };
 

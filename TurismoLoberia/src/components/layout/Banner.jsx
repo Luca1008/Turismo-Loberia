@@ -4,14 +4,33 @@ import invitesImg from "../../assets/images/invites-transparent.png";
 import { useTranslation } from "react-i18next";
 import { PiCursorClick, PiCaretDown, PiCaretUp } from "react-icons/pi";
 
+/**
+ * Componente `Banner`
+ *
+ * Muestra un banner promocional de Lobería con texto, imagen y un enlace interactivo.
+ * Incluye animación de una mano señalando el enlace y funcionalidad de expandir/colapsar
+ * el texto en dispositivos móviles.
+ *
+ * @component
+ *
+ * @example
+ * <Banner />
+ *
+ * @returns {JSX.Element} Banner con imagen, texto, enlace y animación interactiva
+ */
 export const Banner = () => {
   const { t, i18n } = useTranslation();
   const handRef = useRef(null);
   const linkRef = useRef(null);
   const textRef = useRef(null);
+
   const [isMobile, setIsMobile] = useState(false);
   const [isTextExpanded, setIsTextExpanded] = useState(false);
 
+  /**
+   * Verifica si el dispositivo es móvil y ajusta el estado de expansión del texto.
+   * Posiciona y anima la mano interactiva señalando el enlace.
+   */
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth <= 768;
@@ -79,6 +98,9 @@ export const Banner = () => {
     };
   }, [isMobile]);
 
+  /**
+   * Alterna la expansión o colapso del texto en móviles.
+   */
   const toggleText = () => {
     setIsTextExpanded(!isTextExpanded);
   };

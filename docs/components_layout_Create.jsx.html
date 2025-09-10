@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>pages/Contact.jsx - Documentation</title>
+    <title>components/layout/Create.jsx - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">pages/Contact.jsx</h1>
+    <h1 class="page-title">components/layout/Create.jsx</h1>
     
 
     
@@ -39,188 +39,305 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect, useRef } from "react";
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
-import "../styles/contact.css";
-import { useTranslation } from "react-i18next";
-import { trackEvent } from "../analytics";
-import { Global } from "../helpers/Global";
-import ButtonSubmit from "../components/common/ButtonSubmit";
+import ButtonSubmit from "../common/ButtonSubmit";
+import NominatimAutocomplete from "../common/NominatimAutocomplete";
+import { Global } from "../../helpers/Global";
 
 /**
- * Componente `Contact`
+ * Componente `Create`
  *
- * Renderiza un formulario de contacto con tracking de interacciones
- * y estados de envío.
+ * Formulario para crear un nuevo contenido/card, con campos para título,
+ * descripción, ubicación, contacto, categoría, fecha (para eventos), imagen
+ * y otros detalles relevantes.
  *
  * @component
+ *
+ * @example
+ * &lt;Create />
+ *
+ * @returns {JSX.Element} Formulario de creación de contenido con validaciones y manejo de envío.
  */
-export const Contact = () => {
+const Create = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
+    titulo: "",
+    descripcion: "",
+    ubicacion: "",
+    linkUbicacion: "",
+    lat: "",
+    lon: "",
+    horario: "",
+    contacto: "",
+    informacion: "",
+    ciudad: "",
+    categoria: "",
+    fecha: "",
   });
-  const [status, setStatus] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const { t, i18n } = useTranslation();
 
-  const interactionTracked = useRef(false);
+  const [imagen, setImagen] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    trackEvent({
-      category: "Formulario",
-      action: "Vista página contacto",
-      label: "Página Contacto",
-    });
-  }, []);
-
+  /**
+   * Actualiza el estado `formData` con los cambios de los inputs.
+   * @param {React.ChangeEvent&lt;HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>} e 
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (!interactionTracked.current) {
-      trackEvent({
-        category: "Formulario",
-        action: "Inicio interacción",
-        label: "Contacto",
-      });
-      interactionTracked.current = true;
-    }
-
-    if (status === "error") {
-      trackEvent({
-        category: "Formulario",
-        action: "Corrige error",
-        label: `Campo: ${name}`,
-      });
-      setStatus("");
-      setErrorMessage("");
-    }
+    setFormData({ ...formData, [name]: value });
   };
 
+  /**
+   * Actualiza el estado `imagen` cuando se selecciona un archivo.
+   * @param {React.ChangeEvent&lt;HTMLInputElement>} e 
+   */
+  const handleFileChange = (e) => {
+    setImagen(e.target.files[0]);
+  };
+
+  /**
+   * Maneja el envío del formulario, construye un FormData y hace POST a la API.
+   * Muestra mensajes de éxito o error.
+   * @param {React.FormEvent&lt;HTMLFormElement>} e 
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("enviando");
-    setErrorMessage("");
-
+    setLoading(true);
+    setMensaje("");
+    setError("");
     try {
-      const response = await fetch(`${Global.url}send-email`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const data = new FormData();
 
-      const data = await response.json();
+      data.append("card_title", formData.titulo);
+      data.append("card_description", formData.descripcion);
+      data.append("card_ubicacion", formData.ubicacion);
+      data.append("card_link_ubicacion", formData.linkUbicacion);
+      data.append("card_lat", formData.lat);
+      data.append("card_lon", formData.lon);
+      data.append("card_horario", formData.horario);
+      data.append("card_contacto", formData.contacto);
+      data.append("card_info", formData.informacion);
+      data.append("card_city", formData.ciudad);
+      data.append("card_category", formData.categoria);
+
+      if (formData.categoria === "Evento") {
+        data.append("card_date", formData.fecha);
+      }
+
+      if (imagen) {
+        data.append("card_img_portada", imagen);
+      }
+
+      const response = await fetch(`${Global.url}cards`, {
+        method: "POST",
+        body: data,
+      });
 
       if (response.ok) {
-        trackEvent({
-          category: "Formulario",
-          action: "Envío exitoso",
-          label: "Formulario de contacto",
+        setMensaje("¡Contenido creado exitosamente!");
+        setFormData({
+          titulo: "",
+          descripcion: "",
+          ubicacion: "",
+          linkUbicacion: "",
+          lat: "",
+          lon: "",
+          horario: "",
+          contacto: "",
+          informacion: "",
+          ciudad: "",
+          categoria: "",
+          fecha: "",
         });
-        setStatus("exitoso");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-        interactionTracked.current = false;
+        setImagen(null);
+        setTimeout(() => window.location.reload(), 1200);
       } else {
-        trackEvent({
-          category: "Formulario",
-          action: "Error en envío",
-          label: data.error || "Error desconocido",
-        });
-        setStatus("error");
-        setErrorMessage(data.error || "Error al enviar el mensaje");
+        const errorData = await response.json();
+        setError(errorData.error || "Error al crear la card.");
       }
-    } catch (error) {
-      console.error("Error en enviado:", error);
-      trackEvent({
-        category: "Formulario",
-        action: "Error técnico",
-        label: "Fallo conexión backend",
-      });
-      setStatus("error");
-      setErrorMessage(
-        "No se pudo conectar con el servidor. Por favor, verifica que el servidor esté corriendo en http://localhost:5000"
-      );
+    } catch (err) {
+      console.error("Error en la petición:", err);
+      setError("Error de conexión con el servidor.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    &lt;section className="contact" key={i18n.language}>
-      &lt;h2>{t("contactanos")}&lt;/h2>
-      &lt;Form onSubmit={handleSubmit} className="form-contact">
-        &lt;Form.Group className="mb-3" controlId="formName">
-          &lt;Form.Label>{t("nombre_apellido")}&lt;/Form.Label>
+    &lt;div>
+      &lt;h2>Agregar Contenido&lt;/h2>
+      &lt;Form
+        className="form-create-card"
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+      >
+        {/* Campos de texto, select y textarea */}
+        &lt;Form.Group className="mb-3" controlId="titulo">
+          &lt;Form.Label>Título del lugar&lt;/Form.Label>
           &lt;Form.Control
             type="text"
-            name="name"
-            value={formData.name}
+            placeholder="Título"
+            name="titulo"
+            value={formData.titulo}
             onChange={handleChange}
             required
-            placeholder={t("placeholder_nombre")}
           />
         &lt;/Form.Group>
 
-        &lt;Form.Group className="mb-3" controlId="formEmail">
-          &lt;Form.Label>{t("email2")}&lt;/Form.Label>
-          &lt;Form.Control
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            placeholder={t("placeholder_email")}
-          />
-        &lt;/Form.Group>
-
-        &lt;Form.Group className="mb-3" controlId="formSubject">
-          &lt;Form.Label>{t("asunto")}&lt;/Form.Label>
-          &lt;Form.Control
-            type="text"
-            name="subject"
-            value={formData.subject}
-            onChange={handleChange}
-            required
-            placeholder={t("placeholder_asunto")}
-          />
-        &lt;/Form.Group>
-
-        &lt;Form.Group className="mb-3" controlId="formMessage">
-          &lt;Form.Label>{t("mensaje")}&lt;/Form.Label>
+        &lt;Form.Group className="mb-3" controlId="descripcion">
+          &lt;Form.Label>Descripción&lt;/Form.Label>
           &lt;Form.Control
             as="textarea"
-            rows={4}
-            name="message"
-            value={formData.message}
+            rows={6}
+            name="descripcion"
+            value={formData.descripcion}
             onChange={handleChange}
             required
-            placeholder={t("placeholder_mensaje")}
           />
         &lt;/Form.Group>
+
+        &lt;Form.Group className="mb-3" controlId="ubicacion">
+          &lt;Form.Label>Ubicación&lt;/Form.Label>
+          &lt;NominatimAutocomplete
+            onSelect={(place) => {
+              const ubicacion = place.display_name;
+              const linkUbicacion = `https://www.openstreetmap.org/?mlat=${place.lat}&amp;mlon=${place.lon}#map=18/${place.lat}/${place.lon}`;
+              setFormData((prev) => ({
+                ...prev,
+                ubicacion,
+                linkUbicacion,
+                lat: place.lat,
+                lon: place.lon,
+              }));
+            }}
+          />
+        &lt;/Form.Group>
+
+        {formData.linkUbicacion &amp;&amp; (
+          &lt;Form.Group className="mb-3" controlId="linkUbicacion">
+            &lt;Form.Label>Vista previa en OpenStreetMap&lt;/Form.Label>
+            &lt;div>
+              &lt;a
+                href={formData.linkUbicacion}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {formData.linkUbicacion}
+              &lt;/a>
+            &lt;/div>
+          &lt;/Form.Group>
+        )}
+
+        {/* Otros campos: horario, contacto, información, ciudad y categoría */}
+        &lt;Form.Group className="mb-3" controlId="horario">
+          &lt;Form.Label>Horario&lt;/Form.Label>
+          &lt;Form.Control
+            type="text"
+            placeholder="Horario"
+            name="horario"
+            value={formData.horario}
+            onChange={handleChange}
+          />
+        &lt;/Form.Group>
+
+        &lt;Form.Group className="mb-3" controlId="contacto">
+          &lt;Form.Label>Contacto&lt;/Form.Label>
+          &lt;Form.Control
+            type="text"
+            placeholder="Teléfono, email, etc."
+            name="contacto"
+            value={formData.contacto}
+            onChange={handleChange}
+          />
+        &lt;/Form.Group>
+
+        &lt;Form.Group className="mb-3" controlId="informacion">
+          &lt;Form.Label>Información&lt;/Form.Label>
+          &lt;Form.Control
+            type="text"
+            placeholder="Información"
+            name="informacion"
+            value={formData.informacion}
+            onChange={handleChange}
+          />
+        &lt;/Form.Group>
+
+        &lt;Form.Group className="mb-3" controlId="ciudad">
+          &lt;Form.Label>Ciudad&lt;/Form.Label>
+          &lt;Form.Select
+            aria-label="Ciudad"
+            name="ciudad"
+            value={formData.ciudad}
+            onChange={handleChange}
+            required
+          >
+            &lt;option value="">Selecciona una ciudad&lt;/option>
+            &lt;option value="Lobería">Lobería&lt;/option>
+            &lt;option value="Arenas Verdes">Arenas Verdes&lt;/option>
+            &lt;option value="San Manuel">San Manuel&lt;/option>
+          &lt;/Form.Select>
+        &lt;/Form.Group>
+
+        &lt;Form.Group className="mb-3" controlId="categoria">
+          &lt;Form.Label>Categoría&lt;/Form.Label>
+          &lt;Form.Select
+            aria-label="Categoría"
+            name="categoria"
+            value={formData.categoria}
+            onChange={handleChange}
+            required
+          >
+            &lt;option value="">Selecciona una categoría&lt;/option>
+            &lt;option value="Alojamiento">Alojamiento&lt;/option>
+            &lt;option value="Gastronomia">Gastronomía&lt;/option>
+            &lt;option value="Cultura">Cultura&lt;/option>
+            &lt;option value="Evento">Evento&lt;/option>
+            &lt;option value="Interes">Lugares de Interés&lt;/option>
+            &lt;option value="Artesanos">Artesanos&lt;/option>
+            &lt;option value="ServPublicos">Servicios Públicos&lt;/option>
+            &lt;option value="InfoUtil">Información Útil&lt;/option>
+          &lt;/Form.Select>
+        &lt;/Form.Group>
+
+        {formData.categoria === "Evento" &amp;&amp; (
+          &lt;Form.Group className="mb-3" controlId="fecha">
+            &lt;Form.Label>Fecha del evento&lt;/Form.Label>
+            &lt;Form.Control
+              type="date"
+              name="fecha"
+              value={formData.fecha}
+              onChange={handleChange}
+              required
+            />
+          &lt;/Form.Group>
+        )}
+
+        &lt;Form.Group className="mb-3" controlId="formFile">
+          &lt;Form.Label>Imagen de Portada&lt;/Form.Label>
+          &lt;Form.Control
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+        &lt;/Form.Group>
+
+        {mensaje &amp;&amp; &lt;div className="alert alert-success mt-2">{mensaje}&lt;/div>}
+        {error &amp;&amp; &lt;div className="alert alert-danger mt-2">{error}&lt;/div>}
 
         &lt;ButtonSubmit
           type="submit"
-          text={status === "enviando" ? t("enviando") : t("enviar")}
-          disabled={status === "enviando"}
+          text={loading ? "Cargando..." : "Crear"}
+          className={`btn btn-success ${loading ? "loading" : ""}`}
+          disabled={loading}
         />
-
-        {status === "exitoso" &amp;&amp; (
-          &lt;p className="success-message">{t("mensaje_exitoso")}&lt;/p>
-        )}
-        {status === "error" &amp;&amp; (
-          &lt;p className="error-message">{errorMessage}&lt;/p>
-        )}
       &lt;/Form>
-    &lt;/section>
+    &lt;/div>
   );
 };
 
-export default Contact;
+export default Create;
 </code></pre>
         </article>
     </section>

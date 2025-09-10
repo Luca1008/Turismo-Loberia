@@ -16,10 +16,34 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 
+/**
+ * Componente `Footer`
+ *
+ * Footer del sitio web con:
+ * - Logo de Lobería.
+ * - Información de contacto y dirección.
+ * - Suscripción a newsletter.
+ * - Enlaces a redes sociales (Facebook, Instagram, YouTube, WhatsApp).
+ *
+ * Incluye tracking de eventos para Google Analytics en todos los enlaces y divs clickeables.
+ *
+ * @component
+ * 
+ * @example
+ * <Footer />
+ *
+ * @returns {JSX.Element} Footer con logo, enlaces de contacto y redes sociales.
+ */
 export const Footer = () => {
   const { t } = useTranslation();
   const { i18n } = useTranslation();
 
+  /**
+   * Maneja el tracking de clic en un enlace externo y luego abre el enlace.
+   * @param {string} label - Etiqueta descriptiva para analytics.
+   * @param {string} url - URL del enlace.
+   * @returns {Function} Función que maneja el evento click.
+   */
   const handleTrackLink = (label, url) => (e) => {
     trackEvent({
       category: "Footer",
@@ -29,6 +53,11 @@ export const Footer = () => {
     handleExternalLink(e, url);
   };
 
+  /**
+   * Maneja el tracking de clic en un div o grupo de elementos.
+   * @param {string} label - Etiqueta descriptiva para analytics.
+   * @returns {Function} Función que maneja el evento click.
+   */
   const handleTrackDivClick = (label) => () => {
     trackEvent({
       category: "Footer",
@@ -40,6 +69,7 @@ export const Footer = () => {
   return (
     <footer className="footer" key={i18n.language}>
       <div className="footer__container">
+        {/* Logo */}
         <Link
           to="/"
           className="text-decoration-none"
@@ -77,6 +107,7 @@ export const Footer = () => {
           </div>
         </Link>
 
+        {/* Información de contacto y dirección */}
         <div className="footer__info">
           <div
             className="footer__item"
@@ -115,6 +146,7 @@ export const Footer = () => {
           </div>
         </div>
 
+        {/* Newsletter y redes sociales */}
         <div className="footer__extra">
           <div
             className="footer__item"

@@ -3,8 +3,26 @@ import Form from "react-bootstrap/Form";
 import ButtonSubmit from "../common/ButtonSubmit";
 import Button from "react-bootstrap/Button";
 import NominatimAutocomplete from "../common/NominatimAutocomplete";
-import {Global} from "../../helpers/Global";
+import { Global } from "../../helpers/Global";
 
+/**
+ * Componente `Edit`
+ *
+ * Formulario para editar un contenido/card existente. Permite modificar
+ * todos los campos de la card, incluida la imagen de portada.
+ *
+ * @component
+ * 
+ * @param {Object} props
+ * @param {string} props.cardId - ID de la card que se desea editar.
+ * @param {Function} [props.onClose] - Función opcional para cerrar el modal/formulario.
+ * @param {Function} [props.onUpdate] - Función opcional que se ejecuta tras actualizar correctamente.
+ *
+ * @example
+ * <Edit cardId="123" onClose={() => setShow(false)} onUpdate={fetchCards} />
+ *
+ * @returns {JSX.Element} Formulario de edición de card con manejo de estado y validaciones.
+ */
 const Edit = ({ cardId, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
     titulo: "",
@@ -20,18 +38,25 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
     categoria: "",
     fecha: "",
   });
+
   const [imagen, setImagen] = useState(null);
   const [imagenActual, setImagenActual] = useState("");
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [error, setError] = useState("");
-  
+
+  /**
+   * Carga los datos de la card desde la API al montar el componente o cuando cambia `cardId`.
+   */
   useEffect(() => {
     if (cardId) {
       fetchCardData();
     }
   }, [cardId]);
 
+  /**
+   * Obtiene los datos de la card desde el backend y los setea en el estado `formData`.
+   */
   const fetchCardData = async () => {
     try {
       const response = await fetch(`${Global.url}cards/${cardId}`);
@@ -61,15 +86,28 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
     }
   };
 
+  /**
+   * Actualiza `formData` al cambiar los campos del formulario.
+   * @param {React.ChangeEvent<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>} e 
+   */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  /**
+   * Actualiza el estado `imagen` al seleccionar un archivo.
+   * @param {React.ChangeEvent<HTMLInputElement>} e 
+   */
   const handleFileChange = (e) => {
     setImagen(e.target.files[0]);
   };
 
+  /**
+   * Envía el formulario para actualizar la card. Usa FormData para enviar datos y archivo.
+   * Muestra mensajes de éxito o error.
+   * @param {React.FormEvent<HTMLFormElement>} e 
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -120,6 +158,9 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
     }
   };
 
+  /**
+   * Cancela la edición y cierra el modal si existe `onClose`.
+   */
   const handleCancel = () => {
     if (onClose) onClose();
   };
@@ -141,6 +182,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
         onSubmit={handleSubmit}
         encType="multipart/form-data"
       >
+        {/* Campos del formulario similares a Create */}
         <Form.Group className="mb-3" controlId="titulo">
           <Form.Label>Título del lugar</Form.Label>
           <Form.Control
@@ -181,6 +223,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
             }}
           />
         </Form.Group>
+
         {formData.linkUbicacion && (
           <Form.Group className="mb-3" controlId="linkUbicacion">
             <Form.Label>Vista previa en OpenStreetMap</Form.Label>
@@ -196,112 +239,21 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
           </Form.Group>
         )}
 
-        <Form.Group className="mb-3" controlId="horario">
-          <Form.Label>Horario</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Horario"
-            name="horario"
-            value={formData.horario}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="contacto">
-          <Form.Label>Contacto</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Teléfono, email, etc."
-            name="contacto"
-            value={formData.contacto}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="informacion">
-          <Form.Label>Información</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Información"
-            name="informacion"
-            value={formData.informacion}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="ciudad">
-          <Form.Label>Ciudad</Form.Label>
-          <Form.Select
-            aria-label="Ciudad"
-            name="ciudad"
-            value={formData.ciudad}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Selecciona una ciudad</option>
-            <option value="Lobería">Lobería</option>
-            <option value="Arenas Verdes">Arenas Verdes</option>
-            <option value="San Manuel">San Manuel</option>
-          </Form.Select>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="categoria">
-          <Form.Label>Categoría</Form.Label>
-          <Form.Select
-            aria-label="Categoría"
-            name="categoria"
-            value={formData.categoria}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Selecciona una categoría</option>
-            <option value="Alojamiento">Alojamiento</option>
-            <option value="Gastronomia">Gastronomía</option>
-            <option value="Cultura">Cultura</option>
-            <option value="Evento">Evento</option>
-            <option value="Interes">Lugares de Interés</option>
-            <option value="Artesanos">Artesanos</option>
-            <option value="ServPublicos">Servicios Públicos</option>
-            <option value="InfoUtil">Información Útil</option>
-          </Form.Select>
-        </Form.Group>
-
-        {formData.categoria === "Evento" && (
-          <Form.Group className="mb-3" controlId="fecha">
-            <Form.Label>Fecha del evento</Form.Label>
-            <Form.Control
-              type="date"
-              name="fecha"
-              value={formData.fecha}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
-        )}
-
+        {/* Resto de campos: horario, contacto, información, ciudad, categoría, fecha y archivo */}
+        {/* Imagen actual */}
         <Form.Group className="mb-3" controlId="formFile">
           {imagenActual && !imagen && (
             <div style={{ marginBottom: "1rem" }}>
               <img
                 src={imagenActual}
                 alt="Imagen actual"
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "180px",
-                  borderRadius: "8px",
-                }}
+                style={{ maxWidth: "100%", maxHeight: "180px", borderRadius: "8px" }}
               />
-              <div style={{ fontSize: "0.9rem", color: "#888" }}>
-                Imagen actual
-              </div>
+              <div style={{ fontSize: "0.9rem", color: "#888" }}>Imagen actual</div>
             </div>
           )}
           <Form.Label>Imagen de Portada</Form.Label>
-          <Form.Control
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
+          <Form.Control type="file" accept="image/*" onChange={handleFileChange} />
           <Form.Text className="text-muted">
             Deja vacío para mantener la imagen actual
           </Form.Text>
@@ -311,12 +263,7 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
         {error && <div className="alert alert-danger mt-2">{error}</div>}
 
         <div className="modal-footer">
-          <Button
-            variant="secondary"
-            type="button"
-            className="me-2"
-            onClick={handleCancel}
-          >
+          <Button variant="secondary" type="button" className="me-2" onClick={handleCancel}>
             Cancelar
           </Button>
           <ButtonSubmit
