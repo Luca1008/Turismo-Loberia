@@ -2,6 +2,26 @@ import React, { useState, useEffect, useRef } from "react";
 import { IoAccessibility } from "react-icons/io5";
 import "../../styles/stickyButton.css";
 
+/**
+ * Componente `AccessibilityButton`
+ *
+ * Proporciona un menú de accesibilidad que permite:
+ * - Ajustar el tamaño de fuente.
+ * - Activar alto contraste.
+ * - Activar modo oscuro.
+ * - Subrayar enlaces.
+ * - Activar fuente para dislexia.
+ * - Leer el contenido de la página en voz alta.
+ * - Pausar, continuar o detener la lectura.
+ * - Restablecer todos los ajustes de accesibilidad.
+ *
+ * Está diseñado para aplicarse sobre el elemento con id `main-content`.
+ *
+ * @component
+ *
+ * @example
+ * <AccessibilityButton />
+ */
 const AccessibilityButton = () => {
   const [fontSize, setFontSize] = useState(1);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,6 +33,7 @@ const AccessibilityButton = () => {
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
 
+  // Cierra el menú si se hace click fuera del mismo
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -25,14 +46,14 @@ const AccessibilityButton = () => {
         setMenuOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
 
+  /**
+   * Cambia el tamaño de fuente del contenido principal.
+   * @param {number} size - Nuevo tamaño de fuente en rem (0.8 a 1.5).
+   */
   const changeFontSize = (size) => {
     const mainContent = document.getElementById("main-content");
     const newSize = Math.max(0.8, Math.min(size, 1.5));
@@ -42,6 +63,7 @@ const AccessibilityButton = () => {
     }
   };
 
+  /** Alterna el alto contraste */
   const toggleContrast = () => {
     const mainContent = document.getElementById("main-content");
     if (mainContent) {
@@ -50,6 +72,7 @@ const AccessibilityButton = () => {
     }
   };
 
+  /** Alterna el modo oscuro */
   const toggleDarkMode = () => {
     const mainContent = document.getElementById("main-content");
     if (mainContent) {
@@ -58,6 +81,7 @@ const AccessibilityButton = () => {
     }
   };
 
+  /** Alterna el subrayado de enlaces */
   const toggleUnderlineLinks = () => {
     const mainContent = document.getElementById("main-content");
     if (mainContent) {
@@ -66,6 +90,7 @@ const AccessibilityButton = () => {
     }
   };
 
+  /** Alterna la fuente para dislexia */
   const toggleDyslexiaFont = () => {
     const mainContent = document.getElementById("main-content");
     if (mainContent) {
@@ -74,6 +99,7 @@ const AccessibilityButton = () => {
     }
   };
 
+  /** Lee el contenido principal en voz alta */
   const readText = () => {
     const mainContent = document.getElementById("main-content");
     if (mainContent && mainContent.innerText.trim()) {
@@ -89,6 +115,7 @@ const AccessibilityButton = () => {
     }
   };
 
+  /** Pausa o reanuda la lectura en curso */
   const pauseOrResume = () => {
     if (window.speechSynthesis.speaking) {
       if (window.speechSynthesis.paused) {
@@ -99,11 +126,13 @@ const AccessibilityButton = () => {
     }
   };
 
+  /** Detiene la lectura en curso */
   const stopReading = () => {
     window.speechSynthesis.cancel();
     setReading(false);
   };
 
+  /** Restablece todos los ajustes de accesibilidad */
   const resetAccessibility = () => {
     const mainContent = document.getElementById("main-content");
     if (mainContent) {
@@ -148,77 +177,16 @@ const AccessibilityButton = () => {
           role="menu"
           tabIndex={-1}
         >
-          <button
-            onClick={() => changeFontSize(fontSize + 0.1)}
-            aria-label="Aumentar texto"
-            role="menuitem"
-          >
-            A+
-          </button>
-          <button
-            onClick={() => changeFontSize(fontSize - 0.1)}
-            aria-label="Disminuir texto"
-            role="menuitem"
-          >
-            A-
-          </button>
-          <button
-            onClick={toggleContrast}
-            aria-label="Alto contraste"
-            role="menuitem"
-          >
-            Alto contraste
-          </button>
-          <button
-            onClick={toggleDarkMode}
-            aria-label="Modo oscuro"
-            role="menuitem"
-          >
-            Modo oscuro
-          </button>
-          <button
-            onClick={toggleUnderlineLinks}
-            aria-label="Subrayar enlaces"
-            role="menuitem"
-          >
-            Subrayar enlaces
-          </button>
-          <button
-            onClick={toggleDyslexiaFont}
-            aria-label="Fuente dislexia"
-            role="menuitem"
-          >
-            Fuente dislexia
-          </button>
-          <button
-            onClick={readText}
-            aria-label="Leer contenido"
-            role="menuitem"
-            disabled={reading}
-          >
-            Leer contenido
-          </button>
-          <button
-            onClick={pauseOrResume}
-            aria-label="Pausar/Continuar"
-            role="menuitem"
-          >
-            Pausar/Continuar
-          </button>
-          <button
-            onClick={stopReading}
-            aria-label="Detener lectura"
-            role="menuitem"
-          >
-            Detener lectura
-          </button>
-          <button
-            onClick={resetAccessibility}
-            aria-label="Restablecer"
-            role="menuitem"
-          >
-            Restablecer
-          </button>
+          <button onClick={() => changeFontSize(fontSize + 0.1)} aria-label="Aumentar texto" role="menuitem">A+</button>
+          <button onClick={() => changeFontSize(fontSize - 0.1)} aria-label="Disminuir texto" role="menuitem">A-</button>
+          <button onClick={toggleContrast} aria-label="Alto contraste" role="menuitem">Alto contraste</button>
+          <button onClick={toggleDarkMode} aria-label="Modo oscuro" role="menuitem">Modo oscuro</button>
+          <button onClick={toggleUnderlineLinks} aria-label="Subrayar enlaces" role="menuitem">Subrayar enlaces</button>
+          <button onClick={toggleDyslexiaFont} aria-label="Fuente dislexia" role="menuitem">Fuente dislexia</button>
+          <button onClick={readText} aria-label="Leer contenido" role="menuitem" disabled={reading}>Leer contenido</button>
+          <button onClick={pauseOrResume} aria-label="Pausar/Continuar" role="menuitem">Pausar/Continuar</button>
+          <button onClick={stopReading} aria-label="Detener lectura" role="menuitem">Detener lectura</button>
+          <button onClick={resetAccessibility} aria-label="Restablecer" role="menuitem">Restablecer</button>
         </div>
       )}
     </div>
