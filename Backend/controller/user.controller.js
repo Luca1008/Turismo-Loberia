@@ -7,13 +7,20 @@ const nodemailer = require("nodemailer");
 const User = require("../models/User");
 const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
 
-//------------------------------POST user Ok (Registrar)----------------------------------
+/**
+ * Registrar un nuevo usuario (por defecto como admin).
+ * 
+ * @async
+ * @function registerUser
+ * @param {import("express").Request} req - Objeto de solicitud HTTP.
+ * @param {import("express").Response} res - Objeto de respuesta HTTP.
+ * @returns {Promise<void>}
+ */
 exports.registerUser = async (req, res) => {
   try {
     const { name, surname, email, password } = req.body;
-    const role = "admin"; // 👈 Variable hardcodeada
+    const role = "admin";
 
-    // Validaciones básicas
     if (!name || !surname || !email || !password) {
       return res
         .status(400)
@@ -63,7 +70,16 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-// -------------------------------Loguear Ok-----------------------------------------
+/**
+ * Iniciar sesión de usuario.
+ * Genera un token JWT válido por 7 días.
+ *
+ * @async
+ * @function loginUser
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns {Promise<void>}
+ */
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -126,7 +142,15 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-//--------------------------------GET user by id Ok-----------------------------------------
+/**
+ * Obtener un usuario por su ID.
+ *
+ * @async
+ * @function getUserById
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns {Promise<void>}
+ */
 exports.getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -154,7 +178,16 @@ exports.getUserById = async (req, res) => {
   }
 };
 
-//----------------------------------Update Ok--------------------------------
+/**
+ * Actualizar datos de un usuario por ID.
+ * Si se envía `password`, se encripta antes de guardarse.
+ *
+ * @async
+ * @function updateUser
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns {Promise<void>}
+ */
 exports.updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -222,7 +255,15 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-/*---------------------------Delete Ok------------------------*/
+/**
+ * Eliminar un usuario por ID.
+ *
+ * @async
+ * @function deleteUser
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns {Promise<void>}
+ */
 exports.deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -253,7 +294,15 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-// ------------------------------GET all admins Ok------------------------------
+/**
+ * Obtener todos los usuarios con rol "admin".
+ *
+ * @async
+ * @function getAllAdmins
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns {Promise<void>}
+ */
 exports.getAllAdmins = async (req, res) => {
   try {
     const result = await db.query(
@@ -273,7 +322,16 @@ exports.getAllAdmins = async (req, res) => {
   }
 };
 
-// ------------------------Recuperar contraseña--------------------------
+/**
+ * Enviar correo de recuperación de contraseña.
+ * Genera un token temporal válido por 1 hora.
+ *
+ * @async
+ * @function forgotPassword
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns {Promise<void>}
+ */
 exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ status: "error", message: "Email requerido" });
@@ -317,7 +375,15 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-// ----------------------------Resetear contraseña-----------------------------
+/**
+ * Restablecer contraseña usando el token enviado por email.
+ *
+ * @async
+ * @function resetPassword
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @returns {Promise<void>}
+ */
 exports.resetPassword = async (req, res) => {
   const { token, password } = req.body;
   if (!token || !password)

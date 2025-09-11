@@ -89,6 +89,8 @@ npm run dev
 
 * Integración con Google Analytics para rastreo de clics.
 
+* Clima de Localidades.
+
 2. Footer
 
 Contiene logo, enlaces de contacto, dirección y redes sociales.
@@ -146,6 +148,10 @@ Traducciones usando react-i18next.
 Todos los textos clave, menús y etiquetas son traducibles.
 
 Cambio dinámico de idioma desde Navbar y Footer.
+
+8. Panel Admin
+
+Panel de administración para crear, editar y eliminar contenido. Además de editar y crear información de editores.
 
 📝 Notas importantes
 

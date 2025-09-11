@@ -1,6 +1,24 @@
 const db = require('../models/db');
 
-// Crear nueva suscripción
+/**
+ * POST /subscriptions
+ *
+ * Crea una nueva suscripción en el sistema.
+ *
+ * @group Subscriptions - Operaciones sobre suscripciones
+ * @param {string} direction.body - Dirección del suscriptor
+ * @param {string} think.body - Opinión o comentario del suscriptor
+ * @param {string} project.body - Proyecto asociado
+ * @param {string} name.body.required - Nombre del suscriptor
+ * @param {string} email.body.required - Email del suscriptor
+ * @param {string} phone.body - Teléfono del suscriptor
+ * @param {number} companions.body - Número de acompañantes
+ * @param {string[]} transport.body - Medios de transporte seleccionados
+ * @param {string[]} source.body - Cómo conoció el proyecto
+ * @param {boolean} [accept.body=false] - Aceptación de términos
+ * @returns {Object} 201 - { message, data }
+ * @returns {Error} 500 - Error al guardar la suscripción
+ */
 exports.createSubscription = async (req, res) => {
   try {
     const {
@@ -40,7 +58,15 @@ exports.createSubscription = async (req, res) => {
   }
 };
 
-// Obtener todas las suscripciones
+/**
+ * GET /subscriptions/all
+ *
+ * Obtiene todas las suscripciones (sin filtros, solo ordenadas por fecha).
+ *
+ * @group Subscriptions - Operaciones sobre suscripciones
+ * @returns {Array<Object>} 200 - Lista de suscripciones
+ * @returns {Error} 500 - Error al obtener las suscripciones
+ */
 exports.getAllSubscriptions = async (req, res) => {
   try {
     const result = await db.query(`
@@ -54,7 +80,18 @@ exports.getAllSubscriptions = async (req, res) => {
   }
 };
 
-// Obtener suscripciones con paginación y búsqueda
+/**
+ * GET /subscriptions
+ *
+ * Obtiene suscripciones con paginación y búsqueda opcional.
+ *
+ * @group Subscriptions - Operaciones sobre suscripciones
+ * @param {number} [page.query=1] - Número de página
+ * @param {number} [limit.query=10] - Límite de elementos por página
+ * @param {string} [search.query] - Texto a buscar (nombre o email)
+ * @returns {Object} 200 - { page, totalPages, totalItems, data }
+ * @returns {Error} 500 - Error al obtener las suscripciones
+ */
 exports.getSubscriptions = async (req, res) => {
   try {
     let { page, limit, search } = req.query;
@@ -96,7 +133,20 @@ exports.getSubscriptions = async (req, res) => {
   }
 };
 
-// Estadísticas para panel admin
+/**
+ * GET /subscriptions/stats
+ *
+ * Obtiene estadísticas de las suscripciones para el panel de administración.
+ *
+ * @group Subscriptions - Operaciones sobre suscripciones
+ * @returns {Object} 200 - {
+ *   total: number,
+ *   transport: Array<{ transporte: string, count: number }>,
+ *   source: Array<{ source_option: string, count: number }>,
+ *   accept: Array<{ accept: boolean, count: number }>
+ * }
+ * @returns {Error} 500 - Error al obtener estadísticas
+ */
 exports.getStats = async (req, res) => {
   try {
     const total = await db.query(`SELECT COUNT(*) FROM turismo_prueba.subscriptions`);

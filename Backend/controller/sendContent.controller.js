@@ -5,7 +5,19 @@ const jwt = require("jwt-simple");
 
 const SECRET_KEY = process.env.JWT_SECRET || "SecretClaveProjectLoberia_2025";
 
-// Enviar contenido
+/**
+ * POST /subscriptions/send
+ *
+ * Envía un correo a todos los suscriptores activos con la posibilidad de incluir un archivo adjunto.
+ *
+ * @group Subscriptions - Operaciones sobre suscriptores
+ * @param {string} subject.body.required - Asunto del correo
+ * @param {string} message.body.required - Contenido HTML/texto del correo
+ * @param {file} file.formData - Archivo adjunto opcional
+ * @returns {Object} 200 - { message: "Contenido enviado con éxito" }
+ * @returns {Error} 400 - No hay suscriptores activos
+ * @returns {Error} 500 - Error al enviar el contenido
+ */
 exports.sendToSubscribers = async (req, res) => {
   try {
     const { subject, message } = req.body;
@@ -72,7 +84,20 @@ exports.sendToSubscribers = async (req, res) => {
   }
 };
 
-// Alta suscriptor / Re-suscripción
+/**
+ * POST /subscriptions
+ *
+ * Agrega un nuevo suscriptor o re-activa uno existente si estaba desuscripto.
+ *
+ * @group Subscriptions - Operaciones sobre suscriptores
+ * @param {string} name.body - Nombre del suscriptor
+ * @param {string} email.body.required - Email del suscriptor
+ * @param {boolean} [accept.body=true] - Estado de aceptación de la suscripción
+ * @returns {Object} 201 - { message: "Suscripción exitosa" }
+ * @returns {Object} 200 - { message: "Te has vuelto a suscribir correctamente." }
+ * @returns {Error} 400 - Email ya suscrito
+ * @returns {Error} 500 - Error en la suscripción
+ */
 exports.addSubscriber = async (req, res) => {
   const { name, email, accept } = req.body;
 
@@ -114,7 +139,17 @@ exports.addSubscriber = async (req, res) => {
 };
 
 
-// Desuscripción
+/**
+ * GET /unsubscribe/:token
+ *
+ * Marca como inactivo (accept = false) a un suscriptor en base al token recibido.
+ *
+ * @group Subscriptions - Operaciones sobre suscriptores
+ * @param {string} token.path.required - Token JWT de desuscripción
+ * @returns {string} 200 - Mensaje HTML de confirmación de desuscripción
+ * @returns {Error} 400 - Enlace inválido o vencido
+ * @returns {Error} 404 - Suscriptor no encontrado
+ */
 exports.unsubscribe = async (req, res) => {
   const { token } = req.params;
 

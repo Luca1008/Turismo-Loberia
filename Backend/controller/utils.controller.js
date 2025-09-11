@@ -1,7 +1,15 @@
 const nodemailer = require('nodemailer');
 const axios = require('axios');
 
-/*-----------------------Email de contacto-----------------------*/
+/**
+ * Envía un correo de contacto al administrador.
+ *
+ * @async
+ * @function sendEmail
+ * @param {import("express").Request} req - Objeto de solicitud con los campos `name`, `email`, `subject` y `message`.
+ * @param {import("express").Response} res - Objeto de respuesta con el resultado de la operación.
+ * @returns {Promise<void>} Respuesta JSON con éxito o error.
+ */
 exports.sendEmail = async (req, res) => {
   const { name, email, subject, message } = req.body;
 
@@ -34,7 +42,18 @@ exports.sendEmail = async (req, res) => {
   }
 };
 
-/*--------------------Clima------------------*/
+/**
+ * Obtiene el pronóstico de 5 días (resumen diario) desde la API de OpenWeather.
+ *
+ * @async
+ * @function getForecast
+ * @param {import("express").Request} req - Puede incluir en `query`:  
+ *   - `city` {string} Nombre de la ciudad (ejemplo: "Lobería").  
+ *   - `lat` {string|number} Latitud (ejemplo: -38.1).  
+ *   - `lon` {string|number} Longitud (ejemplo: -58.9).  
+ * @param {import("express").Response} res - Respuesta con el arreglo de hasta 5 días de pronóstico.
+ * @returns {Promise<void>} JSON con datos diarios: temperatura, humedad, presión, viento, icono y descripción.
+ */
 exports.getForecast = async (req, res) => {
   let { city, lat, lon } = req.query;
   if (city && city.trim().toLowerCase() === 'arenas verdes') city = 'Forest';
@@ -111,6 +130,27 @@ exports.getForecast = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener el pronóstico' });
   }
 };
+
+/**
+ * Obtiene el clima actual de una ciudad o coordenadas.
+ *
+ * @async
+ * @function getWeather
+ * @param {import("express").Request} req - Puede incluir en `query`:  
+ *   - `city` {string} Nombre de la ciudad.  
+ *   - `lat` {string|number} Latitud.  
+ *   - `lon` {string|number} Longitud.  
+ * @param {import("express").Response} res - Respuesta con los datos del clima.
+ * @returns {Promise<void>} JSON con la información del clima actual:
+ * - `ciudad` {string} Nombre de la ciudad.  
+ * - `temp` {number} Temperatura en °C.  
+ * - `descripcion` {string} Descripción meteorológica.  
+ * - `icon` {string} Icono de OpenWeather.  
+ * - `dt` {number} Timestamp Unix.  
+ * - `humedad` {number} Porcentaje.  
+ * - `presion` {number} hPa.  
+ * - `viento` {string} Velocidad y dirección del viento.
+ */
 
 exports.getWeather = async (req, res) => {
   const { city, lat, lon } = req.query;

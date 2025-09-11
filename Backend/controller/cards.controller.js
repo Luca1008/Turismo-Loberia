@@ -1,6 +1,11 @@
 const db = require('../models/db');
 
-// 🧠 Función utilitaria para convertir buffer en base64 para el frontend
+/**
+ * Convierte los buffers de imagen de una card en base64 para el frontend
+ *
+ * @param {Object} card - Objeto card de la base de datos
+ * @returns {Object} Card con imágenes formateadas en base64
+ */
 const formatCardWithImages = (card) => {
   return {
     ...card,
@@ -13,7 +18,15 @@ const formatCardWithImages = (card) => {
   };
 };
 
-// GET sin filtros
+/**
+ * GET /cards/raw
+ * 
+ * Obtiene todas las cards sin filtros.
+ *
+ * @group Cards - Operaciones sobre cards
+ * @returns {Array<Object>} 200 - Lista de cards
+ * @returns {Error} 500 - Error al obtener las cards
+ */
 exports.getAllCardsRaw = async (req, res) => {
   try {
     const query = 'SELECT * FROM turismo_prueba."card"';
@@ -26,7 +39,33 @@ exports.getAllCardsRaw = async (req, res) => {
   }
 };
 
-// GET con filtros dinámicos
+/**
+ * GET /cards
+ * 
+ * Obtiene todas las cards con filtros dinámicos (paginación incluida).
+ *
+ * @group Cards - Operaciones sobre cards
+ * @param {string} [city] - Ciudad de la card
+ * @param {string} [category] - Categoría (Ej: Evento, Atractivo)
+ * @param {string} [title] - Búsqueda por título (ILIKE)
+ * @param {number} [page=1] - Página actual
+ * @param {number} [limit=6] - Límite de resultados por página
+ * @returns {Object} 200 - { total, cards }
+ * @returns {Error} 500 - Error al obtener cards
+ *//**
+ * GET /cards
+ * 
+ * Obtiene todas las cards con filtros dinámicos (paginación incluida).
+ *
+ * @group Cards - Operaciones sobre cards
+ * @param {string} [city] - Ciudad de la card
+ * @param {string} [category] - Categoría (Ej: Evento, Atractivo)
+ * @param {string} [title] - Búsqueda por título (ILIKE)
+ * @param {number} [page=1] - Página actual
+ * @param {number} [limit=6] - Límite de resultados por página
+ * @returns {Object} 200 - { total, cards }
+ * @returns {Error} 500 - Error al obtener cards
+ */
 exports.getAllCards = async (req, res) => {
   const { city, category, title, page = 1, limit = 6 } = req.query;
   const isAdmin = req.user?.role === "admin";
@@ -77,7 +116,16 @@ exports.getAllCards = async (req, res) => {
   }
 };
 
-// GET por ID
+/**
+ * GET /cards/:id
+ * 
+ * Obtiene una card por su ID.
+ *
+ * @group Cards - Operaciones sobre cards
+ * @param {number} id.path.required - ID de la card
+ * @returns {Object} 200 - Card encontrada
+ * @returns {Error} 404 - Card no encontrada
+ */
 exports.getCardById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -92,7 +140,21 @@ exports.getCardById = async (req, res) => {
   }
 };
 
-// POST (crear nueva card)
+/**
+ * POST /cards
+ * 
+ * Crea una nueva card con imágenes opcionales.
+ *
+ * @group Cards - Operaciones sobre cards
+ * @param {string} card_title.body.required - Título
+ * @param {string} card_description.body - Descripción
+ * @param {string} card_city.body - Ciudad
+ * @param {string} card_category.body - Categoría
+ * @param {file} card_img_portada.formData - Imagen portada (opcional)
+ * @param {file} card_img.formData - Imagen secundaria (opcional)
+ * @returns {Object} 201 - Card creada correctamente
+ * @returns {Error} 500 - Error al crear la card
+ */
 exports.createCard = async (req, res) => {
   try {
     const {
@@ -127,7 +189,20 @@ exports.createCard = async (req, res) => {
 };
 
 
-// PUT (actualizar una card)
+/**
+ * PUT /cards/:id
+ * 
+ * Actualiza una card existente.
+ *
+ * @group Cards - Operaciones sobre cards
+ * @param {number} id.path.required - ID de la card
+ * @param {string} [card_title.body] - Título
+ * @param {string} [card_description.body] - Descripción
+ * @param {file} [card_img_portada.formData] - Imagen portada
+ * @param {file} [card_img.formData] - Imagen secundaria
+ * @returns {Object} 200 - Card actualizada
+ * @returns {Error} 404 - Card no encontrada
+ */
 exports.updateCard = async (req, res) => {
   const { id } = req.params;
   try {
@@ -163,7 +238,16 @@ exports.updateCard = async (req, res) => {
   }
 };
 
-// DELETE
+/**
+ * DELETE /cards/:id
+ * 
+ * Elimina una card existente.
+ *
+ * @group Cards - Operaciones sobre cards
+ * @param {number} id.path.required - ID de la card
+ * @returns {Object} 200 - Card eliminada
+ * @returns {Error} 404 - Card no encontrada
+ */
 exports.deleteCard = async (req, res) => {
   const { id } = req.params;
   try {
