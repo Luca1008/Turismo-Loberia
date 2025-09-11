@@ -1,11 +1,22 @@
-// Importar dependencias
 const jwt = require ("jwt-simple");
 const moment = require("moment");
 
-// Clave secreta
+/**
+ * Clave secreta para firmar tokens JWT
+ * @type {string}
+ */
 const secret = "SecretClaveProjectLoberia_2025";
 
-//Crear una funcion para generar tokens
+/**
+ * Genera un token JWT para un usuario
+ * @param {Object} user - Objeto usuario
+ * @param {number} user.id - ID del usuario
+ * @param {string} user.name - Nombre del usuario
+ * @param {string} user.surname - Apellido del usuario
+ * @param {string} user.email - Email del usuario
+ * @param {string} user.role - Rol del usuario
+ * @returns {string} Token JWT codificado
+ */
 const createToken = (user) =>{
     const payload ={
         id: user.id,
