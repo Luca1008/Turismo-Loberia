@@ -3,7 +3,27 @@ const moment = require("moment");
 const { secret } = require("../services/jwt");
 
 
-// MIDDLEWARE: Funcion de autenticacion
+/**
+ * Middleware de autenticación JWT.
+ *
+ * Valida que el request tenga un header `Authorization` con un token válido (con o sin el prefijo `Bearer `).
+ * Decodifica el token, comprueba la expiración y, si es correcto, agrega el payload del usuario en `req.user`.
+ *
+ * @function auth
+ * @param {import("express").Request} req - Objeto de solicitud HTTP de Express.  
+ *   - Requiere el header `Authorization: Bearer <token>` o `Authorization: <token>`.  
+ *   - Si el token es válido, se añade la propiedad `user` con los datos decodificados.  
+ * @param {import("express").Response} res - Objeto de respuesta HTTP de Express.
+ * @param {import("express").NextFunction} next - Función para pasar el control al siguiente middleware.
+ * @returns {void} Envía un error 401 si no hay token, si está expirado o si es inválido.
+ *
+ * @example
+ * // Usar en una ruta protegida
+ * const auth = require("./middlewares/auth");
+ * router.get("/perfil", auth, (req, res) => {
+ *   res.json({ message: "Bienvenido", user: req.user });
+ * });
+ */
 const auth = (req, res, next) => {
   // Debug: Mostrar todos los headers
   console.log("Headers recibidos:", req.headers);

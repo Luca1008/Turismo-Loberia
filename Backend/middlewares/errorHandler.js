@@ -1,9 +1,24 @@
 /**
- * Middleware para manejar errores de forma centralizada
- * @param {Error} err - Objeto de error
- * @param {Request} req - Objeto de petición
- * @param {Response} res - Objeto de respuesta
- * @param {NextFunction} next - Función next
+ * Middleware centralizado para manejo de errores.
+ *
+ * Detecta distintos tipos de errores (validación, duplicación, JWT, autorización, etc.)
+ * y devuelve la respuesta HTTP adecuada con un mensaje estandarizado.
+ *
+ * @function errorHandler
+ * @param {Error} err - Objeto de error lanzado en algún middleware o ruta.
+ * @param {import("express").Request} req - Objeto de petición HTTP de Express.
+ * @param {import("express").Response} res - Objeto de respuesta HTTP de Express.
+ * @param {import("express").NextFunction} next - Función next de Express.
+ *
+ * @returns {void} Envía una respuesta HTTP con el estado y mensaje según el error detectado.
+ *
+ * @example
+ * const express = require('express');
+ * const app = express();
+ * const errorHandler = require('./middlewares/errorHandler');
+ *
+ * app.use('/api/users', userRoutes);
+ * app.use(errorHandler); // Siempre al final
  */
 const errorHandler = (err, req, res, next) => {
     console.error('Error:', err);

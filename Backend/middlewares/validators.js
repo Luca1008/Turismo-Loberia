@@ -2,7 +2,12 @@ const { body, param, validationResult } = require('express-validator');
 const ALLOWED_ROLES = ['superadmin', 'admin'];
 
 /**
- * Middleware para validar los resultados de la validación
+ * Middleware para validar los resultados de express-validator.
+ *
+ * @function validateResults
+ * @param {import('express').Request} req - Objeto de petición
+ * @param {import('express').Response} res - Objeto de respuesta
+ * @param {import('express').NextFunction} next - Función next
  */
 const validateResults = (req, res, next) => {
     const errors = validationResult(req);
@@ -17,7 +22,11 @@ const validateResults = (req, res, next) => {
 };
 
 /**
- * Validadores para el registro de usuarios
+ * Validadores para el registro de usuarios.
+ *
+ * @type {Array<import('express').RequestHandler>}
+ * @example
+ * app.post('/api/users', registerValidators, registerUser);
  */
 const registerValidators = [
     body('name')
@@ -33,13 +42,17 @@ const registerValidators = [
       .notEmpty().withMessage('La contraseña es requerida')
       .isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres'),
     body('role')
-      .optional() // si querés que sea opcional
+      .optional()
       .isIn(ALLOWED_ROLES).withMessage(`El rol debe ser uno de: ${ALLOWED_ROLES.join(', ')}`),
     validateResults
   ];
 
 /**
- * Validadores para el login
+ * Validadores para el login de usuarios.
+ *
+ * @type {Array<import('express').RequestHandler>}
+ * @example
+ * app.post('/api/login', loginValidators, loginUser);
  */
 const loginValidators = [
     body('email')
@@ -50,9 +63,12 @@ const loginValidators = [
     validateResults
 ];
 
-
 /**
- * Validadores para la actualización de usuario
+ * Validadores para la actualización de usuario.
+ *
+ * @type {Array<import('express').RequestHandler>}
+ * @example
+ * app.put('/api/users/:id', updateUserValidators, updateUser);
  */
 const updateUserValidators = [
     body('name')
