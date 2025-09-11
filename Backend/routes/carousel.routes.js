@@ -22,20 +22,36 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Subir imágenes del carrusel
+/**
+ * @route POST /api/carousel
+ * @desc Subir imagen del carrusel para una ciudad
+ * @access Public
+ * @param {string} city.body.required - Nombre de la ciudad
+ * @param {file} image.body.required - Imagen a subir
+ */
 router.post(
   "/carousel",
   upload.single("image"),
   carouselController.uploadCarouselImages
 );
 
-// Listar imágenes del carrusel para una ciudad
+/**
+ * @route GET /api/carousel/:city
+ * @desc Listar todas las imágenes del carrusel de una ciudad
+ * @access Public
+ * @param {string} city.path.required - Nombre de la ciudad
+ */
 router.get(
   "/carousel/:city",
   carouselController.listCarouselImages
 );
 
-// Eliminar una imagen del carrusel
+/**
+ * @route DELETE /api/carousel/:city
+ * @desc Eliminar la imagen del carrusel de una ciudad
+ * @access Public
+ * @param {string} city.path.required - Nombre de la ciudad
+ */
 router.delete(
   "/carousel/:city",
   carouselController.deleteCarouselImage

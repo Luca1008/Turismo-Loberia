@@ -1,6 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
+/**
+ * @route POST /translate
+ * @group Traducción - Endpoints de traducción de texto
+ * @param {string} q.body.required - Texto a traducir
+ * @param {string} [source.body="es"] - Idioma de origen (ej: "es")
+ * @param {string} [target.body="en"] - Idioma de destino (ej: "en")
+ * @param {string} [format.body="text"] - Formato del contenido ("text" o "html")
+ * @returns {Object} 200 - { translatedText: string }
+ * @returns {Error} 500 - Error al traducir el texto
+ */
 router.post("/", async (req, res) => {
   const { q, source = "es", target = "en", format = "text" } = req.body;
 
@@ -19,4 +29,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router; // ✅ Asegurate de que estás exportando el router
+module.exports = router;
