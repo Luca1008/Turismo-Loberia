@@ -77,6 +77,12 @@
   letter-spacing: 0.0625rem;
 }
 
+.footer__logo__text{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 /* ------------------ Información y sección extra ------------------ */
 .footer__info,
 .footer__extra {

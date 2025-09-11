@@ -362,9 +362,9 @@ const resources = {
       fecha: "Fecha",
       temp_max: "Temp. Máx",
       temp_min: "Temp. Mín",
-      footer_contact: "Contactate con nosotros",
+      footer_contact: "Contactate con Nosotros",
       footer_direccion: "Dirección de Turismo, Av. Campos 500",
-      footer_newsletter: "Suscribite a los newsletter",
+      footer_newsletter: "Suscribite a los Newsletter",
 
       // Suscribirse
       Vivo_en: "Vivo en",
