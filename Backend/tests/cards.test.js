@@ -9,7 +9,10 @@ const app = express();
 app.use(express.json());
 app.use('/api', cardsRoutes);
 
-// Test GET /api/cards-all
+/**
+ * Test GET /api/cards-all
+ * Verifica que la ruta devuelva un array de cards
+ */
 describe('GET /api/cards-all', () => {
   it('debería responder con un array de cards', async () => {
     const res = await request(app).get('/api/cards-all');
@@ -18,7 +21,10 @@ describe('GET /api/cards-all', () => {
   });
 });
 
-// Test POST /api/cards
+/**
+ * Test POST /api/cards
+ * Verifica la creación de una nueva card
+ */
 describe('POST /api/cards', () => {
   it('debería crear una nueva card', async () => {
     const nuevaCard = {
@@ -34,6 +40,8 @@ describe('POST /api/cards', () => {
     };
 
     const res = await request(app).post('/api/cards').send(nuevaCard);
+
+    // Validaciones
     expect(res.statusCode).toBe(201);
     expect(res.body).toHaveProperty('card');
     expect(res.body.card.card_title).toBe('Test Card');
