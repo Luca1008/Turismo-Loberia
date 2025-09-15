@@ -143,6 +143,10 @@ Integración en botones, enlaces y cambios de idioma.
 
 Permite análisis de interacción de usuarios.
 
+![Google Analytics screenshot 1](docs/screenshots/googleAnalityc_1.png)
+
+![GoogleAnalitycs screenShot 2](docs/screenshots/googleAnalityc_2.png)
+
 ## 7. Internacionalización
 
 Traducciones usando react-i18next.

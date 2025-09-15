@@ -1,4 +1,4 @@
-import AccessibilityButtton from "./components/common/AccessibilityButtton";
+import AccessibilityButton from "./components/common/AccessibilityButton";
 import ScrollToHash from "./components/common/ScrollToHash";
 import ScrollToTop from "./components/common/ScrollToTop";
 import Whatsapp from "./components/common/Whatsapp";
@@ -42,7 +42,7 @@ function AppContent() {
         </div>
         <div className="floating-buttons-container">
           <div className="accessibility-container">
-            <AccessibilityButtton />
+            <AccessibilityButton />
           </div>
           <ScrollToTopButton />
           <Whatsapp />
