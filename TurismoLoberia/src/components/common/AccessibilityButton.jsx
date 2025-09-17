@@ -23,7 +23,6 @@ import "../../styles/stickyButton.css";
  * <AccessibilityButton />
  */
 const AccessibilityButton = () => {
-  const [fontSize, setFontSize] = useState(1);
   const [menuOpen, setMenuOpen] = useState(false);
   const [reading, setReading] = useState(false);
   const [isHighContrast, setIsHighContrast] = useState(false);
@@ -49,19 +48,6 @@ const AccessibilityButton = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
-
-  /**
-   * Cambia el tamaño de fuente del contenido principal.
-   * @param {number} size - Nuevo tamaño de fuente en rem (0.8 a 1.5).
-   */
-  const changeFontSize = (size) => {
-    const mainContent = document.getElementById("main-content");
-    const newSize = Math.max(0.8, Math.min(size, 1.5));
-    if (mainContent) {
-      mainContent.style.fontSize = `${newSize}rem`;
-      setFontSize(newSize);
-    }
-  };
 
   /** Alterna el alto contraste */
   const toggleContrast = () => {
@@ -137,7 +123,6 @@ const AccessibilityButton = () => {
     const mainContent = document.getElementById("main-content");
     if (mainContent) {
       mainContent.style.fontSize = "1rem";
-      setFontSize(1);
       mainContent.classList.remove(
         "high-contrast",
         "dark-mode",
@@ -177,16 +162,63 @@ const AccessibilityButton = () => {
           role="menu"
           tabIndex={-1}
         >
-          <button onClick={() => changeFontSize(fontSize + 0.1)} aria-label="Aumentar texto" role="menuitem">A+</button>
-          <button onClick={() => changeFontSize(fontSize - 0.1)} aria-label="Disminuir texto" role="menuitem">A-</button>
-          <button onClick={toggleContrast} aria-label="Alto contraste" role="menuitem">Alto contraste</button>
-          <button onClick={toggleDarkMode} aria-label="Modo oscuro" role="menuitem">Modo oscuro</button>
-          <button onClick={toggleUnderlineLinks} aria-label="Subrayar enlaces" role="menuitem">Subrayar enlaces</button>
-          <button onClick={toggleDyslexiaFont} aria-label="Fuente dislexia" role="menuitem">Fuente dislexia</button>
-          <button onClick={readText} aria-label="Leer contenido" role="menuitem" disabled={reading}>Leer contenido</button>
-          <button onClick={pauseOrResume} aria-label="Pausar/Continuar" role="menuitem">Pausar/Continuar</button>
-          <button onClick={stopReading} aria-label="Detener lectura" role="menuitem">Detener lectura</button>
-          <button onClick={resetAccessibility} aria-label="Restablecer" role="menuitem">Restablecer</button>
+          <button
+            onClick={toggleContrast}
+            aria-label="Alto contraste"
+            role="menuitem"
+          >
+            Alto contraste
+          </button>
+          <button
+            onClick={toggleDarkMode}
+            aria-label="Modo oscuro"
+            role="menuitem"
+          >
+            Modo oscuro
+          </button>
+          <button
+            onClick={toggleUnderlineLinks}
+            aria-label="Subrayar enlaces"
+            role="menuitem"
+          >
+            Subrayar enlaces
+          </button>
+          <button
+            onClick={toggleDyslexiaFont}
+            aria-label="Fuente dislexia"
+            role="menuitem"
+          >
+            Fuente dislexia
+          </button>
+          <button
+            onClick={readText}
+            aria-label="Leer contenido"
+            role="menuitem"
+            disabled={reading}
+          >
+            Leer contenido
+          </button>
+          <button
+            onClick={pauseOrResume}
+            aria-label="Pausar/Continuar"
+            role="menuitem"
+          >
+            Pausar/Continuar
+          </button>
+          <button
+            onClick={stopReading}
+            aria-label="Detener lectura"
+            role="menuitem"
+          >
+            Detener lectura
+          </button>
+          <button
+            onClick={resetAccessibility}
+            aria-label="Restablecer"
+            role="menuitem"
+          >
+            Restablecer
+          </button>
         </div>
       )}
     </div>
