@@ -6,6 +6,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics";
 import DownloadButton from "../components/ui/DownloadButton";
+import { TbMapRoute } from "react-icons/tb";
 
 /**
  * Componente `ArenasVerdes`
@@ -109,15 +110,24 @@ const ArenasVerdes = () => {
           </strong>
         </p>
         <Trans components={{ p: <p /> }}>{data_arenas.como_llegar_intro}</Trans>
-        <Trans components={{ p: <p />, strong: <strong /> }}>
-          {data_arenas.desde_loberia}
-        </Trans>
-        <Trans components={{ p: <p />, strong: <strong /> }}>
-          {data_arenas.desde_necochea}
-        </Trans>
-        <Trans components={{ p: <p />, strong: <strong /> }}>
-          {data_arenas.desde_mar_del_plata}
-        </Trans>
+        <div className="item-location margin-bottom">
+          <TbMapRoute className="route-icon" />
+          <Trans components={{ p: <p />, strong: <strong /> }}>
+            {data_arenas.desde_loberia}
+          </Trans>
+        </div>
+        <div className="item-location margin-bottom">
+          <TbMapRoute className="route-icon" />
+          <Trans components={{ p: <p />, strong: <strong /> }}>
+            {data_arenas.desde_necochea}
+          </Trans>
+        </div>
+        <div className="item-location margin-bottom">
+          <TbMapRoute className="route-icon" />
+          <Trans components={{ p: <p />, strong: <strong /> }}>
+            {data_arenas.desde_mar_del_plata}
+          </Trans>
+        </div>
       </section>
 
       {/* Alojamientos */}
@@ -199,13 +209,18 @@ const ArenasVerdes = () => {
         <div className="photo-que-hacer-arenas-verdes"></div>
         <Trans components={{ p: <p /> }}>{data_arenas.actividades_intro}</Trans>
         <h2>{t("actividades_arenas_verdes")}</h2>
-        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>
+        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 className="padding-top" /> }}>
           {data_arenas.mar}
         </Trans>
-        <Trans components={{ p: <p />, strong: <strong /> }}>{data_arenas.entorno}</Trans>
-        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>{data_arenas.aire_libre}</Trans>
-        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>{data_arenas.magico}</Trans>
-        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 /> }}>{data_arenas.experiencia}</Trans>
+        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 className="padding-top" /> }}>
+          {data_arenas.aire_libre}
+        </Trans>
+        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 className="padding-top" /> }}>
+          {data_arenas.magico}
+        </Trans>
+        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 className="padding-top" /> }}>
+          {data_arenas.experiencia}
+        </Trans>
       </section>
 
       {/* Descargas */}

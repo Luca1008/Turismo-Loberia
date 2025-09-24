@@ -5,6 +5,7 @@ import { FaCar, FaBus, FaTrain } from "react-icons/fa";
 import { useTranslation, Trans } from "react-i18next";
 import { trackEvent } from "../analytics";
 import DownloadButton from "../components/ui/DownloadButton";
+import { TbMapRoute } from "react-icons/tb";
 
 /**
  * Componente `PartidoLoberia`
@@ -212,12 +213,13 @@ const PartidoLoberia = () => {
             ).map((item, index) => (
               <div key={index} className="mb-4">
                 <p>
+                  <TbMapRoute className="route-icon"/>
                   <strong>{item.descripcion}:</strong>
                 </p>
                 {Array.isArray(item.rutas) && (
                   <ul className="list-disc pl-5">
                     {item.rutas.map((ruta, i) => (
-                      <li key={i}>{ruta}</li>
+                      <li key={i} className="route-item">{ruta}</li>
                     ))}
                   </ul>
                 )}
@@ -241,9 +243,11 @@ const PartidoLoberia = () => {
           <Trans i18nKey="descripcion_en_micro" components={{ br: <br /> }} />
           <ul>
             <li>
+              <TbMapRoute className="route-icon"/>
               <Trans i18nKey="opcion_desde_buenos_aires" components={{ br: <br /> }} />
             </li>
             <li>
+              <TbMapRoute className="route-icon"/>
               <Trans i18nKey="opcion_desde_mar_del_plata" components={{ br: <br /> }} />
             </li>
           </ul>

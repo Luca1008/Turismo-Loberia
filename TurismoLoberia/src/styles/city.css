@@ -55,43 +55,108 @@
 }
 
 /* ------------------ Imágenes específicas por ciudad ------------------ */
-.portada-weather { background-image: url("../assets/images/arenas_verdes/agenda.jpg"); }
-.portada-city { background-image: url("../assets/images/partido_loberia/portada.jpg"); }
-.photo-como-llegar-partido-loberia { background-image: url("../assets/images/partido_loberia/como_llegar.jpg"); }
-.photo-gastronomia-partido-loberia { background-image: url("../assets/images/partido_loberia/gastronomia.jpg"); }
-.photo-alojamiento-partido-loberia { background-image: url("../assets/images/partido_loberia/alojamiento.jpg"); }
-.photo-transporte-partido-loberia { background-image: url("../assets/images/partido_loberia/transporte.jpg"); }
-.photo-agenda-partido-loberia { background-image: url("../assets/images/partido_loberia/agenda.jpg"); }
-.photo-que_hacer-partido-loberia { background-image: url("../assets/images/partido_loberia/que_hacer.jpg"); }
+.portada-weather {
+  background-image: url("../assets/images/arenas_verdes/agenda.jpg");
+}
+.portada-city {
+  background-image: url("../assets/images/partido_loberia/portada.jpg");
+}
+.photo-como-llegar-partido-loberia {
+  background-image: url("../assets/images/partido_loberia/como_llegar.jpg");
+}
+.photo-gastronomia-partido-loberia {
+  background-image: url("../assets/images/partido_loberia/gastronomia.jpg");
+}
+.photo-alojamiento-partido-loberia {
+  background-image: url("../assets/images/partido_loberia/alojamiento.jpg");
+}
+.photo-transporte-partido-loberia {
+  background-image: url("../assets/images/partido_loberia/transporte.jpg");
+}
+.photo-agenda-partido-loberia {
+  background-image: url("../assets/images/partido_loberia/agenda.jpg");
+}
+.photo-que_hacer-partido-loberia {
+  background-image: url("../assets/images/partido_loberia/que_hacer.jpg");
+}
 
-.portada-loberia { background-image: url("../assets/images/loberia/portada.jpg"); }
-.photo-como-llegar-loberia { background-image: url("../assets/images/loberia/como_llegar.jpg"); }
-.photo-alojamiento-loberia { background-image: url("../assets/images/loberia/alojamiento.jpg"); }
-.photo-que-hacer-loberia { background-image: url("../assets/images/loberia/que_hacer.jpg"); }
-.photo-agenda-loberia { background-image: url("../assets/images/loberia/agenda.jpg"); }
-.photo-gastronomia-loberia { background-image: url("../assets/images/loberia/gastronomia.jpg"); }
+.portada-loberia {
+  background-image: url("../assets/images/loberia/portada.jpg");
+}
+.photo-como-llegar-loberia {
+  background-image: url("../assets/images/loberia/como_llegar.jpg");
+}
+.photo-alojamiento-loberia {
+  background-image: url("../assets/images/loberia/alojamiento.jpg");
+}
+.photo-que-hacer-loberia {
+  background-image: url("../assets/images/loberia/que_hacer.jpg");
+}
+.photo-agenda-loberia {
+  background-image: url("../assets/images/loberia/agenda.jpg");
+}
+.photo-gastronomia-loberia {
+  background-image: url("../assets/images/loberia/gastronomia.jpg");
+}
 
-.portada-san-manuel { background-image: url("../assets/images/san_manuel/portada.jpg"); }
-.photo-como-llegar-san-manuel { background-image: url("../assets/images/san_manuel/como_llegar.jpg"); }
-.photo-gastronomia-san-manuel { background-image: url("../assets/images/san_manuel/gastronomia.jpg"); }
-.photo-alojamiento-san-manuel { background-image: url("../assets/images/san_manuel/alojamiento.jpg"); }
-.photo-transporte-san-manuel { background-image: url("../assets/images/san_manuel/transporte.jpg"); }
-.photo-agenda-san-manuel { background-image: url("../assets/images/san_manuel/agenda.jpg"); }
-.photo-que-hacer-san-manuel { background-image: url("../assets/images/san_manuel/que_hacer.jpg"); }
+.portada-san-manuel {
+  background-image: url("../assets/images/san_manuel/portada.jpg");
+}
+.photo-como-llegar-san-manuel {
+  background-image: url("../assets/images/san_manuel/como_llegar.jpg");
+}
+.photo-gastronomia-san-manuel {
+  background-image: url("../assets/images/san_manuel/gastronomia.jpg");
+}
+.photo-alojamiento-san-manuel {
+  background-image: url("../assets/images/san_manuel/alojamiento.jpg");
+}
+.photo-transporte-san-manuel {
+  background-image: url("../assets/images/san_manuel/transporte.jpg");
+}
+.photo-agenda-san-manuel {
+  background-image: url("../assets/images/san_manuel/agenda.jpg");
+}
+.photo-que-hacer-san-manuel {
+  background-image: url("../assets/images/san_manuel/que_hacer.jpg");
+}
 
-.portada-arenas-verdes { background-image: url("../assets/images/arenas_verdes/portada.jpg"); }
-.photo-como-llegar-arenas-verdes { background-image: url("../assets/images/arenas_verdes/como_llegar.jpg"); }
-.photo-transporte-arenas-verdes { background-image: url("../assets/images/arenas_verdes/transporte.jpg"); }
-.photo-agenda-arenas-verdes { background-image: url("../assets/images/arenas_verdes/agenda.jpg"); }
-.photo-que-hacer-arenas-verdes { background-image: url("../assets/images/arenas_verdes/que_hacer.jpg"); }
-.photo-gastronomia-arenas-verdes { background-image: url("../assets/images/arenas_verdes/gastronomia.jpg"); }
-.photo-alojamiento-arenas-verdes { background-image: url("../assets/images/arenas_verdes/alojamiento.jpg"); }
+.portada-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/portada.jpg");
+}
+.photo-como-llegar-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/como_llegar.jpg");
+}
+.photo-transporte-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/transporte.jpg");
+}
+.photo-agenda-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/agenda.jpg");
+}
+.photo-que-hacer-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/que_hacer.jpg");
+}
+.photo-gastronomia-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/gastronomia.jpg");
+}
+.photo-alojamiento-arenas-verdes {
+  background-image: url("../assets/images/arenas_verdes/alojamiento.jpg");
+}
 
 /* ------------------ Textos e información ------------------ */
-.city section p { text-align: left; margin-bottom: 0.5rem; }
-.city .information p { margin-bottom: 2rem; }
-.information-city-loberia p { margin-bottom: 1em; }
-.city .download p { text-align: center; }
+.city section p {
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+.city .information p {
+  margin-bottom: 2rem;
+}
+.information-city-loberia p {
+  margin-bottom: 1em;
+}
+.city .download p {
+  text-align: center;
+}
 
 /* ------------------ Botones ------------------ */
 .city .btn-success {
@@ -108,12 +173,73 @@
 
 /* ------------------ Espaciados ------------------ */
 .car,
-.bus { margin-top: 1rem; margin-bottom: 2rem; }
-.h3-city { margin-top: 2rem; margin-bottom: 1rem; }
+.bus {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+.h3-city {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.item-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.item-location svg, svg.route-icon {
+  width: 3rem;
+  height: 3rem;
+  padding-bottom: 0.2rem;
+}
+
+svg.route-icon, .route-item{
+  margin-left: 2rem;
+}
+
+.route-item{
+  margin-top: 0.5rem;
+}
+
+.padding-top{
+  padding-top: 1rem;
+}
+
+.item-location.margin-bottom{
+  margin-bottom: 0.2rem;
+}
+
+h3.h3-margin-top{
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
 
 /* ------------------ Media Queries (tablets y desktop) ------------------ */
 @media (min-width: 768px) {
-  .portada-city { height: 600px; }
-  .photo { height: 400px; }
-  .city svg { font-size: 30px; }
+  .portada-city {
+    height: 600px;
+  }
+  .photo {
+    height: 400px;
+  }
+  .city svg {
+    font-size: 30px;
+  }
+
+  .item-location svg, svg.route-icon {
+  width: 1.5rem;
+  height: 2rem;
+  flex-shrink: 0;
+  padding-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+svg.route-icon, .route-item{
+  margin-left: 2rem;
+}
+.route-item{
+  margin-top: 0.5rem;
+}
 }

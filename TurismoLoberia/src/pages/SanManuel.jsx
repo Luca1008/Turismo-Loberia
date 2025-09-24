@@ -5,6 +5,7 @@ import { FaCar, FaBus, FaBicycle } from "react-icons/fa";
 import { useTranslation, Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics";
+import { TbMapRoute } from "react-icons/tb";
 
 /**
  * Componente `SanManuel`.
@@ -108,18 +109,27 @@ export const SanManuel = () => {
             <FaCar /> {t("en_auto")}
           </strong>
         </p>
+        <div className="item-location margin-bottom">
+        <TbMapRoute className="route-icon"/>
         <Trans
           components={{ p: <p /> }}
           i18nKey="como_llegar_san_manuel.desde_loberia"
         />
+        </div>
+        <div className="item-location margin-bottom">
+        <TbMapRoute className="route-icon"/>
         <Trans
           components={{ p: <p /> }}
           i18nKey="como_llegar_san_manuel.desde_tandil"
         />
+        </div>
+        <div className="item-location">
+        <TbMapRoute className="route-icon"/>  
         <Trans
           components={{ p: <p /> }}
           i18nKey="como_llegar_san_manuel.desde_necochea"
         />
+        </div>
       </section>
 
       {/* Alojamiento */}
@@ -150,7 +160,7 @@ export const SanManuel = () => {
         <h2>{t("agenda")}</h2>
         <div className="photo-agenda-san-manuel"></div>
         <Trans
-          components={{ p: <p />, h2: <h2 />, h3: <h3 />, ul: <ul />, li: <li /> }}
+          components={{ p: <p />, h2: <h2 />, h3: <h3 className="h3-margin-top" />, ul: <ul />, li: <li /> }}
           i18nKey="agenda_san_manuel"
         />
         <ButtonSuccess onClick={() => handleButtonClick("Evento")} />
@@ -161,7 +171,7 @@ export const SanManuel = () => {
         <h2>{t("que_hacer_san_manuel")}</h2>
         <div className="photo-que-hacer-san-manuel"></div>
         <Trans
-          components={{ p: <p />, h3: <h3 />, ul: <ul />, li: <li /> }}
+          components={{ p: <p />, h3: <h3 className="h3-margin-top"/>, ul: <ul />, li: <li /> }}
           i18nKey="que_hacer_san_manuel_descripcion"
         />
       </section>

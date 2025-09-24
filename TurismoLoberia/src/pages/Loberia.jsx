@@ -6,6 +6,8 @@ import { useTranslation, Trans } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics";
 import DownloadButton from "../components/ui/DownloadButton";
+import { MdOutlineAddLocationAlt } from "react-icons/md";
+import { TbMapRoute } from "react-icons/tb";
 
 /**
  * Componente `Loberia`
@@ -100,39 +102,48 @@ const Loberia = () => {
         <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
           {data_descripcion.introduccion}
         </Trans>
-        <br />
         <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
           {data_descripcion.calles}
         </Trans>
-        <br />
+        <div className="item-location">
+          <MdOutlineAddLocationAlt/>
         <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
           {data_descripcion.parque}
         </Trans>
-        <br />
+        </div>
+        <div className="item-location">
+          <MdOutlineAddLocationAlt/>
         <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
           {data_descripcion.camino_sirga}
         </Trans>
-        <br />
+        </div>
         <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
           {data_descripcion.vida_cultural_intro}
         </Trans>
-        <br />
+        <div className="item-location">
+          <MdOutlineAddLocationAlt/>
         <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
           {data_descripcion.museo_historia_natural}
         </Trans>
-        <br />
+        </div>
+        <div className="item-location">
+          <MdOutlineAddLocationAlt/>
         <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
           {data_descripcion.museo_historico}
         </Trans>
-        <br />
+        </div>
+        <div className="item-location">
+          <MdOutlineAddLocationAlt/>
         <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
           {data_descripcion.fiestas_populares}
         </Trans>
-        <br />
+        </div>
+        <div className="item-location">
+          <MdOutlineAddLocationAlt/>
         <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
           {data_descripcion.automovilismo}
         </Trans>
-        <br />
+        </div>
         <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
           {data_descripcion.cierre}
         </Trans>
@@ -156,12 +167,12 @@ const Loberia = () => {
             ).map((item, index) => (
               <div key={index} className="mb-4">
                 <p>
-                  <strong>{item.descripcion}:</strong>
+                  <TbMapRoute className="route-icon"/><strong>{item.descripcion}:</strong>
                 </p>
                 {Array.isArray(item.rutas) && (
                   <ul className="list-disc pl-5">
                     {item.rutas.map((ruta, i) => (
-                      <li key={i}>{ruta}</li>
+                      <li key={i} className="route-item">{ruta}</li>
                     ))}
                   </ul>
                 )}
@@ -182,9 +193,11 @@ const Loberia = () => {
           <Trans i18nKey="descripcion_en_micro" components={{ br: <br /> }} />
           <ul>
             <li>
+              <TbMapRoute className="route-icon"/>
               <Trans i18nKey="opcion_desde_buenos_aires" components={{ br: <br /> }} />
             </li>
             <li>
+              <TbMapRoute className="route-icon"/>
               <Trans i18nKey="opcion_desde_mar_del_plata" components={{ br: <br /> }} />
             </li>
           </ul>

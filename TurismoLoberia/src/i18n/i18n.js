@@ -30,7 +30,7 @@ const resources = {
           titulo:
             "<h3>Lobería se destaca por su paisaje excepcionalmente diverso, que combina en un mismo territorio:</h3>",
 
-          mar: "<h3>Disfruta del mar y la arena:</h3> Camina por la extensa playa, siente la brisa marina y sumérgete en el océano. Es un lugar ideal para la práctica del <strong>surf</strong>, gracias a sus excelentes olas.</li><li>",
+          mar: "<p><strong>Disfruta del mar y la arena:</strong><br/>Camina por la extensa playa, siente la brisa marina y sumérgete en el océano. Es un lugar ideal para la práctica del <strong>surf</strong>, gracias a sus excelentes olas.</p>",
 
           sierras:
             "<p><strong>Sierras:</strong><br/> En San Manuel, un área que invita al descanso y al contacto con la naturaleza serrana.</p>",
@@ -203,13 +203,13 @@ const resources = {
           "<p><strong>Mar del Plata:</strong> La distancia es de 125 km, con un tiempo de viaje estimado de 1 hora y 50 minutos por la RP 88.</p>",
         actividades_intro:
           "<p>Situado a pocos kilómetros de Lobería, <strong>Arenas Verdes</strong> es un balneario natural que cautiva por su belleza agreste y su tranquilidad. Este rincón único combina un extenso <strong>bosque de pinos y eucaliptos</strong>, imponentes <strong>médanos</strong> y una amplia <strong>playa</strong> bañada por el Atlántico, creando un escenario perfecto para desconectar y conectar con la naturaleza.</p>",
-        mar: "<h3>Disfruta del Mar y la Arena:</h3><p>Camina por la extensa playa, siente la brisa marina y sumérgete en el océano. Es un lugar ideal para la práctica del <strong>surf</strong>, gracias a sus excelentes olas.</p>",
+        mar: "<h3>Disfruta del Mar y la Arena:</h3> <p> Camina por la extensa playa, siente la brisa marina y sumérgete en el océano. Es un lugar ideal para la práctica del <strong>surf</strong>, gracias a sus excelentes olas.</p>",
         aire_libre:
-          "<h3>Vive la naturaleza:</h3> La nueva <strong>Reserva Natural</strong> te invita a explorar su flora y fauna, y a capturar en imágenes la belleza de este ecosistema.",
+          "<h3>Vive la naturaleza:</h3><p>La nueva <strong>Reserva Natural</strong> te invita a explorar su flora y fauna, y a capturar en imágenes la belleza de este ecosistema.</p>",
         magico:
-          "<h3>Momentos mágicos:</h3> No te pierdas los espectaculares <strong>amaneceres y atardeceres</strong> que tiñen el cielo de colores. Y al caer la noche, prepárate para un show único: un cielo completamente despejado, ideal para observar las <strong>estrellas</strong>.",
+          "<h3>Momentos mágicos:</h3><p>No te pierdas los espectaculares <strong>amaneceres y atardeceres</strong> que tiñen el cielo de colores. Y al caer la noche, prepárate para un show único: un cielo completamente despejado, ideal para observar las <strong>estrellas</strong>.<7p>",
         relax:
-          "<h3>Relax y ocio:</h3> Disfruta de la tranquilidad del lugar, visita sus <strong>comercios de artesanías y balnearios</strong>, y pasa tiempo de calidad con la familia, permitiendo que los <strong>niños</strong> jueguen libremente en un entorno seguro y natural.",
+          "<h3>Relax y ocio:</h3><p>Disfruta de la tranquilidad del lugar, visita sus <strong>comercios de artesanías y balnearios</strong>, y pasa tiempo de calidad con la familia, permitiendo que los <strong>niños</strong> jueguen libremente en un entorno seguro y natural.</p>",
         experiencia:
           "<p>Arenas Verdes es más que una playa, es una experiencia para todos los sentidos.</p>",
         alojamiento:
@@ -609,7 +609,7 @@ const resources = {
         aire_libre:
           "<h3>Experience nature:</h3> The new <strong>Natural Reserve</strong> invites you to explore its flora and fauna, and capture the beauty of this ecosystem in images.",
         magico:
-          "<h3>Magical moments:</h3> Don’t miss the spectacular <strong>sunsets and sunrises</strong> that paint the sky with colors. And when night falls, get ready for a unique show: a completely clear sky, ideal for observing the <strong>stars</strong>.",
+          "<h3>Magical moments:</h3> Don’t miss the spectacular <strong>sunsets and sunrises</strong> that paint the sky with colors. And when night falls, get ready for a unique show: a completely clear sky, ideal for observing the <strong>stars.</strong>",
         relax:
           "<h3>Relaxation and leisure:</h3> Enjoy the tranquility of the place, visit its <strong>craft shops and seaside resorts</strong>, and spend quality time with family, allowing <strong>children</strong> to play freely in a safe and natural environment.",
         experiencia:
@@ -624,7 +624,7 @@ const resources = {
       alojamientos_arenas_verdes_descripcion:
         "<p><h2>For all travel styles:</h2></p><ul><li><h3>For Nature Lovers:</h3><p>If you seek an authentic experience, you can choose between <strong>camping</strong> under the stars or the privacy of <strong>cabins</strong> and <strong>dormis</strong>, some nestled in the forest.</p></li><li><br/><h3>For Greater Comfort:</h3><p>If traveling with family or friends, you have at your disposal fully equipped <strong>houses</strong>, <strong>apartments</strong>, and <strong>bungalows</strong>, many with privileged views.</p></li></ul><p>Both in the forest area and near the beach, each option will allow you to live a unique experience, waking up to the sound of the sea or surrounded by the peace of the pine trees.</p><p>Get ready to enjoy an unforgettable <strong>stay</strong>.</p>",
       gastronomia_arenas_verdes:
-        "<h2>Flavors with a Sea View: Gastronomy in Arenas Verdes</h2>",
+        "Flavors with a Sea View: Gastronomy in Arenas Verdes",
       transporte_arenas_verdes:
         "Arenas Verdes is located in the district of Lobería and can be accessed in two ways: one is via the coastal road from Costa Bonita, and the other is via a 7 km improved road located at km 108.5 of Provincial Route 88.",
       que_hacer_arenas_verdes:
