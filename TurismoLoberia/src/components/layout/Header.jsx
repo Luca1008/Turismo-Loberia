@@ -1,31 +1,30 @@
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, {
+  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-  useCallback,
 } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
+  FaArrowRight,
   FaBars,
   FaBell,
+  FaCheck,
   FaChevronDown,
   FaCloudSun,
   FaGlobe,
   FaSearch,
   FaTimes,
-  FaCheck,
-  FaArrowRight,
 } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
-import logoLoberia from "../../assets/icons/logoLoberia.jpg";
-import "../../styles/Navbar.css";
-import { trackEvent } from "../../analytics";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Typewriter from "typewriter-effect";
-import axios from "axios";
+import { trackEvent } from "../../analytics";
+import logoLoberia from "../../assets/icons/logoLoberia.jpg";
 import { Global } from "../../helpers/Global";
+import "../../styles/Navbar.css";
 
 /**
  * Hook para detectar clics fuera de un elemento.
@@ -40,9 +39,10 @@ const useClickOutside = (ref, callback) => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    // Usar 'click' en lugar de 'mousedown' para evitar cerrar antes del onClick de React
+    document.addEventListener("click", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, [ref, callback]);
 };
@@ -119,6 +119,7 @@ export const Header = () => {
   );
 
   useClickOutside(navRef, () => {
+    if (showMenu) return; // Evitar cerrar submenús cuando el menú móvil está abierto
     setOpenItem(null);
   });
 
