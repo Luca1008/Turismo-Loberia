@@ -4,7 +4,7 @@ const jwt = require("jwt-simple");
 const moment = require("moment");
 const JWT_SECRET = process.env.JWT_SECRET || "SecretClaveProjectLoberia_2025";
 const nodemailer = require("nodemailer");
-const User = require("../models/User");
+const User = require("../models/user");
 const BASE_URL = process.env.BASE_URL || "http://localhost:5000";
 
 /**
