@@ -242,8 +242,11 @@ export const Header = () => {
   /** Auto-focus input search al abrir barra */
   useEffect(() => {
     if (showSearch) {
-      const input = document.querySelector(".desktop-search-bar input");
-      if (input) input.focus();
+      const timer = setTimeout(() => {
+        const input = document.querySelector(".desktop-search-bar input");
+        if (input) input.focus();
+      }, 100);
+      return () => clearTimeout(timer);
     }
   }, [showSearch]);
 
@@ -355,16 +358,18 @@ export const Header = () => {
     });
   };
 
-   /** Toggle barra de búsqueda */
-  const handleSearchToggle = () => {
-    if (showSearch) {
-      setShowSearch(false);
+  /** Toggle barra de búsqueda - CORREGIDO */
+  const handleSearchToggle = (e) => {
+    if (e) e.stopPropagation(); // Prevenir propagación del evento
+    
+    setShowSearch(!showSearch); // Alternar entre mostrar/ocultar
+    setOpenItem(null);
+    setShowLanguage(false);
+    
+    if (!showSearch) {
       setSuggestions([]);
-    } else {
-      setShowSearch(true);
-      setOpenItem(null);
-      setShowLanguage(false);
     }
+    
     trackEvent({
       category: "Búsqueda",
       action: showSearch ? "Ocultar barra" : "Mostrar barra",
@@ -386,8 +391,8 @@ export const Header = () => {
     });
   };
 
-   // 🔹 Render JSX
-return (
+  // 🔹 Render JSX
+  return (
     <>
       {/** ==================== NAVBAR PRINCIPAL ==================== */}
       <nav
@@ -532,17 +537,23 @@ return (
               )}
             </div>
 
-            {/** Botón mostrar/ocultar barra de búsqueda */}
+            {/** Botón mostrar/ocultar barra de búsqueda - CORREGIDO */}
             {showSearch ? (
               <FaTimes
                 className="text-inherit"
-                onClick={handleSearchToggle}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSearchToggle(e);
+                }}
                 style={{ cursor: "pointer" }}
               />
             ) : (
               <FaSearch
                 className="text-inherit"
-                onClick={handleSearchToggle}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSearchToggle(e);
+                }}
                 style={{ cursor: "pointer" }}
               />
             )}
