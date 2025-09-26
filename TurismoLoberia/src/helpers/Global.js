@@ -16,6 +16,6 @@
  *   .then(data => console.log(data));
  */
 export const Global = {
-  url: "http://localhost:5000/api/",
-  baseUrl: "http://localhost:5000/"
+  url: "https://turismoloberia.tur.ar/api/",
+  baseUrl: "https://turismoloberia.tur.ar/"
 };

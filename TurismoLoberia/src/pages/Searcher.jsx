@@ -12,7 +12,7 @@ import Pagination from "react-bootstrap/Pagination";
 import { FaSearch } from "react-icons/fa";
 import { useLocation, useSearchParams } from "react-router-dom";
 import ContentCard from "../components/cards/ContentCard";
-import "../styles/searcher.css";
+import "../styles/Searcher.css";
 import { useTranslation } from "react-i18next";
 import { trackEvent } from "../analytics";
 import { Global } from "../helpers/Global";

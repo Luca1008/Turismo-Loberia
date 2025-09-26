@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logoLoberiaFooter from "../../assets/icons/logoLoberia.jpg";
 import "../../styles/footer.css";
-import handleExternalLink from "../common/handleExternalLink";
+import handleExternalLink from "../common/HandleExternalLink";
 import { useTranslation } from "react-i18next";
 import { trackEvent } from "../../analytics";
 

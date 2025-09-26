@@ -24,7 +24,7 @@ import Typewriter from "typewriter-effect";
 import { trackEvent } from "../../analytics";
 import logoLoberia from "../../assets/icons/logoLoberia.jpg";
 import { Global } from "../../helpers/Global";
-import "../../styles/Navbar.css";
+import "../../styles/navBar.css";
 
 /**
  * Hook para detectar clics fuera de un elemento.
