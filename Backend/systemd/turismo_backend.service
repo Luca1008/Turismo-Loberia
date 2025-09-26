@@ -1,0 +1,15 @@
+[Unit]
+Description=Turismo Backend Server
+After=network.target remote-fs.target nss-lookup.target
+Documentation=https://github.com/Luca1008/Turismo-Loberia
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=turismo
+WorkingDirectory=/usr/local/share/turismo_backend
+ExecStart=npm start
+
+[Install]
+WantedBy=multi-user.target
