@@ -19,13 +19,13 @@ const db = new Pool({
   search_path: ['turismo_prueba', 'public'],
 });
 // Mostrar en consola las variables de conexión (solo para debug)
-console.log('🔍 Variables de conexión:', {
+/* console.log('🔍 Variables de conexión:', {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-});
+}); */
 
 // Conectar a la base de datos
 db.connect()

@@ -26,8 +26,8 @@ const { secret } = require("../services/jwt");
  */
 const auth = (req, res, next) => {
   // Debug: Mostrar todos los headers
-  console.log("Headers recibidos:", req.headers);
-  console.log("Authorization header:", req.headers.authorization);
+  /* console.log("Headers recibidos:", req.headers);
+  console.log("Authorization header:", req.headers.authorization); */
 
   // Comprobar si me llega la cabecera de auth
   if (!req.headers.authorization) {
@@ -51,12 +51,12 @@ const auth = (req, res, next) => {
     token = authHeader; // En caso que venga sin Bearer
   }
 
-  console.log("Token limpio:", token);
+  /* console.log("Token limpio:", token); */
 
   // Decodificar el token
   try {
     let payload = jwt.decode(token, secret);
-    console.log("Payload decodificado:", payload);
+    /* console.log("Payload decodificado:", payload); */
 
     // Comprobar expiracion del token
     if (payload.exp <= moment().unix()) {
