@@ -111,7 +111,7 @@ const CardPage = () => {
         <p>{card.card_ubicacion}</p>
 
         {card.card_lat && card.card_lon && (
-          <>
+          <div className="map-container">
             <iframe
               title="Mapa OpenStreetMap"
               src={`https://www.openstreetmap.org/export/embed.html?bbox=${
@@ -140,7 +140,7 @@ const CardPage = () => {
             >
               {t("ver_en_openstreetmap")}
             </a>
-          </>
+          </div>
         )}
       </section>
 

@@ -51,3 +51,30 @@ section.card-detail {
 .card-section p {
   text-align: center;
 }
+
+.map-container, .card-detail, .card-section {
+  width: 350px !important;
+}
+h1{
+  margin-top: 1rem !important;
+}
+
+h2{
+  font-size: 1.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+@media screen and (min-width: 768px) {
+  .map-container, .card-detail, .card-section {
+    width: 100% !important;
+  }
+  h1{
+    margin-top: 4rem !important;
+  }
+  h2{
+    font-size: 1.5rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
