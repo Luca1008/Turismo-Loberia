@@ -55,7 +55,7 @@ exports.sendToSubscribers = async (req, res) => {
       const unsubscribeLink = `${process.env.BASE_URL}/unsubscribe/${token}`;
 
       const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: process.env.EMAIL_ADDRESS,
         to: sub.email,
         subject,
         html: `

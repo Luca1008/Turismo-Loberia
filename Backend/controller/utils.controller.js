@@ -19,7 +19,9 @@ exports.sendEmail = async (req, res) => {
 
   try {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      secure: process.env.EMAIL_SECURE,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -27,8 +29,8 @@ exports.sendEmail = async (req, res) => {
     });
 
     const mailOptions = {
-      from: `<${email}>`,
-      to: process.env.EMAIL_USER,
+      from: `Portal Turismo Lobería <${process.env.EMAIL_ADDRESS}>`,
+      to: process.env.EMAIL_ADDRESS,
       subject: `${subject} - (De: ${name} <${email}>)`,
       text: `(Mensaje enviado desde la página de turismo de Lobería)\nNombre: ${name}\nEmail: ${email}\nAsunto: ${subject}\nMensaje:\n${message}`,
       replyTo: email,
