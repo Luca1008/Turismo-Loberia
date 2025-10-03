@@ -197,7 +197,7 @@ export const Header = () => {
         }
       }, 100);
     } else if (s.type === "category") {
-      navigate(`/buscador?category=${encodeURIComponent(s.value)}`);
+      navigate(`/Buscador?category=${encodeURIComponent(s.value)}`);
       setShowSearch(false);
       setSuggestions([]);
     }
@@ -218,8 +218,8 @@ export const Header = () => {
     e.preventDefault();
     const query = searchQuery.trim();
     const url = query
-      ? `/buscador?title=${encodeURIComponent(query)}`
-      : "/buscador";
+      ? `/Buscador?title=${encodeURIComponent(query)}`
+      : "/Buscador";
 
     navigate(url);
     setShowSearch(false);
