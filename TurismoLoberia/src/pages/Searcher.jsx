@@ -388,7 +388,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
                 title={card.card_title}
                 description={card.card_description}
                 city={card.card_city}
-                img={card.img}
+                img={card.card_img_portada}
                 category={card.card_category}
                 card_date={card.card_date}
                 {...(isAdmin && {

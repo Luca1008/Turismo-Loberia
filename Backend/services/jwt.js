@@ -5,7 +5,7 @@ const moment = require("moment");
  * Clave secreta para firmar tokens JWT
  * @type {string}
  */
-const secret = "SecretClaveProjectLoberia_2025";
+const secret = process.env.JWT_SECRET || "SecretClaveProjectLoberia_2025";
 
 /**
  * Genera un token JWT para un usuario
