@@ -84,7 +84,7 @@ export const Header = () => {
     "/Suscribirse",
     "/Clima",
     "/Contacto",
-    "/buscador",
+    "/Buscador",
     "/Admin",
     "/PanelAdmin",
     "/PanelAdmin/modificar-datos",
@@ -663,7 +663,7 @@ export const Header = () => {
               onSubmit={(e) => {
                 e.preventDefault();
                 const query = e.target.elements.searchMobile.value.trim();
-                const url = query ? `/buscador?title=${encodeURIComponent(query)}` : "/buscador";
+                const url = query ? `/Buscador?title=${encodeURIComponent(query)}` : "/Buscador";
                 navigate(url);
                 setShowMenu(false);
               }}
