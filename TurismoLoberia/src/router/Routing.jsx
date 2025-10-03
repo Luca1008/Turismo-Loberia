@@ -19,6 +19,7 @@ import { Register } from "../pages/Register";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import Unsubscribe from "../pages/Unsubscribe";
+import NotFound from "../pages/NotFound";
 
 /**
  * Componente `Routing`
@@ -66,6 +67,8 @@ export const Routing = () => {
         <Route path="crear-admin" element={<CreateAdmin />} />
         <Route path="listar-admins" element={<ListAdmins />} />
       </Route>
+      {/* Ruta 404 - debe ir al final */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
