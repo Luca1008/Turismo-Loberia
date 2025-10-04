@@ -41,7 +41,7 @@ section.weather h1{
 .h2-weather {
   font-weight: bold;
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 2.2rem !important;
 }
 
 .date-weather {
