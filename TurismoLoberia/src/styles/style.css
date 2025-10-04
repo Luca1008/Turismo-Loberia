@@ -159,7 +159,7 @@ body {
     letter-spacing: 0.025em;
   }
   h2 { 
-    font-size: var(--size-h2-desktop);
+    font-size: var(--size-h2-desktop) !important;
     letter-spacing: 0.035em;
   }
   h3 { 
