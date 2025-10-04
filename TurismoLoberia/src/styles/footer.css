@@ -125,6 +125,11 @@
   color: var(--black);
 }
 
+.footer__item:hover p,
+.footer__item:focus p {
+  color: var(--primary-color);
+}
+
 /* ------------------ Redes sociales ------------------ */
 .footer__social {
   display: flex;
