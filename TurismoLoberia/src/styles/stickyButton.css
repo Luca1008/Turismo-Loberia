@@ -5,10 +5,9 @@
 /* ------------------ Contenedores de botones flotantes ------------------ */
 .floating-buttons-container {
   position: fixed;
-  bottom: 350px;
+  bottom: 100px;
   left: 0;
   right: 0;
-  z-index: 10000;
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
@@ -191,7 +190,7 @@
 /* ------------------ Scroll Top Button ------------------ */
 .scroll-button {
   position: fixed;
-  bottom: 430px;
+  bottom: 180px;
   right: 13px;
   z-index: 1000;
   background-color: rgba(95, 93, 93, 0.529);
