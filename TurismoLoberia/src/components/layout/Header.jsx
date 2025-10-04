@@ -361,15 +361,15 @@ export const Header = () => {
   /** Toggle barra de búsqueda - CORREGIDO */
   const handleSearchToggle = (e) => {
     if (e) e.stopPropagation(); // Prevenir propagación del evento
-    
+
     setShowSearch(!showSearch); // Alternar entre mostrar/ocultar
     setOpenItem(null);
     setShowLanguage(false);
-    
+
     if (!showSearch) {
       setSuggestions([]);
     }
-    
+
     trackEvent({
       category: "Búsqueda",
       action: showSearch ? "Ocultar barra" : "Mostrar barra",
@@ -409,7 +409,6 @@ export const Header = () => {
         `}
       >
         <div className="container-fluid d-flex align-items-center justify-content-between px-3 py-2">
-          
           {/** Logo */}
           <div className="logo-container">
             <Link
@@ -419,9 +418,13 @@ export const Header = () => {
             >
               {/** Imagen del logo */}
               <img className="logoLoberia" src={logoLoberia} alt="Lobería" />
-              
+
               {/** Texto del logo con efecto Typewriter */}
-              <div className={`logo-text loberia ${scrolled ? "nav-transparent" : ""}`}>
+              <div
+                className={`logo-text loberia ${
+                  scrolled ? "nav-transparent" : ""
+                }`}
+              >
                 <strong
                   className="primary"
                   style={{
@@ -464,10 +467,12 @@ export const Header = () => {
               >
                 {/** Nombre del item principal */}
                 <strong>{t(id)}</strong>
-                
+
                 {/** Icono de flecha desplegable */}
                 <FaChevronDown
-                  className={`transition-arrow${openItem === id ? " rotate" : ""}`}
+                  className={`transition-arrow${
+                    openItem === id ? " rotate" : ""
+                  }`}
                   size={12}
                 />
 
@@ -525,12 +530,22 @@ export const Header = () => {
                   className="submenu-desktop position-absolute shadow p-2 mt-2 bg-white"
                   style={{ zIndex: 1000 }}
                 >
-                  <li className="px-2 py-1" onClick={() => changeLanguage("es")}>
-                    {i18n.language === "es" && <FaCheck className="me-2 text-success" />}
+                  <li
+                    className="px-2 py-1"
+                    onClick={() => changeLanguage("es")}
+                  >
+                    {i18n.language === "es" && (
+                      <FaCheck className="me-2 text-success" />
+                    )}
                     {t("espanol")}
                   </li>
-                  <li className="px-2 py-1" onClick={() => changeLanguage("en")}>
-                    {i18n.language === "en" && <FaCheck className="me-2 text-success" />}
+                  <li
+                    className="px-2 py-1"
+                    onClick={() => changeLanguage("en")}
+                  >
+                    {i18n.language === "en" && (
+                      <FaCheck className="me-2 text-success" />
+                    )}
                     {t("ingles")}
                   </li>
                 </ul>
@@ -563,7 +578,10 @@ export const Header = () => {
           <div className="d-flex align-items-center gap-2 d-md-none mobile-icon">
             {/** Clima mobile */}
             <strong className="border-item-nav d-flex align-items-center gap-1">
-              <Link to="/Clima" className="text-decoration-none border-item-nav">
+              <Link
+                to="/Clima"
+                className="text-decoration-none border-item-nav"
+              >
                 <FaCloudSun className="primary logoNav" />
               </Link>
             </strong>
@@ -571,13 +589,18 @@ export const Header = () => {
 
             {/** Selector de idioma mobile */}
             <div className="position-relative">
-              <div className="d-flex align-items-center border-item-nav" onClick={(e) => toggleLanguage(e)}>
+              <div
+                className="d-flex align-items-center border-item-nav"
+                onClick={(e) => toggleLanguage(e)}
+              >
                 <FaGlobe className="me-1 primary" />
                 <strong className="primary">
                   {i18n.language === "es" ? t("espanol") : t("ingles")}
                 </strong>
                 <FaChevronDown
-                  className={`primary transition-arrow${showLanguage ? " rotate" : ""}`}
+                  className={`primary transition-arrow${
+                    showLanguage ? " rotate" : ""
+                  }`}
                   size={12}
                 />
               </div>
@@ -592,24 +615,40 @@ export const Header = () => {
                     textAlign: "right",
                   }}
                 >
-                  <li className="px-2 py-1" onClick={() => changeLanguage("es")}>
-                    {i18n.language === "es" && <FaCheck className="me-2 text-success" />}
+                  <li
+                    className="px-2 py-1"
+                    onClick={() => changeLanguage("es")}
+                  >
+                    {i18n.language === "es" && (
+                      <FaCheck className="me-2 text-success" />
+                    )}
                     {t("espanol")}
                   </li>
-                  <li className="px-2 py-1" onClick={() => changeLanguage("en")}>
-                    {i18n.language === "en" && <FaCheck className="me-2 text-success" />}
+                  <li
+                    className="px-2 py-1"
+                    onClick={() => changeLanguage("en")}
+                  >
+                    {i18n.language === "en" && (
+                      <FaCheck className="me-2 text-success" />
+                    )}
                     {t("ingles")}
                   </li>
                 </ul>
               )}
             </div>
             <div className="vertical-divider"></div>
+            {/** Botón hamburguesa para abrir/ocultar menú mobile */}
+            <button
+              className="btn p-0 d-md-none primary"
+              onClick={() => setShowMenu(!showMenu)}
+            >
+              {showMenu ? (
+                <FaTimes className="primary" size={24} />
+              ) : (
+                <FaBars size={24} />
+              )}
+            </button>
           </div>
-
-          {/** Botón hamburguesa para abrir/ocultar menú mobile */}
-          <button className="btn p-0 d-md-none primary" onClick={() => setShowMenu(!showMenu)}>
-            {showMenu ? <FaTimes className="primary" size={24} /> : <FaBars size={24} />}
-          </button>
         </div>
       </nav>
 
@@ -620,7 +659,10 @@ export const Header = () => {
           className="desktop-search-bar p-3 border-nav d-none d-md-block position-sticky"
           style={{ zIndex: 1050 }}
         >
-          <form className="search-desktop-form position-relative" onSubmit={handleSearchSubmit}>
+          <form
+            className="search-desktop-form position-relative"
+            onSubmit={handleSearchSubmit}
+          >
             <input
               type="text"
               className="form-control me-3"
@@ -663,7 +705,9 @@ export const Header = () => {
               onSubmit={(e) => {
                 e.preventDefault();
                 const query = e.target.elements.searchMobile.value.trim();
-                const url = query ? `/Buscador?title=${encodeURIComponent(query)}` : "/Buscador";
+                const url = query
+                  ? `/Buscador?title=${encodeURIComponent(query)}`
+                  : "/Buscador";
                 navigate(url);
                 setShowMenu(false);
               }}
@@ -676,7 +720,10 @@ export const Header = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button className="btn-buscador btn btn-outline-secondary" type="submit">
+              <button
+                className="btn-buscador btn btn-outline-secondary"
+                type="submit"
+              >
                 <FaSearch />
               </button>
             </form>
@@ -714,9 +761,14 @@ export const Header = () => {
             </li>
             {menuData.map(({ id, subitems }, idx) => (
               <li key={idx} className="menu-item">
-                <div className="d-flex justify-content-between align-items-center" onClick={(e) => toggleItem(id, e)}>
+                <div
+                  className="d-flex justify-content-between align-items-center"
+                  onClick={(e) => toggleItem(id, e)}
+                >
                   <strong>{t(id)}</strong>
-                  <FaChevronDown className={`arrow${openItem === id ? " rotate" : ""}`} />
+                  <FaChevronDown
+                    className={`arrow${openItem === id ? " rotate" : ""}`}
+                  />
                 </div>
                 {openItem === id && (
                   <ul className="submenu mt-2">
