@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import "../styles/cardPage.css";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { trackEvent } from "../analytics";
 import { Global } from "../helpers/Global";
+import "../styles/cardPage.css";
 
 /**
  * Componente `CardPage`
@@ -103,12 +103,12 @@ const CardPage = () => {
         </div>
       )}
 
-      <p>{card.card_description}</p>
+      <p>{card.card_description || "Sin información"}</p>
 
       {/* Sección Ubicación */}
       <section className="card-section">
         <h2>{t("ubicacion")}</h2>
-        <p>{card.card_ubicacion}</p>
+        <p>{card.card_ubicacion || "Sin información"}</p>
 
         {card.card_lat && card.card_lon && (
           <div className="map-container">
@@ -147,19 +147,19 @@ const CardPage = () => {
       {/* Sección Horarios */}
       <section className="card-section">
         <h2>{t("horarios")}</h2>
-        <p>{card.card_horario}</p>
+        <p>{card.card_horario || "Sin información"}</p>
       </section>
 
       {/* Sección Contactos */}
       <section className="card-section">
         <h2>{t("contactos")}</h2>
-        <p>{card.card_contacto}</p>
+        <p>{card.card_contacto || "Sin información"}</p>
       </section>
 
       {/* Sección Información */}
       <section className="card-section">
         <h2>{t("informacion")}</h2>
-        <p>{card.card_info}</p>
+        <p>{card.card_info || "Sin información"}</p>
       </section>
     </section>
   );
