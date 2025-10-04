@@ -406,6 +406,7 @@ const resources = {
         "Solicitá ahora el listado completo y empezá a planear tu viaje con ventajas que harán de tu estadía una experiencia inolvidable. ¡Lobería te espera con los brazos abiertos y muchas sorpresas!",
       link_invites: "Pedilo completando un breve formulario haciendo ",
       link_aqui: "click aquí",
+      ver_en_openstreetmap: "Ver en OpenStreetMap",
     },
   },
   en: {
@@ -803,6 +804,7 @@ const resources = {
         "Request the complete list now and start planning your trip with advantages that will make your stay unforgettable. Lobería awaits you with open arms and many surprises!",
       link_invites: "Request it by filling out a short form by ",
       link_aqui: "clicking here",
+      ver_en_openstreetmap: "View in OpenStreetMap",
     },
   },
 };
