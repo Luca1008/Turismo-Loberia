@@ -215,20 +215,54 @@ exports.updateCard = async (req, res) => {
     const imgPortada = req.files?.card_img_portada?.[0]?.buffer || null;
     const imgExtra = req.files?.card_img?.[0]?.buffer || null;
 
-    const result = await db.query(
-      `UPDATE turismo_prueba."card" SET
-        card_title=$1, card_description=$2, card_ubicacion=$3, card_link_ubicacion=$4,
-        card_horario=$5, card_contacto=$6, card_info=$7, card_city=$8, card_category=$9,
-        card_lat=$10, card_lon=$11,
-        card_img_portada=$12, card_img=$13, card_date=$14
-      WHERE id = $15 RETURNING *`,
-      [
-        card_title, card_description, card_ubicacion, card_link_ubicacion,
-        card_horario, card_contacto, card_info, card_city, card_category,
-        card_lat || null, card_lon || null,
-        imgPortada, imgExtra, card_date || null, id
-      ]
-    );
+    // Construcción dinámica del UPDATE para no tocar imágenes si no se envían
+    const setClauses = [
+      'card_title=$1',
+      'card_description=$2',
+      'card_ubicacion=$3',
+      'card_link_ubicacion=$4',
+      'card_horario=$5',
+      'card_contacto=$6',
+      'card_info=$7',
+      'card_city=$8',
+      'card_category=$9',
+      'card_lat=$10',
+      'card_lon=$11',
+      'card_date=$12'
+    ];
+
+    const params = [
+      card_title,
+      card_description,
+      card_ubicacion,
+      card_link_ubicacion,
+      card_horario,
+      card_contacto,
+      card_info,
+      card_city,
+      card_category,
+      card_lat || null,
+      card_lon || null,
+      card_date || null
+    ];
+
+    // Si llega imagen de portada, se agrega a la actualización
+    if (imgPortada !== null) {
+      setClauses.push(`card_img_portada=$${params.length + 1}`);
+      params.push(imgPortada);
+    }
+
+    // Si llega imagen extra, se agrega a la actualización
+    if (imgExtra !== null) {
+      setClauses.push(`card_img=$${params.length + 1}`);
+      params.push(imgExtra);
+    }
+
+    // ID al final
+    params.push(id);
+
+    const query = `UPDATE turismo_prueba."card" SET ${setClauses.join(', ')} WHERE id = $${params.length} RETURNING *`;
+    const result = await db.query(query, params);
 
     if (result.rowCount === 0) return res.status(404).json({ error: 'Card no encontrada para actualizar.' });
     res.json({ message: 'Card actualizada correctamente', card: formatCardWithImages(result.rows[0]) });
