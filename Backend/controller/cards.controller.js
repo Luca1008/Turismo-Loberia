@@ -206,6 +206,8 @@ exports.createCard = async (req, res) => {
 exports.updateCard = async (req, res) => {
   const { id } = req.params;
   try {
+    console.log('[cards.update] id=', id);
+    console.log('[cards.update] req.files keys=', req.files ? Object.keys(req.files) : 'NO_FILES');
     const {
       card_title, card_description, card_ubicacion, card_link_ubicacion,
       card_horario, card_contacto, card_info, card_city, card_category, card_date,
@@ -214,6 +216,7 @@ exports.updateCard = async (req, res) => {
 
     const imgPortada = req.files?.card_img_portada?.[0]?.buffer || null;
     const imgExtra = req.files?.card_img?.[0]?.buffer || null;
+    console.log('[cards.update] hasPortada=', imgPortada !== null, 'hasImg=', imgExtra !== null);
 
     // Construcción dinámica del UPDATE para no tocar imágenes si no se envían
     const setClauses = [
@@ -262,6 +265,7 @@ exports.updateCard = async (req, res) => {
     params.push(id);
 
     const query = `UPDATE turismo_prueba."card" SET ${setClauses.join(', ')} WHERE id = $${params.length} RETURNING *`;
+    console.log('[cards.update] query=', query);
     const result = await db.query(query, params);
 
     if (result.rowCount === 0) return res.status(404).json({ error: 'Card no encontrada para actualizar.' });
