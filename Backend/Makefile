@@ -20,10 +20,7 @@ help :
 
 install :
 	sudo install -d -o $(USUARIO_DESPLIEGUE) -g $(GRUPO_DESPLIEGUE) -m 755 $(DIRECTORIO_BASE)
-	# Sincroniza todo excepto las imágenes personalizadas del carrusel
-	sudo rsync -vr --delete --exclude=.env --exclude=public/carousel $(OBJETIVOS) $(DIRECTORIO_BASE)/
-	# Actualiza defaults del carrusel sin borrar imágenes personalizadas existentes
-	sudo rsync -vr public/carousel $(DIRECTORIO_BASE)/public/
+	sudo rsync -vr --delete --exclude=.env $(OBJETIVOS) $(DIRECTORIO_BASE)/
 	sudo install -d -o $(USUARIO_DESPLIEGUE) -g $(GRUPO_WWW) -m 2750 \
 		$(DIRECTORIO_VAR)
 	sudo install -d -o $(USUARIO_DESPLIEGUE) -g $(GRUPO_WWW) -m 2750 \
@@ -32,16 +29,14 @@ install :
 	sudo chown -Rh $(USUARIO_DESPLIEGUE):$(GRUPO_DESPLIEGUE) \
 		$(DIRECTORIO_BASE)
 	sudo su $(USUARIO_DESPLIEGUE) -c \
-		"cd $(DIRECTORIO_BASE) && npm install && npm audit fix || true"
+		"cd $(DIRECTORIO_BASE) && npm install && npm audit fix"
 	sudo install -m 644 $(SERVICIOS_SYSTEMD) $(BASE_SYSTEMD)
 	sudo systemctl daemon-reload
 	sudo systemctl enable turismo_backend
 	sudo systemctl restart turismo_backend
 
-
 deploy :
-	rsync -vr --delete --exclude=.env --exclude=public/carousel $(OBJETIVOS) $(DIRECTORIO_BASE)/
-	rsync -vr public/carousel $(DIRECTORIO_BASE)/public/
+	rsync -vr --delete --exclude=.env $(OBJETIVOS) $(DIRECTORIO_BASE)/
 	ln -nsf $(DIRECTORIO_VAR)/uploads $(DIRECTORIO_BASE)/uploads
-	cd $(DIRECTORIO_BASE) && npm install && npm audit fix || true
+	cd $(DIRECTORIO_BASE) && npm install && npm audit fix
 	sudo systemctl restart turismo_backend
