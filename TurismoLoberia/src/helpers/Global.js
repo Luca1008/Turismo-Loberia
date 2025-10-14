@@ -29,4 +29,4 @@ export const Global = {
   baseUrl: "http://localhost:5000/"
 };
 
-+/
+*/
