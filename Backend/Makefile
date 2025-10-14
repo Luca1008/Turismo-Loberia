@@ -29,7 +29,7 @@ install :
 	sudo chown -Rh $(USUARIO_DESPLIEGUE):$(GRUPO_DESPLIEGUE) \
 		$(DIRECTORIO_BASE)
 	sudo su $(USUARIO_DESPLIEGUE) -c \
-		"cd $(DIRECTORIO_BASE) && npm install && npm audit fix"
+		"cd $(DIRECTORIO_BASE) && npm install && npm audit fix || true"
 	sudo install -m 644 $(SERVICIOS_SYSTEMD) $(BASE_SYSTEMD)
 	sudo systemctl daemon-reload
 	sudo systemctl enable turismo_backend
@@ -38,5 +38,5 @@ install :
 deploy :
 	rsync -vr --delete --exclude=.env $(OBJETIVOS) $(DIRECTORIO_BASE)/
 	ln -nsf $(DIRECTORIO_VAR)/uploads $(DIRECTORIO_BASE)/uploads
-	cd $(DIRECTORIO_BASE) && npm install && npm audit fix
+	cd $(DIRECTORIO_BASE) && npm install && npm audit fix || true
 	sudo systemctl restart turismo_backend
