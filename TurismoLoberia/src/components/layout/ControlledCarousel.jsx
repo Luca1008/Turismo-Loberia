@@ -71,7 +71,15 @@ export const ControlledCarousel = ({
     Promise.all(
       cities.map(async (city) => {
         try {
-          const res = await fetch(`${Global.url}carousel/${city.key}`);
+          const res = await fetch(`${Global.url}carousel/${city.key}`, {
+            headers: { Accept: 'application/json' },
+          });
+
+          const contentType = res.headers.get('content-type') || '';
+          if (!res.ok || !contentType.includes('application/json')) {
+            throw new Error(`Respuesta no JSON (${res.status})`);
+          }
+
           const data = await res.json();
 
           return {
