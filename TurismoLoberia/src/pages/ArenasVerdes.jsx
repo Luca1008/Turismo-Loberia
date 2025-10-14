@@ -156,7 +156,12 @@ const ArenasVerdes = () => {
               action: "Clic alojamiento",
               label: "Arenas Verdes",
             });
-            navigate("/Buscador", { state: { category: "Alojamiento" } });
+            navigate("/Buscador", {
+              state: {
+                category: "Alojamiento",
+                city: "Arenas Verdes",
+              },
+            });
           }}
         />
       </section>
@@ -175,7 +180,12 @@ const ArenasVerdes = () => {
               action: "Clic gastronomía",
               label: "Arenas Verdes",
             });
-            navigate("/Buscador", { state: { category: "Gastronomía" } });
+            navigate("/Buscador", {
+              state: {
+                category: "Gastronomia",
+                city: "Arenas Verdes",
+              },
+            });
           }}
         />
       </section>
@@ -198,7 +208,12 @@ const ArenasVerdes = () => {
               action: "Clic eventos",
               label: "Arenas Verdes",
             });
-            navigate("/Buscador", { state: { category: "Evento" } });
+            navigate("/Buscador", {
+              state: {
+                category: "Evento",
+                city: "Arenas Verdes",
+              },
+            });
           }}
         />
       </section>
@@ -209,16 +224,40 @@ const ArenasVerdes = () => {
         <div className="photo-que-hacer-arenas-verdes"></div>
         <Trans components={{ p: <p /> }}>{data_arenas.actividades_intro}</Trans>
         <h2>{t("actividades_arenas_verdes")}</h2>
-        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 className="padding-top" /> }}>
+        <Trans
+          components={{
+            p: <p />,
+            strong: <strong />,
+            h3: <h3 className="padding-top" />,
+          }}
+        >
           {data_arenas.mar}
         </Trans>
-        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 className="padding-top" /> }}>
+        <Trans
+          components={{
+            p: <p />,
+            strong: <strong />,
+            h3: <h3 className="padding-top" />,
+          }}
+        >
           {data_arenas.aire_libre}
         </Trans>
-        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 className="padding-top" /> }}>
+        <Trans
+          components={{
+            p: <p />,
+            strong: <strong />,
+            h3: <h3 className="padding-top" />,
+          }}
+        >
           {data_arenas.magico}
         </Trans>
-        <Trans components={{ p: <p />, strong: <strong />, h3: <h3 className="padding-top" /> }}>
+        <Trans
+          components={{
+            p: <p />,
+            strong: <strong />,
+            h3: <h3 className="padding-top" />,
+          }}
+        >
           {data_arenas.experiencia}
         </Trans>
       </section>

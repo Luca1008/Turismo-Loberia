@@ -74,14 +74,15 @@ export const SanManuel = () => {
    * y realiza tracking del clic en el botón.
    *
    * @param {string} category Categoría de búsqueda ("Alojamiento", "Gastronomía", "Evento", etc.)
+   * @param {string} city Ciudad de la búsqueda
    */
-  const handleButtonClick = (category) => {
+  const handleButtonClick = (category, city) => {
     trackEvent({
       category: "Botón",
       action: `Clic ${category.toLowerCase()}`,
-      label: "San Manuel",
+      label: city,
     });
-    navigate("/Buscador", { state: { category } });
+    navigate("/Buscador", { state: { category, city } });
   };
 
   /**
@@ -110,25 +111,25 @@ export const SanManuel = () => {
           </strong>
         </p>
         <div className="item-location margin-bottom">
-        <TbMapRoute className="route-icon"/>
-        <Trans
-          components={{ p: <p /> }}
-          i18nKey="como_llegar_san_manuel.desde_loberia"
-        />
+          <TbMapRoute className="route-icon" />
+          <Trans
+            components={{ p: <p /> }}
+            i18nKey="como_llegar_san_manuel.desde_loberia"
+          />
         </div>
         <div className="item-location margin-bottom">
-        <TbMapRoute className="route-icon"/>
-        <Trans
-          components={{ p: <p /> }}
-          i18nKey="como_llegar_san_manuel.desde_tandil"
-        />
+          <TbMapRoute className="route-icon" />
+          <Trans
+            components={{ p: <p /> }}
+            i18nKey="como_llegar_san_manuel.desde_tandil"
+          />
         </div>
         <div className="item-location">
-        <TbMapRoute className="route-icon"/>  
-        <Trans
-          components={{ p: <p /> }}
-          i18nKey="como_llegar_san_manuel.desde_necochea"
-        />
+          <TbMapRoute className="route-icon" />
+          <Trans
+            components={{ p: <p /> }}
+            i18nKey="como_llegar_san_manuel.desde_necochea"
+          />
         </div>
       </section>
 
@@ -137,7 +138,9 @@ export const SanManuel = () => {
         <Trans components={{ h2: <h2 /> }} i18nKey="alojamientos_san_manuel" />
         <div className="photo-alojamiento-san-manuel"></div>
         <p>{t("alojamientos_san_manuel_descripcion")}</p>
-        <ButtonSuccess onClick={() => handleButtonClick("Alojamiento")} />
+        <ButtonSuccess
+          onClick={() => handleButtonClick("Alojamiento", "San Manuel")}
+        />
       </section>
 
       {/* Gastronomía */}
@@ -145,7 +148,7 @@ export const SanManuel = () => {
         <h2>{t("gastronomia")}</h2>
         <div className="photo-gastronomia-san-manuel"></div>
         <p>San Manuel ofrece una propuesta gastronómica sencilla...</p>
-        <ButtonSuccess onClick={() => handleButtonClick("Gastronomía")} />
+        <ButtonSuccess onClick={() => handleButtonClick("Gastronomia", "San Manuel")} />
       </section>
 
       {/* Transporte */}
@@ -160,10 +163,16 @@ export const SanManuel = () => {
         <h2>{t("agenda")}</h2>
         <div className="photo-agenda-san-manuel"></div>
         <Trans
-          components={{ p: <p />, h2: <h2 />, h3: <h3 className="h3-margin-top" />, ul: <ul />, li: <li /> }}
+          components={{
+            p: <p />,
+            h2: <h2 />,
+            h3: <h3 className="h3-margin-top" />,
+            ul: <ul />,
+            li: <li />,
+          }}
           i18nKey="agenda_san_manuel"
         />
-        <ButtonSuccess onClick={() => handleButtonClick("Evento")} />
+        <ButtonSuccess onClick={() => handleButtonClick("Evento", "San Manuel")} />
       </section>
 
       {/* Qué hacer */}
@@ -171,7 +180,12 @@ export const SanManuel = () => {
         <h2>{t("que_hacer_san_manuel")}</h2>
         <div className="photo-que-hacer-san-manuel"></div>
         <Trans
-          components={{ p: <p />, h3: <h3 className="h3-margin-top"/>, ul: <ul />, li: <li /> }}
+          components={{
+            p: <p />,
+            h3: <h3 className="h3-margin-top" />,
+            ul: <ul />,
+            li: <li />,
+          }}
           i18nKey="que_hacer_san_manuel_descripcion"
         />
       </section>

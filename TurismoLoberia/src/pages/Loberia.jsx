@@ -99,52 +99,72 @@ const Loberia = () => {
 
       {/* Sección Información General */}
       <section className="information-city-loberia">
-        <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
+        <Trans
+          components={{ p: <p />, span: <span className="font-semibold" /> }}
+        >
           {data_descripcion.introduccion}
         </Trans>
-        <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
+        <Trans
+          components={{ p: <p />, span: <span className="font-semibold" /> }}
+        >
           {data_descripcion.calles}
         </Trans>
         <div className="item-location">
-          <MdOutlineAddLocationAlt/>
-        <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
-          {data_descripcion.parque}
-        </Trans>
+          <MdOutlineAddLocationAlt />
+          <Trans
+            components={{ p: <p />, span: <span className="font-semibold" /> }}
+          >
+            {data_descripcion.parque}
+          </Trans>
         </div>
         <div className="item-location">
-          <MdOutlineAddLocationAlt/>
-        <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
-          {data_descripcion.camino_sirga}
-        </Trans>
+          <MdOutlineAddLocationAlt />
+          <Trans
+            components={{ p: <p />, span: <span className="font-semibold" /> }}
+          >
+            {data_descripcion.camino_sirga}
+          </Trans>
         </div>
-        <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
+        <Trans
+          components={{ p: <p />, span: <span className="font-semibold" /> }}
+        >
           {data_descripcion.vida_cultural_intro}
         </Trans>
         <div className="item-location">
-          <MdOutlineAddLocationAlt/>
-        <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
-          {data_descripcion.museo_historia_natural}
-        </Trans>
+          <MdOutlineAddLocationAlt />
+          <Trans
+            components={{ p: <p />, span: <span className="font-semibold" /> }}
+          >
+            {data_descripcion.museo_historia_natural}
+          </Trans>
         </div>
         <div className="item-location">
-          <MdOutlineAddLocationAlt/>
-        <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
-          {data_descripcion.museo_historico}
-        </Trans>
+          <MdOutlineAddLocationAlt />
+          <Trans
+            components={{ p: <p />, span: <span className="font-semibold" /> }}
+          >
+            {data_descripcion.museo_historico}
+          </Trans>
         </div>
         <div className="item-location">
-          <MdOutlineAddLocationAlt/>
-        <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
-          {data_descripcion.fiestas_populares}
-        </Trans>
+          <MdOutlineAddLocationAlt />
+          <Trans
+            components={{ p: <p />, span: <span className="font-semibold" /> }}
+          >
+            {data_descripcion.fiestas_populares}
+          </Trans>
         </div>
         <div className="item-location">
-          <MdOutlineAddLocationAlt/>
-        <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
-          {data_descripcion.automovilismo}
-        </Trans>
+          <MdOutlineAddLocationAlt />
+          <Trans
+            components={{ p: <p />, span: <span className="font-semibold" /> }}
+          >
+            {data_descripcion.automovilismo}
+          </Trans>
         </div>
-        <Trans components={{ p: <p />, span: <span className="font-semibold" /> }}>
+        <Trans
+          components={{ p: <p />, span: <span className="font-semibold" /> }}
+        >
           {data_descripcion.cierre}
         </Trans>
       </section>
@@ -167,19 +187,25 @@ const Loberia = () => {
             ).map((item, index) => (
               <div key={index} className="mb-4">
                 <p>
-                  <TbMapRoute className="route-icon"/><strong>{item.descripcion}:</strong>
+                  <TbMapRoute className="route-icon" />
+                  <strong>{item.descripcion}:</strong>
                 </p>
                 {Array.isArray(item.rutas) && (
                   <ul className="list-disc pl-5">
                     {item.rutas.map((ruta, i) => (
-                      <li key={i} className="route-item">{ruta}</li>
+                      <li key={i} className="route-item">
+                        {ruta}
+                      </li>
                     ))}
                   </ul>
                 )}
               </div>
             ))}
           </div>
-          <Trans i18nKey="intro_2_como_llegar_partido_loberia" components={{ br: <br /> }} />
+          <Trans
+            i18nKey="intro_2_como_llegar_partido_loberia"
+            components={{ br: <br /> }}
+          />
         </div>
 
         {/* Transporte en micro */}
@@ -193,12 +219,18 @@ const Loberia = () => {
           <Trans i18nKey="descripcion_en_micro" components={{ br: <br /> }} />
           <ul>
             <li>
-              <TbMapRoute className="route-icon"/>
-              <Trans i18nKey="opcion_desde_buenos_aires" components={{ br: <br /> }} />
+              <TbMapRoute className="route-icon" />
+              <Trans
+                i18nKey="opcion_desde_buenos_aires"
+                components={{ br: <br /> }}
+              />
             </li>
             <li>
-              <TbMapRoute className="route-icon"/>
-              <Trans i18nKey="opcion_desde_mar_del_plata" components={{ br: <br /> }} />
+              <TbMapRoute className="route-icon" />
+              <Trans
+                i18nKey="opcion_desde_mar_del_plata"
+                components={{ br: <br /> }}
+              />
             </li>
           </ul>
         </div>
@@ -212,8 +244,17 @@ const Loberia = () => {
         <p>{t("alojamientos_loberia_descripcion")}</p>
         <ButtonSuccess
           onClick={() => {
-            trackEvent({ category: "Botón", action: "Clic alojamiento", label: "Lobería" });
-            navigate("/Buscador", { state: { category: "Alojamiento" } });
+            trackEvent({
+              category: "Botón",
+              action: "Clic alojamiento",
+              label: "Lobería",
+            });
+            navigate("/Buscador", {
+              state: {
+                category: "Alojamiento",
+                city: "Lobería",
+              },
+            });
           }}
         />
       </section>
@@ -222,11 +263,23 @@ const Loberia = () => {
       <section className="gastronomy" id="gastronomia">
         <h2>{t("gastronomia")}</h2>
         <div className="photo-gastronomia-loberia"></div>
-        <Trans i18nKey="gastronomia_loberia_descripcion" components={{ p: <p />, span: <span className="font-semibold" /> }} />
+        <Trans
+          i18nKey="gastronomia_loberia_descripcion"
+          components={{ p: <p />, span: <span className="font-semibold" /> }}
+        />
         <ButtonSuccess
           onClick={() => {
-            trackEvent({ category: "Botón", action: "Clic gastronomía", label: "Lobería" });
-            navigate("/Buscador", { state: { category: "Gastronomía" } });
+            trackEvent({
+              category: "Botón",
+              action: "Clic gastronomía",
+              label: "Lobería",
+            });
+            navigate("/Buscador", {
+              state: {
+                category: "Gastronomia",
+                city: "Lobería",
+              },
+            });
           }}
         />
       </section>
@@ -235,7 +288,10 @@ const Loberia = () => {
       <section className="transport" id="transporte">
         <h2>{t("transporte")}</h2>
         <div className="photo-transporte-partido-loberia"></div>
-        <Trans i18nKey="transporte_loberia_descripcion" components={{ p: <p />, strong: <strong /> }} />
+        <Trans
+          i18nKey="transporte_loberia_descripcion"
+          components={{ p: <p />, strong: <strong /> }}
+        />
       </section>
 
       {/* Sección Agenda */}
@@ -243,10 +299,24 @@ const Loberia = () => {
         <h2>{t("agenda_loberia")}</h2>
         <div className="photo-agenda-loberia"></div>
         <p>{t("agenda_loberia_descripcion")}</p>
-        <Trans i18nKey="fiestas_loberia_descripcion" components={{ p: <p />, strong: <strong />, h3: <h3 />, h2: <h2 />, ul: <ul />, li: <li /> }} />
+        <Trans
+          i18nKey="fiestas_loberia_descripcion"
+          components={{
+            p: <p />,
+            strong: <strong />,
+            h3: <h3 />,
+            h2: <h2 />,
+            ul: <ul />,
+            li: <li />,
+          }}
+        />
         <ButtonSuccess
           onClick={() => {
-            trackEvent({ category: "Botón", action: "Clic eventos", label: "Lobería" });
+            trackEvent({
+              category: "Botón",
+              action: "Clic eventos",
+              label: "Lobería",
+            });
             navigate("/Buscador", { state: { category: "Evento" } });
           }}
         />
@@ -256,7 +326,15 @@ const Loberia = () => {
       <section className="event" id="que_hacer">
         <h2>{t("que_hacer_loberia")}</h2>
         <div className="photo-que-hacer-loberia"></div>
-        <Trans i18nKey="que_hacer_loberia_descripcion" components={{ p: <p />, h2: <h2 />, h3: <h3 />, span: <span className="font-semibold" /> }} />
+        <Trans
+          i18nKey="que_hacer_loberia_descripcion"
+          components={{
+            p: <p />,
+            h2: <h2 />,
+            h3: <h3 />,
+            span: <span className="font-semibold" />,
+          }}
+        />
       </section>
 
       {/* Sección Descargas */}
