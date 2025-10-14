@@ -15,15 +15,18 @@
  *   .then(response => response.json())
  *   .then(data => console.log(data));
  */
+
 // Producción
 export const Global = {
   url: "https://turismoloberia.tur.ar/api/",
   baseUrl: "https://turismoloberia.tur.ar/",
 };
 
-/* Desarrollo local
+/*
+// Desarrollo local
 export const Global = {
   url: "http://localhost:5000/api/",
   baseUrl: "http://localhost:5000/"
 };
-*/
+
++/
