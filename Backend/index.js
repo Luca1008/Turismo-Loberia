@@ -23,7 +23,14 @@ app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // 🔽 Agrega esta línea antes de las rutas
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public'), {
+  setHeaders: (res) => {
+    // Evitar caching agresivo del navegador en imágenes del carrusel
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+  }
+}));
 
 // Rutas
 app.use('/api', cardsRoutes);

@@ -17,15 +17,28 @@ exports.uploadCarouselImages = (req, res) => {
   if (!city) {
     return res.status(400).json({ error: "Ciudad requerida" });
   }
-  if (!req.files || req.files.length === 0) {
-    return res.status(400).json({ error: "No se subieron imágenes" });
+  // La ruta usa upload.single("image"), por lo tanto el archivo está en req.file
+  if (!req.file) {
+    return res.status(400).json({ error: "No se subió ninguna imagen" });
   }
+  // Eliminar cualquier archivo previo de la ciudad excepto el recién subido
+  try {
+    const dir = path.join(__dirname, "..", "public", "carousel", city);
+    if (fs.existsSync(dir)) {
+      fs.readdirSync(dir).forEach((filename) => {
+        if (filename !== req.file.filename) {
+          try { fs.unlinkSync(path.join(dir, filename)); } catch (_) {}
+        }
+      });
+    }
+  } catch (_) {}
 
-res.json({
+  res.json({
     message: "Imagen subida correctamente",
     file: {
       filename: req.file.filename,
-      url: `/public/carousel/${city}/${req.file.filename}`,
+      // Agrega un query param para bustear caché del navegador
+      url: `/public/carousel/${city}/${req.file.filename}?t=${Date.now()}`,
     },
   });
 };

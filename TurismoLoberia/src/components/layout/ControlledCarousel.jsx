@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
-import "../../styles/controlled-carousel.css";
-import { Global } from "../../helpers/Global";
 import defaultArenas from "../../assets/images/carousel-index/default-arenas.jpg";
 import defaultLoberia from "../../assets/images/carousel-index/default-loberia.jpg";
 import defaultSanManuel from "../../assets/images/carousel-index/default-sanmanuel.jpg";
+import { Global } from "../../helpers/Global";
+import "../../styles/controlled-carousel.css";
 
 const defaultCities = [
   {
@@ -71,7 +71,7 @@ export const ControlledCarousel = ({
     Promise.all(
       cities.map(async (city) => {
         try {
-          const res = await fetch(`${Global.apiUrl}carousel/${city.key}`);
+          const res = await fetch(`${Global.url}carousel/${city.key}`);
           const data = await res.json();
 
           return {
