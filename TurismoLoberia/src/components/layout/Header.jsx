@@ -96,12 +96,21 @@ export const Header = () => {
     "/cards/:id",
     "/unsubscribe/:token",
   ];
-
-  const isTransparentRoute = transparentRoutes.some((route) =>
-    route.includes(":")
-      ? location.pathname.startsWith(route.split("/:")[0])
-      : location.pathname === route
-  );
+  
+  const currentPath = location.pathname.toLowerCase();
+  
+  const isTransparentRoute = transparentRoutes.some((route) => {
+    const routeLower = route.toLowerCase();
+  
+    if (route.includes(":")) {
+      // Tomamos la parte fija antes del parámetro
+      const baseRoute = routeLower.split("/:")[0];
+      return currentPath.startsWith(baseRoute);
+    } else {
+      return currentPath === routeLower;
+    }
+  });
+  
 
   /** Categorías disponibles para sugerencias de búsqueda */
   const categoriasDisponibles = useMemo(
