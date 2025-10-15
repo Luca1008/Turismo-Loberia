@@ -150,20 +150,31 @@
 
 #main-content.dark-mode .header,
 #main-content.dark-mode .more-info,
-#main-content.dark-mode .footer {
+#main-content.dark-mode .footer,
+#main-content.dark-mode .mobile-menu {
   background: var(--dark-mode) !important;
   color: var(--white) !important;
 }
 
 #main-content.dark-mode h1, 
 #main-content.dark-mode h2, 
-#main-content.dark-mode h3 {
+#main-content.dark-mode h3,
+#main-content.dark-mode footer p,
+#main-content.dark-mode span,
+#main-content.dark-mode button svg{
   color: var(--white) !important;
 }
 
 #main-content.dark-mode a {
   color: var(--color-link-dark) !important;
 }
+
+#main-content.dark-mode footer a svg
+{
+  fill: var(--white) !important;
+  background-color: transparent !important;
+}
+
 
 #main-content.dark-mode button,
 #main-content.dark-mode .btn,
