@@ -1,4 +1,3 @@
-import React from "react";
 import { Button, Card } from "react-bootstrap";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
@@ -104,7 +103,11 @@ const ContentCard = ({
                   variant="danger"
                   size="sm"
                   className="btn-delete"
-                  onClick={() => onDelete(id)}
+                  onClick={() => {
+                    if (window.confirm("¿Está seguro que desea eliminar?")) {
+                      onDelete(id);
+                    }
+                  }}
                 >
                   <strong>
                     <MdDeleteForever
