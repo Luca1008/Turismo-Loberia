@@ -434,3 +434,19 @@ it('debería responder con un array de cards', async () => {
  * @returns {JSX.Element}
 
 ## Documentación: JSDoc con Minami
+
+## 📚 Documentación
+
+La documentación completa del proyecto está disponible en la carpeta [`doc`](./doc).  
+Allí encontrarás guías de uso, referencias de API, y detalles técnicos para desarrolladores y administradores.
+
+> **Ruta:** `/doc`
+
+## 📄 Archivos relevantes
+
+En la carpeta [`archivos_relevantes`](./archivos_relevantes) se encuentran:
+
+- **Requerimientos del sitio:** Documento con los requisitos funcionales y técnicos del proyecto.
+- **Manual de usuario del Panel Admin:** Guía detallada para el uso y administración del panel de control.
+
+> **Ruta:** `/archivos_relevantes`
