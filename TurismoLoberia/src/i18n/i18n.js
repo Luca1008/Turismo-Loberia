@@ -407,6 +407,9 @@ const resources = {
       link_invites: "Pedilo completando un breve formulario haciendo ",
       link_aqui: "click aquí",
       ver_en_openstreetmap: "Ver en OpenStreetMap",
+      page_not_found: "Página No Encontrada.",
+      sorry_not_found: "Lo sentimos, la página que estás buscando no existe.",
+      back_index: "Volver al Inicio"
     },
   },
   en: {
@@ -805,6 +808,9 @@ const resources = {
       link_invites: "Request it by filling out a short form by ",
       link_aqui: "clicking here",
       ver_en_openstreetmap: "View in OpenStreetMap",
+      page_not_found: "Page Not Found.",
+      sorry_not_found: "Sorry, the page you're looking for doesn't exist.",
+      back_index: "Return"
     },
   },
 };

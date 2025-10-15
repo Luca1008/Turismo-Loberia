@@ -3,16 +3,14 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #7ca66a 0%, #57af31 100%);
+  background: linear-gradient(135deg, #7ca66a 0%, #b5f59a 100%);
   font-family: 'Arial', sans-serif;
 }
 
 .not-found-content {
   text-align: center;
-  background: white;
+  background: transparent;
   padding: 3rem;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   max-width: 500px;
   width: 90%;
 }
@@ -41,18 +39,18 @@
 .not-found-link {
   display: inline-block;
   padding: 12px 30px;
-  background-color: #007bff;
   color: white;
   text-decoration: none;
   border-radius: 5px;
   font-size: 1.1rem;
+  font-weight: bolder;
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .not-found-link:hover {
-  background-color: #0056b3;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
