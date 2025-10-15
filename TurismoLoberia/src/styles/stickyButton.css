@@ -129,18 +129,6 @@
   filter: contrast(1.4);
 }
 
-#main-content.high-contrast a {
-  color: var(--color-high-contrast-link) !important;
-  text-decoration: underline;
-}
-
-#main-content.high-contrast button,
-#main-content.high-contrast input,
-#main-content.high-contrast select {
-  border: 2px solid var(--color-high-contrast-text) !important;
-  background: var(--black) !important;
-  color: var(--color-high-contrast-text) !important;
-}
 
 /* ------------------ Modo Oscuro ------------------ */
 #main-content.dark-mode {
