@@ -41,7 +41,7 @@
   flex-direction: column;
   gap: 4px;
   min-width: 120px;
-  max-width: 140px;
+  max-width: 150px;
   position: absolute;
   bottom: 100%;
   left: 0;
@@ -123,12 +123,11 @@
 }
 
 /* ------------------ Modo Alto Contraste ------------------ */
-#main-content.high-contrast {
+#main-content.high-contrast img{
   background: var(--color-high-contrast-bg) !important;
   color: var(--color-high-contrast-text) !important;
   filter: contrast(1.4);
 }
-
 
 /* ------------------ Modo Oscuro ------------------ */
 #main-content.dark-mode {
