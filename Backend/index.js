@@ -22,7 +22,7 @@ app.use(cors({
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// 🔽 Agrega esta línea antes de las rutas
+// Rutas publicas para servir imágenes y otros archivos estáticos
 app.use('/public', express.static(path.join(__dirname, 'public'), {
   setHeaders: (res) => {
     // Evitar caching agresivo del navegador en imágenes del carrusel
