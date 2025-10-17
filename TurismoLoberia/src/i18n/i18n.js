@@ -409,7 +409,10 @@ const resources = {
       ver_en_openstreetmap: "Ver en OpenStreetMap",
       page_not_found: "Página No Encontrada.",
       sorry_not_found: "Lo sentimos, la página que estás buscando no existe.",
-      back_index: "Volver al Inicio"
+      back_index: "Volver al Inicio",
+      p1_alojamiento:"Queremos que vengas a conocernos y disfrutar de tu estadía!!!",
+      p2_alojamiento:"Déjate sorprender por nuestros paisajes, nuestra gente y la tranquilidad que solo Lobería puede ofrecerte.",
+      p3_alojamiento: "Viví una experiencia única entre mar, sierras y naturaleza. ¡Te esperamos!"
     },
   },
   en: {
@@ -810,7 +813,10 @@ const resources = {
       ver_en_openstreetmap: "View in OpenStreetMap",
       page_not_found: "Page Not Found.",
       sorry_not_found: "Sorry, the page you're looking for doesn't exist.",
-      back_index: "Return"
+      back_index: "Return",
+      p1_alojamiento:"Plan your stay with us and enjoy an unforgettable experience!",
+      p2_alojamiento:"Discover a variety of accommodations that suit your style and needs.",
+      p3_alojamiento:"From luxurious suites to cozy cottages, we have something for everyone.",
     },
   },
 };
