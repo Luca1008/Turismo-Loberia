@@ -147,7 +147,7 @@ export const SanManuel = () => {
       <section className="gastronomy" id="gastronomia">
         <h2>{t("gastronomia")}</h2>
         <div className="photo-gastronomia-san-manuel"></div>
-        <p>San Manuel ofrece una propuesta gastronómica sencilla...</p>
+        <p>t("gastronomia_sanManuel")</p>
         <ButtonSuccess onClick={() => handleButtonClick("Gastronomia", "San Manuel")} />
       </section>
 
@@ -155,7 +155,7 @@ export const SanManuel = () => {
       <section className="transport" id="transporte">
         <h2>{t("transporte")}</h2>
         <div className="photo-transporte-san-manuel"></div>
-        <p>San Manuel ofrece opciones limitadas de transporte público...</p>
+        <p>t("transport_sanManuel")</p>
       </section>
 
       {/* Agenda de eventos */}

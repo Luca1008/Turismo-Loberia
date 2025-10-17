@@ -56,10 +56,10 @@ import { Banner } from "../components/layout/Banner";
 export const Index = () => {
   /** Estado para almacenar los lugares de interés */
   const [interes, setInteres] = useState([]);
-  /** Estado para almacenar los lugares de gastronomía */
-  const [gastronomia, setGastronomia] = useState([]);
-   /** Estado para almacenar los alojamientos */
-  const [alojamientos, setAlojamientos] = useState([]);
+  /** Estado para almacenar los lugares de gastronomía 
+  const [gastronomia, setGastronomia] = useState([]);*/
+   /** Estado para almacenar los alojamientos 
+  const [alojamientos, setAlojamientos] = useState([]);*/
   /** Estado para almacenar los próximos eventos */
   const [eventos, setEventos] = useState([]);
   /** Estado para controlar si el iframe de Facebook se cargó */
@@ -119,7 +119,7 @@ export const Index = () => {
         setInteres([]);
       });
 
-    fetch(`${Global.url}cards?category=Gastronomia&limit=3&page=1`)
+   /*  fetch(`${Global.url}cards?category=Gastronomia&limit=3&page=1`)
       .then((res) => res.json())
       .then((data) => {
         const cards = data.cards || data;
@@ -128,9 +128,9 @@ export const Index = () => {
       .catch((err) => {
         console.error("Error al cargar Gastronmía:", err);
         setGastronomia([]);
-      });
+      }); */
 
-    fetch(`${Global.url}cards?category=Alojamiento&limit=3&page=1`)
+    /* fetch(`${Global.url}cards?category=Alojamiento&limit=3&page=1`)
       .then((res) => res.json())
       .then((data) => {
         const cards = data.cards || data;
@@ -139,7 +139,7 @@ export const Index = () => {
       .catch((err) => {
         console.error("Error al cargar alojamientos:", err);
         setAlojamientos([]);
-      });
+      }); */
 
     fetch(`${Global.url}cards?category=Evento&limit=3&page=1`)
       .then((res) => res.json())
@@ -301,7 +301,7 @@ export const Index = () => {
             });
           }}
         />
-        <h2>{t("gastronomia")}</h2>
+        {/* <h2>{t("gastronomia")}</h2>
         <div className="places-items">
           {gastronomia.map((card) => (
             <ContentCard
@@ -352,7 +352,7 @@ export const Index = () => {
               state: { category: "Alojamiento" },
             });
           }}
-        />
+        /> */}
       </section>
 
       {/* Próximos eventos */}
