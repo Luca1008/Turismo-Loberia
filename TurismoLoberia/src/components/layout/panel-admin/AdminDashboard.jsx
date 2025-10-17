@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { Bar, Pie } from "react-chartjs-2";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
+  ArcElement,
   BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
   Title,
   Tooltip,
-  Legend,
-  ArcElement,
 } from "chart.js";
-import "../../../styles/panelAdmin.css";
+import { useEffect, useState } from "react";
+import { Bar, Pie } from "react-chartjs-2";
 import { Global } from "../../../helpers/Global";
+import "../../../styles/panelAdmin.css";
 
 ChartJS.register(
   CategoryScale,
@@ -45,6 +45,9 @@ ChartJS.register(
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
 
+  const formatLabel = (s) =>
+    s ? s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) : s;
+
   useEffect(() => {
     fetch(`${Global.url}subscriptions/stats`)
       .then((res) => res.json())
@@ -62,7 +65,7 @@ export default function AdminDashboard() {
     );
 
   const transportData = {
-    labels: stats.transport.map((t) => t.transporte),
+    labels: stats.transport.map((t) => formatLabel(t.transporte)),
     datasets: [
       {
         label: "Usuarios por transporte",
@@ -73,7 +76,7 @@ export default function AdminDashboard() {
   };
 
   const sourceData = {
-    labels: stats.source.map((s) => s.source_option),
+    labels: stats.source.map((s) => formatLabel(s.source_option)),
     datasets: [
       {
         label: "Usuarios por fuente",
@@ -123,7 +126,7 @@ export default function AdminDashboard() {
         <div className="option-cards">
           {stats.transport.map((t, idx) => (
             <div key={idx} className="option-card transport">
-              <h4>{t.transporte}</h4>
+              <h4>{formatLabel(t.transporte)}</h4>
               <p>{t.count}</p>
               <small>{getPercentage(t.count)}%</small>
             </div>
@@ -141,7 +144,7 @@ export default function AdminDashboard() {
         <div className="option-cards">
           {stats.source.map((s, idx) => (
             <div key={idx} className="option-card source">
-              <h4>{s.source_option}</h4>
+              <h4>{formatLabel(s.source_option)}</h4>
               <p>{s.count}</p>
               <small>{getPercentage(s.count)}%</small>
             </div>
