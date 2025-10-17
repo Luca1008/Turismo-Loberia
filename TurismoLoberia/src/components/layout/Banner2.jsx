@@ -8,7 +8,7 @@ import { PiCursorClick, PiCaretDown, PiCaretUp } from "react-icons/pi";
  * Componente `Banner`
  *
  * Muestra un banner promocional de Lobería con texto, imagen y un enlace interactivo.
- * Incluye animación de una mano señalando el enlace y funcionalidad de expandir/colapsar
+ * Incluye animación de una flecha señalando el enlace y funcionalidad de expandir/colapsar
  * el texto en dispositivos móviles.
  *
  * @component
@@ -29,7 +29,7 @@ export const Banner2 = () => {
 
   /**
    * Verifica si el dispositivo es móvil y ajusta el estado de expansión del texto.
-   * Posiciona y anima la mano interactiva señalando el enlace.
+   * Posiciona y anima la flecha interactiva señalando el enlace.
    */
   useEffect(() => {
     const checkMobile = () => {
@@ -57,7 +57,7 @@ export const Banner2 = () => {
         .closest(".banner-loberia")
         .getBoundingClientRect();
 
-      handElement.style.left = `${linkRect.left - bannerRect.left - 45}px`;
+      handElement.style.left = `${linkRect.left - bannerRect.left - 145}px`;
       handElement.style.top = `${linkRect.top - bannerRect.top + 5}px`;
       handElement.style.display = "block";
 
@@ -107,8 +107,7 @@ export const Banner2 = () => {
 
   return (
     <section className="banner2-loberia" key={i18n.language}>
-      <div ref={handRef} className="animated-hand">
-        <PiCursorClick />
+      <div ref={handRef} className="animated-hand2">
       </div>
       <div className="banner-content">
         <img

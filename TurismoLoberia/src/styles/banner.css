@@ -54,11 +54,33 @@
   width: 100%;
 }
 
-.banner2-image {
+.banner2-image, .banner-image {
   flex: 1;
   max-width: 400px;
   border-radius: 15px;
   width: 100%;
+  /* Efecto suave para la imagen del banner sin alterar su tamaño */
+  will-change: transform;
+  animation: bannerFloatNoScale 6s ease-in-out infinite;
+  transition: transform 200ms ease;
+}
+
+@keyframes bannerFloatNoScale {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-6px) rotate(-0.4deg);
+  }
+  50% {
+    transform: translateY(0) rotate(0deg);
+  }
+  75% {
+    transform: translateY(6px) rotate(0.4deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
 }
 
 /* Contenedor del texto */
@@ -265,5 +287,13 @@
   .banner-text {
     font-size: 0.2rem;
     line-height: 1.5;
+  }
+}
+
+/* Respeta preferencia de reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .banner2-image, .banner-image {
+    animation: none !important;
+    transition: none !important;
   }
 }
