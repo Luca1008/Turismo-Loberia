@@ -22,6 +22,19 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
+.banner2-loberia {
+  position: relative;
+  background: linear-gradient(100deg, #e1c961, #0a839a);
+  color: white;
+  padding: 60px 20px;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
 /* Contenedor interno del contenido del banner */
 .banner-content {
   display: flex;
@@ -35,6 +48,13 @@
 
 /* Imagen dentro del banner */
 .banner-image {
+  flex: 1;
+  max-width: 400px;
+  border-radius: 15px;
+  width: 100%;
+}
+
+.banner2-image {
   flex: 1;
   max-width: 400px;
   border-radius: 15px;
@@ -63,8 +83,9 @@
 }
 
 /* Enlaces del banner */
-.banner-link {
-  color: #f3dd12;
+.banner-link,
+.banner2-link {
+  color: #fec224;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease;
@@ -74,7 +95,8 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-.banner-link:hover {
+.banner-link:hover,
+.banner2-link:hover {
   color: #aee622;
   background: rgba(255, 255, 255, 0.2);
 }
@@ -92,7 +114,8 @@
 }
 
 @keyframes point {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) translateX(0) scale(1);
   }
   50% {
@@ -200,7 +223,7 @@
 
   /* Gradiente para indicar que hay más texto */
   .banner-text.collapsed::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;

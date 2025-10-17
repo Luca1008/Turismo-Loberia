@@ -17,6 +17,7 @@ import gastronomia_icon from "../assets/icons/services/gastronomia.svg";
 import alojamientos_icon from "../assets/icons/services/alojamientos.svg";
 import info_util_icon from "../assets/icons/services/info_util.svg";
 import { Banner } from "../components/layout/Banner";
+import { Banner2 } from "../components/layout/Banner2";
 /**
  * Componente `Index`
  *
@@ -354,7 +355,7 @@ export const Index = () => {
           }}
         /> */}
       </section>
-
+      <Banner2/>
       {/* Próximos eventos */}
       <section className="upcoming-events">
         <h2>{t("proximos_eventos")}</h2>

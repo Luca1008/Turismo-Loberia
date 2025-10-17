@@ -18,7 +18,7 @@ import { PiCursorClick, PiCaretDown, PiCaretUp } from "react-icons/pi";
  *
  * @returns {JSX.Element} Banner con imagen, texto, enlace y animación interactiva
  */
-export const Banner = () => {
+export const Banner2 = () => {
   const { t, i18n } = useTranslation();
   const handRef = useRef(null);
   const linkRef = useRef(null);
@@ -106,7 +106,7 @@ export const Banner = () => {
   };
 
   return (
-    <section className="banner-loberia" key={i18n.language}>
+    <section className="banner2-loberia" key={i18n.language}>
       <div ref={handRef} className="animated-hand">
         <PiCursorClick />
       </div>
@@ -114,7 +114,7 @@ export const Banner = () => {
         <img
           src={invitesImg}
           alt="Lobería Te Invita"
-          className="banner-image"
+          className="banner2-image"
         />
         <div className="banner-text-container">
           <div
@@ -130,8 +130,8 @@ export const Banner = () => {
               {t("link_invites")}
               <a
                 ref={linkRef}
-                className="banner-link"
-                href="https://forms.gle/kmbozSt448xEVYC57"
+                className="banner2-link"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeheWYc3VbukGn9mrRkUVHxeuOYa-UKfTjgeMfYcxVmXrUnzg/viewform"
                 target="_blank"
                 rel="noopener noreferrer"
               >
