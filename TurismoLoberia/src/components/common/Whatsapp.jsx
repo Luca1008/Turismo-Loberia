@@ -20,7 +20,7 @@ const Whatsapp = () => {
    * Abre WhatsApp en una nueva ventana para el número especificado.
    */
   const openWhatsApp = () => {
-    window.open("https://wa.me/542266123456", "_blank");
+    window.open("https://wa.me/5492261411412 ", "_blank");
   };
 
   return (
