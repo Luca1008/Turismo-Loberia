@@ -5,6 +5,8 @@ import "../../styles/footer.css";
 import handleExternalLink from "../common/HandleExternalLink";
 import { useTranslation } from "react-i18next";
 import { trackEvent } from "../../analytics";
+import linktreeIcon from "../../assets/icons/linkTreeIcon.svg";
+
 
 import {
   FaBell,
@@ -199,6 +201,19 @@ export const Footer = () => {
             <a href="#" onClick={handleTrackLink("WhatsApp", "#")}>
               <FaWhatsapp className="svg-social" />
             </a>
+            <a
+  href="https://linktr.ee/loberiaturismo?utm_source=linktree_profile_share&ltsid=829f97dc-07cd-449f-87c1-f6ca54476255"
+  onClick={handleTrackLink(
+    "Linktree",
+    "https://linktr.ee/loberiaturismo?utm_source=linktree_profile_share&ltsid=829f97dc-07cd-449f-87c1-f6ca54476255"
+  )}
+>
+  <img
+    src={linktreeIcon}
+    alt="Linktree"
+    className="svg-social"
+  />
+</a>
           </div>
         </div>
       </div>
