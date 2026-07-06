@@ -262,8 +262,9 @@ export const Index = () => {
         </div>
       </section>
 
+    
       {/* Sección de banner */}
-      <Banner />
+      {/*<Banner />/*}
 
       {/* Sección de lugares */}
       <section className="places">
@@ -302,6 +303,7 @@ export const Index = () => {
             });
           }}
         />
+        
         {/* <h2>{t("gastronomia")}</h2>
         <div className="places-items">
           {gastronomia.map((card) => (
@@ -390,10 +392,15 @@ export const Index = () => {
 
       {/* Más información */}
       <section className="more-info">
-        <h2>{t("actualidad")}</h2>
+        <div className="info-header">
+          <h2>{t("actualidad")}</h2>
+         {/* Carrusel del clima */}
+            <div className="weather-wrapper">
+              <WeatherCarousel />
+            </div>
+        </div>
         <div className="container-info">
-          {/* Carrusel del clima */}
-          <WeatherCarousel />
+        
           {/* Plugin de Facebook con spinner mientras carga */}
           <div className="facebook-container">
             {!iframeLoaded && (

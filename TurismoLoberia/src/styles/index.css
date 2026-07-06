@@ -113,6 +113,8 @@
 }
 
 /* ------------------ More Info ------------------ */
+
+
 section .container-info {
   display: flex;
   flex-direction: column;
@@ -217,6 +219,25 @@ section .container-info {
   }
 
   /* More Info Section */
+ 
+.info-header {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.info-header h2 {
+  margin: 0;
+}
+
+.weather-wrapper {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+  
   section {
     max-width: 1100px;
     margin: 2.5rem auto;
@@ -236,7 +257,7 @@ section .container-info {
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
-    padding-top: 2rem;
+    padding-top: 6rem;
   }
 
   /* Spinner Facebook */
