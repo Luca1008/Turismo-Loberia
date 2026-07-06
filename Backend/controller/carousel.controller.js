@@ -38,7 +38,7 @@ exports.uploadCarouselImages = (req, res) => {
     file: {
       filename: req.file.filename,
       // Agrega un query param para bustear caché del navegador
-      url: `/public/carousel/${city}/${req.file.filename}?t=${Date.now()}`,
+      url: `/api/public/carousel/${city}/${req.file.filename}?t=${Date.now()}`,
     },
   });
 };
@@ -61,7 +61,7 @@ exports.listCarouselImages = (req, res) => {
   const files = fs.readdirSync(dir);
   const images = files.map((filename) => ({
     filename,
-    url: `/public/carousel/${city}/${filename}`,
+    url: `/api/public/carousel/${city}/${filename}`,
   }));
   res.json({ images });
 };
