@@ -30,7 +30,7 @@ exports.sendEmail = async (req, res) => {
 
     const mailOptions = {
       from: `Portal Turismo Lobería <${process.env.EMAIL_ADDRESS}>`,
-      to: process.env.EMAIL_ADDRESS,
+      to: process.env.CONTACT_EMAIL_TO || process.env.EMAIL_ADDRESS,
       subject: `${subject} - (De: ${name} <${email}>)`,
       text: `(Mensaje enviado desde la página de turismo de Lobería)\nNombre: ${name}\nEmail: ${email}\nAsunto: ${subject}\nMensaje:\n${message}`,
       replyTo: email,
