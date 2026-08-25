@@ -1,0 +1,32 @@
+.city-photo {
+  margin: 0 0 2rem;
+}
+
+.city-photo img {
+  display: block;
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.city-photo-credit {
+  margin-top: 0.4rem;
+  font-family: var(--font-base);
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--black-2);
+  text-align: right;
+}
+
+@media (min-width: 768px) {
+  .city-photo img {
+    height: 500px;
+  }
+}
+
+.city-photo--contain img {
+  height: auto;
+  object-fit: contain;
+}

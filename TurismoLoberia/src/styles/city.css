@@ -52,6 +52,7 @@
 /* Contenedor principal de la ciudad */
 .city {
   position: relative;
+  padding-top: 90px; /* deja libre el alto de la navbar fija */
 }
 
 /* ------------------ Imágenes específicas por ciudad ------------------ */
@@ -243,4 +244,10 @@ svg.route-icon, .route-item{
 .route-item{
   margin-top: 0.5rem;
 }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .city {
+    padding-top: 100px; /* navbar mide 100px en este rango */
+  }
 }

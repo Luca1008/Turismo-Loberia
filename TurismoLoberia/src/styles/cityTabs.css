@@ -1,0 +1,178 @@
+/* =====================================================
+   CityTabs — navegación entre secciones de una ciudad
+   =====================================================
+   Se presenta como una pequeña ruta de "paradas": una línea
+   punteada conecta cada sección, y la parada activa se resalta
+   en verde institucional. Retoma el lenguaje visual que ya usan
+   las páginas de ciudad para describir cómo llegar (rutas, pines).
+===================================================== */
+
+.city-tabs {
+  --city-tabs-line: #b3a98f;
+  --city-tabs-muted: #8a887f;
+
+  position: relative;
+  max-width: 1100px;
+  margin: 0.75rem auto 0.5rem;
+  padding: 0 0.5rem;
+}
+
+/* La sección que sigue a las solapas ya tiene suficiente separación con
+   el margen propio de las solapas: se recorta el margen/título grandes
+   que usa `section`/`section h2` en el resto del sitio (ver style.css)
+   para que no se acumule un espacio enorme debajo de las solapas. */
+.city-tabs + section {
+  margin-top: 0.5rem;
+}
+.city-tabs + section > h2:first-child,
+.city-tabs + section > h3:first-child {
+  margin-top: 1.25rem;
+}
+
+/* Insinúa que la fila continúa fuera de pantalla en mobile */
+.city-tabs::before,
+.city-tabs::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 1.1rem;
+  width: 1.5rem;
+  pointer-events: none;
+  z-index: 1;
+}
+.city-tabs::before {
+  left: 0;
+  background: linear-gradient(to right, var(--white), transparent);
+}
+.city-tabs::after {
+  right: 0;
+  background: linear-gradient(to left, var(--white), transparent);
+}
+
+.city-tabs-track {
+  display: flex;
+  align-items: flex-start;
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 1rem 0;
+  gap: 1.75rem;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.city-tabs-track::-webkit-scrollbar {
+  display: none;
+}
+
+.city-tabs-stop {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.city-tabs-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding-bottom: 1.1rem;
+  position: relative;
+  text-decoration: none;
+  color: var(--city-tabs-muted);
+  font-family: var(--font-base);
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.city-tabs-link:hover {
+  color: var(--primary-color-dark-2);
+}
+
+.city-tabs-link:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.city-tabs-icon {
+  font-size: 1.05rem;
+}
+
+/* Parada sobre la línea punteada */
+.city-tabs-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--city-tabs-line);
+  transform: translateX(-50%);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.city-tabs-link.is-active {
+  color: var(--primary-color-dark-2);
+  font-weight: 700;
+}
+
+.city-tabs-link.is-active .city-tabs-icon {
+  color: var(--primary-color);
+}
+
+.city-tabs-link.is-active::after {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(87, 175, 49, 0.16);
+}
+
+/* Línea punteada que conecta las paradas */
+.city-tabs-track {
+  position: relative;
+}
+
+.city-tabs-track::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1.1rem;
+  height: 2px;
+  background-image: linear-gradient(
+    to right,
+    var(--city-tabs-line) 0 6px,
+    transparent 6px 13px
+  );
+  background-size: 13px 2px;
+  background-repeat: repeat-x;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .city-tabs-link:hover .city-tabs-icon {
+    transform: translateY(-2px);
+  }
+  .city-tabs-icon {
+    transition: transform 0.15s ease;
+  }
+}
+
+@media (min-width: 768px) {
+  .city-tabs {
+    padding: 0 1.5rem;
+  }
+  .city-tabs-track {
+    margin: 0 auto;
+    gap: 2.5rem;
+  }
+  .city-tabs-link {
+    font-size: 0.9rem;
+  }
+  .city-tabs-icon {
+    font-size: 1.2rem;
+  }
+}

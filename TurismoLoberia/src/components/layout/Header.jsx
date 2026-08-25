@@ -24,6 +24,7 @@ import Typewriter from "typewriter-effect";
 import { trackEvent } from "../../analytics";
 import logoLoberia from "../../assets/icons/logoLoberia.jpg";
 import { Global } from "../../helpers/Global";
+import { CITY_SECTIONS } from "../../helpers/citySections";
 import "../../styles/navBar.css";
 
 /**
@@ -85,6 +86,10 @@ export const Header = () => {
     "/Clima",
     "/Contacto",
     "/Buscador",
+    "/PartidoLoberia/:section",
+    "/Loberia/:section",
+    "/ArenasVerdes/:section",
+    "/SanManuel/:section",
     "/Admin",
     "/PanelAdmin",
     "/PanelAdmin/modificar-datos",
@@ -261,80 +266,25 @@ export const Header = () => {
 
   const menuData = useMemo(
     () => [
-      {
-        id: "partido_loberia",
-        subitems: [
-          "informacion_general",
-          "historia",
-          "naturaleza",
-          "producciones",
-          "como_llegar",
-        ],
-      },
-      {
-        id: "ciudad_loberia",
-        subitems: [
-          "informacion_general",
-          "como_llegar",
-          "alojamientos",
-          "gastronomia",
-          "transporte",
-          "agenda",
-          "que_hacer",
-          "descargas",
-        ],
-      },
-      {
-        id: "san_manuel",
-        subitems: [
-          "informacion_general",
-          "como_llegar",
-          "alojamientos",
-          "gastronomia",
-          "transporte",
-          "agenda",
-          "que_hacer",
-          "descargas",
-        ],
-      },
-      {
-        id: "arenas_verdes",
-        subitems: [
-          "informacion_general",
-          "como_llegar",
-          "alojamientos",
-          "base_campamentos",
-          "gastronomia",
-          "transporte",
-          "agenda",
-          "que_hacer",
-          "descargas",
-        ],
-      },
+      { id: "partido_loberia", subitems: CITY_SECTIONS.partido_loberia },
+      { id: "ciudad_loberia", subitems: CITY_SECTIONS.ciudad_loberia },
+      { id: "san_manuel", subitems: CITY_SECTIONS.san_manuel },
+      { id: "arenas_verdes", subitems: CITY_SECTIONS.arenas_verdes },
     ],
     [i18n.language]
   );
 
-  /** Genera hash amigable para subitems del menú */
-  const toHash = (text) =>
-    text
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[̀-ͯ]/g, "")
-      .replace(/\s+/g, "-");
-
   /** Obtiene ruta para cada subitem del menú */
   const getSubitemRoute = (sectionId, subKey) => {
-    const hash = toHash(subKey);
     switch (sectionId) {
       case "partido_loberia":
-        return `/PartidoLoberia#${hash}`;
+        return `/PartidoLoberia/${subKey}`;
       case "ciudad_loberia":
-        return `/Loberia#${hash}`;
+        return `/Loberia/${subKey}`;
       case "san_manuel":
-        return `/SanManuel#${hash}`;
+        return `/SanManuel/${subKey}`;
       case "arenas_verdes":
-        return `/ArenasVerdes#${hash}`;
+        return `/ArenasVerdes/${subKey}`;
       default:
         return "/";
     }

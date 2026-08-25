@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import ArenasVerdes from "../pages/ArenasVerdes";
 import { Contact } from "../pages/Contact";
 import { Index } from "../pages/Index";
@@ -46,10 +46,26 @@ export const Routing = () => {
     <Routes>
       {/* Rutas públicas */}
       <Route path="/" element={<Index />} />
-      <Route path="/PartidoLoberia" element={<PartidoLoberia />} />
-      <Route path="/Loberia" element={<Loberia />} />
-      <Route path="/ArenasVerdes" element={<ArenasVerdes />} />
-      <Route path="/SanManuel" element={<SanManuel />} />
+      <Route
+        path="/PartidoLoberia"
+        element={<Navigate to="/PartidoLoberia/informacion_general" replace />}
+      />
+      <Route path="/PartidoLoberia/:section" element={<PartidoLoberia />} />
+      <Route
+        path="/Loberia"
+        element={<Navigate to="/Loberia/informacion_general" replace />}
+      />
+      <Route path="/Loberia/:section" element={<Loberia />} />
+      <Route
+        path="/ArenasVerdes"
+        element={<Navigate to="/ArenasVerdes/informacion_general" replace />}
+      />
+      <Route path="/ArenasVerdes/:section" element={<ArenasVerdes />} />
+      <Route
+        path="/SanManuel"
+        element={<Navigate to="/SanManuel/informacion_general" replace />}
+      />
+      <Route path="/SanManuel/:section" element={<SanManuel />} />
       <Route path="/Clima" element={<Clima />} />
       <Route path="/Contacto" element={<Contact />} />
       <Route path="/Buscador" element={<Searcher />} />

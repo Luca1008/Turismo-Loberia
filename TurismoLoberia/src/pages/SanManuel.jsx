@@ -1,199 +1,72 @@
 import React, { useEffect } from "react";
-import ButtonSuccess from "../components/common/ButtonSuccess";
+import { Navigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "../styles/city.css";
-import { FaCar, FaBus, FaBicycle } from "react-icons/fa";
-import { useTranslation, Trans } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import { trackEvent } from "../analytics";
-import { TbMapRoute } from "react-icons/tb";
+import { CITY_SECTIONS } from "../helpers/citySections";
+import CityTabs from "../components/common/CityTabs";
+import InformacionGeneral from "./city-sections/san-manuel/InformacionGeneral";
+import ComoLlegar from "./city-sections/san-manuel/ComoLlegar";
+import Alojamientos from "./city-sections/san-manuel/Alojamientos";
+import Gastronomia from "./city-sections/san-manuel/Gastronomia";
+import Transporte from "./city-sections/san-manuel/Transporte";
+import Agenda from "./city-sections/san-manuel/Agenda";
+import QueHacer from "./city-sections/san-manuel/QueHacer";
+import Descargas from "./city-sections/san-manuel/Descargas";
+
+const SECTION_COMPONENTS = {
+  informacion_general: InformacionGeneral,
+  como_llegar: ComoLlegar,
+  alojamientos: Alojamientos,
+  gastronomia: Gastronomia,
+  transporte: Transporte,
+  agenda: Agenda,
+  que_hacer: QueHacer,
+  descargas: Descargas,
+};
 
 /**
- * Componente `SanManuel`.
+ * Componente `SanManuel`
  *
- * Página informativa sobre la localidad de San Manuel.
- * Muestra secciones de información general, cómo llegar, alojamientos, gastronomía,
- * transporte, agenda de eventos, actividades y descargas.
- * Realiza tracking de la vista de la página, secciones y clics en botones.
+ * Página de la localidad de San Manuel. Renderiza únicamente el componente
+ * de la sección indicada por el parámetro de ruta `:section` (ver
+ * CITY_SECTIONS), en lugar de todas las secciones a la vez.
  *
  * @component
- * @example
- * <SanManuel />
- *
- * @returns {JSX.Element} Contenido de la página de San Manuel
- *
- * @author
- * Felicitas Aguerralde
- * Luca Guidi
+ * @returns {JSX.Element}
  */
 export const SanManuel = () => {
-  const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
+  const { i18n } = useTranslation();
+  const { section } = useParams();
+  const sectionIds = CITY_SECTIONS.san_manuel;
+  const SectionComponent = SECTION_COMPONENTS[section];
 
-  /**
-   * Ejecuta tracking al cargar la página.
-   * Registra vistas de la página, de secciones y scroll completo.
-   */
   useEffect(() => {
-    // Tracking de vista de página
+    if (!SectionComponent) return;
     trackEvent({
       category: "Páginas",
       action: "Vista página",
       label: "San Manuel",
     });
-
-    // Tracking de vistas de secciones
-    const sections = [
-      "informacion_general",
-      "como_llegar",
-      "alojamientos",
-      "gastronomia",
-      "transporte",
-      "agenda",
-      "que_hacer",
-      "descargas",
-    ];
-
-    sections.forEach((sectionId) => {
-      trackEvent({
-        category: "Sección",
-        action: "Vista sección",
-        label: sectionId,
-      });
-    });
-
-    // Tracking de scroll completo
     trackEvent({
-      category: "Scroll",
-      action: "Página completa",
-      label: "San Manuel",
+      category: "Sección",
+      action: "Vista sección",
+      label: section,
     });
-  }, []);
+  }, [section, SectionComponent]);
 
-  /**
-   * Navega a la página de búsqueda filtrando por categoría
-   * y realiza tracking del clic en el botón.
-   *
-   * @param {string} category Categoría de búsqueda ("Alojamiento", "Gastronomía", "Evento", etc.)
-   * @param {string} city Ciudad de la búsqueda
-   */
-  const handleButtonClick = (category, city) => {
-    trackEvent({
-      category: "Botón",
-      action: `Clic ${category.toLowerCase()}`,
-      label: city,
-    });
-    navigate("/Buscador", { state: { category, city } });
-  };
+  if (!SectionComponent) {
+    return <Navigate to={`/SanManuel/${sectionIds[0]}`} replace />;
+  }
 
-  /**
-   * Renderiza la página de San Manuel con todas sus secciones.
-   */
   return (
     <div className="city" key={i18n.language}>
-      {/* Sección principal */}
-      <div id="informacion_general" className="portada-san-manuel"></div>
-      <h1>{t("san_manuel")}</h1>
-      <section className="information">
-        <Trans components={{ p: <p /> }} i18nKey="descripcion_san_manuel" />
-      </section>
-
-      {/* Cómo llegar */}
-      <section className="go-to" id="como_llegar">
-        <h2>{t("como_llegar")}</h2>
-        <div className="photo-como-llegar-san-manuel"></div>
-        <Trans
-          components={{ p: <p /> }}
-          i18nKey="como_llegar_san_manuel.titulo"
-        />
-        <p>
-          <strong className="primary">
-            <FaCar /> {t("en_auto")}
-          </strong>
-        </p>
-        <div className="item-location margin-bottom">
-          <TbMapRoute className="route-icon" />
-          <Trans
-            components={{ p: <p /> }}
-            i18nKey="como_llegar_san_manuel.desde_loberia"
-          />
-        </div>
-        <div className="item-location margin-bottom">
-          <TbMapRoute className="route-icon" />
-          <Trans
-            components={{ p: <p /> }}
-            i18nKey="como_llegar_san_manuel.desde_tandil"
-          />
-        </div>
-        <div className="item-location">
-          <TbMapRoute className="route-icon" />
-          <Trans
-            components={{ p: <p /> }}
-            i18nKey="como_llegar_san_manuel.desde_necochea"
-          />
-        </div>
-      </section>
-
-      {/* Alojamiento */}
-      <section className="accommodation" id="alojamientos">
-        <Trans components={{ h2: <h2 /> }} i18nKey="alojamientos_san_manuel" />
-        <div className="photo-alojamiento-san-manuel"></div>
-        <p>{t("alojamientos_san_manuel_descripcion")}</p>
-        <ButtonSuccess
-          onClick={() => handleButtonClick("Alojamiento", "San Manuel")}
-        />
-      </section>
-
-      {/* Gastronomía */}
-      <section className="gastronomy" id="gastronomia">
-        <h2>{t("gastronomia")}</h2>
-        <div className="photo-gastronomia-san-manuel"></div>
-        <p>{t("gastronomia_sanManuel")}</p>
-        <ButtonSuccess onClick={() => handleButtonClick("Gastronomia", "San Manuel")} />
-      </section>
-
-      {/* Transporte */}
-      <section className="transport" id="transporte">
-        <h2>{t("transporte")}</h2>
-        <div className="photo-transporte-san-manuel"></div>
-        <p>{t("transport_sanManuel")}</p>
-      </section>
-
-      {/* Agenda de eventos */}
-      <section className="agenda" id="agenda">
-        <h2>{t("agenda")}</h2>
-        <div className="photo-agenda-san-manuel"></div>
-        <Trans
-          components={{
-            p: <p />,
-            h2: <h2 />,
-            h3: <h3 className="h3-margin-top" />,
-            ul: <ul />,
-            li: <li />,
-          }}
-          i18nKey="agenda_san_manuel"
-        />
-        <ButtonSuccess onClick={() => handleButtonClick("Evento", "San Manuel")} />
-      </section>
-
-      {/* Qué hacer */}
-      <section className="event" id="que_hacer">
-        <h2>{t("que_hacer_san_manuel")}</h2>
-        <div className="photo-que-hacer-san-manuel"></div>
-        <Trans
-          components={{
-            p: <p />,
-            h3: <h3 className="h3-margin-top" />,
-            ul: <ul />,
-            li: <li />,
-          }}
-          i18nKey="que_hacer_san_manuel_descripcion"
-        />
-      </section>
-
-      {/* Descargas */}
-      <section className="download" id="descargas">
-        <h2>{t("descargas")}</h2>
-      </section>
+      <CityTabs
+        basePath="/SanManuel"
+        sectionIds={sectionIds}
+        activeSection={section}
+      />
+      <SectionComponent />
     </div>
   );
 };

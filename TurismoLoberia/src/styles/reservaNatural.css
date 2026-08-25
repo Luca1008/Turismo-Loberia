@@ -1,0 +1,93 @@
+/* =====================================================
+   Sección Reserva Natural — Partido de Lobería
+===================================================== */
+
+.reserve-ordenanza {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 1rem;
+  row-gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--black-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.5rem;
+}
+
+.reserve-ordenanza-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--primary-color-dark-2);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.reserve-ordenanza-link:hover {
+  color: var(--primary-color);
+}
+
+.reserve-quote {
+  margin: 0 0 1.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--primary-color);
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--grey-dark);
+}
+
+.reserve-map {
+  margin: 1.5rem 0 2rem;
+}
+
+.reserve-map .map-container {
+  width: 100%;
+}
+
+.reserve-map iframe {
+  border-radius: 8px;
+  margin-bottom: 0.2rem;
+}
+
+.reserve-experiences {
+  margin-top: 1.4rem;
+}
+
+.reserve-experience + .reserve-experience {
+  margin-top: 3rem;
+}
+
+.reserve-experience h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-base);
+  color: var(--grey-dark);
+  font-weight: bolder;
+  font-size: 1.1rem;
+  margin-bottom: 1.1rem;
+}
+
+.reserve-experience-icon {
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+/* La foto de cada experiencia debe quedar pegada a su propio texto, no al
+   subtítulo de la experiencia siguiente: se recorta el margen inferior
+   que `CityPhoto` trae por defecto solo dentro de este bloque. */
+.reserve-experience .city-photo {
+  margin-bottom: 0.75rem;
+}
+
+.reserve-relleno {
+  margin-top: 3rem;
+}
+
+.reserve-experience-lead {
+  font-weight: 600;
+  color: var(--black-1-texto);
+}

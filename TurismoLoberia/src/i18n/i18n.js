@@ -69,6 +69,48 @@ const resources = {
         cierre:
           "<p><strong>Vení a Lobería, te esperamos para que descubras un destino que conecta el pasado con el presente y proyecta un futuro lleno de naturaleza y cultura.</strong></p>",
       },
+      reserva_natural: "Reserva Natural",
+      intro_reserva_natural: {
+        nombre: "Reserva Natural Municipal de Objetivos Mixtos",
+        ordenanza: "Ordenanza Municipal N° 2.981-25",
+        ordenanza_descarga: "Descargá la Ordenanza completa aquí",
+        cita: "Viví uno de los grandes espectáculos naturales.",
+        intro:
+          "En el Partido de Lobería, las aves viajeras encuentran descanso, vos encontrás naturaleza en estado puro.",
+        unico_titulo: "¿Por qué este lugar es único?",
+        unico_texto:
+          "En nuestras costas convergen playas, dunas y pastizales que brindan refugio a cientos de especies. Algunas llegan desde el Ártico luego de recorrer más de 12.000 kilómetros.",
+        mirador: "Mirador de Aves",
+        experiencias_titulo: "Elegí tu experiencia durante todo el año",
+        experiencias: {
+          aves: {
+            titulo: "Observar aves",
+            texto_1:
+              "Descubrí uno de los mejores lugares de la costa bonaerense para la observación de aves.",
+            texto_2:
+              "La Reserva Natural Municipal de Objetivos Mixtos protege playas, dunas y pastizales donde conviven aves residentes y migratorias de importancia internacional. Durante todo el año es posible observar especies características de la costa atlántica, mientras que en distintas épocas llegan aves que recorren miles de kilómetros.",
+          },
+          fotografia: {
+            titulo: "Fotografía",
+            texto_1:
+              "Un escenario único para los amantes de la fotografía de naturaleza.",
+            texto_2:
+              "La combinación de playas abiertas, dunas, amaneceres, atardeceres y una extraordinaria diversidad de aves convierte a la reserva en un lugar ideal para registrar imágenes de fauna silvestre. Cada estación ofrece paisajes y comportamientos diferentes.",
+          },
+          senderismo: {
+            titulo: "Senderismo",
+            texto_1: "Caminá la reserva a tu propio ritmo.",
+            texto_2:
+              "Recorrer la reserva caminando por el sendero permite descubrir ambientes naturales prácticamente intactos y disfrutar del paisaje costero en silencio. El sendero conduce hacia el Mirador de Aves Playeras, desde donde es posible observar aves, flora nativa y amplias vistas del océano.",
+          },
+          naturaleza: {
+            titulo: "Naturaleza",
+            texto_1: "Mucho más que aves.",
+            texto_2:
+              "La reserva protege uno de los ambientes costeros más representativos del sudeste bonaerense. Playas, dunas y pastizales albergan una rica biodiversidad de plantas, mamíferos, reptiles, insectos y aves que forman un ecosistema de enorme valor para la conservación. Cada visita permite descubrir nuevos paisajes y comprender la importancia de preservar este patrimonio natural.",
+          },
+        },
+      },
       intro_como_llegar_partido_loberia:
         "Las principales rutas de acceso a Lobería son:",
       como_llegar: "Cómo Llegar",
@@ -242,6 +284,7 @@ const resources = {
       agenda: "Agenda",
       que_hacer: "Qué Hacer",
       descargas: "Descargas",
+      secciones_pagina: "Secciones de esta página",
       Clima: "Clima",
       buscar: "Buscar...",
       idioma: "Idioma",
@@ -480,6 +523,47 @@ const resources = {
         cierre:
           "<p><strong>Come to Lobería — we’re waiting for you to discover a destination that connects the past with the present and projects a future full of nature and culture.</strong></p>",
       },
+      reserva_natural: "Natural Reserve",
+      intro_reserva_natural: {
+        nombre: "Municipal Natural Reserve of Mixed Objectives",
+        ordenanza: "Municipal Ordinance No. 2,981-25",
+        ordenanza_descarga: "Download the full Ordinance here",
+        cita: "Experience one of nature's great spectacles.",
+        intro:
+          "In the Partido de Lobería, traveling birds find rest, and you find nature in its purest state.",
+        unico_titulo: "Why is this place unique?",
+        unico_texto:
+          "Beaches, dunes, and grasslands converge along our coast, giving shelter to hundreds of species. Some arrive from the Arctic after traveling more than 12,000 kilometers.",
+        mirador: "Bird Lookout",
+        experiencias_titulo: "Choose your experience, all year round",
+        experiencias: {
+          aves: {
+            titulo: "Bird watching",
+            texto_1:
+              "Discover one of the best spots on the Buenos Aires coast for birdwatching.",
+            texto_2:
+              "The Municipal Natural Reserve of Mixed Objectives protects beaches, dunes, and grasslands where resident and migratory birds of international importance coexist. Coastal species can be spotted year-round, while at different times of year birds that travel thousands of kilometers arrive.",
+          },
+          fotografia: {
+            titulo: "Photography",
+            texto_1: "A unique setting for nature photography lovers.",
+            texto_2:
+              "The combination of open beaches, dunes, sunrises, sunsets, and an extraordinary diversity of birds makes the reserve an ideal place to capture wildlife images. Each season offers different landscapes and behavior.",
+          },
+          senderismo: {
+            titulo: "Hiking",
+            texto_1: "Walk the reserve at your own pace.",
+            texto_2:
+              "Walking the reserve's trail reveals nearly untouched natural environments and lets you enjoy the coastal landscape in silence. The trail leads to the Shorebird Lookout, where you can observe birds, native flora, and wide views of the ocean.",
+          },
+          naturaleza: {
+            titulo: "Nature",
+            texto_1: "Much more than birds.",
+            texto_2:
+              "The reserve protects one of the most representative coastal environments of southeastern Buenos Aires province. Beaches, dunes, and grasslands are home to a rich biodiversity of plants, mammals, reptiles, insects, and birds that form an ecosystem of enormous conservation value. Every visit reveals new landscapes and the importance of preserving this natural heritage.",
+          },
+        },
+      },
       opciones_como_llegar: "The main access routes to Lobería are:",
       intro_como_llegar_partido_loberia:
         "The main access routes to Lobería are:",
@@ -653,6 +737,7 @@ const resources = {
       agenda: "Agenda",
       que_hacer: "Things to Do",
       descargas: "Downloads",
+      secciones_pagina: "Sections on this page",
       Clima: "Weather",
       buscar: "Search...",
       idioma: "Language",
