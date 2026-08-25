@@ -1,0 +1,33 @@
+.reserve-banner {
+  position: relative;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 0.5rem;
+}
+
+.reserve-banner-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.reserve-banner-cta {
+  position: absolute;
+  left: 5rem;
+  top: 84%;
+  transform: translateY(calc(-30%));
+}
+
+.reserve-banner-cta .btn-success {
+  font-size: 1.2rem;
+  padding: 0.75rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .reserve-banner-cta {
+    left: 9rem;
+    top: 74%;
+  }
+}

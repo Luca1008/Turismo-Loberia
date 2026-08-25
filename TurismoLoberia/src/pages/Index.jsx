@@ -18,6 +18,7 @@ import alojamientos_icon from "../assets/icons/services/alojamientos.svg";
 import info_util_icon from "../assets/icons/services/info_util.svg";
 import { Banner } from "../components/layout/Banner";
 import { Banner2 } from "../components/layout/Banner2";
+import ReservaNaturalBanner from "../components/layout/ReservaNaturalBanner";
 /**
  * Componente `Index`
  *
@@ -262,7 +263,9 @@ export const Index = () => {
         </div>
       </section>
 
-    
+      {/* Banner promocional de la Reserva Natural */}
+      <ReservaNaturalBanner />
+
       {/* Sección de banner */}
       {/*<Banner />/*}
 
