@@ -149,6 +149,19 @@ body {
   background-color: var(--white);
 }
 
+/* Layout "sticky footer": en páginas con poco contenido (ej. Descargas)
+   el contenido crece para ocupar el alto de la pantalla y el footer
+   queda siempre pegado abajo, en vez de subir pegado al contenido. */
+#main-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#main-content > .main-content {
+  flex: 1 0 auto;
+}
+
 /* =====================================================
    Media Queries: Desktop / Tablet
 ===================================================== */
