@@ -1,0 +1,80 @@
+/* =====================================================
+   Fondo de sección — Partido de Lobería
+   =====================================================
+   La sección en sí queda a todo el ancho, con el patrón de íconos de
+   fondo visible en toda la sección (también detrás del texto, no sólo en
+   los costados). El contenido real vive adentro de un wrapper
+   (.section-inner) centrado en 1100px sin color de fondo propio, así que
+   el patrón se ve parejo en toda la sección. Los íconos (varios
+   distintos mezclados, no uno solo repetido) se generan muy
+   transparentes para no afectar la lectura del texto. Acotado a Partido
+   de Lobería.
+===================================================== */
+
+.bg-pattern-bird,
+.bg-pattern-landmark,
+.bg-pattern-waves,
+.bg-pattern-wheat,
+.bg-pattern-pin,
+.bg-pattern-reserve {
+  position: relative;
+  background-color: #fafbf9;
+  background-image: radial-gradient(
+    circle at 2px 2px,
+    rgba(87, 175, 49, 0.08) 1px,
+    transparent 0
+  );
+  background-repeat: repeat;
+  background-size: 40px 40px;
+  overflow: hidden;
+}
+
+.bg-pattern-bird .section-inner,
+.bg-pattern-landmark .section-inner,
+.bg-pattern-waves .section-inner,
+.bg-pattern-wheat .section-inner,
+.bg-pattern-pin .section-inner,
+.bg-pattern-reserve .section-inner {
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
+}
+
+/* Información General usa el patrón de íconos reales (pájaro/hoja/sol),
+   fiel a su draft de Superdesign — el resto de las secciones se quedó con
+   el punteado uniforme de arriba. */
+.bg-pattern-bird {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20150%20150%22%20width%3D%22150%22%20height%3D%22150%22%20fill%3D%22none%22%20stroke%3D%22rgba(87%2C175%2C49%2C0.09)%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cg%20transform%3D%22translate(8%2C10)%20scale(1.417)%22%3E%3Cpath%20d%3D%22M16%207h.01%22%2F%3E%3Cpath%20d%3D%22M3.4%2018H12a8%208%200%200%200%208-8V7a4%204%200%200%200-7.28-2.3L2%2020%22%2F%3E%3Cpath%20d%3D%22m20%207%202%20.5-2%20.5%22%2F%3E%3Cpath%20d%3D%22M10%2018v3%22%2F%3E%3Cpath%20d%3D%22M14%2017.75V21%22%2F%3E%3Cpath%20d%3D%22M7%2018a6%206%200%200%200%203.84-10.61%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(78%2C58)%20scale(1.250)%22%3E%3Cpath%20d%3D%22M11%2020A7%207%200%200%201%209.8%206.1C15.5%205%2017%204.48%2019%202c1%202%202%204.18%202%208%200%205.5-4.78%2010-10%2010Z%22%2F%3E%3Cpath%20d%3D%22M2%2021c0-3%201.85-5.36%205.08-6C9.5%2014.52%2012%2013%2013%2012%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(30%2C95)%20scale(1.167)%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%224%22%2F%3E%3Cpath%20d%3D%22M12%202v2%22%2F%3E%3Cpath%20d%3D%22M12%2020v2%22%2F%3E%3Cpath%20d%3D%22m4.93%204.93%201.41%201.41%22%2F%3E%3Cpath%20d%3D%22m17.66%2017.66%201.41%201.41%22%2F%3E%3Cpath%20d%3D%22M2%2012h2%22%2F%3E%3Cpath%20d%3D%22M20%2012h2%22%2F%3E%3Cpath%20d%3D%22m6.34%2017.66-1.41%201.41%22%2F%3E%3Cpath%20d%3D%22m19.07%204.93-1.41%201.41%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-size: 150px 150px;
+}
+
+@media (min-width: 768px) {
+  .bg-pattern-bird,
+  .bg-pattern-landmark,
+  .bg-pattern-waves,
+  .bg-pattern-wheat,
+  .bg-pattern-pin,
+  .bg-pattern-reserve {
+    max-width: none;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .bg-pattern-bird .section-inner,
+  .bg-pattern-landmark .section-inner,
+  .bg-pattern-waves .section-inner,
+  .bg-pattern-wheat .section-inner,
+  .bg-pattern-pin .section-inner,
+  .bg-pattern-reserve .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+}
+

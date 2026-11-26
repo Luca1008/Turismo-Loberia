@@ -1,0 +1,60 @@
+/* =====================================================
+   Marco de fotos — Partido de Lobería
+   =====================================================
+   Marco grueso, color sólido (naranja de la paleta), recto (rectangular,
+   sin inclinación) — no un paralelogramo ni esquinas redondeadas. El
+   pajarito sobresale de una esquina del marco. Acotado a las secciones de
+   Partido de Lobería.
+===================================================== */
+
+.photo-frame-partido {
+  position: relative;
+  padding: 16px;
+  margin: 0 12px 2rem;
+}
+
+.photo-frame-partido-inner {
+  overflow: hidden;
+}
+
+.photo-frame-partido .city-photo {
+  margin-bottom: 0;
+}
+
+/* El pie de foto (crédito) va sobre el color sólido del marco, así que
+   necesita texto claro para tener contraste, y un poco más de aire
+   respecto del borde del paralelogramo. */
+.photo-frame-partido .city-photo-credit {
+  color: #fff;
+  padding: 0.3rem 25px 0;
+}
+
+.photo-frame-partido .city-photo img,
+.photo-frame-partido .photo-historia-partido-loberia,
+.photo-frame-partido .photo-naturaleza-partido-loberia,
+.photo-frame-partido .photo-produccion-partido-loberia,
+.photo-frame-partido .photo-como-llegar-partido-loberia {
+  border-radius: 10px;
+  margin-bottom: 0;
+}
+
+/* El pajarito: salido del marco por dos lados (esquina superior derecha). */
+.photo-frame-partido .frame-bird {
+  position: absolute;
+  top: -18px;
+  right: -14px;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--accent-orange);
+  color: var(--accent-orange);
+  font-size: 1.2rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  z-index: 3;
+}
+
+

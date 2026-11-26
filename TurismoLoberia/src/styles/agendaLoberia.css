@@ -1,0 +1,184 @@
+/* =====================================================
+   Agenda — Ciudad de Lobería y San Manuel (AgendaSeasons.jsx)
+   =====================================================
+   Fiestas agrupadas por temporada: cada temporada tiene un encabezado con
+   ícono y período en su color de acento (verano naranja, primavera verde,
+   todo el año azul), y sus eventos se muestran como tarjetas blancas con
+   una franja superior del mismo color — mismo lenguaje que los mosaicos
+   blancos de Partido/Ciudad de Lobería.
+===================================================== */
+
+.agenda .agenda-lead {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.agenda-season {
+  --agenda-accent: var(--primary-color);
+  --agenda-tint: #f0f7ed;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto 2.75rem;
+}
+
+.agenda-orange {
+  --agenda-accent: var(--accent-orange);
+  --agenda-tint: #fff4ed;
+}
+.agenda-green {
+  --agenda-accent: var(--primary-color);
+  --agenda-tint: #f0f7ed;
+}
+.agenda-blue {
+  --agenda-accent: var(--accent-blue);
+  --agenda-tint: #edf0fa;
+}
+
+/* ------------------ Encabezado de temporada ------------------ */
+/* Grilla: ícono a la izquierda ocupando dos filas, título arriba y
+   período debajo. Así en mobile los títulos largos ("Actividades a lo
+   Largo del Año") no dejan el ícono solo en una línea. En desktop vuelve
+   a una sola fila (ver media query). */
+.agenda-season-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 0.75rem;
+  row-gap: 0.3rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.agenda-season-header .agenda-season-icon {
+  grid-row: 1 / span 2;
+}
+
+.agenda-season-header .accent-chip {
+  justify-self: start;
+}
+
+.agenda-season-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--agenda-tint);
+  border: 1px solid color-mix(in srgb, var(--agenda-accent) 30%, transparent);
+}
+
+/* !important: `.city svg { color: var(--primary-color) }` (city.css) le
+   gana a la herencia y dejaría todos los íconos en verde. */
+.agenda-season-icon svg {
+  display: block;
+  font-size: 1.3rem;
+  color: var(--agenda-accent) !important;
+}
+
+/* !important en tamaño/margen: los h3 tienen tamaño global con
+   !important en style.css. */
+.agenda-season-title {
+  margin: 0 !important;
+  font-size: 1.35rem !important;
+  font-weight: 800;
+  color: var(--grey-dark);
+}
+
+/* ------------------ Tarjetas de eventos ------------------ */
+.agenda-events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.agenda-event {
+  position: relative;
+  padding: 1.25rem 1.25rem 1.1rem;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.agenda-event:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Fecha opcional del evento (ej. "25 de marzo"), arriba del título. */
+.agenda-event-date {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--black-2);
+}
+
+.agenda-event-text strong {
+  color: var(--grey-dark);
+  font-weight: 700;
+}
+
+.agenda-event-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--agenda-accent);
+}
+
+.city section p.agenda-event-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--black-1-texto, var(--grey-dark));
+}
+
+.agenda-closing {
+  margin-top: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agenda-event {
+    transition: none;
+  }
+  .agenda-event:hover {
+    transform: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .agenda-events {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .agenda-season-title {
+    font-size: 1.6rem !important;
+  }
+
+  .agenda-season-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Columnas según la cantidad de eventos del grupo (clase puesta por
+     AgendaSeasons): 3 eventos → 3 columnas, 4 eventos cortos → 4. */
+  .agenda-events-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .agenda-events-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

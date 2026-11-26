@@ -60,7 +60,7 @@ const Loberia = () => {
   }
 
   return (
-    <div className="city" key={i18n.language}>
+    <div className="city town-page" key={i18n.language}>
       <CityTabs
         basePath="/Loberia"
         sectionIds={sectionIds}

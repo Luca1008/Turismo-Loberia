@@ -1,20 +1,17 @@
 /* =====================================================
    CityTabs — navegación entre secciones de una ciudad
    =====================================================
-   Se presenta como una pequeña ruta de "paradas": una línea
-   punteada conecta cada sección, y la parada activa se resalta
-   en verde institucional. Retoma el lenguaje visual que ya usan
-   las páginas de ciudad para describir cómo llegar (rutas, pines).
+   Barra tipo píldora: cada solapa es una píldora con un chip de ícono en
+   color (verde/naranja/azul/amarillo, rotando por sección), la activa se
+   rellena en su color de acento. Retoma el lenguaje visual de las tarjetas
+   mosaico del rediseño de las secciones de Partido de Lobería.
 ===================================================== */
 
 .city-tabs {
-  --city-tabs-line: #b3a98f;
-  --city-tabs-muted: #8a887f;
-
   position: relative;
-  max-width: 1100px;
-  margin: 0.75rem auto 0.5rem;
-  padding: 0 0.5rem;
+  max-width: 1200px;
+  margin: 0.75rem auto 1.5rem;
+  padding: 0 1rem;
 }
 
 /* La sección que sigue a las solapas ya tiene suficiente separación con
@@ -29,35 +26,59 @@
   margin-top: 1.25rem;
 }
 
-/* Insinúa que la fila continúa fuera de pantalla en mobile */
-.city-tabs::before,
-.city-tabs::after {
-  content: "";
+/* Flechas laterales: solo se muestran cuando queda contenido para ese lado
+   (ver CityTabs.jsx), para dar la pista visual de que la barra es un
+   carrusel horizontal. */
+.city-tabs-arrow {
   position: absolute;
-  top: 0;
-  bottom: 1.1rem;
-  width: 1.5rem;
-  pointer-events: none;
-  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.city-tabs::before {
+
+.city-tabs-arrow svg {
+  color: var(--primary-color) !important;
+  margin: 0 !important;
+  font-size: 1rem;
+}
+
+.city-tabs-arrow:hover {
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.city-tabs-arrow-left {
   left: 0;
-  background: linear-gradient(to right, var(--white), transparent);
 }
-.city-tabs::after {
+.city-tabs-arrow-right {
   right: 0;
-  background: linear-gradient(to left, var(--white), transparent);
 }
 
 .city-tabs-track {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  gap: 0.6rem;
   list-style: none;
-  margin: 0;
-  padding: 0.25rem 1rem 0;
-  gap: 1.75rem;
+  margin: 0 auto;
+  padding: 0.35rem;
   width: max-content;
   max-width: 100%;
+  background: #fdfdfb;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 100px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
   overflow-x: auto;
   scroll-snap-type: x proximity;
   scrollbar-width: none;
@@ -73,91 +94,149 @@
 
 .city-tabs-link {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
-  padding-bottom: 1.1rem;
-  position: relative;
+  gap: 0.5rem;
+  padding: 0.3rem 0.9rem 0.3rem 0.3rem;
   text-decoration: none;
-  color: var(--city-tabs-muted);
+  color: var(--black-1-texto);
   font-family: var(--font-base);
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
-  transition: color 0.15s ease;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease;
 }
 
-.city-tabs-link:hover {
-  color: var(--primary-color-dark-2);
+.city-tabs-icon-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.city-tabs-icon {
+  display: block;
+  font-size: 0.85rem;
+}
+
+/* Color por sección (mismo mapeo en las 4 ciudades). !important: city.css
+   tiene una regla global `.city svg { color: var(--primary-color) }` (para
+   los íconos de "Cómo llegar") que por especificidad le gana al color
+   heredado del chip, así que hay que apuntarle directo al ícono. */
+.tab-green .city-tabs-icon-chip {
+  background: #f0f7ed;
+}
+.tab-green .city-tabs-icon {
+  color: var(--primary-color) !important;
+}
+.tab-orange .city-tabs-icon-chip {
+  background: #fff4ed;
+}
+.tab-orange .city-tabs-icon {
+  color: var(--accent-orange) !important;
+}
+.tab-blue .city-tabs-icon-chip {
+  background: #edf0fa;
+}
+.tab-blue .city-tabs-icon {
+  color: var(--accent-blue) !important;
+}
+.tab-yellow .city-tabs-icon-chip {
+  background: #fffaea;
+}
+.tab-yellow .city-tabs-icon {
+  color: var(--accent-yellow-2) !important;
 }
 
 .city-tabs-link:focus-visible {
   outline: 2px solid var(--primary-color);
-  outline-offset: 4px;
-  border-radius: 4px;
+  outline-offset: 2px;
 }
 
-.city-tabs-icon {
-  font-size: 1.05rem;
+/* Hover (solapas inactivas) */
+/* !important: un estilo global de accesibilidad (ver stickyButton.css)
+   fuerza `a { background: transparent !important }` en todo el sitio. */
+.city-tabs-link:not(.is-active):hover {
+  background-color: #fff !important;
+  border-color: rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.06);
+}
+.city-tabs-link:not(.is-active):hover .city-tabs-icon-chip {
+  transform: scale(1.1);
 }
 
-/* Parada sobre la línea punteada */
-.city-tabs-link::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--white);
-  border: 2px solid var(--city-tabs-line);
-  transform: translateX(-50%);
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+/* Solapa activa: se rellena con su color de acento */
+.tab-green.is-active {
+  --tab-active-bg: var(--primary-color);
+  --tab-active-shadow: rgba(87, 175, 49, 0.3);
+}
+.tab-orange.is-active {
+  --tab-active-bg: var(--accent-orange);
+  --tab-active-shadow: rgba(253, 123, 40, 0.3);
+}
+.tab-blue.is-active {
+  --tab-active-bg: var(--accent-blue);
+  --tab-active-shadow: rgba(65, 91, 186, 0.3);
+}
+.tab-yellow.is-active {
+  --tab-active-bg: var(--accent-yellow-2);
+  --tab-active-shadow: rgba(252, 207, 89, 0.35);
 }
 
 .city-tabs-link.is-active {
-  color: var(--primary-color-dark-2);
+  background-color: var(--tab-active-bg, var(--primary-color)) !important;
+  color: #fff;
   font-weight: 700;
+  box-shadow: 0 8px 15px -4px var(--tab-active-shadow, rgba(87, 175, 49, 0.3));
+  transform: translateY(-2px);
+}
+
+/* El amarillo es demasiado claro para texto blanco: se invierte a oscuro. */
+.tab-yellow.is-active {
+  color: var(--grey-dark);
+}
+
+.city-tabs-link.is-active .city-tabs-icon-chip {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: none;
 }
 
 .city-tabs-link.is-active .city-tabs-icon {
-  color: var(--primary-color);
+  color: #fff !important;
 }
 
-.city-tabs-link.is-active::after {
-  background: var(--primary-color);
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 4px rgba(87, 175, 49, 0.16);
+/* El círculo blanco translúcido no contrasta sobre el amarillo: se oscurece
+   un poco para que el ícono (blanco, como en las demás solapas) se siga viendo. */
+.tab-yellow.is-active .city-tabs-icon-chip {
+  background: rgba(44, 44, 44, 0.25);
 }
 
-/* Línea punteada que conecta las paradas */
-.city-tabs-track {
-  position: relative;
-}
-
-.city-tabs-track::before {
-  content: "";
-  position: absolute;
-  left: 1rem;
-  right: 1rem;
-  bottom: 1.1rem;
-  height: 2px;
-  background-image: linear-gradient(
-    to right,
-    var(--city-tabs-line) 0 6px,
-    transparent 6px 13px
-  );
-  background-size: 13px 2px;
-  background-repeat: repeat-x;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .city-tabs-link:hover .city-tabs-icon {
-    transform: translateY(-2px);
+@media (prefers-reduced-motion: reduce) {
+  .city-tabs-link,
+  .city-tabs-icon-chip {
+    transition: none;
   }
-  .city-tabs-icon {
-    transition: transform 0.15s ease;
+}
+
+/* Mobile: tabs más compactas (~40px de alto cada una, barra ~52px) que
+   siguen siendo cómodas para tocar; las flechas se agrandan un poco porque
+   eran el blanco táctil más chico de la barra. Los valores de desktop se
+   restablecen en el bloque de abajo. */
+@media (max-width: 767px) {
+  .city-tabs-arrow {
+    width: 2.25rem;
+    height: 2.25rem;
   }
 }
 
@@ -166,13 +245,18 @@
     padding: 0 1.5rem;
   }
   .city-tabs-track {
-    margin: 0 auto;
-    gap: 2.5rem;
+    gap: 0.75rem;
+    padding: 0.75rem;
   }
   .city-tabs-link {
     font-size: 0.9rem;
+    padding: 0.5rem 1.1rem 0.5rem 0.5rem;
+  }
+  .city-tabs-icon-chip {
+    width: 2.15rem;
+    height: 2.15rem;
   }
   .city-tabs-icon {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
   }
 }

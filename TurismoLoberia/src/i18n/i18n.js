@@ -17,8 +17,24 @@ const resources = {
       // Intro Loberia Actualizado
       intro_loberia_index:
         "En el corazón de la provincia de Buenos Aires, Lobería te espera con paisajes encantadores, historia viva y la calidez que solo conservan los pueblos auténticos. Ubicada entre suaves colinas, campos dorados y una costa agreste que se encuentra con el Océano Atlántico, esta joya escondida es perfecta para quienes buscan desconectarse y redescubrir la paz. Explorá sus playas vírgenes como Arenas Verdes, recorré senderos rurales, saboreá sabores caseros y maravillate con su rico patrimonio arquitectónico y natural. Lobería no es solo un destino — es una experiencia que te reconecta con la simpleza, la autenticidad y la esencia de la Argentina. Lobería — donde la naturaleza, la historia y el descanso se encuentran.",
+      // Mismo texto de intro_loberia_index, repartido en mosaico (inicio)
+      inicio_mosaic: {
+        lead:
+          "<h3>En el corazón de la provincia de Buenos Aires, Lobería te espera con paisajes encantadores, historia viva y la calidez que solo conservan los pueblos auténticos.</h3>",
+        paisaje:
+          "<p><strong>Un paisaje que enamora:</strong><br/>Ubicada entre suaves colinas, campos dorados y una costa agreste que se encuentra con el Océano Atlántico, esta joya escondida es perfecta para quienes buscan desconectarse y redescubrir la paz.</p>",
+        experiencias:
+          "<p><strong>Vivilo al aire libre:</strong><br/>Explorá sus playas vírgenes como Arenas Verdes, recorré senderos rurales, saboreá sabores caseros y maravillate con su rico patrimonio arquitectónico y natural.</p>",
+        esencia:
+          "<p><strong>Nuestra esencia:</strong><br/>Lobería no es solo un destino — es una experiencia que te reconecta con la simpleza, la autenticidad y la esencia de la Argentina.</p>",
+        cierre:
+          "<p>Lobería — donde la naturaleza, la historia y el descanso se encuentran.</p>",
+      },
       // Partido de Lobería Actualizado
       partido_loberia: "Partido de Lobería",
+      diversidad_natural: "Diversidad natural",
+      vida_cultural: "Vida cultural",
+      perfil_productivo: "Perfil productivo",
       intro_partido_loberia: {
         presentacion:
           "<p>Ubicado en el sudeste de la Provincia de Buenos Aires, el partido de Lobería es un destino ideal para quienes buscan conectar con la naturaleza en un entorno sereno, con paisajes diversos y propuestas para disfrutar de aventuras inolvidables.</p>",
@@ -26,11 +42,20 @@ const resources = {
         caracteristicas:
           "<p>Las principales características que distinguen a Lobería son su <strong>diversidad natural</strong>, su <strong>rica vida cultural</strong> y su <strong>potente perfil productivo</strong>, principalmente en el sector agropecuario.</p>",
 
+        caracteristicas_detalle: {
+          diversidad:
+            "Mar, sierras, campo y río se combinan en un mismo territorio, con paisajes para todos los gustos.",
+          cultura:
+            "Museos, fiestas populares y tradiciones que mantienen viva la identidad de cada localidad.",
+          produccion:
+            "Un motor agropecuario pujante, con producción agrícola-ganadera y productos locales que distinguen a la región.",
+        },
+
         paisaje: {
           titulo:
             "<h3>Lobería se destaca por su paisaje excepcionalmente diverso, que combina en un mismo territorio:</h3>",
 
-          mar: "<p><strong>Disfruta del mar y la arena:</strong><br/>Camina por la extensa playa, siente la brisa marina y sumérgete en el océano. Es un lugar ideal para la práctica del <strong>surf</strong>, gracias a sus excelentes olas.</p>",
+          mar: "<p><strong>Disfruta del mar y la arena:</strong><br/>Camina por la extensa playa, siente la brisa marina y sumérgete en el océano. Es un lugar ideal para la práctica del <b>surf</b>, gracias a sus excelentes olas.</p>",
 
           sierras:
             "<p><strong>Sierras:</strong><br/> En San Manuel, un área que invita al descanso y al contacto con la naturaleza serrana.</p>",
@@ -57,7 +82,7 @@ const resources = {
 
         economia: {
           intro:
-            "<p>El motor económico de Lobería es su sector agropecuario, lo que lo posiciona como uno de los principales municipios productores de la provincia.</p>",
+            "<h3>El motor económico de Lobería es su sector agropecuario, lo que lo posiciona como uno de los principales municipios productores de la provincia.</h3>",
 
           produccion:
             "<p><strong>Producción agrícola-ganadera:</strong><br/> Lobería es reconocida por su sistema productivo mixto de agricultura y ganadería, siendo un importante polo de producción en la región.</p>",
@@ -67,19 +92,21 @@ const resources = {
         },
 
         cierre:
-          "<p><strong>Vení a Lobería, te esperamos para que descubras un destino que conecta el pasado con el presente y proyecta un futuro lleno de naturaleza y cultura.</strong></p>",
+          "<p>Vení a Lobería, te esperamos para que descubras un destino que conecta el pasado con el presente y proyecta un futuro lleno de naturaleza y cultura.</strong></p>",
       },
       reserva_natural: "Reserva Natural",
       intro_reserva_natural: {
         nombre: "Reserva Natural Municipal de Objetivos Mixtos",
         ordenanza: "Ordenanza Municipal N° 2.981-25",
         ordenanza_descarga: "Descargá la Ordenanza completa aquí",
-        cita: "Viví uno de los grandes espectáculos naturales.",
+        cita: "Viví uno de los grandes espectáculos naturales",
         intro:
           "En el Partido de Lobería, las aves viajeras encuentran descanso, vos encontrás naturaleza en estado puro.",
         unico_titulo: "¿Por qué este lugar es único?",
         unico_texto:
           "En nuestras costas convergen playas, dunas y pastizales que brindan refugio a cientos de especies. Algunas llegan desde el Ártico luego de recorrer más de 12.000 kilómetros.",
+        unico_stat: "12.000 km",
+        unico_stat_label: "recorren algunas aves migratorias desde el Ártico",
         mirador: "Mirador de Aves",
         experiencias_titulo: "Elegí tu experiencia durante todo el año",
         experiencias: {
@@ -187,10 +214,61 @@ const resources = {
         cierre:
           "<p>Con su combinación de actividades al aire libre, riqueza cultural e histórica y la calidez de su gente, Lobería se presenta como un destino turístico completo y diferente.</p>",
       },
+      alojamientos_loberia_meta: {
+        titulo: "Alojamientos en Lobería: hoteles, casas y departamentos | Turismo Lobería",
+        descripcion: "Dónde alojarse en Lobería: hoteles, casas y departamentos de alquiler con dirección y teléfono. Listado oficial de la Dirección de Turismo.",
+      },
+      alojamientos_listado: {
+        titulo: "Dónde alojarse en {{lugar}}",
+        grupos: {
+          hotel: "Hoteles",
+          particular: "Departamentos y casas particulares",
+          cabana: "Cabañas",
+          apart: "Apart",
+          hostal: "Hostal, departamentos y bungalows",
+          camping: "Campings",
+        },
+        llamar: "Llamar a",
+        ver_mapa: "Ver en Google Maps",
+        abrir: "Abrir",
+        actualizado: "Información actualizada a {{fecha}}. Te recomendamos consultar disponibilidad y tarifas directamente con cada alojamiento.",
+        consultar: "Te recomendamos consultar disponibilidad y tarifas directamente con cada alojamiento.",
+        cargando: "Cargando alojamientos…",
+        vacio: "Todavía no hay alojamientos en este grupo.",
+        admin: {
+          barra: "Estás viendo esta página como administrador",
+          respaldo: "Estos alojamientos todavía no están cargados en la base de datos: se muestran los del folleto y no se pueden editar. Para habilitar la edición hay que correr las migraciones de Backend/migrations.",
+          agregar: "Agregar",
+          editar: "Editar",
+          borrar: "Borrar",
+          titulo_nuevo: "Nuevo alojamiento",
+          titulo_editar: "Editar alojamiento",
+          tipo: "Grupo",
+          nombre: "Nombre",
+          descripcion: "Capacidad y descripción",
+          direccion: "Dirección",
+          contactos: "Contactos",
+          contactos_ayuda: "Uno por línea: teléfonos, @instagram, email, web o Facebook (\"Facebook: nombre\" o la dirección facebook.com/...).",
+          nota: "Nota",
+          nota_ayuda: "Opcional, ej. \"Emite Factura A\".",
+          obligatorio: "obligatorio",
+          cancelar: "Cancelar",
+          guardar: "Guardar",
+          guardando: "Guardando…",
+          guardado: "Alojamiento guardado.",
+          borrado: "Alojamiento borrado.",
+          confirmar_titulo: "¿Borrar alojamiento?",
+          confirmar_texto: "Se va a eliminar \"{{nombre}}\" del sitio y del Buscador. Esta acción no se puede deshacer.",
+          confirmar_si: "Sí, borrar",
+          error_sesion: "Tu sesión venció. Volvé a iniciar sesión para guardar los cambios.",
+          error_guardar: "No se pudo guardar. Revisá tu conexión e intentá de nuevo.",
+          error_borrar: "No se pudo borrar. Intentá de nuevo.",
+        },
+      },
       alojamientos_loberia_descripcion:
         "En nuestro destino, encontrarás una amplia variedad de opciones de alojamiento pensadas para cada tipo de viajero. Ya sea que busques la comodidad de un hotel o la calidez de un hospedaje familiar.",
       gastronomia_loberia_descripcion:
-        "<p>En nuestro destino, la gastronomía es sencilla y deliciosa. Te invitamos a descubrir los sabores de nuestra comunidad a través de una oferta variada y accesible.</p><br /><br /><p>Podrás disfrutar de una buena <strong>parrilla</strong> con cortes de carne local, probar una auténtica <strong>pizza</strong> en sus distintos estilos, o sentarte en un <strong>restaurante</strong> para degustar platos caseros. </p><p>Si buscas algo rápido o simplemente un café, encontrarás opciones en nuestras <strong>estaciones de servicio</strong> y <strong>confiterías</strong>, perfectas para hacer una pausa.</p><br /><br /><p>¡Prepárate para saborear nuestra cocina más auténtica!</p>",
+        "<p>En nuestro destino, la gastronomía es sencilla y deliciosa. Te invitamos a descubrir los sabores de nuestra comunidad a través de una oferta variada y accesible.</p><p>Podrás disfrutar de una buena <strong>parrilla</strong> con cortes de carne local, probar una auténtica <strong>pizza</strong> en sus distintos estilos, o sentarte en un <strong>restaurante</strong> para degustar platos caseros. </p><p>Si buscas algo rápido o simplemente un café, encontrarás opciones en nuestras <strong>estaciones de servicio</strong> y <strong>confiterías</strong>, perfectas para hacer una pausa.</p><p>¡Prepárate para saborear nuestra cocina más auténtica!</p>",
       transporte_loberia_descripcion:
         "<p>Para que te desplaces con comodidad y sin preocupaciones durante tu visita, te informamos que en la ciudad contamos con servicios de transporte privado.</p><p>Si necesitas trasladarte a tu alojamiento, a un restaurante o a cualquier punto de interés, puedes contar con los servicios de <strong>remises</strong> disponibles. Estos vehículos te ofrecen una opción flexible y segura para moverte a tu propio ritmo.</p>",
       agenda_loberia_descripcion:
@@ -198,15 +276,79 @@ const resources = {
       agenda_loberia: "Agenda de Fiestas y Actividades en Lobería",
       que_hacer_loberia:
         "Lobería: Un destino para conectar con la naturaleza y la historia",
-      fiestas_loberia_descripcion:
-        "<p>Lobería es un destino que vibra con la energía de sus fiestas y tradiciones a lo largo de todo el año. Te invitamos a planificar tu visita y ser parte de nuestra agenda cultural y comunitaria</p><p><h2>Verano (Enero - Marzo)</h2></p> <ul><li><h3>Carnavales Lobería:</h3> El verano se despide a puro ritmo con los tradicionales carnavales. Las noches se llenan de color, música y alegría con el desfile de comparsas, murgas y carrozas, un espectáculo que convoca a toda la comunidad y sus visitantes.</li><br/><li><h3>Fiesta del Aniversario y Loberfest:</h3> El 31 de enero, Lobería celebra un nuevo aniversario de su fundación. Las celebraciones incluyen espectáculos artísticos, feria de artesanos y una gran fiesta de la cerveza artesanal conocida como la Loberfest, con food trucks y música en vivo en un ambiente festivo.</li><br/><li><h3>Fiesta Popular del Pago:</h3> Nacida como un encuentro de amigos, esta fiesta popular se ha consolidado como un evento imperdible. Es una oportunidad única para vivir el folklore y las tradiciones locales a través de la música en vivo, asado a la parrilla y un ambiente de camaradería.</li></ul><p><h2>Primavera (Septiembre - Diciembre)</h2></p></br><ul><h3>Fiesta de la Primavera y del Estudiante:</h3> En septiembre, Lobería le da la bienvenida a la primavera con una gran celebración llena de color y energía. Con actividades recreativas y música en vivo, la jornada se vive en la plaza principal, invitando a jóvenes y familias a disfrutar.</li><br/><br/><li><h3>Exposiciones Rurales y Encuentros Tradicionales:</h3> La ciudad mantiene viva la conexión con el campo a través de la Expo Lobería, organizada por la Sociedad Rural, un evento que muestra lo mejor de la producción agropecuaria, y la Fiesta de Asadores, donde el aroma del asado se convierte en el gran protagonista.</li><br/><li><h3>Fiesta de las Colectividades:</h3> Lobería celebra su herencia multicultural en este evento que rinde homenaje a las raíces de la comunidad. Disfruta de la música, las danzas típicas y los sabores de las distintas colectividades que conviven en el partido.</li></ul><h2>Actividades a lo Largo del Año</h2><ul><li><h3>Eventos Deportivos:</h3> Carreras, torneos y otras competencias locales.</li><br/><li><h3>Ferias de Emprendedores:</h3> Muestras de productos locales y artesanías.</li><br/><li><h3>Festivales de Música:</h3> Oportunidades para disfrutar de artistas locales y regionales.</li><br/><li><h3>Exposiciones Artísticas:</h3> Muestras en el Centro Cultural y otros espacios de la ciudad.</li></ul><>¡Lobería te espera en cualquier momento del año para que vivas una experiencia auténtica y memorable!",
+      fiestas_loberia: {
+        "intro": "Lobería es un destino que vibra con la energía de sus fiestas y tradiciones a lo largo de todo el año. Te invitamos a planificar tu visita y ser parte de nuestra agenda cultural y comunitaria.",
+        "temporadas": [
+          {
+            "titulo": "Verano",
+            "periodo": "Enero - Marzo",
+            "eventos": [
+              {
+                "titulo": "Carnavales Lobería",
+                "texto": "El verano se despide a puro ritmo con los tradicionales carnavales. Las noches se llenan de color, música y alegría con el desfile de comparsas, murgas y carrozas, un espectáculo que convoca a toda la comunidad y sus visitantes."
+              },
+              {
+                "titulo": "Fiesta del Aniversario y Loberfest",
+                "texto": "El 31 de enero, Lobería celebra un nuevo aniversario de su fundación. Las celebraciones incluyen espectáculos artísticos, feria de artesanos y una gran fiesta de la cerveza artesanal conocida como la Loberfest, con food trucks y música en vivo en un ambiente festivo."
+              },
+              {
+                "titulo": "Fiesta Popular del Pago",
+                "texto": "Nacida como un encuentro de amigos, esta fiesta popular se ha consolidado como un evento imperdible. Es una oportunidad única para vivir el folklore y las tradiciones locales a través de la música en vivo, asado a la parrilla y un ambiente de camaradería."
+              }
+            ]
+          },
+          {
+            "titulo": "Primavera",
+            "periodo": "Septiembre - Diciembre",
+            "eventos": [
+              {
+                "titulo": "Fiesta de la Primavera y del Estudiante",
+                "texto": "En septiembre, Lobería le da la bienvenida a la primavera con una gran celebración llena de color y energía. Con actividades recreativas y música en vivo, la jornada se vive en la plaza principal, invitando a jóvenes y familias a disfrutar."
+              },
+              {
+                "titulo": "Exposiciones Rurales y Encuentros Tradicionales",
+                "texto": "La ciudad mantiene viva la conexión con el campo a través de la Expo Lobería, organizada por la Sociedad Rural, un evento que muestra lo mejor de la producción agropecuaria, y la Fiesta de Asadores, donde el aroma del asado se convierte en el gran protagonista."
+              },
+              {
+                "titulo": "Fiesta de las Colectividades",
+                "texto": "Lobería celebra su herencia multicultural en este evento que rinde homenaje a las raíces de la comunidad. Disfruta de la música, las danzas típicas y los sabores de las distintas colectividades que conviven en el partido."
+              }
+            ]
+          },
+          {
+            "titulo": "Actividades a lo Largo del Año",
+            "periodo": "Todo el año",
+            "eventos": [
+              {
+                "titulo": "Eventos Deportivos",
+                "texto": "Carreras, torneos y otras competencias locales."
+              },
+              {
+                "titulo": "Ferias de Emprendedores",
+                "texto": "Muestras de productos locales y artesanías."
+              },
+              {
+                "titulo": "Festivales de Música",
+                "texto": "Oportunidades para disfrutar de artistas locales y regionales."
+              },
+              {
+                "titulo": "Exposiciones Artísticas",
+                "texto": "Muestras en el Centro Cultural y otros espacios de la ciudad."
+              }
+            ]
+          }
+        ],
+        "cierre": "¡Lobería te espera en cualquier momento del año para que vivas una experiencia auténtica y memorable!"
+      },
       que_hacer_loberia_descripcion:
         "<p>Lobería te invita a descubrir un entorno único donde se fusionan la ciudad, las localidades del interior, el campo, las sierras y el mar.<br /><br /><h3>Naturaleza y Aventura:</h3> Explora la belleza de <span>Arenas Verdes</span>, nuestra playa agreste ideal para disfrutar del mar y los médanos, y también el <span>Río Quequén</span> en el Paraje Las Cascadas, que te ofrecen un escenario perfecto para la pesca y el kayak.<br /><br /><h3>Cultura e Historia:</h3> Sumérgete en el pasado de la región visitando el <span>Museo de Ciencias Naturales</span> y los <span>Museos Históricos de la Ciudad de Lobería y de la localidad de San Manuel</span>.<br /><br />Para los amantes del automovilismo, es imperdible visitar el <span>Centro Cultural Villa Ercilia</span>, a partir del cual se está construyendo el Museo del Automovilismo.<br /><br /><h3>Tradición y Relax:</h3> Simplemente, recorre nuestras calles, conoce los monumentos locales y disfruta del ritmo apacible de la vida en Lobería, ideal para desconectar y recargar energías.</p>",
 
       //San Manuel Actualizado
       san_manuel: "San Manuel",
-      descripcion_san_manuel:
-        "<p>San Manuel es una localidad centenaria del partido de Lobería, conocida por su ambiente tranquilo y su cercanía a las sierras, la convierte en el lugar ideal para el descanso y el contacto con la naturaleza. Posee un rico patrimonio cultural y religioso, y es famosa por sus fiestas populares como la fiesta del aniversario y las celebraciones del ViaCrucis, que son una excelente oportunidad para sumergirse en las tradiciones locales.</p>",
+      descripcion_san_manuel: {
+        "intro": "San Manuel es una localidad centenaria del partido de Lobería, conocida por su ambiente tranquilo y su cercanía a las sierras, la convierte en el lugar ideal para el descanso y el contacto con la naturaleza.",
+        "patrimonio": "Posee un rico patrimonio cultural y religioso, y es famosa por sus fiestas populares como la fiesta del aniversario y las celebraciones del ViaCrucis, que son una excelente oportunidad para sumergirse en las tradiciones locales."
+      },
       como_llegar_san_manuel: {
         titulo:
           "<p>Aquí tienes las indicaciones para llegar a San Manuel en automóvil desde algunas ciudades cercanas desde:</p>",
@@ -221,8 +363,32 @@ const resources = {
         "<h2>Alojamiento en San Manuel: Tu Lugar para el Descanso</h2>",
       alojamientos_san_manuel_descripcion:
         "Si buscas un lugar tranquilo para desconectar y disfrutar de la paz del campo, San Manuel te ofrece un alojamiento para que puedas concretar tu estadía en la localidad.",
-      agenda_san_manuel:
-        "<h2>Fiestas y Tradiciones en San Manuel: Un Reencuentro con la Fe y la Comunidad</h2><p>La localidad de San Manuel celebra su identidad y su historia a través de una serie de festividades que marcan el calendario y atraen a vecinos y visitantes.</p><p> Son oportunidades únicas para conectar con la esencia de este pueblo.</p> <ul><li><h3>Aniversario de la localidad:</h3><p>Cada 25 de marzo, San Manuel se viste de fiesta para celebrar su fundación. El evento congrega a la comunidad en un festejo que incluye espectáculos artísticos, feria de emprendedores y un ambiente de alegría que celebra el arraigo y la historia del pueblo.</p></li><li><h3>Celebración de la Virgen de Fátima:</h3><p>La fe es un pilar fundamental en San Manuel.</p><p>En el mes de mayo, la <strong>Parroquia Nuestra Señora de Fátima</strong> se convierte en el epicentro de una gran celebración religiosa. Los fieles participan en misas, procesiones y diversas actividades en honor a su patrona, en un acto de devoción que une a toda la comunidad.</p></li><li><h3>Semana Santa y Vía Crucis del Cerro El Toro:</h3><p>La espiritualidad se vive de una manera muy especial en la localidad. Durante la Semana Santa, los actos religiosos culminan con la emotiva representación del <strong>Vía Crucis en el Cerro El Toro:</strong></p><p>Los participantes recorren las estaciones en un ascenso simbólico, uniendo la devoción con el imponente paisaje natural, en una experiencia de profunda reflexión.</p></li></ul><p>San Manuel te invita a ser parte de estas tradiciones que definen su espíritu y su identidad.</p>",
+      agenda_san_manuel: {
+        "intro": "La localidad de San Manuel celebra su identidad y su historia a través de una serie de festividades que marcan el calendario y atraen a vecinos y visitantes. Son oportunidades únicas para conectar con la esencia de este pueblo.",
+        "temporadas": [
+          {
+            "titulo": "Fiestas y Tradiciones",
+            "eventos": [
+              {
+                "titulo": "Aniversario de la localidad",
+                "fecha": "25 de marzo",
+                "texto": "Cada 25 de marzo, San Manuel se viste de fiesta para celebrar su fundación. El evento congrega a la comunidad en un festejo que incluye espectáculos artísticos, feria de emprendedores y un ambiente de alegría que celebra el arraigo y la historia del pueblo."
+              },
+              {
+                "titulo": "Semana Santa y Vía Crucis del Cerro El Toro",
+                "fecha": "Semana Santa",
+                "texto": "La espiritualidad se vive de una manera muy especial en la localidad. Durante la Semana Santa, los actos religiosos culminan con la emotiva representación del <strong>Vía Crucis en el Cerro El Toro</strong>: los participantes recorren las estaciones en un ascenso simbólico, uniendo la devoción con el imponente paisaje natural, en una experiencia de profunda reflexión."
+              },
+              {
+                "titulo": "Celebración de la Virgen de Fátima",
+                "fecha": "Mayo",
+                "texto": "La fe es un pilar fundamental en San Manuel. En el mes de mayo, la <strong>Parroquia Nuestra Señora de Fátima</strong> se convierte en el epicentro de una gran celebración religiosa. Los fieles participan en misas, procesiones y diversas actividades en honor a su patrona, en un acto de devoción que une a toda la comunidad."
+              }
+            ]
+          }
+        ],
+        "cierre": "San Manuel te invita a ser parte de estas tradiciones que definen su espíritu y su identidad."
+      },
       que_hacer_san_manuel:
         "San Manuel: Un rincón de Historia y Fe en el Corazón de la Pampa",
       que_hacer_san_manuel_descripcion:
@@ -237,8 +403,12 @@ const resources = {
       descripcion_arenas_verdes: {
         descripcion_1:
           "<p>Arenas Verdes es el lugar ideal para quienes buscan desconectarse y disfrutar de la naturaleza en su estado más puro. Se encuentra a la altura del km 108,5 de la ruta provincial Nro 88.</p>",
-        descripcion_2:
-          "<p>Este balneario, parte del partido de Lobería, se caracteriza por su paisaje agreste, con amplios bosques, extensos médanos y una playa de gran belleza. Es el destino perfecto para quienes desean descansar, caminar, practicar deportes al aire libre y disfrutar del mar en un entorno tranquilo y natural.</p>",
+        descripcion_2: {
+          paisaje:
+            "Este balneario, parte del partido de Lobería, se caracteriza por su paisaje agreste, con amplios bosques, extensos médanos y una playa de gran belleza.",
+          destino:
+            "Es el destino perfecto para quienes desean descansar, caminar, practicar deportes al aire libre y disfrutar del mar en un entorno tranquilo y natural.",
+        },
         como_llegar_intro:
           "<p>Aquí te detallamos las rutas para llegar en automóvil desde los principales puntos cercanos:</p>",
         desde_loberia:
@@ -253,7 +423,7 @@ const resources = {
         aire_libre:
           "<h3>Vive la naturaleza:</h3><p>La nueva <strong>Reserva Natural</strong> te invita a explorar su flora y fauna, y a capturar en imágenes la belleza de este ecosistema.</p>",
         magico:
-          "<h3>Momentos mágicos:</h3><p>No te pierdas los espectaculares <strong>amaneceres y atardeceres</strong> que tiñen el cielo de colores. Y al caer la noche, prepárate para un show único: un cielo completamente despejado, ideal para observar las <strong>estrellas</strong>.<7p>",
+          "<h3>Momentos mágicos:</h3><p>No te pierdas los espectaculares <strong>amaneceres y atardeceres</strong> que tiñen el cielo de colores. Y al caer la noche, prepárate para un show único: un cielo completamente despejado, ideal para observar las <strong>estrellas</strong>.</p>",
         relax:
           "<h3>Relax y ocio:</h3><p>Disfruta de la tranquilidad del lugar, visita sus <strong>comercios de artesanías y balnearios</strong>, y pasa tiempo de calidad con la familia, permitiendo que los <strong>niños</strong> jueguen libremente en un entorno seguro y natural.</p>",
         experiencia:
@@ -302,8 +472,17 @@ const resources = {
       intro_loberia:
         "En el corazón de la provincia de Buenos Aires, Lobería te espera con paisajes encantadores, historia viva y una calidez que sólo los pueblos auténticos conservan.<br/><br/>Entre sierras suaves, campos dorados y un litoral agreste que acaricia el Atlántico, este rincón bonaerense es perfecto para quienes buscan desconectar y redescubrir la tranquilidad.<br/><br/>Explorá sus playas vírgenes como Arenas Verdes, caminá por senderos rurales, degustá sabores caseros, y maravillate con su patrimonio arquitectónico y natural.<br/><br/><strong>Lobería, donde la naturaleza, la historia y el descanso se encuentran.</strong>",
       proximos_eventos: "Próximos Eventos",
-      eventos_intro: "No te pierdas todos los eventos que tenemos para vos!!!",
+      eventos_intro: "No te pierdas todos los eventos que tenemos para vos!",
+      sin_eventos_intro:
+        "Por el momento no hay eventos programados. ¡Muy pronto tendremos novedades!",
       actualidad: "Actualidad",
+      destino_destacado: "Destino Destacado",
+      hero_subtitulo:
+        "Naturaleza virgen, sierras que cuentan historias y la paz que solo el Partido de Lobería puede ofrecer.",
+      eyebrow_experiencias: "Experiencias",
+      agenda_cultural: "Agenda Cultural",
+      info_al_dia: "Info al día",
+      ver_detalles: "Ver Detalles",
       admin_title: "Panel de Administración",
       email: "Correo Electrónico",
       password: "Contraseña",
@@ -350,8 +529,10 @@ const resources = {
       error_conexion2: "Error al conectar con el servidor",
       busqueda: "Busqueda",
       no_se_encontraron_resultados: "No se encontraron resultados",
-      busqueda_contenido: "Búsqueda de Contenido",
-      buscar_por_nombre: "Buscar por nombre...",
+      busqueda_contenido: "Búsqueda de contenidos",
+      busqueda_subtitulo:
+        "Encontrá los mejores rincones, eventos y sabores de nuestra tierra.",
+      buscar_por_nombre: "¿Qué estás buscando?",
       ciudad_provincia_pais: "Ciudad, Provincia, País",
       pais: "País",
       provincia: "Provincia",
@@ -454,10 +635,12 @@ const resources = {
       link_invites: "Pedilo completando un breve formulario haciendo ",
       link_aqui: "click aquí",
       ver_en_openstreetmap: "Ver en OpenStreetMap",
+      anterior: "Anterior",
+      siguiente: "Siguiente",
       page_not_found: "Página No Encontrada.",
       sorry_not_found: "Lo sentimos, la página que estás buscando no existe.",
       back_index: "Volver al Inicio",
-      p1_alojamiento:"Queremos que vengas a conocernos y disfrutar de tu estadía!!!",
+      p1_alojamiento:"Queremos que vengas a conocernos y disfrutar de tu estadía!",
       p2_alojamiento:"Déjate sorprender por nuestros paisajes, nuestra gente y la tranquilidad que solo Lobería puede ofrecerte.",
       p3_alojamiento: "Viví una experiencia única entre mar, sierras y naturaleza. ¡Te esperamos!"
     },
@@ -473,12 +656,24 @@ const resources = {
 
       // Partido de Lobería
       partido_loberia: "Lobería District",
+      diversidad_natural: "Natural diversity",
+      vida_cultural: "Cultural life",
+      perfil_productivo: "Productive profile",
       intro_partido_loberia: {
         presentacion:
           "<p>Located in the southeast of the Province of Buenos Aires, the partido of Lobería is an ideal destination for those looking to connect with nature in a serene environment, offering diverse landscapes and unforgettable adventures.</p>",
 
         caracteristicas:
           "<p>The main features that set Lobería apart are its <strong>natural diversity</strong>, its <strong>rich cultural life</strong>, and its <strong>strong productive profile</strong>, mainly in the agricultural sector.</p>",
+
+        caracteristicas_detalle: {
+          diversidad:
+            "Sea, sierras, countryside and rivers combine in one territory, with landscapes for every taste.",
+          cultura:
+            "Museums, popular festivals, and traditions that keep each town's identity alive.",
+          produccion:
+            "A thriving agricultural engine, with mixed farming and local products that set the region apart.",
+        },
 
         paisaje: {
           titulo:
@@ -534,6 +729,8 @@ const resources = {
         unico_titulo: "Why is this place unique?",
         unico_texto:
           "Beaches, dunes, and grasslands converge along our coast, giving shelter to hundreds of species. Some arrive from the Arctic after traveling more than 12,000 kilometers.",
+        unico_stat: "12,000 km",
+        unico_stat_label: "traveled by some migratory birds arriving from the Arctic",
         mirador: "Bird Lookout",
         experiencias_titulo: "Choose your experience, all year round",
         experiencias: {
@@ -641,10 +838,61 @@ const resources = {
         cierre:
           "<p>With its combination of outdoor activities, cultural and historical richness, and the warmth of its people, Lobería presents itself as a complete and unique tourist destination.</p>",
       },
+      alojamientos_loberia_meta: {
+        titulo: "Accommodations in Lobería: hotels, houses and apartments | Turismo Lobería",
+        descripcion: "Where to stay in Lobería: hotels, houses and apartments for rent with address and phone. Official list from the Tourism Office.",
+      },
+      alojamientos_listado: {
+        titulo: "Where to stay in {{lugar}}",
+        grupos: {
+          hotel: "Hotels",
+          particular: "Private apartments and houses",
+          cabana: "Cabins",
+          apart: "Apartment hotels",
+          hostal: "Hostels, apartments and bungalows",
+          camping: "Campsites",
+        },
+        llamar: "Call",
+        ver_mapa: "View on Google Maps",
+        abrir: "Open",
+        actualizado: "Information updated as of {{fecha}}. We recommend checking availability and rates directly with each accommodation.",
+        consultar: "We recommend checking availability and rates directly with each accommodation.",
+        cargando: "Loading accommodations…",
+        vacio: "There are no accommodations in this group yet.",
+        admin: {
+          barra: "You are viewing this page as an administrator",
+          respaldo: "These accommodations are not in the database yet: the brochure list is shown and cannot be edited. Run the migrations in Backend/migrations to enable editing.",
+          agregar: "Add",
+          editar: "Edit",
+          borrar: "Delete",
+          titulo_nuevo: "New accommodation",
+          titulo_editar: "Edit accommodation",
+          tipo: "Group",
+          nombre: "Name",
+          descripcion: "Capacity and description",
+          direccion: "Address",
+          contactos: "Contacts",
+          contactos_ayuda: "One per line: phones, @instagram, email, website or Facebook (\"Facebook: name\" or the facebook.com/... address).",
+          nota: "Note",
+          nota_ayuda: "Optional, e.g. \"Issues type A invoices\".",
+          obligatorio: "required",
+          cancelar: "Cancel",
+          guardar: "Save",
+          guardando: "Saving…",
+          guardado: "Accommodation saved.",
+          borrado: "Accommodation deleted.",
+          confirmar_titulo: "Delete accommodation?",
+          confirmar_texto: "\"{{nombre}}\" will be removed from the site and the Search page. This cannot be undone.",
+          confirmar_si: "Yes, delete",
+          error_sesion: "Your session expired. Log in again to save your changes.",
+          error_guardar: "Could not save. Check your connection and try again.",
+          error_borrar: "Could not delete. Please try again.",
+        },
+      },
       alojamientos_loberia_descripcion:
         "In our destination, you will find a wide variety of accommodation options designed for every type of traveler. Whether you seek the comfort of a hotel or the warmth of a family-run lodging.",
       gastronomia_loberia_descripcion:
-        "<p>In our destination, the gastronomy is simple and delicious. We invite you to discover the flavors of our community through a varied and affordable offer.</p><br /><br /><p>You can enjoy a good <strong>grill</strong> with local meat cuts, try an authentic <strong>pizza</strong> in its different styles, or sit down at a <strong>restaurant</strong> to savor homemade dishes. </p><p>If you're looking for something quick or just a coffee, you'll find options at our <strong>service stations</strong> and <strong>cafeterias</strong>, perfect for taking a break.</p><br /><br /><p>Get ready to savor our most authentic cuisine!</p>",
+        "<p>In our destination, the gastronomy is simple and delicious. We invite you to discover the flavors of our community through a varied and affordable offer.</p><p>You can enjoy a good <strong>grill</strong> with local meat cuts, try an authentic <strong>pizza</strong> in its different styles, or sit down at a <strong>restaurant</strong> to savor homemade dishes. </p><p>If you're looking for something quick or just a coffee, you'll find options at our <strong>service stations</strong> and <strong>cafeterias</strong>, perfect for taking a break.</p><p>Get ready to savor our most authentic cuisine!</p>",
       transporte_loberia_descripcion:
         "<p>To move around comfortably and without worries during your visit, we inform you that the city offers private transportation services.</p><p>If you need to get to your accommodation, a restaurant or any point of interest, you can rely on the available <strong>taxi services</strong>. These vehicles offer you a flexible and safe option to move at your own pace.</p>",
       agenda_loberia: "Lobería's Festival and Activity Schedule",
@@ -652,15 +900,79 @@ const resources = {
         "Here you have all the information about Lobería's festivals and activities, grouped and organized for easy use on the tourism website.",
       que_hacer_loberia:
         "Lobería: A destination to connect with nature and history",
-      fiestas_loberia_descripcion:
-        "<p>Lobería is a destination that vibrates with the energy of its festivals and traditions throughout the year. We invite you to plan your visit and be part of our cultural and community calendar.</p><p><h2>Summer (January - March)</h2></p> <ul><li><h3>Lobería Carnivals:</h3> Summer bids farewell in full swing with the traditional carnivals. The nights fill with color, music, and joy with the parade of comparsas, murgas, and floats, a spectacle that brings together the entire community and its visitors.</li><br/><li><h3>Anniversary Celebration and Loberfest:</h3> On January 31st, Lobería celebrates another anniversary of its founding. The festivities include artistic performances, a craft fair, and the great craft beer festival known as Loberfest, with food trucks and live music in a festive atmosphere.</li><br/><li><h3>Fiesta Popular del Pago:</h3> Born as a gathering of friends, this popular festival has become an unmissable event. It’s a unique opportunity to experience folklore and local traditions through live music, grilled barbecue, and a spirit of camaraderie.</li></ul><p><h2>Spring (September - December)</h2></p></br><ul><li><h3>Spring and Student Festival:</h3> In September, Lobería welcomes spring with a big celebration full of color and energy. With recreational activities and live music, the day takes place in the main square, inviting young people and families to enjoy together.</li><br/><br/><li><h3>Rural Exhibitions and Traditional Gatherings:</h3> The city keeps its bond with the countryside alive through Expo Lobería, organized by the Rural Society, an event that showcases the best of agricultural production, and the Asadores Festival, where the aroma of barbecue becomes the main attraction.</li><br/><li><h3>Festival of Communities:</h3> Lobería celebrates its multicultural heritage in this event that pays tribute to the community’s roots. Enjoy music, traditional dances, and the flavors of the different cultures that coexist in the district.</li></ul><h2>Activities Throughout the Year</h2><ul><li><h3>Sports Events:</h3> Races, tournaments, and other local competitions.</li><br/><li><h3>Entrepreneurs’ Fairs:</h3> Exhibitions of local products and crafts.</li><br/><li><h3>Music Festivals:</h3> Opportunities to enjoy performances by local and regional artists.</li><br/><li><h3>Art Exhibitions:</h3> Shows at the Cultural Center and other venues in the city.</li></ul><>Lobería awaits you at any time of the year so you can enjoy an authentic and memorable experience!",
+      fiestas_loberia: {
+        "intro": "Lobería is a destination that vibrates with the energy of its festivals and traditions throughout the year. We invite you to plan your visit and be part of our cultural and community calendar.",
+        "temporadas": [
+          {
+            "titulo": "Summer",
+            "periodo": "January - March",
+            "eventos": [
+              {
+                "titulo": "Lobería Carnivals",
+                "texto": "Summer bids farewell in full swing with the traditional carnivals. The nights fill with color, music, and joy with the parade of comparsas, murgas, and floats, a spectacle that brings together the entire community and its visitors."
+              },
+              {
+                "titulo": "Anniversary Celebration and Loberfest",
+                "texto": "On January 31st, Lobería celebrates another anniversary of its founding. The festivities include artistic performances, a craft fair, and the great craft beer festival known as Loberfest, with food trucks and live music in a festive atmosphere."
+              },
+              {
+                "titulo": "Fiesta Popular del Pago",
+                "texto": "Born as a gathering of friends, this popular festival has become an unmissable event. It’s a unique opportunity to experience folklore and local traditions through live music, grilled barbecue, and a spirit of camaraderie."
+              }
+            ]
+          },
+          {
+            "titulo": "Spring",
+            "periodo": "September - December",
+            "eventos": [
+              {
+                "titulo": "Spring and Student Festival",
+                "texto": "In September, Lobería welcomes spring with a big celebration full of color and energy. With recreational activities and live music, the day takes place in the main square, inviting young people and families to enjoy together."
+              },
+              {
+                "titulo": "Rural Exhibitions and Traditional Gatherings",
+                "texto": "The city keeps its bond with the countryside alive through Expo Lobería, organized by the Rural Society, an event that showcases the best of agricultural production, and the Asadores Festival, where the aroma of barbecue becomes the main attraction."
+              },
+              {
+                "titulo": "Festival of Communities",
+                "texto": "Lobería celebrates its multicultural heritage in this event that pays tribute to the community’s roots. Enjoy music, traditional dances, and the flavors of the different cultures that coexist in the district."
+              }
+            ]
+          },
+          {
+            "titulo": "Activities Throughout the Year",
+            "periodo": "All year round",
+            "eventos": [
+              {
+                "titulo": "Sports Events",
+                "texto": "Races, tournaments, and other local competitions."
+              },
+              {
+                "titulo": "Entrepreneurs’ Fairs",
+                "texto": "Exhibitions of local products and crafts."
+              },
+              {
+                "titulo": "Music Festivals",
+                "texto": "Opportunities to enjoy performances by local and regional artists."
+              },
+              {
+                "titulo": "Art Exhibitions",
+                "texto": "Shows at the Cultural Center and other venues in the city."
+              }
+            ]
+          }
+        ],
+        "cierre": "Lobería awaits you at any time of the year so you can enjoy an authentic and memorable experience!"
+      },
       que_hacer_loberia_descripcion:
         "<p><h2>Lobería: A destination to connect with nature and history</h2><br /><br />Lobería invites you to discover a unique environment where the city, the inland towns, the countryside, the hills, and the sea come together.<br /><br /><h3>Nature and Adventure:</h3> Explore the beauty of <span>Arenas Verdes</span>, our unspoiled beach ideal for enjoying the sea and the dunes, and also the <span>Quequén River</span> in the Las Cascadas area, offering the perfect setting for fishing and kayaking.<br /><br /><h3>Culture and History:</h3> Immerse yourself in the past of the region by visiting the <span>Museum of Natural Sciences</span> and the <span>Historical Museums of the City of Lobería and the town of San Manuel</span>.<br /><br />For motorsport enthusiasts, a must-see is the <span>Villa Ercilia Cultural Center</span>, from which the Automobile Museum is being developed.<br /><br /><h3>Tradition and Relaxation:</h3> Simply stroll through our streets, discover local monuments, and enjoy the peaceful rhythm of life in Lobería — perfect for disconnecting and recharging your energy.</p>",
 
       //San Manuel Actualizado
       san_manuel: "San Manuel",
-      descripcion_san_manuel:
-        "<p>San Manuel is a century-old town in the Partido de Lobería, known for its peaceful atmosphere and proximity to the hills, making it an ideal place for rest and connection with nature.</p><p>It has a rich cultural and religious heritage, and is famous for its popular festivals such as the anniversary celebration and the Via Crucis events, which are excellent opportunities to immerse yourself in local traditions.</p>",
+      descripcion_san_manuel: {
+        "intro": "San Manuel is a century-old town in the Partido de Lobería, known for its peaceful atmosphere and proximity to the hills, making it an ideal place for rest and connection with nature.",
+        "patrimonio": "It has a rich cultural and religious heritage, and is famous for its popular festivals such as the anniversary celebration and the Via Crucis events, which are excellent opportunities to immerse yourself in local traditions."
+      },
       como_llegar_san_manuel: {
         titulo: "Directions to San Manuel by car from nearby cities",
         desde_loberia:
@@ -674,8 +986,32 @@ const resources = {
         "<h2>Accommodation in San Manuel: Your Place to Rest</h2>",
       alojamientos_san_manuel_descripcion:
         "If you're looking for a quiet place to disconnect and enjoy the peace of the countryside, San Manuel offers accommodations where you can plan your stay in the town.",
-      agenda_san_manuel:
-        "<h2>Festivals and Traditions in San Manuel: A Reunion with Faith and Community</h2><p>The town of San Manuel celebrates its identity and history through a series of festivities that mark the calendar and attract both locals and visitors.</p><p>These are unique opportunities to connect with the essence of this town.</p><ul><li><h3>Town Anniversary:</h3><p>Every March 25, San Manuel dresses up to celebrate its founding. The event brings the community together in a celebration that includes artistic performances, an artisan fair, and a joyful atmosphere that honors the town's heritage and history.</p></li><li><h3>Celebration of the Virgin of Fátima:</h3><p>Faith is a fundamental pillar in San Manuel.</p><p>In May, the <strong>Our Lady of Fátima Parish</strong> becomes the epicenter of a major religious celebration. The faithful participate in masses, processions, and various activities in honor of their patroness, in an act of devotion that unites the entire community.</p></li><li><h3>Holy Week and the Way of the Cross on Cerro El Toro:</h3><p>Spirituality is experienced in a very special way in the town. During Holy Week, the religious events culminate with the moving representation of the <strong>Way of the Cross on Cerro El Toro:</strong></p><p>Participants walk through the stations in a symbolic ascent, combining devotion with the stunning natural landscape, in an experience of deep reflection.</p></li></ul><p>San Manuel invites you to be part of these traditions that define its spirit and identity.</p>",
+      agenda_san_manuel: {
+        "intro": "The town of San Manuel celebrates its identity and history through a series of festivities that mark the calendar and attract both locals and visitors. These are unique opportunities to connect with the essence of this town.",
+        "temporadas": [
+          {
+            "titulo": "Festivals and Traditions",
+            "eventos": [
+              {
+                "titulo": "Town Anniversary",
+                "fecha": "March 25",
+                "texto": "Every March 25, San Manuel dresses up to celebrate its founding. The event brings the community together in a celebration that includes artistic performances, an artisan fair, and a joyful atmosphere that honors the town's heritage and history."
+              },
+              {
+                "titulo": "Holy Week and the Way of the Cross on Cerro El Toro",
+                "fecha": "Holy Week",
+                "texto": "Spirituality is experienced in a very special way in the town. During Holy Week, the religious events culminate with the moving representation of the <strong>Way of the Cross on Cerro El Toro</strong>: participants walk through the stations in a symbolic ascent, combining devotion with the stunning natural landscape, in an experience of deep reflection."
+              },
+              {
+                "titulo": "Celebration of the Virgin of Fátima",
+                "fecha": "May",
+                "texto": "Faith is a fundamental pillar in San Manuel. In May, the <strong>Our Lady of Fátima Parish</strong> becomes the epicenter of a major religious celebration. The faithful participate in masses, processions, and various activities in honor of their patroness, in an act of devotion that unites the entire community."
+              }
+            ]
+          }
+        ],
+        "cierre": "San Manuel invites you to be part of these traditions that define its spirit and identity."
+      },
       que_hacer_san_manuel:
         "San Manuel: A Corner of History and Faith in the Heart of the Pampas",
       que_hacer_san_manuel_descripcion:
@@ -688,8 +1024,12 @@ const resources = {
       descripcion_arenas_verdes: {
         descripcion_1:
           "<p>Arenas Verdes is the ideal place for those seeking to disconnect and enjoy nature in its purest form. It is located at km 108.5 of Provincial Route 88.</p>",
-        descripcion_2:
-          "<p>This beach resort, part of the Lobería district, is known for its wild landscape, with large forests, vast sand dunes, and a beautiful beach. It's the perfect destination for those looking to relax, walk, enjoy outdoor sports, and experience the sea in a peaceful and natural setting.</p>",
+        descripcion_2: {
+          paisaje:
+            "This beach resort, part of the Lobería district, is known for its wild landscape, with large forests, vast sand dunes, and a beautiful beach.",
+          destino:
+            "It's the perfect destination for those looking to relax, walk, enjoy outdoor sports, and experience the sea in a peaceful and natural setting.",
+        },
         como_llegar_intro:
           "<p>Here are the driving routes from major nearby locations:</p>",
         desde_loberia:
@@ -754,9 +1094,30 @@ const resources = {
       descubri_loberia: "Discover Lobería",
       intro_loberia_index:
         "In the heart of Buenos Aires Province, Lobería awaits you with charming landscapes, living history, and the warmth only authentic towns preserve. Nestled among gentle hills, golden fields, and a rugged coastline that meets the Atlantic Ocean, this hidden gem is perfect for those seeking to unplug and rediscover peace. Explore its unspoiled beaches like Arenas Verdes, walk through rural trails, savor homemade flavors, and marvel at its rich architectural and natural heritage. Lobería isn’t just a destination — it’s an experience that reconnects you with simplicity, authenticity, and the essence of Argentina. Lobería — where nature, history, and relaxation meet.",
+      inicio_mosaic: {
+        lead:
+          "<h3>In the heart of Buenos Aires Province, Lobería awaits you with charming landscapes, living history, and the warmth only authentic towns preserve.</h3>",
+        paisaje:
+          "<p><strong>A landscape that captivates:</strong><br/>Nestled among gentle hills, golden fields, and a rugged coastline that meets the Atlantic Ocean, this hidden gem is perfect for those seeking to unplug and rediscover peace.</p>",
+        experiencias:
+          "<p><strong>Live it outdoors:</strong><br/>Explore its unspoiled beaches like Arenas Verdes, walk through rural trails, savor homemade flavors, and marvel at its rich architectural and natural heritage.</p>",
+        esencia:
+          "<p><strong>Our essence:</strong><br/>Lobería isn’t just a destination — it’s an experience that reconnects you with simplicity, authenticity, and the essence of Argentina.</p>",
+        cierre:
+          "<p>Lobería — where nature, history, and relaxation meet.</p>",
+      },
       proximos_eventos: "Upcoming Events",
       eventos_intro: "Don't miss all the events we have for you!!!",
+      sin_eventos_intro:
+        "There are no events scheduled at the moment. Check back soon for news!",
       actualidad: "News",
+      destino_destacado: "Featured Destination",
+      hero_subtitulo:
+        "Untouched nature, hills with stories to tell, and the peace only the Partido de Lobería can offer.",
+      eyebrow_experiencias: "Experiences",
+      agenda_cultural: "Cultural Agenda",
+      info_al_dia: "Info Today",
+      ver_detalles: "View Details",
       admin_title: "Admin Panel",
       email: "Email",
       password: "Password",
@@ -802,8 +1163,10 @@ const resources = {
       error_conexion2: "Failed to connect to the server",
       busqueda: "Search",
       no_se_encontraron_resultados: "No results found",
-      busqueda_contenido: "Content Search",
-      buscar_por_nombre: "Search by name...",
+      busqueda_contenido: "Adventure Finder",
+      busqueda_subtitulo:
+        "Find the best spots, events and flavors of our land.",
+      buscar_por_nombre: "What are you looking for?",
       ciudad_provincia_pais: "City, Province, Country",
       ciudad: "City",
       categoria: "Category",
@@ -902,6 +1265,8 @@ const resources = {
       link_invites: "Request it by filling out a short form by ",
       link_aqui: "clicking here",
       ver_en_openstreetmap: "View in OpenStreetMap",
+      anterior: "Previous",
+      siguiente: "Next",
       page_not_found: "Page Not Found.",
       sorry_not_found: "Sorry, the page you're looking for doesn't exist.",
       back_index: "Return",

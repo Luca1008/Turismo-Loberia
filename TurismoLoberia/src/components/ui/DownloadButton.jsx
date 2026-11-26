@@ -35,8 +35,8 @@ const DownloadButton = ({
       download={fileName}
       className={className}
     >
-      <FiDownload />
-      <span style={{ marginLeft: "0.5rem", color: "var(--primary-color)", fontWeight: "bold" }}>{label}</span>
+      <FiDownload aria-hidden="true" />
+      <span>{label}</span>
     </a>
   );
 };

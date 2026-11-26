@@ -60,7 +60,7 @@ const ArenasVerdes = () => {
   }
 
   return (
-    <div className="city" key={i18n.language}>
+    <div className="city town-page" key={i18n.language}>
       <CityTabs
         basePath="/ArenasVerdes"
         sectionIds={sectionIds}

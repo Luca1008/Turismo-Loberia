@@ -53,6 +53,10 @@
 .city {
   position: relative;
   padding-top: 90px; /* deja libre el alto de la navbar fija */
+  /* Red de seguridad: ningún adorno (insignias, decoraciones rotadas)
+     puede generar scroll horizontal en mobile. `clip` en vez de `hidden`
+     para no crear un contenedor de scroll ni romper elementos sticky. */
+  overflow-x: clip;
 }
 
 /* ------------------ Imágenes específicas por ciudad ------------------ */
@@ -250,4 +254,15 @@ svg.route-icon, .route-item{
   .city {
     padding-top: 100px; /* navbar mide 100px en este rango */
   }
+}
+
+/* Íconos dentro de círculos (solapas, Cómo Llegar, encabezados de Agenda y
+   Alojamientos): `.city svg` les suma margin-right: 8px y los corre del
+   centro; con margin auto quedan centrados en su círculo. */
+.city .city-tabs-icon,
+.city .fact-icon svg,
+.city .lodging-group-icon svg,
+.city .agenda-season-icon svg,
+.city .adventure-badge svg {
+  margin: auto auto;
 }

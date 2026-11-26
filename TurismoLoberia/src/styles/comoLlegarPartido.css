@@ -1,0 +1,168 @@
+/* =====================================================
+   Cómo Llegar — Partido de Lobería
+   =====================================================
+   Estilos exclusivos de esta página: encabezados "En Auto"/"En Micro" y
+   las variantes de color para el itinerario de paradas, que reutiliza
+   `.fact-list`/`.fact-block`/`.fact-icon`/`.fact-copy` (storySection.css)
+   — clases compartidas con Cómo Llegar de Arenas Verdes/San Manuel e
+   Información General de Ciudad de Lobería. Los modificadores de acá son
+   aditivos: no cambian el verde/azul que ya usan esas páginas. Esta
+   página no tiene foto de portada (se sacó a pedido del usuario).
+===================================================== */
+
+/* ------------------ Encabezados "En Auto" / "En Micro" ------------------ */
+.section-subheading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--grey-dark);
+  margin: 0 0 1.75rem;
+}
+
+.section-subheading svg {
+  color: var(--primary-color);
+  font-size: 1.35rem;
+}
+
+/* ------------------ Variantes de color del itinerario ------------------ */
+/* !important: `.city svg { color: var(--primary-color) }` (city.css)
+   apunta directo al <svg> del ícono (no al <span class="fact-icon"> que
+   lo contiene), así que le gana a la herencia sin importar qué color
+   tenga el círculo — el pin del mapa quedaba siempre verde aunque el
+   círculo/caja de al lado fuera naranja/azul/amarillo. Se hereda el color
+   real del `.fact-icon` (o su variante is-orange/is-blue/is-yellow) en
+   vez de fijar uno solo. */
+.fact-icon svg {
+  color: inherit !important;
+}
+
+/* Se suman a `.fact-icon` (verde por defecto) y `.fact-icon.is-blue`, ya
+   usados en otras páginas — acá se agrega naranja/amarillo para poder
+   rotar los 4 colores de la paleta entre las paradas. */
+.fact-icon.is-orange {
+  border-color: rgba(253, 123, 40, 0.28);
+  background-color: #fff4ed;
+  color: var(--accent-orange);
+}
+.fact-icon.is-yellow {
+  border-color: rgba(201, 154, 30, 0.28);
+  background-color: #fffaea;
+  color: var(--grey-dark);
+}
+/* `.fact-icon.is-blue` (storySection.css) solo define el color del ícono
+   (ahí se usaba nada más que para variar el color del ícono, no el resto
+   del círculo) — acá se completa el borde/fondo para que funcione igual
+   que is-orange/is-yellow dentro de la rotación de 4 colores. Al estar en
+   este archivo, solo se carga en esta página; no afecta a Arenas Verdes/
+   San Manuel/Información General, que siguen viendo el círculo verde con
+   ícono azul de siempre. */
+.fact-icon.is-blue {
+  border-color: rgba(65, 91, 186, 0.28);
+  background-color: #edf0fa;
+}
+
+/* Fondo tenue del mismo color detrás del texto de cada parada. */
+.fact-copy.tint-green,
+.fact-copy.tint-orange,
+.fact-copy.tint-blue,
+.fact-copy.tint-yellow {
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+}
+.fact-copy.tint-green {
+  background: #f1f8ed;
+}
+.fact-copy.tint-orange {
+  background: #fff4ed;
+}
+/* En los Cómo Llegar (Partido y las 3 localidades) el texto de cada parada
+   va sin fondo naranja, solo el círculo del ícono conserva el color. */
+.bg-pattern-pin .fact-copy.tint-orange,
+.town-page .go-to .fact-copy.tint-orange {
+  background: none;
+  padding: 0.55rem 0 0;
+}
+.fact-copy.tint-blue {
+  background: #edf0fa;
+}
+.fact-copy.tint-yellow {
+  background: #fffaea;
+}
+
+.fact-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--grey-dark);
+}
+
+.fact-routes {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--black-2);
+}
+
+.fact-routes li {
+  margin-bottom: 0.25rem;
+}
+
+.fact-routes li:last-child {
+  margin-bottom: 0;
+}
+
+/* ------------------ Textos de transición y cierre ------------------ */
+/* `.story-intro`/`.mosaic-quote` son clases compartidas (Historia,
+   Reserva Natural, y `.go-to` la reutilizan también las otras 3 páginas
+   de "Cómo Llegar"), así que se escopea con `.bg-pattern-pin` — la única
+   clase exclusiva de esta página en su <section> — para no achicar ni
+   poner en gris esos mismos textos en el resto del sitio. También se
+   aplica a Cómo Llegar de Ciudad de Lobería, San Manuel y Arenas Verdes
+   (`.town-page .go-to`, ver Loberia/SanManuel/ArenasVerdes.jsx), que usan
+   el mismo formato que Partido. */
+.bg-pattern-pin .story-intro,
+.bg-pattern-pin .mosaic-quote,
+.town-page .go-to .story-intro,
+.town-page .go-to .mosaic-quote {
+  font-family: var(--font-base);
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--black-2);
+  padding: 20px;
+}
+
+/* En San Manuel/Arenas Verdes el texto de introducción es un <p>, no un
+   <h3>: `.city section p { text-align: left }` (city.css) le gana a la
+   clase sola, así que se fuerza el centrado como en Partido. */
+.town-page .go-to p.story-intro {
+  text-align: center !important;
+}
+
+/* El texto de cierre ("Para obtener información detallada...") va en
+   verde, a diferencia de los dos de transición de arriba. */
+.bg-pattern-pin .mosaic-quote,
+.town-page .go-to .mosaic-quote {
+  color: var(--primary-color);
+}
+
+/* ------------------ Ajustes mobile (Partido y Ciudad de Lobería) ------------------ */
+/* En pantallas angostas el texto de cada parada quedaba muy justo (~230px
+   en un celular de 360px): se reduce el padding interno del recuadro y la
+   separación con el círculo, y los textos de transición/cierre pierden el
+   padding lateral para alinearse con las paradas. El margen general de la
+   sección (1rem por lado, style.css) no se toca. */
+@media (max-width: 767px) {
+  .bg-pattern-pin .fact-block,
+  .town-page .go-to .fact-block {
+    gap: 0.75rem;
+  }
+
+  .bg-pattern-pin .story-intro,
+  .bg-pattern-pin .mosaic-quote,
+  .town-page .go-to .story-intro,
+  .town-page .go-to .mosaic-quote {
+    padding: 20px 0;
+  }
+}

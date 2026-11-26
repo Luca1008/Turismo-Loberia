@@ -6,6 +6,25 @@
    mensajes de éxito/error y centrado de botones.
 ===================================================== */
 
+/* ------------------ Botón de descarga genérico ------------------ */
+/* Usado por `DownloadButton` (className por defecto "button") en las
+   secciones de Descargas que todavía no tienen un estilo propio. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary-color-dark-2);
+  font-weight: bold;
+  text-decoration: none;
+  margin: 0.5rem 0;
+}
+
+.button:hover,
+.button:focus {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
 /* ------------------ Botón principal / submit ------------------ */
 /* Botón de acción principal, usado en formularios */
 .btn-success,

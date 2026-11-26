@@ -60,7 +60,7 @@ export const SanManuel = () => {
   }
 
   return (
-    <div className="city" key={i18n.language}>
+    <div className="city town-page" key={i18n.language}>
       <CityTabs
         basePath="/SanManuel"
         sectionIds={sectionIds}

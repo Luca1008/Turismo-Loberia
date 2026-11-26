@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import {
   FaInfoCircle,
   FaLandmark,
@@ -33,6 +34,24 @@ const SECTION_ICONS = {
   descargas: FaDownload,
 };
 
+/** Color de acento del chip de cada solapa (rota verde/naranja/azul/amarillo,
+ * igual en las 4 ciudades para que la misma sección siempre tenga el mismo
+ * color). */
+const SECTION_ACCENTS = {
+  informacion_general: "green",
+  historia: "orange",
+  naturaleza: "blue",
+  producciones: "yellow",
+  reserva_natural: "green",
+  como_llegar: "orange",
+  alojamientos: "blue",
+  gastronomia: "yellow",
+  transporte: "green",
+  agenda: "orange",
+  que_hacer: "blue",
+  descargas: "yellow",
+};
+
 /**
  * Componente `CityTabs`
  *
@@ -50,6 +69,27 @@ const SECTION_ICONS = {
 const CityTabs = ({ basePath, sectionIds, activeSection }) => {
   const { t } = useTranslation();
   const activeLinkRef = useRef(null);
+  const trackRef = useRef(null);
+
+  /** Muestra/oculta cada flecha según si todavía queda contenido para ese lado. */
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const updateArrows = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    setCanScrollLeft(track.scrollLeft > 4);
+    setCanScrollRight(
+      track.scrollLeft + track.clientWidth < track.scrollWidth - 4
+    );
+  }, []);
+
+  const scrollByAmount = (direction) => {
+    trackRef.current?.scrollBy({
+      left: direction * (trackRef.current.clientWidth * 0.6),
+      behavior: "smooth",
+    });
+  };
 
   // En mobile las solapas no entran todas en pantalla y se desplazan
   // horizontalmente: al entrar (o cambiar de sección) centramos la
@@ -64,29 +104,70 @@ const CityTabs = ({ basePath, sectionIds, activeSection }) => {
       inline: "center",
       block: "nearest",
     });
-  }, [activeSection]);
+    // El scroll del scrollIntoView es async: recalculamos las flechas un
+    // instante después para que reflejen la posición final.
+    const timer = setTimeout(updateArrows, 350);
+    return () => clearTimeout(timer);
+  }, [activeSection, updateArrows]);
+
+  // Detecta si hace falta mostrar flechas al montar y si cambia el tamaño
+  // de pantalla (en desktop ancho puede que ya entren todas las solapas).
+  useEffect(() => {
+    updateArrows();
+    window.addEventListener("resize", updateArrows);
+    return () => window.removeEventListener("resize", updateArrows);
+  }, [updateArrows, sectionIds]);
 
   return (
     <nav className="city-tabs" aria-label={t("secciones_pagina")}>
-      <ul className="city-tabs-track">
+      {canScrollLeft && (
+        <button
+          type="button"
+          className="city-tabs-arrow city-tabs-arrow-left"
+          aria-label={t("anterior")}
+          onClick={() => scrollByAmount(-1)}
+        >
+          <LuChevronLeft aria-hidden="true" />
+        </button>
+      )}
+      <ul
+        className="city-tabs-track"
+        ref={trackRef}
+        onScroll={updateArrows}
+      >
         {sectionIds.map((id) => {
           const Icon = SECTION_ICONS[id] || FaInfoCircle;
+          const accent = SECTION_ACCENTS[id] || "green";
           const isActive = id === activeSection;
           return (
             <li key={id} className="city-tabs-stop">
               <Link
                 ref={isActive ? activeLinkRef : null}
                 to={`${basePath}/${id}`}
-                className={`city-tabs-link${isActive ? " is-active" : ""}`}
+                className={`city-tabs-link tab-${accent}${
+                  isActive ? " is-active" : ""
+                }`}
                 aria-current={isActive ? "page" : undefined}
               >
-                <Icon className="city-tabs-icon" aria-hidden="true" />
+                <span className="city-tabs-icon-chip">
+                  <Icon className="city-tabs-icon" aria-hidden="true" />
+                </span>
                 <span>{t(id)}</span>
               </Link>
             </li>
           );
         })}
       </ul>
+      {canScrollRight && (
+        <button
+          type="button"
+          className="city-tabs-arrow city-tabs-arrow-right"
+          aria-label={t("siguiente")}
+          onClick={() => scrollByAmount(1)}
+        >
+          <LuChevronRight aria-hidden="true" />
+        </button>
+      )}
     </nav>
   );
 };

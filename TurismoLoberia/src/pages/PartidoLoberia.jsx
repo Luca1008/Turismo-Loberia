@@ -58,7 +58,7 @@ const PartidoLoberia = () => {
   }
 
   return (
-    <div className="city" key={i18n.language}>
+    <div className="city partido-page" key={i18n.language}>
       <CityTabs
         basePath="/PartidoLoberia"
         sectionIds={sectionIds}

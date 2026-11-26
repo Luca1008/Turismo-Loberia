@@ -1,0 +1,951 @@
+/* =====================================================
+   Rediseño "mosaico aventurero" — Partido de Lobería
+   =====================================================
+   Piezas compartidas por Historia, Información General, Reserva Natural y
+   el resto de las secciones de Partido de Lobería: eyebrow "Descubrí
+   Lobería", marco de foto tipo aventura (borde recortado + insignia
+   brújula), tarjetas mosaico de color sólido, y las animaciones de
+   aparición/hover. Se suma a (no reemplaza) storySection.css y
+   partidoPhotoFrame.css, que siguen usándose para el patrón anterior
+   (fact-list con línea punteada) en las páginas que todavía no migraron.
+===================================================== */
+
+/* ------------------ Subtítulo destacado (bajo la foto) ------------------ */
+/* Solo para el subtítulo introductorio de Información General, Historia,
+   Naturaleza y Producciones (el texto justo debajo de la foto). No tocar
+   .story-intro: ese lo comparten otros textos (cierre de Naturaleza,
+   textos de Cómo Llegar) que no deben cambiar. */
+/* !important: `.city section p` (city.css) tiene más especificidad
+   (clase + 2 tags) que esta clase sola y le gana, dejando el texto
+   alineado a la izquierda en vez de centrado — mismo criterio que
+   `.reserve-intro` en Reserva Natural. */
+/* Mobile-first: en mobile se ve más chico (16px) para no quedar
+   desproporcionado contra el resto del texto; en desktop (≥768px) vuelve
+   a los 24px de siempre. */
+.section-lead {
+  font-family: var(--font-subtitle);
+  font-weight: 600;
+  max-width: 780px;
+  margin: 0 auto 2rem;
+  text-align: center !important;
+  font-size: 16px;
+  color: var(--primary-color);
+}
+
+@media (min-width: 768px) {
+  .section-lead {
+    font-size: 24px;
+  }
+}
+
+/* ------------------ Eyebrow "Descubrí Lobería" ------------------ */
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-eyebrow svg {
+  color: var(--primary-color);
+  font-size: 1.3rem;
+}
+
+.section-eyebrow span {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--black-2);
+}
+
+.title-underline {
+  height: 4px;
+  width: 4.5rem;
+  background-color: var(--primary-color);
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
+/* ------------------ Decoraciones flotantes de fondo ------------------ */
+/* !important en color: city.css tiene una regla global `.city svg { color:
+   var(--primary-color) }` (para los íconos de ruta de "cómo llegar") que
+   por especificidad le gana a una clase sola como esta y pisaría el color
+   que le pasemos. */
+.deco-float {
+  position: absolute;
+  color: var(--primary-color) !important;
+  opacity: 0.12;
+  z-index: 0;
+  pointer-events: none;
+  animation: mosaic-float 6s ease-in-out infinite alternate;
+}
+
+@keyframes mosaic-float {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(-16px) rotate(8deg);
+  }
+}
+
+/* Variantes con animación pulse/bounce (Información General). */
+.deco-pulse,
+.deco-bounce {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.deco-pulse {
+  color: var(--primary-color) !important;
+  opacity: 0.1;
+  animation: mosaic-pulse 2.5s ease-in-out infinite;
+}
+
+.deco-bounce {
+  color: var(--accent-blue) !important;
+  opacity: 0.1;
+  animation: mosaic-bounce 4s ease-in-out infinite;
+}
+
+@keyframes mosaic-pulse {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes mosaic-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+/* Brújula gigante y tenue de fondo, al pie de la sección. */
+.compass-deco {
+  position: absolute;
+  bottom: -100px;
+  right: -100px;
+  font-size: 20rem;
+  opacity: 0.03;
+  transform: rotate(-15deg);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deco-pulse,
+  .deco-bounce {
+    animation: none;
+  }
+}
+
+/* ------------------ Marco de foto "aventura" ------------------ */
+.photo-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.photo-frame-adventure {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  margin: 0 auto 2.5rem;
+  max-width: 1040px; /* borde a borde con el ancho de contenido de .section-inner (1100px - padding) */
+  background: #fff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  transform: rotate(-1deg);
+  transition: transform 0.3s ease;
+}
+
+.photo-frame-adventure:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.photo-caption {
+  display: block;
+  margin-top: 0.5rem;
+  text-align: right;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--black-2);
+}
+
+.photo-frame-adventure .city-photo,
+.photo-frame-adventure img {
+  display: block;
+  width: 100%;
+  border-radius: 2px;
+  margin-bottom: 0;
+}
+
+/* Detalle inferior tipo "estampa": un borde recortado/perforado, como el
+   filo de una entrada o un sello postal. */
+.photo-frame-adventure .torn-edge {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 15px;
+  background: #fff;
+  clip-path: polygon(
+    0% 0%,
+    5% 100%,
+    10% 0%,
+    15% 90%,
+    20% 0%,
+    25% 100%,
+    30% 0%,
+    35% 85%,
+    40% 0%,
+    45% 100%,
+    50% 0%,
+    55% 95%,
+    60% 0%,
+    65% 100%,
+    70% 0%,
+    75% 80%,
+    80% 0%,
+    85% 100%,
+    90% 0%,
+    95% 90%,
+    100% 0%
+  );
+}
+
+.photo-frame-adventure .city-photo-credit {
+  color: var(--black-2);
+  font-size: 0.75rem;
+  font-style: italic;
+  text-align: right;
+  padding: 0.4rem 0.25rem 0;
+}
+
+.photo-frame-adventure .adventure-badge {
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-yellow-2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
+  transform: rotate(12deg);
+  z-index: 2;
+}
+
+.photo-frame-adventure .adventure-badge svg {
+  color: var(--grey-dark);
+  font-size: 1.5rem;
+}
+
+/* Mobile: con right/top -18px la insignia sobresalía del ancho de la
+   pantalla (la sección solo tiene 1rem de padding lateral) y generaba
+   scroll horizontal en Ciudad de Lobería, San Manuel y Arenas Verdes (en
+   Partido no pasaba porque sus secciones tienen overflow: hidden). */
+@media (max-width: 767px) {
+  .photo-frame-adventure .adventure-badge {
+    top: -14px;
+    right: -6px;
+  }
+}
+
+/* Insignia más grande, fiel al draft de Información General. */
+.photo-frame-adventure .adventure-badge--lg {
+  width: 70px;
+  height: 70px;
+}
+
+/* ------------------ Tarjetas mosaico ------------------ */
+.mosaic-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 1100px;
+  /* El margen inferior extra deja lugar al translateY() de las tarjetas
+     con .mosaic-tilt-2 (baja 10px): al ser transform no afecta el alto
+     del grid, así que sin este margen el contenido siguiente se solapa. */
+  margin: 0 auto 1.5rem;
+}
+
+.mosaic-card {
+  position: relative;
+  padding: 2rem 1.75rem;
+  border-radius: 22px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.35s ease;
+}
+
+.mosaic-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
+}
+
+/* Collage asimétrico (Información General): cada tarjeta rotada distinto,
+   se enderezan y agrandan al hover. Clases opcionales, no afectan a las
+   tarjetas que no las usan en el resto de las páginas. */
+.mosaic-tilt-1,
+.mosaic-tilt-2,
+.mosaic-tilt-3 {
+  min-height: 360px;
+}
+.mosaic-tilt-1 {
+  min-height: 250px;
+}
+
+/* La rotación se guarda en --reveal-transform (en vez de en `transform`
+   directo) porque `.reveal-item` anima `transform` con `forwards`: el
+   estado final de esa animación pisaría cualquier rotate() declarado acá.
+   El keyframe de `.reveal-item` lee esta variable para terminar en la
+   posición correcta (ver más abajo). */
+@media (min-width: 1024px) {
+  .mosaic-tilt-1 {
+    --reveal-transform: rotate(-1.5deg);
+  }
+  .mosaic-tilt-2 {
+    --reveal-transform: rotate(2deg) translateY(10px);
+  }
+  .mosaic-tilt-3 {
+    --reveal-transform: rotate(-1deg) translateY(-10px);
+  }
+}
+
+.mosaic-tilt-1:hover,
+.mosaic-tilt-2:hover,
+.mosaic-tilt-3:hover {
+  transform: scale(1.03) rotate(0deg) !important;
+  z-index: 30;
+}
+
+.mosaic-card-icon {
+  margin-bottom: 1rem;
+  font-size: 1.9rem;
+  position: relative;
+}
+
+/* ------------------ Mosaico ancho/horizontal (una sola tarjeta) ------------------ */
+/* Para páginas de un solo párrafo (Alojamientos, Gastronomía, Transporte,
+   Agenda, Qué Hacer en Ciudad de Lobería/San Manuel/Arenas Verdes): en vez
+   de ícono arriba y texto abajo, una tarjeta ancha con ícono a la
+   izquierda y texto a la derecha, para darle el mismo peso visual que los
+   mosaicos de varias tarjetas sin inventar contenido que no existe. */
+.mosaic-card.mosaic-card-wide {
+  flex-direction: row;
+  align-items: center;
+  gap: 1.75rem;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  padding: 2rem 2.25rem;
+}
+
+.mosaic-card-wide .mosaic-card-icon {
+  margin-bottom: 0;
+  flex-shrink: 0;
+  font-size: 3rem;
+}
+
+.mosaic-card-wide .mosaic-copy {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .mosaic-card.mosaic-card-wide {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.75rem 1.5rem;
+  }
+}
+
+/* !important: city.css tiene `.city svg { color: var(--primary-color) }`
+   (para los íconos de "cómo llegar"), que le gana por especificidad a una
+   clase sola y pintaría estos íconos siempre en verde en vez del blanco
+   (u oscuro, en la tarjeta amarilla) que les corresponde según la tarjeta. */
+.mosaic-card-icon,
+.mosaic-watermark {
+  color: inherit !important;
+}
+
+.mosaic-card.mosaic-green {
+  background-color: var(--primary-color);
+}
+.mosaic-card.mosaic-orange {
+  background-color: var(--accent-orange);
+}
+.mosaic-card.mosaic-blue {
+  background-color: var(--accent-blue);
+}
+.mosaic-card.mosaic-yellow {
+  background-color: var(--accent-yellow-2);
+  color: var(--grey-dark);
+}
+
+.mosaic-card-photo-wrap {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+
+.mosaic-card-photo {
+  display: block;
+  width: 100%;
+  height: 14rem;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Crédito del autor de la foto, superpuesto al pie de la imagen (mismo
+   criterio que `.city-photo-credit`, adaptado a fondo de foto en vez de
+   fondo blanco). */
+.mosaic-card-photo-credit {
+  position: absolute;
+  bottom: 0.4rem;
+  right: 0.75rem;
+  left: 0.75rem;
+  font-size: 0.7rem;
+  font-style: italic;
+  color: #fff;
+  text-align: right;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.mosaic-watermark {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  font-size: 6rem;
+  opacity: 0.15;
+  transform: rotate(12deg);
+  pointer-events: none;
+}
+
+.mosaic-yellow .mosaic-watermark {
+  opacity: 0.2;
+}
+
+.mosaic-eyebrow {
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0.4;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.03em;
+}
+
+/* `.mosaic-title` es un <h2> real (CardPage): sin !important en el
+   tamaño, el `h2 { font-size: var(--size-h2-desktop) !important }`
+   global (style.css) lo agranda a 2.5rem en desktop en vez de los 1.1rem
+   pensados acá, y ese título gigante es lo que hacía parecer el
+   contenido "centrado" en la tarjeta en vez de pegado arriba. */
+.mosaic-title {
+  font-size: 1.1rem !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+/* `color: inherit !important` en las tres: son <h2>/<p>/<strong>, y sin
+   esto los colores globales de esos tags (h1,h2,h3 → gris oscuro; p →
+   gris texto) le ganan al blanco heredado de `.mosaic-card` — la
+   herencia siempre pierde frente a una regla que apunte directo al
+   elemento, sin importar su especificidad. En `.mosaic-yellow` el propio
+   `.mosaic-card` ya define `color: var(--grey-dark)`, así que heredar
+   ese color sigue dejando el texto oscuro ahí como corresponde. */
+.mosaic-title,
+.mosaic-copy,
+.mosaic-label {
+  color: inherit !important;
+}
+
+.mosaic-copy {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+/* Texto de cierre debajo del mosaico (ej. Naturaleza, Producciones). */
+.mosaic-closing-text {
+  font-weight: 500;
+  color: var(--black-2);
+}
+
+.mosaic-label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 0.35rem;
+}
+
+/* ------------------ Cita destacada tipo pull-quote ------------------ */
+/* Mobile-first: 1.25rem (20px) en mobile, vuelve a 2rem recién en
+   desktop — a 2rem fijo se veía desproporcionado en pantallas angostas. */
+.mosaic-quote {
+  font-family: var(--font-subtitle);
+  font-weight: 600;
+  font-size: 1.25rem;
+  max-width: 700px;
+  margin: 2rem auto 1.5rem;
+  text-align: center;
+  color: var(--primary-color);
+  line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+  .mosaic-quote {
+    font-size: 2rem;
+  }
+}
+
+/* !important: city.css tiene `.city section p { text-align: left }`, que
+   por especificidad (dos selectores de tag + una clase) le gana a esta
+   clase sola — por eso este párrafo no quedaba centrado como la cita de
+   arriba (que es un <blockquote>, no un <p>, así que esa regla no lo toca). */
+.reserve-intro {
+  font-size: 1.25rem;
+  text-align: center !important;
+  color: var(--black-2);
+}
+
+/* ------------------ Callout con dato/estadística destacada ------------------ */
+.stat-callout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 820px;
+  margin: 0 auto 2.5rem;
+  padding: 1.75rem 2rem;
+  background: #f4f9f1;
+  border-radius: 20px;
+  border: 1px solid rgba(87, 175, 49, 0.15);
+}
+
+.stat-callout-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Mobile-first: 2rem en mobile (3rem con "12.000 km" no entraba cómodo
+   en pantallas angostas), vuelve a 3rem en desktop. */
+.stat-callout-number {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--primary-color);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .stat-callout-number {
+    font-size: 3rem;
+  }
+}
+
+.stat-callout-title {
+  margin: 0.35rem 0 0;
+  font-size: 1.1rem;
+  color: var(--grey-dark);
+}
+
+.stat-callout-text {
+  flex: 1 1 240px;
+  margin: 0;
+}
+
+/* ------------------ Mapa con marco decorativo ------------------ */
+.map-frame {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 1040px;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+}
+
+.map-frame iframe {
+  width: 100%;
+  height: 300px;
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.map-frame a {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: var(--primary-color-dark-2);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ------------------ Galería de cierre ------------------ */
+.closing-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 2rem auto 0;
+}
+
+.closing-gallery .photo-frame-adventure,
+.closing-gallery .photo-container {
+  margin-bottom: 0;
+}
+
+/* ------------------ Chips y botones de acento (reutilizables) ------------------ */
+/* Paleta compartida por CityTabs, tarjetas de resultados (Buscador) y
+   cualquier otro elemento que necesite un acento rotando entre los 4
+   colores autorizados. */
+.accent-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.accent-chip.accent-green {
+  background: #f0f7ed;
+  color: var(--primary-color-dark-2);
+}
+.accent-chip.accent-orange {
+  background: #fff4ed;
+  color: var(--accent-orange);
+}
+.accent-chip.accent-blue {
+  background: #edf0fa;
+  color: var(--accent-blue);
+}
+.accent-chip.accent-yellow {
+  background: #fffaea;
+  color: var(--grey-dark);
+}
+
+/* !important: este botón puede renderizarse como <a>/<Button as={Link}
+   variant="link">, y ese `variant="link"` le agrega la clase `btn-link`
+   de Bootstrap — que coincide con la propia clase genérica ".btn-link"
+   del sitio (button.css: display:flex en columna, width:100%, borde
+   verde, radio 12px, sombra). Misma especificidad (una clase) en ambas
+   reglas, así que sin !important el ganador depende del orden de carga
+   de los CSS, de forma inconsistente entre páginas (ver bug: en
+   /PanelAdmin, que además importa button.css, el botón "Ver Más" salía
+   estirado a lo ancho completo de la card en vez de mantenerse como
+   píldora). Se fuerzan acá todas las propiedades que colisionan con esa
+   clase, no solo `color`. */
+.accent-pill-button {
+  display: inline-flex !important;
+  width: auto !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  border: none !important;
+  border-radius: 100px;
+  box-shadow: none;
+  margin: 0;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.accent-pill-button:hover {
+  transform: translateY(-2px);
+  color: #fff !important;
+}
+
+/* !important: un estilo global de accesibilidad (ver stickyButton.css)
+   fuerza `a { background: transparent !important }` en todo el sitio;
+   estos botones son <a>/<Link>, así que necesitan ganarle a esa regla. */
+.accent-pill-button.accent-green {
+  background-color: var(--primary-color) !important;
+  box-shadow: 0 8px 16px rgba(87, 175, 49, 0.25);
+}
+.accent-pill-button.accent-orange {
+  background-color: var(--accent-orange) !important;
+  box-shadow: 0 8px 16px rgba(253, 123, 40, 0.25);
+}
+.accent-pill-button.accent-blue {
+  background-color: var(--accent-blue) !important;
+  box-shadow: 0 8px 16px rgba(65, 91, 186, 0.25);
+}
+.accent-pill-button.accent-yellow {
+  background-color: var(--accent-yellow-2) !important;
+  color: var(--grey-dark) !important;
+  box-shadow: 0 8px 16px rgba(252, 207, 89, 0.3);
+}
+
+.accent-pill-button.accent-white {
+  background-color: #fff !important;
+  color: var(--accent-orange) !important;
+  border: 2px solid var(--accent-orange) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Botones de descarga: blanco con texto negro, igual en todas las ciudades. */
+.accent-pill-button.accent-neutral {
+  background-color: #fff !important;
+  color: var(--grey-dark) !important;
+  border: 2px solid var(--grey-dark) !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* !important: `.city svg { color: var(--primary-color) }` (city.css)
+   apunta directo al <svg> del ícono de descarga y le gana a la herencia
+   del texto blanco de `.accent-pill-button` — el ícono quedaba verde en
+   vez de blanco sobre los botones naranja/azul de "Descargas" (Partido de
+   Lobería). Escopeado a `.download` para no afectar otros usos de
+   accent-pill-button fuera de esa sección. */
+.download .accent-pill-button svg,
+.reserve-ordenanza .accent-pill-button svg {
+  color: inherit !important;
+}
+
+/* ------------------ Animaciones de aparición ------------------ */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: mosaic-reveal 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.reveal-delay-1 {
+  animation-delay: 0.1s;
+}
+.reveal-delay-2 {
+  animation-delay: 0.22s;
+}
+.reveal-delay-3 {
+  animation-delay: 0.34s;
+}
+.reveal-delay-4 {
+  animation-delay: 0.46s;
+}
+
+@keyframes mosaic-reveal {
+  to {
+    opacity: 1;
+    transform: var(--reveal-transform, translateY(0));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deco-float,
+  .reveal-item {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .mosaic-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .mosaic-list.mosaic-list-4,
+  .mosaic-list.mosaic-list-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mosaic-card {
+    padding: 2.25rem 2rem;
+  }
+}
+
+/* ------------------ Mosaicos de Partido de Lobería: fondo blanco ------------------ */
+/* En /PartidoLoberia (`.partido-page`, ver PartidoLoberia.jsx), en las
+   tres ciudades — Lobería, San Manuel, Arenas Verdes (`.town-page`) — y en
+   el detalle de cada card (/cards/:id, `.card-detail`): las
+   tarjetas pasan a fondo blanco con íconos verdes repartidos como patrón,
+   y el título (.mosaic-label, o .mosaic-title en el detalle) toma el color de acento que antes era el
+   fondo de la tarjeta.
+   Más especificidad + !important donde hace falta para ganarle a las
+   reglas `color: inherit !important` de arriba. */
+.partido-page .mosaic-card,
+.town-page .mosaic-card,
+.card-detail .mosaic-card,
+.card-detail .mosaic-card.mosaic-green,
+.card-detail .mosaic-card.mosaic-orange,
+.card-detail .mosaic-card.mosaic-blue,
+.card-detail .mosaic-card.mosaic-yellow,
+.partido-page .mosaic-card.mosaic-green,
+.town-page .mosaic-card.mosaic-green,
+.partido-page .mosaic-card.mosaic-orange,
+.town-page .mosaic-card.mosaic-orange,
+.partido-page .mosaic-card.mosaic-blue,
+.town-page .mosaic-card.mosaic-blue,
+.partido-page .mosaic-card.mosaic-yellow,
+.town-page .mosaic-card.mosaic-yellow {
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%2357af31' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.16'%3E%3Cg transform='translate(14 18) rotate(-12 12 12)'%3E%3Cpath d='M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z'/%3E%3Cpath d='M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12'/%3E%3C/g%3E%3Cg transform='translate(112 34) rotate(8 12 12)'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z'/%3E%3C/g%3E%3Cg transform='translate(58 92)'%3E%3Cpath d='M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1'/%3E%3Cpath d='M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1'/%3E%3C/g%3E%3Cg transform='translate(140 124) rotate(-6 12 12)'%3E%3Cpath d='m8 3 4 8 5-5 5 15H2L8 3z'/%3E%3C/g%3E%3Cg transform='translate(20 138) rotate(18 12 12)'%3E%3Cpath d='M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z'/%3E%3Cpath d='M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  color: var(--grey-dark);
+  border: 1px solid rgba(87, 175, 49, 0.18);
+}
+
+.card-detail .mosaic-card .mosaic-watermark,
+.partido-page .mosaic-card .mosaic-card-icon,
+.town-page .mosaic-card .mosaic-card-icon,
+.partido-page .mosaic-card .mosaic-watermark,
+.town-page .mosaic-card .mosaic-watermark {
+  color: var(--primary-color) !important;
+}
+
+.partido-page .mosaic-card .mosaic-watermark,
+.town-page .mosaic-card .mosaic-watermark,
+.card-detail .mosaic-card .mosaic-watermark {
+  opacity: 0.12;
+}
+
+/* En el detalle de card: fondo blanco liso, sin el patrón de íconos
+   (mismos selectores que el bloque blanco de arriba para igualar
+   especificidad; gana por ir después). */
+.card-detail .mosaic-card,
+.card-detail .mosaic-card.mosaic-green,
+.card-detail .mosaic-card.mosaic-orange,
+.card-detail .mosaic-card.mosaic-blue,
+.card-detail .mosaic-card.mosaic-yellow {
+  background-image: none;
+}
+
+/* En el detalle de card los íconos de fondo son rellenos (Font Awesome),
+   no de contorno como en Partido: con la misma opacidad se veían como
+   manchas verdes. */
+.card-detail .mosaic-card .mosaic-watermark {
+  opacity: 0.06;
+}
+
+.partido-page .mosaic-green .mosaic-label,
+.card-detail .mosaic-green .mosaic-title {
+  color: var(--primary-color) !important;
+}
+.partido-page .mosaic-orange .mosaic-label,
+.card-detail .mosaic-orange .mosaic-title {
+  color: var(--accent-orange) !important;
+}
+.partido-page .mosaic-blue .mosaic-label,
+.card-detail .mosaic-blue .mosaic-title {
+  color: var(--accent-blue) !important;
+}
+.partido-page .mosaic-yellow .mosaic-label,
+.card-detail .mosaic-yellow .mosaic-title {
+  color: var(--accent-yellow-2) !important;
+}
+
+.partido-page .mosaic-card-photo {
+  border-color: rgba(87, 175, 49, 0.18);
+}
+
+/* ------------------ Ciudades: tarjeta ancha sobria ------------------ */
+/* Prueba de estilo más sobrio para las tarjetas de un solo párrafo
+   (Alojamientos, Gastronomía, Transporte): en vez de una tarjeta, el texto
+   normal con una línea de acento verde a la izquierda y el ícono verde.
+   Va después del bloque blanco de arriba para pisar su fondo y borde. */
+.town-page .mosaic-card.mosaic-card-wide {
+  background: none;
+  border: none;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--grey-dark);
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  gap: 1.25rem;
+}
+
+.town-page .mosaic-card.mosaic-card-wide:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.town-page .mosaic-card-wide .mosaic-card-icon {
+  font-size: 2rem;
+}
+
+@media (max-width: 767px) {
+  .town-page .mosaic-card.mosaic-card-wide {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    padding: 0.25rem 0 0.25rem 1rem;
+  }
+
+  .town-page .mosaic-card-wide .mosaic-card-icon {
+    font-size: 1.6rem;
+  }
+}
+
+/* ------------------ Ciudad de Lobería: aire entre texto y mosaicos ------------------ */
+/* En Información General los párrafos y los mosaicos se alternan; sin
+   este margen quedaban muy pegados. El margen inferior es mayor que el
+   superior para compensar el translateY de las tarjetas inclinadas. */
+.town-page .information-city-loberia .mosaic-list {
+  margin-top: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+/* Listas dentro del bloque sobrio (Qué Hacer de San Manuel): sin la
+   sangría por defecto del <ul>, que en mobile dejaba el texto en una
+   columna muy angosta. Los subtítulos (h3) ya separan cada ítem. */
+.town-page .mosaic-card-wide .mosaic-copy ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+/* ------------------ Información General de San Manuel / Arenas Verdes ------------------ */
+/* Mosaicos con un solo párrafo corto: sin la altura mínima de las
+   tarjetas inclinadas (pensada para textos largos), que dejaba la tarjeta
+   medio vacía. Va después de .mosaic-tilt-* para ganarle. */
+.mosaic-card.mosaic-compact {
+  min-height: 0;
+}
+
+/* Una sola tarjeta (San Manuel): centrada y no tan ancha. */
+.mosaic-list.mosaic-list-1 {
+  grid-template-columns: 1fr;
+  max-width: 720px;
+}
+
+/* Aire entre texto y mosaicos parecido al de Ciudad de Lobería (acá el
+   párrafo de arriba ya trae 2rem de margen inferior desde city.css). */
+.town-page .information .mosaic-list {
+  margin-top: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+/* `.city .information p { margin-bottom: 2rem }` (city.css) también
+   alcanzaba al párrafo dentro de la tarjeta y le dejaba un hueco abajo. */
+.city .information .mosaic-card p.mosaic-copy {
+  margin-bottom: 0;
+}
