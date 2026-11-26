@@ -2,16 +2,33 @@
    Panel de Administración / Dashboard / Formularios
    =====================================================
    Estilos para:
-   - Panel admin
+   - Shell del panel (sidebar + topbar + pestañas)
    - Login y formularios
-   - Side menu / herramientas flotantes
    - Botones y modales
    - Formulario de Carousel
    - Dashboard y tarjetas
    - Gráficos
    - Envío de contenido
    - Responsividad
+
+   Look "clásico" pero moderno: paneles planos con borde fino de 1px,
+   esquinas bien redondeadas y sin sombras suaves ni degradados — a
+   propósito distinto del estilo "mosaico aventurero" de las páginas
+   públicas de turismo, porque esta es una herramienta interna de uso
+   diario, no una página de marketing. El fondo es el mismo de las demás
+   páginas del sitio (`--white`, ver style.css), no un gris aparte.
 ===================================================== */
+
+:root {
+  --admin-line: #e3e5e9;
+  --admin-bg: var(--white);
+  --admin-ink: #23262b;
+  --admin-grey: #667085;
+  --admin-yellow: #c99a1e;
+  --admin-radius-sm: 10px;
+  --admin-radius-md: 14px;
+  --admin-radius-lg: 20px;
+}
 
 /* ------------------ Panel admin ------------------ */
 .panel-admin {
@@ -28,106 +45,415 @@ section.login h2 {
   color: var(--primary-color);
 }
 
-/* ------------------ Navbar usuario ------------------ */
-.nav-user {
-  background-color: rgba(0,0,0,0.058);
+/* ------------------ Shell: sidebar + topbar + pestañas ------------------ */
+/* `.header` (navBar.css) es fixed !important sobre toda la app: el shell
+   necesita el mismo margen que usaba el viejo `.nav-user` para no quedar
+   tapado por la barra pública. */
+.admin-shell {
+  display: flex;
+  flex-direction: column;
+  margin-top: 90px;
+  background: var(--admin-bg);
+  color: var(--admin-ink);
+  font-size: 0.9rem;
+}
+
+/* Fila de abajo del topbar: sidebar + contenido. En mobile se apilan
+   (el sidebar ya es una tira horizontal de pestañas, ver abajo); desde
+   992px quedan lado a lado. */
+.admin-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Mobile-first: el sidebar se vuelve una tira horizontal de pestañas
+   scrolleable pegada arriba (no desaparece — antes esto dejaba el panel
+   sin forma de cambiar de sección en mobile). A partir de 992px pasa a
+   ser la columna vertical fija de siempre. */
+.admin-sidebar {
   display: flex;
   flex-direction: row;
+  flex-shrink: 0;
+  background: #fff;
+  border-bottom: 1px solid var(--admin-line);
+  overflow-x: auto;
+  position: sticky;
+  top: 90px;
+  z-index: 10;
+}
+
+.admin-sidebar-brand {
+  display: none;
   align-items: center;
-  justify-content: flex-end;
-  padding: 1rem;
-  margin-top: 90px;
+  gap: 0.65rem;
+  padding: 1.15rem 1.1rem;
+  border-bottom: 1px solid var(--admin-line);
 }
 
-.nav-user li {
-  padding-left: 1rem;
-}
-
-/* ------------------ Side Tools Flotantes ------------------ */
-.container-tools {
-  display: flex;
-  flex-direction: column;
-  width: max-content;
-  justify-content: flex-start;
-  align-items: flex-end;
-  color: var(--white);
-  position: fixed;
-  top: 0;
-  height: max-content;
-  margin-top: 150px;
-  padding: 1rem;
-  z-index: 10000;
-  box-sizing: border-box;
-  right: -250px;
-  left: auto;
-  background-color: rgba(128,128,128,0.637);
-  backdrop-filter: blur(5px);
-}
-
-.container-tools ul {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.container-tools li {
-  padding-bottom: 0.5rem;
-  width: 100%;
-  text-align: left;
-  align-items: center;
-}
-
-.container-tools a {
-  color: var(--white);
-  font-weight: bold;
-  text-decoration: none;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.container-tools a:hover {
-  color: var(--black);
-}
-
-.container-tools svg {
-  margin-right: 0.3rem;
-}
-
-.container-tools.open {
-  transition: left 0.3s ease;
-  right: 0;
-}
-
-/* ------------------ Botón toggle lateral derecho ------------------ */
-.menu-toggle.right {
-  background-color: rgba(128,128,128,0.637);
-  position: fixed;
-  right: 15px;
-  top: 35%;
-  transform: translateY(-50%);
-  color: var(--white);
-  border: none;
-  width: 30px;
-  height: 60px;
-  border-radius: 5px 0 0 5px;
-  cursor: pointer;
-  z-index: 1001;
+.admin-sidebar-logo {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--admin-radius-sm);
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 5px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.15);
 }
 
-.menu-toggle.right.open {
-  right: 219px;
-  box-shadow: 0 8px 5px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.15);
+.admin-sidebar-title {
+  font-weight: 600;
+  font-size: 0.88rem;
+  line-height: 1.2;
 }
 
-/* ------------------ Sidebar admin ------------------ */
+.admin-sidebar-subtitle {
+  font-size: 0.65rem;
+  color: #9aa0a6;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.admin-sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  padding: 0.4rem;
+  gap: 0.25rem;
+}
+
+/* En la tira horizontal de mobile, los rótulos de grupo ("General",
+   "Configuración") no aportan y no hay lugar — se ocultan ahí y vuelven
+   en el sidebar vertical de escritorio. */
+.admin-sidebar-group-label {
+  display: none;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.63rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9aa0a6;
+}
+
+.admin-sidebar-group-label:not(:first-child) {
+  margin-top: 0.75rem;
+}
+
+/* "Cerrar sesión" ya está accesible desde el topbar en todos los anchos;
+   el footer del sidebar (redundante) solo se muestra en la versión de
+   escritorio. */
+.admin-sidebar-footer {
+  display: none;
+  border-top: 1px solid var(--admin-line);
+  padding: 0.6rem;
+}
+
+.side-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--admin-radius-sm);
+  font-family: var(--font-base);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #4b4f56;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.side-link svg {
+  font-size: 1.05rem;
+  color: #8a8f98;
+  flex-shrink: 0;
+}
+
+.side-link:hover {
+  background: #eef0f2;
+}
+
+.side-link.is-active {
+  background: #eef6ea;
+  color: #3e7d23;
+  font-weight: 600;
+}
+
+.side-link.is-active svg {
+  color: var(--primary-color);
+}
+
+.admin-content-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-topbar {
+  background: #fff;
+  border-bottom: 1px solid var(--admin-line);
+  padding: 0.75rem 1.25rem 0.75rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.admin-topbar-breadcrumb {
+  font-size: 0.8rem;
+  color: var(--admin-grey);
+}
+
+.admin-topbar-breadcrumb strong {
+  color: var(--admin-ink);
+  font-weight: 600;
+}
+
+.admin-topbar-sep {
+  color: #c7cad0;
+  margin: 0 0.4rem;
+}
+
+.admin-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.82rem;
+  flex-wrap: wrap;
+}
+
+.admin-topbar-welcome {
+  color: var(--admin-grey);
+}
+
+.admin-topbar-welcome strong {
+  color: var(--admin-ink);
+  font-weight: 600;
+}
+
+.admin-topbar-divider {
+  width: 1px;
+  height: 1rem;
+  background: var(--admin-line);
+}
+
+.admin-topbar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  color: var(--admin-grey);
+  font-family: var(--font-base);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.admin-topbar-link:hover {
+  color: #3e7d23;
+}
+
+.admin-topbar-link--danger:hover {
+  color: #c0392b;
+}
+
+.admin-main {
+  padding: 1.5rem 1.25rem 3rem;
+  max-width: 73.75rem;
+}
+
+/* El `<section>` global del sitio público (style.css) trae
+   `margin-top: 2rem; margin-bottom: 3rem; padding: 0 1rem;`, pensado para
+   las secciones de las páginas de turismo — acá duplicaba el espaciado
+   que ya da `.admin-main` y empujaba el contenido innecesariamente abajo. */
+.admin-tab-panel {
+  margin: 0;
+  padding: 0 0 0 5rem;
+}
+
+/* Algunos de los componentes reales embebidos acá (ej. EditarSecciones)
+   envuelven su contenido en su propio <section>, que también hereda el
+   `margin-top/bottom` global pensado para las páginas públicas. */
+.admin-panel section {
+  margin: 0;
+}
+
+/* `.user-panel` (envoltorio del Offcanvas de Ajustes) y `.Toastify`
+   (react-toastify) son también `<section>` vacíos cuando no hay nada que
+   mostrar (offcanvas cerrado / sin notificaciones) — igual heredan
+   `margin-top/bottom` del `section` global y dejaban un hueco fantasma
+   antes del footer. */
+.admin-shell > .user-panel,
+.admin-shell > .Toastify {
+  margin: 0;
+}
+
+/* contact.css define un `form { width, background, box-shadow, radius,
+   padding }` genérico para el formulario de contacto que, al no estar
+   scopeado, termina aplicándose a cualquier <form> del sitio — incluidos
+   los de este panel (Bootstrap `Form` también renderiza un <form>). Se
+   neutraliza acá para no heredar ese estilo ajeno. */
+.admin-shell form {
+  width: auto;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Inputs/selects de Bootstrap (Create, Edit, EditarSecciones) con el
+   mismo radio redondeado que el resto de los campos del panel. */
+.admin-shell .form-control,
+.admin-shell .form-select {
+  border-radius: var(--admin-radius-sm);
+}
+
+.admin-tab-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  text-align: left;
+}
+
+/* Paneles planos: borde fino, radio chico, sin sombra */
+.admin-panel {
+  background: #fff;
+  border: 1px solid var(--admin-line);
+  border-radius: var(--admin-radius-md);
+  padding: 1.1rem;
+  max-width: 46.25rem;
+}
+
+.admin-panel--narrow {
+  max-width: 26rem;
+  padding: 0;
+}
+
+.admin-panel-head {
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--admin-line);
+}
+
+.admin-panel--narrow .form-carousel {
+  padding: 1.1rem;
+  margin: 0;
+  max-width: none;
+}
+
+/* `Create` (Crear contenido) trae su propio <h2> sin clase, que hereda el
+   `h2 { font-size: 2.5rem }` global del sitio público — se achica acá para
+   que combine con la densidad del resto del panel. */
+.admin-panel h2 {
+  font-size: 1rem !important;
+  font-weight: 600;
+  text-align: left;
+  margin: 0 0 1rem;
+}
+
+.btn-admin-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  font-family: var(--font-base);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--admin-radius-sm);
+  cursor: pointer;
+}
+
+.btn-admin-primary:hover {
+  background: #3e7d23;
+}
+
+.btn-admin-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Modal de edición: antes no tenía estilo propio (quedaba sin fondo/caja) */
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(35, 38, 43, 0.45);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3rem 1rem;
+  overflow-y: auto;
+  z-index: 2000;
+}
+
+.admin-modal-content {
+  background: #fff;
+  border-radius: var(--admin-radius-lg);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 43.75rem;
+  max-height: none;
+}
+
+@media (min-width: 992px) {
+  .admin-body {
+    flex-direction: row;
+  }
+
+  .admin-sidebar {
+    flex-direction: column;
+    width: 15rem;
+    border-bottom: none;
+    border-right: 1px solid var(--admin-line);
+    overflow-x: visible;
+    top: 90px;
+  }
+
+  .admin-sidebar-brand {
+    display: flex;
+  }
+
+  .admin-sidebar-nav {
+    flex-direction: column;
+    padding: 1rem 0;
+    gap: 0;
+  }
+
+  .admin-sidebar-group-label {
+    display: block;
+  }
+
+  .admin-sidebar-footer {
+    display: block;
+  }
+
+  .side-link {
+    width: 100%;
+    border-bottom: none;
+    border-left: 3px solid transparent;
+    border-radius: 0 var(--admin-radius-sm) var(--admin-radius-sm) 0;
+    padding: 0.5rem 0.9rem 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    white-space: normal;
+  }
+
+  .side-link.is-active {
+    border-left-color: var(--primary-color);
+  }
+}
+
+/* ------------------ Sidebar admin (Offcanvas de ajustes) ------------------ */
 aside.sidebar-admin {
   display: flex;
   flex-direction: column;
@@ -157,9 +483,14 @@ aside.sidebar-admin li svg {
   border-radius: 0%;
 }
 
-.btn-admin {
-  background-color: transparent;
-  border: none;
+/* `.register-form` también la usa admin.css para el login/registro, donde
+   necesita quedar centrada en columna (`display:flex; align-items:center`)
+   — acá, reutilizada por `EditarSecciones` dentro de un panel ancho, esa
+   misma regla desalineaba los campos hacia el centro. Se resetea a bloque
+   solo dentro de `.admin-panel`, sin tocar el login. */
+.admin-panel .register-form {
+  display: block;
+  padding: 0;
 }
 
 .buttons-container {
@@ -186,7 +517,8 @@ aside.sidebar-admin li svg {
 
 /* ------------------ Modal ------------------ */
 .modal-header {
-  width: 650px;
+  width: 100%;
+  max-width: 650px;
   display: flex;
   flex-direction: row;
   margin: auto;
@@ -202,7 +534,7 @@ aside.sidebar-admin li svg {
 
 .modal-footer button {
   font-weight: bold;
-  border-radius: 8px;
+  border-radius: var(--admin-radius-sm);
   box-shadow: 0 4px 16px rgba(0,0,0,0.25), 0 1.5px 4px rgba(60,180,60,0.18);
 }
 
@@ -219,95 +551,132 @@ aside.sidebar-admin li svg {
   flex-direction: column;
   justify-content: left;
   align-items: left;
-  margin-bottom: 2rem;
+  margin-bottom: 1.1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #3a3d42;
+  gap: 0.3rem;
 }
 
 .form-carousel label.default-image {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  font-weight: 500;
 }
 
 .form-carousel input[type="checkbox"] {
   margin-right: 0.5rem;
+  accent-color: var(--primary-color);
+}
+
+.form-carousel select,
+.form-carousel input[type="file"] {
+  border: 1px solid var(--admin-line);
+  border-radius: var(--admin-radius-sm);
+  padding: 0.5rem 0.7rem;
+  font-size: 0.85rem;
+  font-family: var(--font-base);
+  font-weight: 400;
+  color: var(--admin-ink);
+  background: #fff;
 }
 
 /* ------------------ Dashboard ------------------ */
+/* Paneles planos con borde fino y acento de color a la izquierda, en vez
+   de los degradados de antes — mismo criterio "clásico" que el resto del
+   panel (ver cabecera del archivo). */
 .dashboard-container {
   font-family: var(--font-base);
-  background: rgba(128,152,133,0.159);
-  backdrop-filter: blur(60px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--admin-line);
+  border-radius: var(--admin-radius-md);
+  padding: 1.25rem;
 }
 
 .dashboard-container h2 {
-  text-align: center;
-  margin-bottom: 40px;
+  text-align: left;
+  font-size: 0.95rem !important;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
 }
 
 /* Resumen tarjetas */
 .summary-cards {
   display: flex;
-  gap: 20px;
+  gap: 1rem;
   flex-wrap: wrap;
-  justify-content: center;
 }
 
 .card-dashboard {
-  flex: 1 1 50px;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  flex: 1 1 12.5rem;
+  padding: 1rem 1.15rem;
+  background: #fff;
+  border: 1px solid var(--admin-line);
+  border-left: 3px solid var(--primary-color);
+  border-radius: var(--admin-radius-sm);
+  text-align: left;
   max-height: max-content;
 }
 
-.card-dashboard.total {
-  background: linear-gradient(135deg, #6babff, #ff8787);
+.card-dashboard h2 {
+  font-size: 0.78rem !important;
+  font-weight: 600;
+  color: var(--admin-grey);
+  margin-bottom: 0.35rem;
+}
+
+.card-dashboard.total h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
 }
 
 .card-dashboard.accept {
-  background: linear-gradient(135deg, #ffd93d, #c78bff);
+  border-left-color: var(--admin-yellow);
 }
 
 /* Sección transporte / fuente */
 .section {
-  margin-top: 40px;
+  margin-top: 1.75rem;
 }
 
 .section h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  text-align: left;
+  font-size: 0.85rem !important;
+  font-weight: 600;
+  color: var(--admin-grey);
+  margin-bottom: 0.85rem;
 }
 
 .option-cards {
   display: flex;
-  gap: 15px;
+  gap: 0.75rem;
   flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
 .option-card {
-  flex: 1 1 150px;
-  padding: 15px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  flex: 1 1 9.5rem;
+  padding: 0.85rem 1rem;
+  background: #fff;
+  border: 1px solid var(--admin-line);
+  border-left: 3px solid var(--admin-grey);
+  border-radius: var(--admin-radius-sm);
+  text-align: left;
 }
 
 .option-card.transport {
-  background: linear-gradient(135deg, #ff913d, #c78bff);
+  border-left-color: #415bba;
 }
 
 .option-card.source {
-  background: linear-gradient(135deg, #3dff98, #c78bff);
+  border-left-color: #fd7b28;
 }
 
-.option-card h4 { margin-bottom: 5px; }
-.option-card p { font-size: 1.5rem; margin: 0; }
-.option-card small { display: block; margin-top: 3px; }
+.option-card h4 { margin-bottom: 5px; font-size: 0.8rem; font-weight: 600; }
+.option-card p { font-size: 1.3rem; font-weight: 700; margin: 0; }
+.option-card small { display: block; margin-top: 3px; color: var(--admin-grey); }
 
 /* ------------------ Gráficos ------------------ */
 .pie-chart {
@@ -335,24 +704,32 @@ aside.sidebar-admin li svg {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   max-width: 700px;
-  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--admin-line);
+  border-radius: var(--admin-radius-md);
+  padding: 1.25rem;
+  margin: 0;
 }
 
 .send-content-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  text-align: left;
+  font-size: 0.95rem !important;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 .send-content-container input,
 .send-content-container textarea {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 0.55rem 0.75rem;
+  margin-bottom: 0.9rem;
+  border: 1px solid var(--admin-line);
+  border-radius: var(--admin-radius-sm);
+  font-family: var(--font-base);
+  font-size: 0.85rem;
+  color: var(--admin-ink);
 }
 
 .send-content-container textarea {
@@ -362,17 +739,21 @@ aside.sidebar-admin li svg {
 
 .send-content-container button {
   width: 100%;
-  padding: 12px;
+  padding: 0.6rem;
+  background: var(--primary-color);
   color: white;
-  font-size: 1rem;
+  font-family: var(--font-base);
+  font-weight: 600;
+  font-size: 0.85rem;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--admin-radius-sm);
   cursor: pointer;
-  transition: 0.3s;
+  transition: background 0.2s;
 }
 
 .send-content-container button:hover {
-  opacity: 0.9;
+  background: #3e7d23;
+  opacity: 1;
 }
 .bar-chart-transport,
 .bar-chart-source,

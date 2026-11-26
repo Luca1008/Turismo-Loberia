@@ -6,6 +6,7 @@ const utilsRoutes = require('./routes/utils.routes');
 const userRoutes = require('./routes/user.routes');
 const translateRoutes = require("./routes/translate");
 const carouselRoutes = require('./routes/carousel.routes');
+const sectionsRoutes = require('./routes/sections.routes');
 const multer = require('multer'); // ⬅️ Agregado para configuración global si se necesita
 const path = require('path');
 const subscriptionRoutes = require('./routes/subscription.routes');
@@ -39,6 +40,7 @@ app.use('/api', cardsRoutes);
 app.use('/api', utilsRoutes);
 app.use('/api', userRoutes);
 app.use('/api', carouselRoutes);
+app.use('/api', sectionsRoutes);
 // 💬 Traducción (proxy)
 app.use("/api/translate", translateRoutes);
 // Suscripciones

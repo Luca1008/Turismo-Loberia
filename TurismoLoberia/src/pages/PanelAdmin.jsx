@@ -1,15 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import Nav from "react-bootstrap/Nav";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import {
-  FaChevronRight,
-  FaChevronLeft,
   FaPencilAlt,
   FaUserCheck,
   FaUsersCog,
-  FaPlus,
 } from "react-icons/fa";
-import { MdLogout, MdOutlineSettings, MdEmail } from "react-icons/md";
+import {
+  LuChartColumn,
+  LuList,
+  LuFilePlus,
+  LuImage,
+  LuGalleryHorizontalEnd,
+  LuMail,
+  LuLogOut,
+  LuSettings,
+} from "react-icons/lu";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,8 +25,26 @@ import "../styles/panelAdmin.css";
 import Searcher from "./Searcher";
 import AdminDashboard from "../components/layout/panel-admin/AdminDashboard.jsx";
 import SendContent from "../components/layout/panel-admin/SendContent";
-import { IoStatsChartSharp } from "react-icons/io5";
+import EditarSecciones from "../components/layout/panel-admin/EditarSecciones";
 import { Global } from "../helpers/Global.js";
+
+/**
+ * Secciones del panel, agrupadas y en el orden en que aparecen en el
+ * sidebar. Cada una es una "pestaña": solo la sección activa se
+ * renderiza en `<main>`, en vez del viejo esquema de todo apilado con
+ * scroll a anclas.
+ */
+const GENERAL_TABS = [
+  { id: "estadisticas", label: "Estadísticas", icon: LuChartColumn },
+  { id: "gestionar-contenido", label: "Gestionar contenido", icon: LuList },
+  { id: "crear-contenido", label: "Crear contenido", icon: LuFilePlus },
+];
+
+const CONFIG_TABS = [
+  { id: "editar-secciones", label: "Editar secciones", icon: LuImage, superadminOnly: true },
+  { id: "modificar-carrusel", label: "Carrusel de portada", icon: LuGalleryHorizontalEnd },
+  { id: "enviar-suscripciones", label: "Enviar contenido", icon: LuMail },
+];
 
 /**
  * Componente `PanelAdmin`
@@ -37,6 +60,10 @@ import { Global } from "../helpers/Global.js";
  * - Configurar sus datos de usuario
  * - Administrar otros administradores (solo superadmin)
  *
+ * Estructura: un sidebar fijo con una pestaña por sección (`activeTab`)
+ * y un topbar con breadcrumb + accesos a Ajustes/Cerrar sesión — solo la
+ * sección activa se muestra en el contenido principal.
+ *
  * Funcionalidades principales:
  * - Uso de `useAuth` para autenticación y logout
  * - Navegación programática con `useNavigate`
@@ -45,7 +72,7 @@ import { Global } from "../helpers/Global.js";
  * - Notificaciones con `react-toastify`
  *
  * Hooks utilizados:
- * - `useState` para manejar estado de menús, modales, imagen y carga
+ * - `useState` para manejar estado de la pestaña activa, modales, imagen y carga
  * - `useRef` para referencias a modales y componentes hijos
  * - `useEffect` para scroll automático al abrir modal de edición
  *
@@ -71,8 +98,8 @@ const PanelAdmin = () => {
     navigate("/Admin");
   };
 
-  /** Estado del menú lateral */
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  /** Sección activa del panel (pestaña del sidebar) */
+  const [activeTab, setActiveTab] = useState("gestionar-contenido");
 
   /** Estado del Offcanvas de ajustes */
   const [show, setShow] = useState(false);
@@ -92,6 +119,14 @@ const PanelAdmin = () => {
   /** Referencias a componentes */
   const editModalRef = useRef(null);
   const searcherRef = useRef(null);
+
+  const isSuperadmin = auth.role === "superadmin";
+  const visibleConfigTabs = CONFIG_TABS.filter(
+    (tab) => !tab.superadminOnly || isSuperadmin
+  );
+  const currentTab =
+    [...GENERAL_TABS, ...CONFIG_TABS].find((tab) => tab.id === activeTab) ||
+    GENERAL_TABS[0];
 
   /**
    * Abre el modal de edición de tarjeta
@@ -175,140 +210,168 @@ const PanelAdmin = () => {
     }
   }, [showEditModal]);
 
+  const renderNavLink = (tab) => (
+    <button
+      key={tab.id}
+      type="button"
+      className={`side-link${activeTab === tab.id ? " is-active" : ""}`}
+      onClick={() => setActiveTab(tab.id)}
+    >
+      <tab.icon aria-hidden="true" />
+      {tab.label}
+    </button>
+  );
+
   return (
-    <>
-      {/* Navbar superior con información del usuario y logout */}
-      <Nav defaultActiveKey="/Admin" as="ul" className="nav-user">
-        <Nav.Item as="li">
-          <strong>Bienvenido {auth.name}</strong>
-        </Nav.Item>
-        <Nav.Item as="li">
-          <button className="btn-admin" onClick={handleShow}>
-            <MdOutlineSettings /> Ajustes
-          </button>
-        </Nav.Item>
-        <Nav.Item as="li">
-          <span>
-            <button className="btn-admin" onClick={handleLogout}>
-              <MdLogout /> Cerrar sesión
-            </button>
+    <div className="admin-shell">
+      {/* Topbar: a todo el ancho de la página, arriba del sidebar */}
+      <header className="admin-topbar">
+        <div className="admin-topbar-breadcrumb">
+          Panel de Administración
+          <span className="admin-topbar-sep">/</span>
+          <strong>{currentTab.label}</strong>
+        </div>
+        <div className="admin-topbar-actions">
+          <span className="admin-topbar-welcome">
+            Bienvenido, <strong>{auth.name}</strong>
           </span>
-        </Nav.Item>
-      </Nav>
+          <span className="admin-topbar-divider"></span>
+          <button type="button" className="admin-topbar-link" onClick={handleShow}>
+            <LuSettings aria-hidden="true" /> Ajustes
+          </button>
+          <button
+            type="button"
+            className="admin-topbar-link admin-topbar-link--danger"
+            onClick={handleLogout}
+          >
+            <LuLogOut aria-hidden="true" /> Cerrar sesión
+          </button>
+        </div>
+      </header>
 
-      {/* Menú lateral */}
-      <button
-        className={`menu-toggle right ${isMenuOpen ? "open" : ""}`}
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-      >
-        {isMenuOpen ? <FaChevronRight /> : <FaChevronLeft />}
-      </button>
-      <div className={`container-tools ${isMenuOpen ? "open" : ""}`}>
-        <ul>
-          <li>
-            <a href="#gestionar-contenido">
-              <span>
-                <FaPencilAlt />
-                Gestionar contenido
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#crear-contenido">
-              <span>
-                <FaPlus />
-                Crear contenido
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#modificar-carrusel">
-              <span>
-                <FaPencilAlt />
-                Modificar carrusel
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#enviar-suscripciones">
-              <span>
-                <MdEmail />
-                Enviar contenido
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#estadisticas">
-              <span>
-                <IoStatsChartSharp />
-                Estadísticas
-              </span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      {/* Panel principal */}
-      <section className="panel-admin">
-        <h2>Bienvenido al Panel de Administración</h2>
-        <div id="gestionar-contenido"> </div>
-
-        {/* Componente para gestión de contenido */}
-        <Searcher ref={searcherRef} isAdmin={true} onEdit={handleEditCard} />
-
-        {/* Crear nuevo contenido */}
-        <section id="crear-contenido" className="add-card">
-          <Create />
-        </section>
-
-        {/* Modal de edición */}
-        {showEditModal && (
-          <div className="modal-overlay" ref={editModalRef}>
-            <div className="modal-content">
-              <Edit
-                cardId={selectedCardId}
-                onClose={handleCloseEditModal}
-                onUpdate={handleUpdateCard}
-              />
+      <div className="admin-body">
+        {/* Sidebar */}
+        <aside className="admin-sidebar">
+          <div className="admin-sidebar-brand">
+            <span className="admin-sidebar-logo">L</span>
+            <div>
+              <div className="admin-sidebar-title">Lobería</div>
+              <div className="admin-sidebar-subtitle">Panel Admin</div>
             </div>
           </div>
-        )}
 
-        {/* Formulario de actualización del carrusel */}
-        <h2 id="modificar-carrusel">Modificar Carrusel de Portada</h2>
-        <form onSubmit={handleSubmit} className="form-carousel">
-          <label>
-            Ciudad:
-            <select value={selectedCity} onChange={handleCityChange}>
-              <option value="loberia">Lobería</option>
-              <option value="arenas_verdes">Arenas Verdes</option>
-              <option value="san_manuel">San Manuel</option>
-            </select>
-          </label>
-          <label>
-            Imagen personalizada:
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              disabled={useDefault}
-              key={selectedCity + (useDefault ? "-default" : "-custom")}
+          <nav className="admin-sidebar-nav">
+            <div className="admin-sidebar-group-label">General</div>
+            {GENERAL_TABS.map(renderNavLink)}
+
+            <div className="admin-sidebar-group-label">Configuración</div>
+            {visibleConfigTabs.map(renderNavLink)}
+          </nav>
+
+          <div className="admin-sidebar-footer">
+            <button type="button" className="side-link" onClick={handleLogout}>
+              <LuLogOut aria-hidden="true" /> Cerrar sesión
+            </button>
+          </div>
+        </aside>
+
+        <div className="admin-content-wrap">
+        {/* Panel principal: solo la pestaña activa */}
+        <main className="admin-main">
+          {activeTab === "estadisticas" && (
+            <section className="admin-tab-panel">
+              <h1 className="admin-tab-title">Estadísticas</h1>
+              <AdminDashboard />
+            </section>
+          )}
+
+          {activeTab === "gestionar-contenido" && (
+            <section className="admin-tab-panel">
+              <h1 className="admin-tab-title">Gestionar contenido</h1>
+              <Searcher ref={searcherRef} isAdmin={true} onEdit={handleEditCard} />
+            </section>
+          )}
+
+          {activeTab === "crear-contenido" && (
+            <section className="admin-tab-panel">
+              <h1 className="admin-tab-title">Crear contenido</h1>
+              <div className="admin-panel">
+                <Create />
+              </div>
+            </section>
+          )}
+
+          {activeTab === "editar-secciones" && isSuperadmin && (
+            <section className="admin-tab-panel">
+              <h1 className="admin-tab-title">Editar secciones</h1>
+              <div className="admin-panel">
+                <EditarSecciones />
+              </div>
+            </section>
+          )}
+
+          {activeTab === "modificar-carrusel" && (
+            <section className="admin-tab-panel">
+              <h1 className="admin-tab-title">Carrusel de portada</h1>
+              <div className="admin-panel admin-panel--narrow">
+                <div className="admin-panel-head">Actualizar imagen por ciudad</div>
+                <form onSubmit={handleSubmit} className="form-carousel">
+                  <label>
+                    Ciudad
+                    <select value={selectedCity} onChange={handleCityChange}>
+                      <option value="loberia">Lobería</option>
+                      <option value="arenas_verdes">Arenas Verdes</option>
+                      <option value="san_manuel">San Manuel</option>
+                    </select>
+                  </label>
+                  <label>
+                    Imagen personalizada
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      disabled={useDefault}
+                      key={selectedCity + (useDefault ? "-default" : "-custom")}
+                    />
+                  </label>
+                  <label className="default-image">
+                    <input
+                      type="checkbox"
+                      checked={useDefault}
+                      onChange={handleUseDefaultChange}
+                    />
+                    Usar imagen default
+                  </label>
+                  <button type="submit" className="btn-admin-primary" disabled={loading}>
+                    {loading ? "Actualizando..." : "Actualizar Carrusel"}
+                  </button>
+                </form>
+              </div>
+            </section>
+          )}
+
+          {activeTab === "enviar-suscripciones" && (
+            <section className="admin-tab-panel">
+              <h1 className="admin-tab-title">Enviar contenido</h1>
+              <SendContent />
+            </section>
+          )}
+        </main>
+        </div>
+      </div>
+
+      {/* Modal de edición */}
+      {showEditModal && (
+        <div className="admin-modal-overlay" ref={editModalRef}>
+          <div className="admin-modal-content">
+            <Edit
+              cardId={selectedCardId}
+              onClose={handleCloseEditModal}
+              onUpdate={handleUpdateCard}
             />
-          </label>
-          <label className="default-image">
-            <input
-              type="checkbox"
-              checked={useDefault}
-              onChange={handleUseDefaultChange}
-            />
-            Usar imagen default
-          </label>
-          <button type="submit" disabled={loading}>
-            {loading ? "Actualizando..." : "Actualizar Carrusel"}
-          </button>
-        </form>
-        <ToastContainer position="top-right" autoClose={2500} />
-      </section>
+          </div>
+        </div>
+      )}
 
       {/* Offcanvas de ajustes */}
       <section className="user-panel">
@@ -330,7 +393,7 @@ const PanelAdmin = () => {
               <div className="panel-admin">
                 <aside className="sidebar-admin">
                   <ul>
-                    {auth.role === "superadmin" && (
+                    {isSuperadmin && (
                       <>
                         <li>
                           <Link to="modificar-datos">
@@ -363,16 +426,8 @@ const PanelAdmin = () => {
         </Offcanvas>
       </section>
 
-      {/* Sección de envío de contenido a suscriptores */}
-      <section id="enviar-suscripciones" className="send-content">
-        <SendContent />
-      </section>
-
-      {/* Sección de estadísticas */}
-      <section id="estadisticas" className="stats">
-        <AdminDashboard />
-      </section>
-    </>
+      <ToastContainer position="top-right" autoClose={2500} />
+    </div>
   );
 };
 
