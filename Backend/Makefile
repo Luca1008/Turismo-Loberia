@@ -3,8 +3,12 @@ DIRECTORIO_VAR=/var/lib/turismo
 USUARIO_DESPLIEGUE=turismo
 GRUPO_DESPLIEGUE=turismo
 GRUPO_WWW=www-data
-OBJETIVOS=controller index.js middlewares models package.json public routes \
-	  services
+OBJETIVOS=controller helpers index.js middlewares models package.json public \
+	  routes services
+# Contenido que el admin sube o edita desde el sitio (fotos del carrusel,
+# textos e imágenes de secciones): vive solo en el servidor, el despliegue
+# no lo pisa ni lo borra.
+EXCLUIR=--exclude=.env --exclude=/public/sections --exclude=/public/carousel
 BASE_SYSTEMD=/etc/systemd/system
 SERVICIOS_SYSTEMD=systemd/turismo_backend.service
 
@@ -20,7 +24,7 @@ help :
 
 install :
 	sudo install -d -o $(USUARIO_DESPLIEGUE) -g $(GRUPO_DESPLIEGUE) -m 755 $(DIRECTORIO_BASE)
-	sudo rsync -vr --delete --exclude=.env $(OBJETIVOS) $(DIRECTORIO_BASE)/
+	sudo rsync -vr --delete $(EXCLUIR) $(OBJETIVOS) $(DIRECTORIO_BASE)/
 	sudo install -d -o $(USUARIO_DESPLIEGUE) -g $(GRUPO_WWW) -m 2750 \
 		$(DIRECTORIO_VAR)
 	sudo install -d -o $(USUARIO_DESPLIEGUE) -g $(GRUPO_WWW) -m 2750 \
@@ -36,7 +40,7 @@ install :
 	sudo systemctl restart turismo_backend
 
 deploy :
-	rsync -vr --delete --exclude=.env $(OBJETIVOS) $(DIRECTORIO_BASE)/
+	rsync -vr --delete $(EXCLUIR) $(OBJETIVOS) $(DIRECTORIO_BASE)/
 	ln -nsf $(DIRECTORIO_VAR)/uploads $(DIRECTORIO_BASE)/uploads
 	cd $(DIRECTORIO_BASE) && npm install && npm audit fix
 	sudo systemctl restart turismo_backend
