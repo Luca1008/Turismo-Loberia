@@ -10,9 +10,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Pagination from "react-bootstrap/Pagination";
 import { FaSearch } from "react-icons/fa";
+import { LuMap, LuCompass } from "react-icons/lu";
 import { useLocation, useSearchParams } from "react-router-dom";
 import ContentCard from "../components/cards/ContentCard";
 import "../styles/Searcher.css";
+import "../styles/mosaicSection.css";
 import { useTranslation } from "react-i18next";
 import { trackEvent } from "../analytics";
 import { Global } from "../helpers/Global";
@@ -229,7 +231,10 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
    */
   const handleDeleteCard = async (cardId) => {
     try {
-      const response = await axios.delete(`${Global.url}cards/${cardId}`);
+      // El backend exige sesión de administrador para borrar cards.
+      const response = await axios.delete(`${Global.url}cards/${cardId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
       if (response.status === 200) fetchCards();
     } catch (error) {
       console.error("Error al eliminar la card:", error);
@@ -261,9 +266,32 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
   };
 
   return (
-    <div className="search-page" key={i18n.language}>
+    <div
+      className={`search-page${isAdmin ? " search-page--embedded" : ""}`}
+      key={i18n.language}
+    >
+      {/* La cabecera decorativa (íconos flotantes, eyebrow, título grande) es
+          propia de la página pública /Buscador — en el panel de admin se
+          omite para que el buscador se vea como una herramienta más, en
+          línea con el resto del panel. */}
+      {!isAdmin && (
+        <>
+          <LuCompass className="deco-float search-deco" aria-hidden="true" style={{ top: "8%", left: "3%", fontSize: "4rem" }} />
+          <LuMap className="deco-float search-deco" aria-hidden="true" style={{ bottom: "10%", right: "3%", fontSize: "4.5rem", animationDelay: "1s" }} />
+        </>
+      )}
+
       <main className="search-main">
-        <h1 className="search-title">{t("busqueda_contenido")}</h1>
+        {!isAdmin && (
+          <>
+            <div className="section-eyebrow">
+              <LuMap aria-hidden="true" />
+              <span>{t("descubri_loberia")}</span>
+            </div>
+            <h1 className="search-title">{t("busqueda_contenido")}</h1>
+            <p className="search-subtitle">{t("busqueda_subtitulo")}</p>
+          </>
+        )}
 
         {/* Barra de búsqueda y sugerencias */}
         <div className="search-bar">
@@ -307,6 +335,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
         {/* Filtros */}
         <div className="search-filters">
           <Form.Select
+            className="filter-select"
             value={city}
             onChange={(e) => {
               setCity(e.target.value);
@@ -325,6 +354,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
           </Form.Select>
 
           <Form.Select
+            className="filter-select"
             value={category}
             onChange={(e) => {
               setCategory(e.target.value);
@@ -357,9 +387,10 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
         </div>
 
         {/* Filtros activos */}
+       { /*
         {(search || city || category) && (
           <div className="active-filters">
-            <strong>{t("filtros_activos")}: </strong>
+           {t("filtros_activos")}: 
             {search && (
               <span className="filter-tag">
                 {t("busqueda")}: {search}
@@ -371,12 +402,13 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
               </span>
             )}
             {category && (
-              <strong className="filter-tag">
+              <span className="filter-tag">
                 {t("categoria")}: {category}
-              </strong>
+              </span>
             )}
           </div>
         )}
+        */}
 
         {/* Resultados */}
         <div className="results-grid">

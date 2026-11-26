@@ -14,12 +14,102 @@
   text-align: center;
 }
 
+.pEvent{
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+}
+
 .places .text-left {
   text-align: left;
   margin-top: 1rem;
 }
 
+/* Un poco más de separación entre el h1 y la línea verde en esta sección
+   (se agrega también margin-bottom para no perder el espacio hacia el
+   párrafo que sigue). */
+.places-title-underline {
+  margin: 1.25rem auto 1rem;
+}
+
+/* El h2 real que achica el espacio es el de la regla global
+   `section h2 { margin-bottom: 2rem }` (style.css): se anula acá, igual
+   que hace `.title-wrap h2` en el resto de las secciones con mosaico. */
+.upcoming-events h2 {
+  margin-bottom: 0;
+}
+
+/* Subrayado de "Próximos Eventos" un poco más pegado al título */
+.events-title-underline {
+  margin-top: 0.5rem;
+}
+
+/* ------------------ Eyebrow del carrusel principal ------------------ */
+/* El posicionamiento de `.hero-caption` (bloque abajo a la izquierda con
+   degradado) vive en controlled-carousel.css, junto al resto del carrusel. */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.hero-eyebrow-bar {
+  display: inline-block;
+  width: 2rem;
+  height: 3px;
+  background: var(--accent-yellow-2, #fccf59);
+}
+
+/* ------------------ Tarjeta del plugin de Facebook ------------------ */
+.facebook-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.facebook-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.5rem 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin-bottom: 0.5rem;
+}
+
+.facebook-card-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: #1877f2;
+  color: white;
+  flex-shrink: 0;
+}
+
+.facebook-card-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.facebook-card-subtitle {
+  font-size: 0.8rem;
+  color: var(--black-2);
+}
+
 /* ------------------ Guía de servicios ------------------ */
+.services {
+  position: relative;
+}
+
 .services h2 {
   margin-top: 0%;
   margin-bottom: 0%;
@@ -28,9 +118,15 @@
 }
 
 /* Contenedor de items de servicios */
+/* `flex-wrap: wrap`: en mobile los 6 íconos en una sola fila (sin wrap ni
+   scroll) eran más anchos que la pantalla y se salían del contenedor sin
+   achicarse (flex no encoge items con `max-width: max-content` por
+   debajo de su contenido) — eso empujaba el ancho de toda la página y
+   aparecía una franja blanca / scroll horizontal al final del body. */
 .item-services-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 0.5rem;
   padding: 1rem;
   max-width: 1200px;
@@ -63,13 +159,15 @@
   transform: translateY(1px);
 }
 
-.item-services:hover svg {
-  transform: scale(1.1);
-  color: var(--primary-color-dark-1);
-}
-
+/* Nombres visibles también en mobile (antes solo aparecían en desktop). */
 .item-services p {
-  display: none; /* Se muestra solo en hover con media query */
+  display: flex;
+  justify-content: center;
+  margin-top: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #544341f2;
+  text-align: center;
 }
 
 /* Animación borde */
@@ -110,12 +208,33 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 /* ------------------ More Info ------------------ */
 
+/* Degradado sutil verde + más íconos flotando (ver Index.jsx), para que la
+   sección no quede tan "pelada" detrás de las tarjetas de clima/Facebook. */
+section.more-info {
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 1rem;
+  background: linear-gradient(to bottom, rgb(249, 250, 251), #629e2e63);
+}
+
+/* `.deco-*` (mosaicSection.css) usan `z-index: 0`, que en el orden de
+   pintado de CSS queda por ENCIMA del contenido normal sin posicionar
+   (como el título y este contenedor) — sin este z-index, con más íconos
+   repartidos por toda la sección alguno terminaba tapando el título, el
+   clima o Facebook. */
+.more-info .info-header {
+  position: relative;
+  z-index: 1;
+}
 
 section .container-info {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -159,7 +278,7 @@ section .container-info {
     display: flex;
     font-weight: 600;
     font-size: 0.95rem;
-    color: var(--primary-color);
+    color: #544341f2;
     text-align: center;
     justify-content: center;
   }
@@ -210,9 +329,8 @@ section .container-info {
     color: var(--primary-color-dark-1);
   }
 
-  /* Places & Events */
-  .places-items,
-  .events {
+  /* Places */
+  .places-items {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -221,7 +339,6 @@ section .container-info {
   /* More Info Section */
  
 .info-header {
-  position: relative;
   width: 100%;
   text-align: center;
   margin-bottom: 2rem;
@@ -231,13 +348,6 @@ section .container-info {
   margin: 0;
 }
 
-.weather-wrapper {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-  
   section {
     max-width: 1100px;
     margin: 2.5rem auto;
@@ -246,18 +356,25 @@ section .container-info {
   }
 
   section.more-info {
-    background: linear-gradient(to bottom, #f9fafb, #dcedc8);
     width: 100%;
     max-width: 100%;
     margin: 0;
-    padding: 2rem;
+    padding: 3rem 2rem;
   }
 
   section .container-info {
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
-    padding-top: 6rem;
+    gap: 2.5rem;
+    padding-top: 2rem;
+  }
+
+  /* El `margin: 0 auto` de abajo es para cuando `.container-info` está en
+     columna (mobile); en fila (acá) haría que el auto-margin empuje esta
+     tarjeta lejos de la del clima en vez de quedar una al lado de la otra. */
+  section .container-info .facebook-container {
+    margin: 0;
   }
 
   /* Spinner Facebook */

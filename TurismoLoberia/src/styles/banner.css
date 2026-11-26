@@ -104,6 +104,31 @@
   margin-bottom: 15px;
 }
 
+/* Jerarquía tipográfica del segundo banner ("Vení a conocernos"): mismo
+   texto, pero con tamaños/pesos distintos en vez de 3 párrafos iguales,
+   para que se lea como un banner (frase de impacto → texto de apoyo →
+   llamado a la acción) en vez de un bloque de texto plano. */
+.banner2-lead {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+.banner2-body {
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.65;
+  opacity: 0.95;
+}
+
+.banner2-cta {
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-style: italic;
+  opacity: 0.9;
+}
+
 /* Enlaces del banner */
 .banner-link,
 .banner2-link {
@@ -243,7 +268,10 @@
     opacity: 1;
   }
 
-  /* Gradiente para indicar que hay más texto */
+  /* Gradiente para indicar que hay más texto. Solo se usa en el primer
+     banner (violeta); en el segundo (`.banner2-loberia`) se saca
+     directamente, en vez de matchear el color, para que no se vea ninguna
+     sombra al colapsar el texto en mobile. */
   .banner-text.collapsed::after {
     content: "";
     position: absolute;
@@ -253,6 +281,10 @@
     height: 40px;
     background: linear-gradient(to bottom, transparent, #8e44ad);
     pointer-events: none;
+  }
+
+  .banner2-loberia .banner-text.collapsed::after {
+    display: none;
   }
 
   .expand-button {

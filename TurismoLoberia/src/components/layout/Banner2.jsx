@@ -122,10 +122,10 @@ export const Banner2 = () => {
               isTextExpanded ? "expanded" : "collapsed"
             }`}
           >
-            <p>{t("p1_alojamiento")}</p>
-            <p>{t("p2_alojamiento")}</p>
-            <p>{t("p3_alojamiento")}</p>
-            <p>
+            <p className="banner2-lead">{t("p1_alojamiento")}</p>
+            <p className="banner2-body">{t("p2_alojamiento")}</p>
+            <p className="banner2-body">{t("p3_alojamiento")}</p>
+            <p className="banner2-cta">
               {t("link_invites")}
               <a
                 ref={linkRef}

@@ -13,56 +13,225 @@
 ===================================================== */
 
 /* ------------------ Contenedor principal ------------------ */
+.search-page {
+  position: relative;
+  overflow-x: hidden;
+  background-color: #fdfcf9;
+}
+
+/* Íconos decorativos de fondo (brújula + mapa), igual que el resto del
+   rediseño de Partido de Lobería. */
+.search-deco {
+  position: absolute;
+  z-index: 0;
+}
+
 .search-main {
-  padding: 7rem 1rem 2rem 1rem; /* top + otros */
+  position: relative;
+  z-index: 1;
+  padding: 7rem 1rem 2rem 1rem; /* top + otros: despeja el navbar fijo público */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   min-height: 80vh;
+}
+
+/* Modo embebido (usado dentro del panel de admin, isAdmin=true): no hay
+   navbar fijo que despejar ni hero decorativo, así que no necesita el
+   padding/alto pensado para la página pública. */
+.search-page--embedded .search-main {
+  padding: 0;
+  min-height: 0;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+/* "Gestionar contenido" (admin) usa el mismo look clásico/plano del resto
+   del panel en vez del estilo "mosaico" de /Buscador: sin el fondo propio
+   de la página pública, buscador y filtros con borde fino en vez de
+   píldora verde gruesa, y acento único (verde) en botones en vez de la
+   rotación de colores por categoría. La forma de las cards (imagen, chip,
+   título, descripción, "Ver Más") se mantiene igual que en /Buscador. */
+.search-page--embedded {
+  background: none;
+}
+
+.search-page--embedded .search-input-group {
+  border: 1px solid var(--admin-line, #e3e5e9);
+  border-radius: var(--admin-radius-sm, 10px);
+  max-width: 100%;
+}
+
+.search-page--embedded .search-input-group:focus-within {
+  box-shadow: none;
+  transform: none;
+  border-color: var(--primary-color);
+}
+
+.search-page--embedded .search-input-group button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--admin-radius-sm, 10px);
+}
+
+.search-page--embedded .search-filters {
+  max-width: 100%;
+  justify-content: flex-start;
+}
+
+.search-page--embedded .filter-select {
+  appearance: auto;
+  border-radius: var(--admin-radius-sm, 10px);
+  border: 1px solid var(--admin-line, #e3e5e9);
+  color: var(--admin-ink, #23262b);
+  font-weight: 500;
+  background-image: none;
+  padding: 0.5rem 0.75rem;
+}
+
+.search-page--embedded .filter-select:hover,
+.search-page--embedded .filter-select:focus {
+  border-color: var(--primary-color);
+}
+
+.search-page--embedded .active-filters {
+  max-width: 100%;
+  justify-content: flex-start;
+}
+
+.search-page--embedded .filter-tag {
+  background: #fff !important;
+  color: var(--admin-ink, #23262b) !important;
+  border: 1px solid var(--admin-line, #e3e5e9);
+  border-radius: var(--admin-radius-sm, 10px);
+}
+
+.search-page--embedded .results-grid {
+  max-width: 100%;
+}
+
+/* Botón "Ver Más": mismo verde y mismo texto blanco en todas las cards
+   (antes el acento "yellow" -Eventos- forzaba texto gris oscuro con
+   !important y quedaba inconsistente con el resto) — no la rotación de
+   colores por categoría, y radio/tamaño consistentes. */
+.search-page--embedded .card-view-more.accent-pill-button {
+  background-color: var(--primary-color) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  border-radius: var(--admin-radius-sm, 10px) !important;
+  padding: 0.4rem 0.9rem !important;
+  font-size: 0.8rem !important;
+  margin-bottom: 0.9rem !important;
+}
+
+/* Botones de Editar/Eliminar: chips de contorno clásicos en vez de los
+   botones grandes azul/rojo por defecto de Bootstrap. Se pasa de overlay
+   flotante (position:absolute, pegado al borde de la card) a flujo
+   normal, para que quede claramente separado del botón "Ver Más" en vez
+   de amontonarse encima. */
+.search-page--embedded .card-buttons-wrapper {
+  position: static;
+  background: none;
+  backdrop-filter: none;
+  padding: 0;
+  pointer-events: auto;
+}
+
+.search-page--embedded .card-buttons {
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.search-page--embedded .btn-edit,
+.search-page--embedded .btn-delete {
+  background: #fff !important;
+  border: 1px solid var(--admin-line, #e3e5e9) !important;
+  border-radius: var(--admin-radius-sm, 10px) !important;
+  color: var(--admin-ink, #23262b) !important;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 0.35rem 0.7rem;
+  box-shadow: none !important;
+}
+
+.search-page--embedded .btn-edit:hover {
+  background: #eef6ea !important;
+  border-color: var(--primary-color) !important;
+  color: #3e7d23 !important;
+}
+
+.search-page--embedded .btn-delete:hover {
+  background: #fdeceb !important;
+  border-color: #e8b4ae !important;
+  color: #c0392b !important;
 }
 
 /* ------------------ Título ------------------ */
 .search-title {
-  font-size: 2rem;
-  font-weight: 700;
+  font-family: var(--font-subtitle);
+  font-size: 2.5rem;
+  font-weight: 800;
   text-align: center;
+  color: var(--grey-dark);
+  margin: 0;
+}
+
+.search-subtitle {
+  max-width: 480px;
+  text-align: center;
+  color: var(--black-2);
+  margin: -0.5rem 0 0;
 }
 
 /* ------------------ Barra de búsqueda ------------------ */
 .search-input-group {
   position: relative;
   display: flex;
+  align-items: center;
   width: 100%;
   max-width: 720px;
-  max-height: 60px;
-  border: 2px solid var(--primary-color-dark1);
-  border-radius: 12px;
+  border: 2px solid var(--primary-color);
+  border-radius: 9999px;
   overflow: hidden;
   background-color: white;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 0.35rem;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.search-input-group:focus-within {
+  box-shadow: 0 0 0 4px rgba(87, 175, 49, 0.15);
+  transform: translateY(-1px);
 }
 
 .search-input-group input {
   flex: 1;
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 1.25rem;
   border: none;
-  font-size: 1rem;
+  font-size: 1.1rem;
   outline: none;
+  background: transparent;
 }
 
 .search-input-group button {
-  background-color: var(--primary-color-dark1);
-  color: var(--black);
-  padding-right: 1rem;
-  font-size: 1rem;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .search-input-group button:hover {
-  background-color: var(--primary-white-2);
+  background-color: var(--primary-color-dark-2);
+  transform: scale(1.05);
 }
 
 /* ------------------ Sugerencias ------------------ */
@@ -110,45 +279,115 @@
 
 button.btn-reset {
   display: flex;
-  flex-direction: row;
-  font-size: 0.8rem;
-  font-weight: bold;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: none;
+  color: var(--black-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+}
+
+button.btn-reset:hover,
+button.btn-reset:focus {
+  background: transparent;
+  color: var(--red);
 }
 
 /* ------------------ Filtros ------------------ */
 .search-filters {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: 0.75rem;
   width: 100%;
   max-width: 720px;
 }
 
 .filter-select {
-  padding: 0.6rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--white2);
+  appearance: none;
+  padding: 0.6rem 2.25rem 0.6rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary-color-dark-2);
+  border-radius: 9999px;
+  border: 2px solid #d9ecd1;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2357af31'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
 }
 
-.select-label-primary {
-  color: var(--primary-color);
-  font-weight: bold;
+.filter-select:hover,
+.filter-select:focus {
+  border-color: var(--primary-color-light-1);
+  outline: none;
 }
 
-.select-label-primary option[value=""] {
-  color: var(--primary-color);
-  font-weight: bold;
+/* ------------------ Filtros activos ------------------ */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 0.75rem;
+  width: 100%;
+  max-width: 720px;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.active-filters > strong:first-child {
+  margin-right: 0.25rem;
+  color: var(--black);
+}
+
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  color: var(--black);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+}
+
+/* El `.filter-tag` combina con `.accent-chip.accent-X`, que fija su
+   propio color por acento (verde/azul/naranja) y le gana por
+   especificidad — se fuerza acá a negro para las tres variantes. */
+.active-filters .filter-tag {
+  color: var(--black) !important;
 }
 
 /* ------------------ Grid de resultados ------------------ */
 .results-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
-  justify-items: center;
+  gap: 2rem;
   width: 100%;
   max-width: 1200px;
+}
+
+/* ------------------ Sin resultados ------------------ */
+/* grid-column: 1/-1 para que ocupe todo el ancho de .results-grid en vez
+   de quedar metido en la primera columna cuando hay 3 (desktop) */
+.no-results {
+  grid-column: 1 / -1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.no-results p {
+  max-width: 480px;
+  font-size: 1.1rem;
+  color: var(--primary-color-dark-1);
 }
 
 /* ------------------ Paginación ------------------ */
@@ -163,42 +402,58 @@ button.btn-reset {
 .pagination {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
-  color: var(--primary-color);
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.pagination .page-link,
-.pagination .page-item {
+.pagination .page-item .page-link {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid #e5e5e5;
+  background-color: #fff;
+  color: var(--black-2) !important;
+  font-weight: 700;
+  padding: 0;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #fff;
   color: var(--primary-color) !important;
+  border-color: var(--primary-color-light-1);
 }
 
 .pagination .page-item.active .page-link {
   background-color: var(--primary-color) !important;
   color: var(--white) !important;
   border-color: var(--primary-color) !important;
+  box-shadow: 0 6px 14px rgba(87, 175, 49, 0.3);
 }
 
 /* ------------------ Media Queries ------------------ */
 @media (min-width: 768px) {
+  .search-title {
+    font-size: 3rem;
+  }
+
   .search-filters {
-    flex-direction: row;
-    justify-content: center;
+    flex-wrap: nowrap;
   }
 
   .results-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .pagination .page-link {
-    padding: 0.3rem 0.6rem;
-    font-size: 0.8rem;
-  }
-
-  .pagination .page-item {
-    flex-shrink: 0;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .pagination-container {
     padding: 0 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .results-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

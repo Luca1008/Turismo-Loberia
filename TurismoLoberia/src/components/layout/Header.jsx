@@ -625,7 +625,7 @@ export const Header = () => {
             <input
               type="text"
               className="form-control me-3"
-              placeholder={t("Buscar...")}
+              placeholder={t("¿Qué estás buscando?")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

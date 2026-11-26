@@ -26,6 +26,13 @@
 
   /* Tipografía */
   --font-base: "Poppins", sans-serif;
+  --font-subtitle: "Lora", serif; /* Subtítulos de secciones tipo Historia/Naturaleza/Producciones, uso puntual */
+
+  /* Acentos de la paleta del logo (uso puntual, el verde sigue siendo el color dominante) */
+  --accent-orange: #fd7b28;
+  --accent-blue: #415bba;
+  --accent-yellow-1: #fee260;
+  --accent-yellow-2: #fccf59;
 
   /* Tamaños tipográficos mobile */
   --size-h1-mobile: 2rem; /* 32px */
@@ -138,6 +145,14 @@ section h2 {
 section.forgot-password h2 {
   margin-top: 7rem;
   margin-bottom: 2rem;
+}
+
+/* Reserva siempre el ancho de la scrollbar vertical: sin esto, cambiar
+   entre vistas de distinto largo (ej. las pestañas del Panel de
+   Administración) hace que la scrollbar aparezca/desaparezca y todo el
+   layout "salte" de ancho de un lado a otro. */
+html {
+  overflow-y: scroll;
 }
 
 /* ------------------ Estilos globales de body ------------------ */

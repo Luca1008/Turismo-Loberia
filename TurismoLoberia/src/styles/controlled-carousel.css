@@ -48,7 +48,8 @@
 }
 
 /* ------------------ Título dentro del carrusel ------------------ */
-/* Posicionado al fondo, centrado horizontalmente */
+/* Posicionado al fondo, centrado horizontalmente (fallback si no se usa
+   `renderCaption` con `.hero-caption`) */
 .carousel-index h1 {
   font-size: 1.5rem;
   position: absolute;
@@ -58,6 +59,62 @@
   color: white;
   padding: 1rem 2rem 1rem 1rem;
   text-align: center;
+  font-weight: 800;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.01em;
+}
+
+/* Bootstrap limita `.carousel-caption` a una franja centrada (left/right
+   15%, text-align:center): se libera para que `.hero-caption` pueda ocupar
+   todo el ancho y anclar el texto abajo a la izquierda, como en el diseño. */
+.carousel-index .carousel-caption {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* Caption editorial: bloque abajo a la izquierda, con degradado detrás
+   del texto para que se lea sobre cualquier foto (igual criterio que
+   `.event-banner-overlay`). */
+.carousel-index .hero-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  text-align: left;
+  padding: 1.5rem 1.5rem 2.5rem;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.carousel-index .hero-caption h1 {
+  position: static;
+  width: auto;
+  padding: 0;
+  text-align: left;
+  font-size: 2.25rem;
+}
+
+/* `.index p { text-align: center }` (index.css) le gana por orden de
+   cascada a esta regla con la misma especificidad: se fuerza el align acá. */
+.carousel-index .hero-subtitle {
+  color: rgba(255, 255, 255, 0.92);
+  font-style: italic;
+  font-family: var(--font-subtitle, serif);
+  font-size: 1rem;
+  max-width: 34rem;
+  margin: 0.75rem 0 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  text-align: left !important;
 }
 
 /* ------------------ Animación de zoom ------------------ */
@@ -87,6 +144,18 @@
   /* Título más grande en desktop */
   .carousel-index h1 {
     font-size: 4rem;
+  }
+
+  .carousel-index .hero-caption {
+    padding: 3rem 4rem 4rem;
+  }
+
+  .carousel-index .hero-caption h1 {
+    font-size: 6rem;
+  }
+
+  .carousel-index .hero-subtitle {
+    font-size: 1.35rem;
   }
 
   /* Tamaño de iconos de control del carrusel */
