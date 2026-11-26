@@ -91,6 +91,8 @@ const Create = () => {
 
       const response = await fetch(`${Global.url}cards`, {
         method: "POST",
+        // El backend exige sesión de administrador para crear cards.
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         body: data,
       });
 

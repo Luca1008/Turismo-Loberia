@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /Admin
+Disallow: /PanelAdmin
+Disallow: /Register
+Disallow: /recuperar-password
+Disallow: /reset-password/
+Disallow: /unsubscribe/
+
+Sitemap: https://turismoloberia.tur.ar/sitemap.xml

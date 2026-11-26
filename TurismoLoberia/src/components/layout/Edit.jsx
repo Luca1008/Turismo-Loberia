@@ -136,6 +136,8 @@ const Edit = ({ cardId, onClose, onUpdate }) => {
 
       const response = await fetch(`${Global.url}cards/${cardId}`, {
         method: "PUT",
+        // El backend exige sesión de administrador para editar cards.
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         body: data,
       });
 
