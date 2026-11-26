@@ -1,9 +1,12 @@
 import { Button, Card } from "react-bootstrap";
 import { FaLocationDot } from "react-icons/fa6";
+import { LuArrowRight, LuCompass } from "react-icons/lu";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import defaultImg from "../../assets/images/default-photo.jpg";
+import CardPlaceholder, { CATEGORY_ACCENTS } from "./CardPlaceholder";
 import "../../styles/card.css";
+import "../../styles/mosaicSection.css";
 
 /**
  * Componente `ContentCard`
@@ -16,10 +19,13 @@ import "../../styles/card.css";
  * @param {string} [props.title="Título del lugar"] - Título del contenido.
  * @param {string} [props.description="Descripción breve del lugar."] - Descripción breve.
  * @param {string} [props.city="Ciudad no especificada"] - Nombre de la ciudad.
- * @param {string} [props.img] - URL de la imagen del contenido. Usa imagen por defecto si no se proporciona.
+ * @param {string} [props.img] - URL de la imagen del contenido. Si no hay (o no carga) se muestra un placeholder con el ícono de la categoría.
  * @param {string|number} [props.id=null] - Identificador del contenido.
  * @param {string} [props.category=""] - Categoría del contenido. Si es "Evento", se mostrará la fecha.
  * @param {string} [props.card_date=""] - Fecha del evento (formato ISO o reconocible por `Date`).
+ * @param {"grid"|"showcase"} [props.variant="grid"] - "showcase" agrega el marco tipo estampa
+ *   (borde recortado + insignia brújula) usado en "Descubrí Lobería" del inicio; /Buscador y el
+ *   admin siguen usando "grid" (por defecto), sin tocar su apariencia.
  * @param {function} [props.onEdit] - Función llamada al hacer clic en el botón de editar, recibe `id` como argumento.
  * @param {function} [props.onDelete] - Función llamada al hacer clic en el botón de eliminar, recibe `id` como argumento.
  *
@@ -46,11 +52,17 @@ const ContentCard = ({
   id = null,
   category = "",
   card_date = "",
+  variant = "grid",
   onEdit,
   onDelete,
 }) => {
-  const imageSrc = img || defaultImg;
+  // Si la foto no carga (link roto) también se muestra el placeholder.
+  const [imgFailed, setImgFailed] = useState(false);
+  useEffect(() => setImgFailed(false), [img]);
+  const hasImage = Boolean(img) && !imgFailed;
   const isEvent = category === "Evento";
+  const isShowcase = variant === "showcase";
+  const accent = CATEGORY_ACCENTS[category] || "green";
   let dateMonth = "";
   let dateDay = "";
   if (isEvent && card_date) {
@@ -60,12 +72,52 @@ const ContentCard = ({
   }
 
   return (
-    <Card className="card">
-      <Card.Img className="card-img" src={imageSrc} variant="top" alt={title} />
+    <Card className={`card${isShowcase ? " card-showcase" : ""}`}>
+      {isShowcase ? (
+        <div className="card-img-wrapper-showcase">
+          {hasImage ? (
+            <img
+              className="card-img-showcase"
+              src={img}
+              alt={title}
+              onError={() => setImgFailed(true)}
+            />
+          ) : (
+            <CardPlaceholder category={category} className="card-img-showcase" />
+          )}
+          <span className="adventure-badge-mini" aria-hidden="true">
+            <LuCompass />
+          </span>
+          {category && (
+            <span className={`accent-chip accent-${accent} card-category-chip`}>
+              {category}
+            </span>
+          )}
+        </div>
+      ) : (
+        <>
+          {hasImage ? (
+            <Card.Img
+              className="card-img"
+              src={img}
+              variant="top"
+              alt={title}
+              onError={() => setImgFailed(true)}
+            />
+          ) : (
+            <CardPlaceholder category={category} className="card-img" />
+          )}
+          {category && (
+            <span className={`accent-chip accent-${accent} card-category-chip`}>
+              {category}
+            </span>
+          )}
+        </>
+      )}
       <Card.Body className="card-body">
         <div className="content-card">
           <Card.Title className="card-title-ellipsis">{title}</Card.Title>
-          <Card.Text className="text-left">{description}</Card.Text>
+          <Card.Text className="text-left card-description">{description}</Card.Text>
           <Card.Text className="card-city-ellipsis">
             <strong className="location-icon">
               <FaLocationDot /> {city}
@@ -74,11 +126,12 @@ const ContentCard = ({
         </div>
         <Button
           variant="link"
-          className="btn-link"
+          className={`accent-pill-button accent-${accent} card-view-more`}
           as={Link}
           to={`/cards/${id}`}
         >
           Ver Más
+          <LuArrowRight aria-hidden="true" />
         </Button>
         {(onEdit || onDelete) && (
           <div className="card-buttons-wrapper">
@@ -121,7 +174,7 @@ const ContentCard = ({
           </div>
         )}
         {isEvent && (
-          <div className="event-card__date blurred">
+          <div className="event-card__date">
             <p className="event-card__month">{dateMonth}.</p>
             <p className="event-card__day">{dateDay}</p>
           </div>

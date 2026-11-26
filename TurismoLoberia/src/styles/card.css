@@ -12,20 +12,107 @@
   flex-direction: column;
   height: 450px;
   width: 18rem;
-  margin: 1rem;
-  border-radius: 14px;
+  border-radius: 22px;
   background: white;
   text-align: left;
-  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0, 0, 0, 0.18);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  position: relative; 
+  position: relative;
 }
 
-/* Efecto hover/focus: leve zoom */
+/* Efecto hover/focus: leve elevación */
 .card:hover,
 .card:focus-within {
-  transform: scale(1.03);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.16);
+}
+
+/* En el grid de resultados del Buscador la card llena su columna en vez de
+   quedar con el ancho fijo que usa el carrusel de la home (.places-items). */
+.results-grid .card {
+  width: 100%;
+  height: auto;
+}
+
+.results-grid .card:hover,
+.results-grid .card:focus-within {
+  transform: translateY(-8px) scale(1.01);
+}
+
+/* Chip de categoría, superpuesto sobre la imagen */
+.card-category-chip {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+}
+
+/* En /Buscador (y "Gestionar contenido" del admin, que reutiliza el mismo
+   grid) el chip queda sólido con el color de la categoría en vez de un
+   fondo clarito, para que se note más sobre la foto. */
+.results-grid .card-category-chip {
+  font-weight: 700;
+  padding: 0.35rem 0.9rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+.results-grid .card-category-chip.accent-green {
+  background: var(--primary-color) !important;
+  color: #fff !important;
+}
+.results-grid .card-category-chip.accent-orange {
+  background: var(--accent-orange) !important;
+  color: #fff !important;
+}
+.results-grid .card-category-chip.accent-blue {
+  background: var(--accent-blue) !important;
+  color: #fff !important;
+}
+.results-grid .card-category-chip.accent-yellow {
+  background: var(--accent-yellow-2) !important;
+  color: var(--grey-dark) !important;
+}
+
+/* Botón "Ver Más" en forma de píldora con acento de color */
+.card-view-more {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.card-view-more svg {
+  transition: transform 0.2s ease;
+}
+.card-view-more:hover svg {
+  transform: translateX(3px);
+}
+
+/* En /Buscador el botón pasa a ocupar todo el ancho de la card, con el
+   texto y la flecha en los extremos — más presencia que la píldora chica
+   alineada a la izquierda. */
+.results-grid .card-view-more {
+  align-self: stretch;
+  width: 100%;
+  justify-content: space-between !important;
+}
+
+/* El título/descripción/ubicación quedan agrupados y compactos (en vez de
+   estirarse para llenar la card, que dejaba un espacio inconsistente
+   entre ellos según el largo de la descripción) — el único que empuja
+   hacia abajo es el botón "Ver Más", que siempre queda anclado al final. */
+.results-grid .content-card {
+  flex-grow: 0;
+}
+.results-grid .location-icon {
+  margin-top: 0;
+}
+/* `.card-description` reserva 80px (~3 líneas) para que las cards de una
+   misma fila compartan alto aunque el texto real varíe — pero con
+   descripciones cortas (1 línea) eso dejaba un hueco grande y vacío antes
+   de la ubicación. Se achica a ~2 líneas: sigue emparejando la fila sin
+   dejar tanto espacio muerto en las cards con texto corto. */
+.results-grid .card-description {
+  min-height: 44px;
 }
 
 /* Contenedor del cuerpo de la card */
@@ -34,20 +121,33 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  gap: 0.4rem;
   text-align: left !important;
   justify-content: left !important;
   overflow: hidden;
   align-items: flex-start !important;
 }
 
-/* Descripción dentro de la card con truncamiento de líneas */
+/* Descripción dentro de la card con truncamiento de líneas (antes esta
+   clase no se usaba en ContentCard.jsx — la descripción quedaba sin
+   truncar y variaba de largo entre cards de la misma fila).
+   !important: Bootstrap le agrega a este mismo <p> la clase genérica
+   `.card-text` (definida más abajo en este archivo), que también fija
+   display/line-clamp/overflow — mismo nivel de especificidad (una clase),
+   así que por orden de declaración esa regla le ganaba a ésta y la
+   descripción quedaba sin recortar a 3 líneas (se veía una 4ta línea
+   parcial pisando la ubicación de abajo). */
 .card-description {
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* Máximo 3 líneas */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important; /* Máximo 3 líneas */
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
   text-overflow: ellipsis;
-  min-height: 80px;
+  /* 72px = 3 líneas exactas a este line-height (24px): con 80px sobraban
+     8px de aire donde se alcanzaba a asomar, sin puntos suspensivos, el
+     borde superior de una 4ta línea que el recorte por líneas ya había
+     descartado. */
+  min-height: 72px;
   text-align: left;
 }
 
@@ -64,8 +164,12 @@
 .card-img {
   height: 200px;
   object-fit: cover;
-  border-radius: 10px 10px 0 0;
+  border-radius: 0;
   transition: transform 0.4s ease;
+}
+
+.results-grid .card-img {
+  height: 280px;
 }
 
 /* Efecto zoom en la imagen al pasar el mouse */
@@ -109,32 +213,100 @@
   margin-top: auto;
 }
 
+/* ------------------ Card "Showcase" (Inicio → Descubrí Lobería) ------------------ */
+/* Variante de ContentCard (variant="showcase") con el mismo lenguaje
+   "aventura" (foto con borde recortado tipo estampa + insignia brújula)
+   que ya usan las páginas de Partido de Lobería. Solo se usa en la home;
+   /Buscador y "Gestionar contenido" del admin siguen con variant="grid"
+   (por defecto) y no se ven afectados. */
+.card-showcase {
+  width: 20rem;
+  /* La foto de esta variante ocupa 18px más que la de `.card-img` (10px de
+     padding + 8px del borde recortado): con la altura fija de 450px que
+     usa `.card` para el resto de sus usos, ese espacio de más le queda muy
+     ajustado a la columna de texto y el título terminaba aplastado a un
+     puñado de píxeles de alto. Se deja crecer libremente, igual que ya
+     hace `.results-grid .card`. */
+  height: auto;
+  border-radius: 24px;
+}
+
+.card-img-wrapper-showcase {
+  position: relative;
+  padding: 10px;
+}
+
+.card-img-showcase {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: transform 0.4s ease;
+}
+
+.card-showcase:hover .card-img-showcase {
+  transform: scale(1.05);
+}
+
+/* Insignia mini, versión a escala de `.photo-frame-adventure .adventure-badge`. */
+.adventure-badge-mini {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-yellow-2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: rotate(12deg);
+  z-index: 3;
+  color: var(--grey-dark);
+  font-size: 1.1rem;
+}
+
+/* Botón "Ver Más" a todo el ancho y centrado (a diferencia del grid de
+   /Buscador/admin, que lo deja con texto y flecha en los extremos). */
+.card-showcase .card-view-more {
+  align-self: stretch;
+  width: 100%;
+  justify-content: center !important;
+}
+
 /* ------------------ Event Cards ------------------ */
-/* Fecha en la esquina superior izquierda */
+/* Insignia de fecha tipo ribbon, esquina superior derecha */
 .event-card__date {
   position: absolute;
   top: 12px;
-  left: 12px;
+  right: 12px;
   z-index: 2;
-  border-radius: 10px;
-  padding: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 0.4rem 0.6rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
   text-align: center;
-  min-width: 3.75rem;
+  min-width: 3.25rem;
+  background-color: var(--accent-orange);
+  color: #fff;
 }
 
 /* Mes y día de la fecha */
 .event-card__month {
   display: block;
   line-height: 1;
-  text-transform: capitalize;
+  text-transform: uppercase;
   font-weight: bolder;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
 }
 
 .event-card__day {
   display: block;
-  font-weight: bold;
-  line-height: 1;
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1.2;
 }
 
 /* Contenedor inferior de la card de evento */
@@ -144,6 +316,168 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+}
+
+/* ------------------ Event Banner (Home) ------------------ */
+/* Banner horizontal de evento: foto a todo lo ancho, texto/fecha/botón superpuestos */
+/* `.upcoming-events` es flex-column con `align-items:center` (index.css):
+   sin un ancho explícito, este bloque y su `<img width:100%>` colapsan a un
+   tamaño mínimo por la misma dependencia circular ya vista en
+   `.photo-frame-adventure`/`.map-frame` (ver mosaicSection.css). */
+.events {
+  width: 100%;
+}
+
+.event-banner {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 1.5rem auto;
+  border-radius: 32px;
+  overflow: hidden;
+  box-sizing: border-box;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
+}
+
+.event-banner-img {
+  display: block;
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.event-banner:hover .event-banner-img {
+  transform: scale(1.05);
+}
+
+/* Franja de fecha, estilo estampa, arriba a la derecha */
+.event-banner-ribbon {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 5;
+  background: var(--accent-orange);
+  color: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  min-width: 4.5rem;
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event-banner-ribbon-month {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}
+
+.event-banner-ribbon-day {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* Degradado oscuro para que el texto blanco se lea sobre cualquier foto */
+.event-banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem 2rem;
+  color: white;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.65) 45%,
+    rgba(0, 0, 0, 0.4) 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.event-banner-info {
+  max-width: 650px;
+}
+
+/* Se fuerza el color acá: la regla global `h1,h2,h3{color:...}` targetea
+   directamente el color de este <h3>, así que gana por sobre el blanco
+   heredado de `.event-banner-overlay` (la herencia pierde frente a
+   cualquier regla explícita, sin importar su especificidad). */
+.event-banner-title {
+  color: white;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 992px) {
+  .event-banner-title {
+    font-size: 2.75rem;
+  }
+
+  .event-banner-description {
+    font-size: 1.15rem;
+  }
+}
+
+.event-banner-description {
+  margin-bottom: 0.5rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.event-banner-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.event-banner-meta svg {
+  color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+  .event-banner-img {
+    height: 260px;
+  }
+
+  .event-banner-overlay {
+    padding: 1rem 1.25rem;
+  }
+
+  .event-banner-title {
+    font-size: 1.25rem;
+  }
+
+  .event-banner-ribbon {
+    top: 1rem;
+    right: 1rem;
+    min-width: 3.5rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .event-banner-ribbon-day {
+    font-size: 1.25rem;
+  }
 }
 
 /* ------------------ Edit Cards ------------------ */

@@ -1,0 +1,103 @@
+/* =====================================================
+   Placeholder de foto por categoría (CardPlaceholder.jsx)
+   =====================================================
+   Ocupa el lugar de `.card-img` / `.card-img-showcase` cuando la card no
+   tiene imagen. El alto lo da la clase de tamaño que se le suma
+   (card-img, card-img-showcase), igual que a la foto.
+===================================================== */
+
+.card-placeholder {
+  --ph-accent: var(--primary-color);
+  --ph-tint: #f1f8ed;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background-color: var(--ph-tint);
+  /* Puntitos suaves del color de acento, como textura. */
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--ph-accent) 18%, transparent) 1.5px,
+    transparent 1.6px
+  );
+  background-size: 18px 18px;
+}
+
+.placeholder-orange {
+  --ph-accent: var(--accent-orange);
+  --ph-tint: #fff4ed;
+}
+.placeholder-blue {
+  --ph-accent: var(--accent-blue);
+  --ph-tint: #edf0fa;
+}
+.placeholder-yellow {
+  --ph-accent: var(--accent-yellow-2);
+  --ph-tint: #fffaea;
+}
+
+/* !important en los colores: `.city svg` y otras reglas globales pintan
+   los íconos de verde y les suman margen. */
+.card-placeholder-watermark {
+  position: absolute;
+  right: -1.5rem;
+  bottom: -1.75rem;
+  width: 9rem;
+  height: 9rem;
+  margin: 0 !important;
+  color: var(--ph-accent) !important;
+  opacity: 0.12;
+  transform: rotate(-12deg);
+  transition: transform 0.4s ease;
+  pointer-events: none;
+}
+
+.card-placeholder-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--ph-accent) 25%, transparent);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.card-placeholder-icon svg {
+  width: 2rem;
+  height: 2rem;
+  margin: auto auto !important;
+  color: var(--ph-accent) !important;
+}
+
+/* Variante "showcase" (Inicio): mismas esquinas redondeadas que la foto. */
+.card-placeholder.card-img-showcase {
+  border-radius: 16px;
+}
+
+/* En el buscador la foto es más alta. */
+.results-grid .card-placeholder.card-img {
+  height: 280px;
+}
+
+/* Al pasar el mouse la foto hace zoom; acá se mueve solo la marca de agua. */
+.card:hover .card-placeholder.card-img,
+.card-showcase:hover .card-placeholder.card-img-showcase {
+  transform: none;
+}
+.card:hover .card-placeholder-watermark {
+  transform: rotate(-6deg) scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-placeholder-watermark {
+    transition: none;
+  }
+  .card:hover .card-placeholder-watermark {
+    transform: rotate(-12deg);
+  }
+}

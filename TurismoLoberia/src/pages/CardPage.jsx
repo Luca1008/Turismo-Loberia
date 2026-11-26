@@ -2,9 +2,19 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import {
+  FaLocationDot,
+  FaClock,
+  FaPhone,
+  FaCircleInfo,
+  FaCalendarDays,
+  FaMap,
+} from "react-icons/fa6";
+import { LuCompass, LuLeaf, LuWaves } from "react-icons/lu";
 import { trackEvent } from "../analytics";
 import { Global } from "../helpers/Global";
 import "../styles/cardPage.css";
+import "../styles/mosaicSection.css";
 
 /**
  * Componente `CardPage`
@@ -83,84 +93,120 @@ const CardPage = () => {
 
   return (
     <section className="card-detail" key={i18n.language}>
-      <h1>{card.card_title}</h1>
-      {card.card_img_portada && (
-        <img
-          src={card.card_img_portada}
-          alt={card.card_title}
-          className="card-img-portada"
-        />
-      )}
+      <LuLeaf className="deco-float" aria-hidden="true" style={{ top: "10%", left: "1%", fontSize: "3rem" }} />
+      <LuCompass className="deco-pulse" aria-hidden="true" style={{ top: "45%", right: "2%", fontSize: "3.5rem" }} />
+      <LuWaves className="deco-bounce" aria-hidden="true" style={{ bottom: "6%", left: "3%", fontSize: "2.5rem" }} />
+
+      <div className="title-wrap">
+        <div className="section-eyebrow">
+          <FaLocationDot aria-hidden="true" />
+          <span>{t("descubri_loberia")}</span>
+        </div>
+        <h1>{card.card_title}</h1>
+        <div className="title-underline"></div>
+      </div>
 
       {card.card_category === "Evento" && card.card_date && (
-        <div className="event-date-detail" style={{ marginBottom: "1rem", fontWeight: "bold", fontSize: "1.2rem" }}>
-          {t("fecha_evento")}:{" "}
-          {new Date(card.card_date).toLocaleDateString("es-AR", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+        <div className="card-detail-event-pill-wrap">
+          <span className="accent-pill-button accent-orange">
+            <FaCalendarDays aria-hidden="true" />
+            {t("fecha_evento")}:{" "}
+            {new Date(card.card_date).toLocaleDateString("es-AR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </span>
         </div>
       )}
 
-      <p>{card.card_description || "Sin información"}</p>
+      {card.card_img_portada && (
+        <div className="photo-frame-adventure card-detail-photo-frame">
+          <img
+            src={card.card_img_portada}
+            alt={card.card_title}
+            className="card-img-portada"
+          />
+          <div className="torn-edge" aria-hidden="true"></div>
+          <span className="adventure-badge" aria-hidden="true">
+            <LuCompass />
+          </span>
+        </div>
+      )}
 
-      {/* Sección Ubicación */}
-      <section className="card-section">
-        <h2>{t("ubicacion")}</h2>
-        <p>{card.card_ubicacion || "Sin información"}</p>
+      <p className="section-lead">{card.card_description || "Sin información"}</p>
 
-        {card.card_lat && card.card_lon && (
-          <div className="map-container">
-            <iframe
-              title="Mapa OpenStreetMap"
-              src={`https://www.openstreetmap.org/export/embed.html?bbox=${
-                card.card_lon - 0.01
-              }%2C${card.card_lat - 0.01}%2C${card.card_lon + 0.01}%2C${
-                card.card_lat + 0.01
-              }&layer=mapnik&marker=${card.card_lat}%2C${card.card_lon}`}
-              width="100%"
-              height="300"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-            />
-            <br />
-            <a
-              href={`https://www.openstreetmap.org/?mlat=${card.card_lat}&mlon=${card.card_lon}#map=18/${card.card_lat}/${card.card_lon}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() =>
-                trackEvent({
-                  category: "Mapa",
-                  action: "Click ver en OpenStreetMap",
-                  label: card.card_title || `ID: ${id}`,
-                })
-              }
-            >
-              {t("ver_en_openstreetmap")}
-            </a>
-          </div>
-        )}
-      </section>
+      <div className="mosaic-list mosaic-list-2 card-detail-grid">
+        {/* Sección Ubicación */}
+        <article className="mosaic-card mosaic-green card-detail-wide card-detail-location">
+          <FaLocationDot className="mosaic-watermark" aria-hidden="true" />
+          <h2 className="mosaic-title">
+            <FaLocationDot aria-hidden="true" /> {t("ubicacion")}
+          </h2>
+          <p className="mosaic-copy">{card.card_ubicacion || "Sin información"}</p>
 
-      {/* Sección Horarios */}
-      <section className="card-section">
-        <h2>{t("horarios")}</h2>
-        <p>{card.card_horario || "Sin información"}</p>
-      </section>
+          {card.card_lat && card.card_lon && (
+            <div className="map-frame">
+              <iframe
+                title="Mapa OpenStreetMap"
+                src={`https://www.openstreetmap.org/export/embed.html?bbox=${
+                  card.card_lon - 0.01
+                }%2C${card.card_lat - 0.01}%2C${card.card_lon + 0.01}%2C${
+                  card.card_lat + 0.01
+                }&layer=mapnik&marker=${card.card_lat}%2C${card.card_lon}`}
+                width="100%"
+                height="300"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+              />
+              <a
+                href={`https://www.openstreetmap.org/?mlat=${card.card_lat}&mlon=${card.card_lon}#map=18/${card.card_lat}/${card.card_lon}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="accent-pill-button accent-white"
+                onClick={() =>
+                  trackEvent({
+                    category: "Mapa",
+                    action: "Click ver en OpenStreetMap",
+                    label: card.card_title || `ID: ${id}`,
+                  })
+                }
+              >
+                <FaMap aria-hidden="true" />
+                {t("ver_en_openstreetmap")}
+              </a>
+            </div>
+          )}
+        </article>
 
-      {/* Sección Contactos */}
-      <section className="card-section">
-        <h2>{t("contactos")}</h2>
-        <p>{card.card_contacto || "Sin información"}</p>
-      </section>
+        {/* Sección Horarios */}
+        <article className="mosaic-card mosaic-orange">
+          <FaClock className="mosaic-watermark" aria-hidden="true" />
+          <h2 className="mosaic-title">
+            <FaClock aria-hidden="true" /> {t("horarios")}
+          </h2>
+          <p className="mosaic-copy">{card.card_horario || "Sin información"}</p>
+        </article>
 
-      {/* Sección Información */}
-      <section className="card-section">
-        <h2>{t("informacion")}</h2>
-        <p>{card.card_info || "Sin información"}</p>
-      </section>
+        {/* Sección Contactos */}
+        <article className="mosaic-card mosaic-blue">
+          <FaPhone className="mosaic-watermark" aria-hidden="true" />
+          <h2 className="mosaic-title">
+            <FaPhone aria-hidden="true" /> {t("contactos")}
+          </h2>
+          <p className="mosaic-copy">{card.card_contacto || "Sin información"}</p>
+        </article>
+
+        {/* Sección Información */}
+        <article className="mosaic-card mosaic-yellow card-detail-wide">
+          <FaCircleInfo className="mosaic-watermark" aria-hidden="true" />
+          <h2 className="mosaic-title">
+            <FaCircleInfo aria-hidden="true" /> {t("informacion")}
+          </h2>
+          <p className="mosaic-copy">{card.card_info || "Sin información"}</p>
+        </article>
+      </div>
     </section>
   );
 };
