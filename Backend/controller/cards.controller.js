@@ -19,6 +19,38 @@ const formatCardWithImages = (card) => {
 };
 
 /**
+ * Indica si la columna opcional `card_tipo` existe en la tabla (la agrega
+ * la migración Backend/migrations/2026-11-alojamientos-estructura.sql). Se
+ * consulta una sola vez y se cachea: así el backend nuevo funciona igual si
+ * se publica antes de correr la migración (simplemente ignora el tipo).
+ * @returns {Promise<boolean>}
+ */
+let cardTipoColumnPromise = null;
+const hasCardTipoColumn = () => {
+  if (!cardTipoColumnPromise) {
+    cardTipoColumnPromise = db
+      .query(
+        `SELECT 1 FROM information_schema.columns
+         WHERE table_schema = 'turismo_prueba' AND table_name = 'card' AND column_name = 'card_tipo'`
+      )
+      .then((r) => r.rowCount > 0)
+      .catch((err) => {
+        console.error('No se pudo verificar la columna card_tipo:', err.message);
+        cardTipoColumnPromise = null; // reintentar en el próximo pedido
+        return false;
+      });
+  }
+  return cardTipoColumnPromise;
+};
+
+/** Convierte a entero positivo acotado (evita inyectar texto en LIMIT/OFFSET). */
+const toBoundedInt = (value, fallback, max) => {
+  const n = parseInt(value, 10);
+  if (!Number.isFinite(n) || n < 1) return fallback;
+  return Math.min(n, max);
+};
+
+/**
  * GET /cards/raw
  * 
  * Obtiene todas las cards sin filtros.
@@ -101,8 +133,17 @@ exports.getAllCards = async (req, res) => {
      const countResult = await db.query(countQuery, params);
     const total = parseInt(countResult.rows[0].count);
 
-    const offset = (parseInt(page) - 1) * parseInt(limit);
-    query += ` ORDER BY id ASC LIMIT ${limit} OFFSET ${offset}`;
+    // `page`/`limit` vienen del query string: se validan como enteros
+    // antes de ir al SQL (antes se interpolaban tal cual → inyección SQL).
+    // Máximo 200 por página (la sección Alojamientos pide todos de una vez).
+    const safeLimit = toBoundedInt(limit, 6, 200);
+    const safePage = toBoundedInt(page, 1, 100000);
+    const offset = (safePage - 1) * safeLimit;
+    // Los eventos se ordenan por fecha (el más próximo primero), no por
+    // orden de carga: si se sube primero un evento del 1 de octubre y
+    // después uno del 26 de septiembre, este último debe listarse antes.
+    const orderClause = category === 'Evento' ? 'card_date ASC' : 'id ASC';
+    query += ` ORDER BY ${orderClause} LIMIT ${safeLimit} OFFSET ${offset}`;
 
     const result = await db.query(query, params);
     const formatted = result.rows.map(formatCardWithImages);
@@ -166,19 +207,29 @@ exports.createCard = async (req, res) => {
     const imgPortada = req.files?.card_img_portada?.[0]?.buffer || null;
     const imgExtra = req.files?.card_img?.[0]?.buffer || null;
 
+    const columns = [
+      'card_title', 'card_description', 'card_ubicacion', 'card_link_ubicacion',
+      'card_horario', 'card_contacto', 'card_info', 'card_city', 'card_category',
+      'card_lat', 'card_lon',
+      'card_img_portada', 'card_img', 'card_date'
+    ];
+    const values = [
+      card_title, card_description, card_ubicacion, card_link_ubicacion,
+      card_horario, card_contacto, card_info, card_city, card_category,
+      card_lat || null, card_lon || null,
+      imgPortada, imgExtra, card_date || null
+    ];
+    // Tipo de alojamiento (hotel, particular, cabana...): solo si la
+    // migración ya agregó la columna.
+    if (req.body.card_tipo !== undefined && (await hasCardTipoColumn())) {
+      columns.push('card_tipo');
+      values.push(req.body.card_tipo || null);
+    }
+    const placeholders = values.map((_, i) => `$${i + 1}`).join(',');
+
     const result = await db.query(
-      `INSERT INTO turismo_prueba."card" (
-        card_title, card_description, card_ubicacion, card_link_ubicacion,
-        card_horario, card_contacto, card_info, card_city, card_category,
-        card_lat, card_lon,
-        card_img_portada, card_img, card_date
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING *`,
-      [
-        card_title, card_description, card_ubicacion, card_link_ubicacion,
-        card_horario, card_contacto, card_info, card_city, card_category,
-        card_lat || null, card_lon || null,
-        imgPortada, imgExtra, card_date || null
-      ]
+      `INSERT INTO turismo_prueba."card" (${columns.join(', ')}) VALUES (${placeholders}) RETURNING *`,
+      values
     );
 
     res.status(201).json({ message: 'Card creada correctamente', card: formatCardWithImages(result.rows[0]) });
@@ -248,6 +299,13 @@ exports.updateCard = async (req, res) => {
       card_lon || null,
       card_date || null
     ];
+
+    // Tipo de alojamiento: solo se toca si viene en el pedido (el formulario
+    // del Panel no lo envía y no debe borrarlo) y si la columna existe.
+    if (req.body.card_tipo !== undefined && (await hasCardTipoColumn())) {
+      setClauses.push(`card_tipo=$${params.length + 1}`);
+      params.push(req.body.card_tipo || null);
+    }
 
     // Si llega imagen de portada, se agrega a la actualización
     if (imgPortada !== null) {

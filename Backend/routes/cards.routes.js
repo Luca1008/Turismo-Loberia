@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const upload = require('../middlewares/upload'); // ✔️ SOLO esta
 const cardsController = require('../controller/cards.controller');
+const auth = require('../middlewares/auth');
 
 /**
  * @route GET /api/test
@@ -35,11 +36,12 @@ router.get('/cards-all', cardsController.getAllCardsRaw);
 /**
  * @route POST /api/cards
  * @desc Crea una nueva card con imágenes
- * @access Public
+ * @access Admin (requiere token: antes era pública y cualquiera podía
+ *   crear, editar o borrar cards sin iniciar sesión)
  * @param {file} card_img_portada - Imagen de portada (máx. 1)
  * @param {file} card_img - Imagen principal (máx. 1)
  */
-router.post('/cards', upload.fields([
+router.post('/cards', auth, upload.fields([
   { name: 'card_img_portada', maxCount: 1 },
   { name: 'card_img', maxCount: 1 }
 ]), cardsController.createCard);
@@ -50,8 +52,9 @@ router.post('/cards', upload.fields([
  * @param {string} id - ID de la card
  * @param {file} card_img_portada - Imagen de portada (opcional)
  * @param {file} card_img - Imagen principal (opcional)
+ * @access Admin (requiere token)
  */
-router.put('/cards/:id', upload.fields([
+router.put('/cards/:id', auth, upload.fields([
   { name: 'card_img_portada', maxCount: 1 },
   { name: 'card_img', maxCount: 1 }
 ]), cardsController.updateCard);
@@ -60,8 +63,9 @@ router.put('/cards/:id', upload.fields([
  * @route DELETE /api/cards/:id
  * @desc Elimina una card por ID
  * @param {string} id - ID de la card
+ * @access Admin (requiere token)
  */
-router.delete('/cards/:id', cardsController.deleteCard);
+router.delete('/cards/:id', auth, cardsController.deleteCard);
 
 module.exports = router;
 
