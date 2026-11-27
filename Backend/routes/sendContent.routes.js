@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const path = require("path");
 const sendContentController = require("../controller/sendContent.controller");
+const auth = require("../middlewares/auth");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "public/uploads/"),
@@ -17,10 +18,10 @@ const upload = multer({ storage });
 /**
  * @route POST /api/send
  * @desc Enviar contenido a todos los suscriptores
- * @access Public
+ * @access Admin
  * @param {file} file.body.required - Archivo a enviar a los suscriptores
  */
-router.post("/send", upload.single("file"), sendContentController.sendToSubscribers);
+router.post("/send", auth, upload.single("file"), sendContentController.sendToSubscribers);
 
 /**
  * @route POST /api/subscribe

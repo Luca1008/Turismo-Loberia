@@ -49,7 +49,9 @@ export default function AdminDashboard() {
     s ? s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) : s;
 
   useEffect(() => {
-    fetch(`${Global.url}subscriptions/stats`)
+    fetch(`${Global.url}subscriptions/stats`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    })
       .then((res) => res.json())
       .then((data) => setStats(data))
       .catch((err) => {

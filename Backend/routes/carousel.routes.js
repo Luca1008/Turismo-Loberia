@@ -3,6 +3,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const carouselController = require("../controller/carousel.controller");
+const auth = require("../middlewares/auth");
 
 const router = express.Router();
 
@@ -25,12 +26,13 @@ const upload = multer({ storage });
 /**
  * @route POST /api/carousel
  * @desc Subir imagen del carrusel para una ciudad
- * @access Public
+ * @access Admin
  * @param {string} city.body.required - Nombre de la ciudad
  * @param {file} image.body.required - Imagen a subir
  */
 router.post(
   "/carousel",
+  auth,
   upload.single("image"),
   carouselController.uploadCarouselImages
 );
@@ -49,11 +51,12 @@ router.get(
 /**
  * @route DELETE /api/carousel/:city
  * @desc Eliminar la imagen del carrusel de una ciudad
- * @access Public
+ * @access Admin
  * @param {string} city.path.required - Nombre de la ciudad
  */
 router.delete(
   "/carousel/:city",
+  auth,
   carouselController.deleteCarouselImage
 );
 

@@ -176,6 +176,7 @@ const PanelAdmin = () => {
       if (useDefault) {
         await fetch(`${Global.url}carousel/${selectedCity}`, {
           method: "DELETE",
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         toast.success("Se usará la imagen default para esta ciudad.");
       } else {
@@ -189,6 +190,7 @@ const PanelAdmin = () => {
         formData.append("image", image);
         await fetch(`${Global.url}carousel`, {
           method: "POST",
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           body: formData,
         });
         toast.success("Imagen personalizada actualizada.");

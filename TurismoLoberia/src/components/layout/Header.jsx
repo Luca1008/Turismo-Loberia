@@ -97,7 +97,6 @@ export const Header = () => {
     "/PanelAdmin/listar-admins",
     "/recuperar-password",
     "/reset-password/:token",
-    "/Register",
     "/cards/:id",
     "/unsubscribe/:token",
   ];

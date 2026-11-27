@@ -36,7 +36,9 @@ const ListAdmins = () => {
    * Obtiene la lista de administradores desde el backend.
    */
   const fetchAdmins = () => {
-    fetch(`${Global.url}user/admins`)
+    fetch(`${Global.url}user/admins`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    })
       .then((res) => {
         if (!res.ok) throw new Error("Error al cargar admins");
         return res.json();

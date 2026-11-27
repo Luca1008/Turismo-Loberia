@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const subscriptionController = require("../controller/subscription.controller");
+const auth = require("../middlewares/auth");
 
 /**
  * @route POST /subscriptions
@@ -26,7 +27,8 @@ router.post("/", subscriptionController.createSubscription);
  * @returns {Array<Object>} 200 - Lista de suscripciones
  * @returns {Error} 500 - Error al obtener las suscripciones
  */
-router.get("/", subscriptionController.getAllSubscriptions);
+// Datos personales de los suscriptores: solo admins.
+router.get("/", auth, subscriptionController.getAllSubscriptions);
 
 /**
  * @route GET /subscriptions/paginated
@@ -37,7 +39,7 @@ router.get("/", subscriptionController.getAllSubscriptions);
  * @returns {Object} 200 - { page, totalPages, totalItems, data }
  * @returns {Error} 500 - Error al obtener las suscripciones
  */
-router.get("/paginated", subscriptionController.getSubscriptions);
+router.get("/paginated", auth, subscriptionController.getSubscriptions);
 
 /**
  * @route GET /subscriptions/stats
@@ -50,6 +52,6 @@ router.get("/paginated", subscriptionController.getSubscriptions);
  * }
  * @returns {Error} 500 - Error al obtener estadísticas
  */
-router.get("/stats", subscriptionController.getStats);
+router.get("/stats", auth, subscriptionController.getStats);
 
 module.exports = router;

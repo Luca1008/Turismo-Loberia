@@ -15,7 +15,6 @@ import UpdateUser from "../components/layout/panel-admin/UpdateAdmin";
 import CreateAdmin from "../components/layout/panel-admin/CreateAdmin";
 import ListAdmins from "../components/layout/panel-admin/ListAdmins";
 import CardPage from "../pages/CardPage";
-import { Register } from "../pages/Register";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import Unsubscribe from "../pages/Unsubscribe";
@@ -73,7 +72,6 @@ export const Routing = () => {
       <Route path="/Admin" element={<Admin />} />
       <Route path="/recuperar-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
-      <Route path="/Register" element={<Register />} />
       <Route path="/cards/:id" element={<CardPage />} />
       <Route path="/unsubscribe/:token" element={<Unsubscribe />} />
 

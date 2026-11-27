@@ -3,6 +3,8 @@ const router = express.Router();
 const userController = require('../controller/user.controller');
 const { registerValidators, loginValidators } = require('../middlewares/validators');
 const auth = require('../middlewares/auth');
+const requireSuperAdmin = require('../middlewares/requireSuperAdmin');
+const requireSelfOrSuperAdmin = require('../middlewares/requireSelfOrSuperAdmin');
 
 /**
  * @route POST /user/register
@@ -16,7 +18,8 @@ const auth = require('../middlewares/auth');
  * @returns {Error} 400 - Error de validación
  * @returns {Error} 500 - Error interno del servidor
  */
-router.post('/user/register', registerValidators, userController.registerUser);
+// Solo un superadmin logueado puede dar de alta admins (desde el panel).
+router.post('/user/register', auth, requireSuperAdmin, registerValidators, userController.registerUser);
 
 /**
  * @route POST /user/login
@@ -35,7 +38,7 @@ router.post('/user/login', loginValidators, userController.loginUser);
  * @returns {Array<Object>} 200 - Lista de administradores
  * @returns {Error} 500 - Error interno del servidor
  */
-router.get('/user/admins', userController.getAllAdmins);
+router.get('/user/admins', auth, requireSuperAdmin, userController.getAllAdmins);
 
 /**
  * @route GET /user/{id}
@@ -45,7 +48,8 @@ router.get('/user/admins', userController.getAllAdmins);
  * @returns {Error} 404 - Usuario no encontrado
  * @returns {Error} 500 - Error interno del servidor
  */
-router.get('/user/:id', userController.getUserById);
+// Cada usuario solo puede ver, modificar o borrar su propia cuenta, salvo el superadmin.
+router.get('/user/:id', auth, requireSelfOrSuperAdmin, userController.getUserById);
 
 /**
  * @route PUT /user/{id}
@@ -60,7 +64,7 @@ router.get('/user/:id', userController.getUserById);
  * @returns {Error} 401 - No autorizado
  * @returns {Error} 500 - Error interno del servidor
  */
-router.put('/user/:id', auth, userController.updateUser);
+router.put('/user/:id', auth, requireSelfOrSuperAdmin, userController.updateUser);
 
 /**
  * @route DELETE /user/{id}
@@ -71,7 +75,7 @@ router.put('/user/:id', auth, userController.updateUser);
  * @returns {Error} 404 - Usuario no encontrado
  * @returns {Error} 500 - Error interno del servidor
  */
-router.delete('/user/:id', auth, userController.deleteUser);
+router.delete('/user/:id', auth, requireSelfOrSuperAdmin, userController.deleteUser);
 
 /**
  * @route POST /user/recuperar-password

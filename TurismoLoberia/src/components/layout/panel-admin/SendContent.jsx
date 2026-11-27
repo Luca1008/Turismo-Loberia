@@ -40,6 +40,7 @@ export default function SendContent() {
 
       const res = await fetch(`${Global.url}send/send`, {
         method: "POST",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         body: formData,
       });
 
