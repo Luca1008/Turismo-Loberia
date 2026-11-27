@@ -3,6 +3,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { LuArrowRight, LuCompass } from "react-icons/lu";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import CardPlaceholder, { CATEGORY_ACCENTS } from "./CardPlaceholder";
 import "../../styles/card.css";
@@ -63,6 +64,12 @@ const ContentCard = ({
   const isEvent = category === "Evento";
   const isShowcase = variant === "showcase";
   const accent = CATEGORY_ACCENTS[category] || "green";
+  const { t } = useTranslation();
+  // Nombre legible ("Información útil" en vez de "InfoUtil"); si la
+  // categoría no está en la lista, se muestra tal cual.
+  const categoryLabel = category
+    ? t(`categorias.${category}`, { defaultValue: category })
+    : "";
   let dateMonth = "";
   let dateDay = "";
   if (isEvent && card_date) {
@@ -90,7 +97,7 @@ const ContentCard = ({
           </span>
           {category && (
             <span className={`accent-chip accent-${accent} card-category-chip`}>
-              {category}
+              {categoryLabel}
             </span>
           )}
         </div>
@@ -109,7 +116,7 @@ const ContentCard = ({
           )}
           {category && (
             <span className={`accent-chip accent-${accent} card-category-chip`}>
-              {category}
+              {categoryLabel}
             </span>
           )}
         </>

@@ -403,7 +403,7 @@ const Searcher = ({ isAdmin = false, onEdit = null }) => {
             )}
             {category && (
               <span className="filter-tag">
-                {t("categoria")}: {category}
+                {t("categoria")}: {t(`categorias.${category}`, { defaultValue: category })}
               </span>
             )}
           </div>
