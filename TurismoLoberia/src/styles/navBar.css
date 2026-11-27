@@ -685,20 +685,4 @@ button.btn.btn-white {
     height: 20px;
   }
 
-  .item-services{
-    width: 60px;
-    height: 60px;
-  }
-
-  .services .item-services img{
-    width: 70px !important;
-    height: 70px !important;
-  }
-
-  .services .item-services p{
-    font-size: 0.5rem;
-    font-weight: 600;
-    align-items: center;
-    justify-content: center;
-  }
 }

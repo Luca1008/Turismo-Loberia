@@ -118,35 +118,35 @@
 }
 
 /* Contenedor de items de servicios */
-/* `flex-wrap: wrap`: en mobile los 6 íconos en una sola fila (sin wrap ni
-   scroll) eran más anchos que la pantalla y se salían del contenedor sin
-   achicarse (flex no encoge items con `max-width: max-content` por
-   debajo de su contenido) — eso empujaba el ancho de toda la página y
-   aparecía una franja blanca / scroll horizontal al final del body. */
+/* Grilla de columnas iguales: 3×2 en mobile y los 6 en una fila desde
+   768px. Con flex + wrap cada ítem medía lo que su texto, quedaban 4
+   arriba y 2 abajo y el ícono no quedaba centrado sobre el nombre. */
 .item-services-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 1rem;
-  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem 0.5rem;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 1.25rem 0 1rem;
   text-align: center;
-  align-items: center;
-  justify-content: center;
 }
 
-/* Item individual */
+/* Item individual: ícono y nombre centrados en su columna. */
 .item-services {
-  max-width: max-content;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  min-width: 0;
   cursor: pointer;
   position: relative;
 }
 
 .item-services img {
-  width: 50px;
-  height: 50px;
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25));
   transition: transform 0.3s ease, filter 0.3s ease;
 }
@@ -163,8 +163,9 @@
 .item-services p {
   display: flex;
   justify-content: center;
-  margin-top: 0.35rem;
-  font-size: 0.65rem;
+  margin: 0.45rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.25;
   font-weight: 600;
   color: #544341f2;
   text-align: center;
@@ -264,20 +265,23 @@ section .container-info {
   }
 
   .item-services img {
-    width: 110px !important;
-    height: 110px !important;
-    margin: 0 auto 12px auto;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 4px auto;
   }
 
   .item-services-container {
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1.5rem 0.5rem;
+    max-width: 720px;
+    margin-top: 1rem;
   }
 
   .item-services p {
     display: flex;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
     color: #544341f2;
     text-align: center;
     justify-content: center;
@@ -422,5 +426,23 @@ section .container-info {
 
   .carousel-index img {
     height: 100% !important;
+  }
+}
+
+/* Desktop: íconos grandes como antes. */
+@media (min-width: 992px) {
+  .item-services-container {
+    max-width: 960px;
+    gap: 2rem;
+  }
+
+  .item-services img {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 12px;
+  }
+
+  .item-services p {
+    font-size: 0.95rem;
   }
 }
